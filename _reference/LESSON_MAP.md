@@ -1,6 +1,11 @@
-# LESSON MAP -> EPISODES
+# LESSON MAP -> EPISODES (DEPRECATED)
 
-> Source of truth for methodology. 25 lessons -> 40 episodes.
+> **⚠️ DEPRECATED (2026-04-13):** This file describes the OLD 40-episode structure.
+> The actual structure is 50 episodes (70 blocks after merges).
+> **Source of truth:** `pipeline/grid.yaml`
+> From ep.5 onwards, numbering in this file does NOT match the current project.
+
+> ~~Source of truth for methodology. 25 lessons -> 40 episodes.~~
 
 ---
 
