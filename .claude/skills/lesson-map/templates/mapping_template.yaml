@@ -1,0 +1,46 @@
+# LESSON MAPPING — lesson_{ID}
+# Маппинг урока на сюжет (шаг 3)
+# Источник: pipeline/briefs/brief_{ID}.yaml
+
+lesson_id: lesson_{ID}
+title: "Название урока (ru)"
+target_episodes: []  # номера эпизодов из grid
+
+# Замена персонажей (для всего урока)
+character_map:
+  - from: "Generic-персонаж"
+    to: "Наш персонаж"
+    rationale: "почему именно этот"
+
+# Блоки (по структуре брифа)
+blocks:
+
+  - id: "{ID}.1"
+    title: "Название блока"
+
+    stories:
+      - original: "Описание истории из урока"
+        action: keep        # keep | adapt | replace
+        mapped: "Как выглядит в мире Марко"
+
+    practice:
+      warmup:                # 2-3 generic для разогрева
+        - quiz: "Формулировка"
+          type: generic      # generic | story | plot
+          answer: "ответ"
+          original_step: "sc.step"
+
+      middle:                # 4-6 из жизни Марко
+        - quiz: "Формулировка"
+          type: story
+          answer: "ответ"
+          replaces: "sc.step"
+          rationale: "почему"
+
+      finale:                # 3-5 провокационных сюжетных
+        - quiz: "Формулировка"
+          type: plot
+          answer: "ответ"
+          replaces: "sc.step"
+          rationale: "почему"
+          spoiler_check: "нет/да — обоснование"

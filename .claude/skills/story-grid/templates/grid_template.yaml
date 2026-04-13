@@ -1,0 +1,31 @@
+# STORY GRID
+# Грубая сетка: блоки уроков → дни → сюжет
+# Сгенерирован на основе briefs/*.yaml + source/
+
+max_per_day: 4
+total_blocks_raw: 0     # до объединений
+total_blocks_merged: 0  # после объединений
+total_episodes: 0
+
+days:
+
+  - day: 1
+    lessons: ["1A", "1B"]
+    story_arc: "Акт I: Пробуждение"
+    story_summary: "Краткое описание сюжетной линии дня"
+    source_episodes: [1, 2]  # какие эпизоды source покрывает
+    episodes:
+      - ep: 1
+        blocks: ["1A.1"]
+        story_beat: "Одно предложение — что происходит"
+        terms: ["факт", "мнение"]
+        votes: 15
+      - ep: 2
+        blocks: ["1A.2"]
+        story_beat: "Одно предложение"
+        terms: ["неправда"]
+        votes: 34
+
+merge_log:
+  - merged: ["X.2", "X.3"]
+    reason: "Обоснование объединения"
