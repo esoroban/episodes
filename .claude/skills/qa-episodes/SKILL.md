@@ -1,135 +1,100 @@
 ---
 name: qa-episodes
 description: |
-  Валидирует выходы episode-plan и episode-map: порядок терминов,
-  корректность ответов, спойлер-чек, полнота квизов. Вердикт PASS/FAIL.
-  Триггеры: «проверь эпизоды», «qa эпизодов», «qa-episodes».
-  Аргумент: «plan» (проверяет episode plans), «map» (проверяет episode maps),
-  «all» (оба), номер дня (например «plan day 1»). Без аргумента — all.
+  Validates episode-plan and episode-map outputs: term order, answer correctness,
+  spoiler check, quiz completeness. Returns PASS/FAIL verdict.
+  Triggers: "check episodes", "qa episodes", "qa-episodes".
+  Argument: "plan" (checks episode plans), "map" (checks episode maps),
+  "all" (both), day number (e.g., "plan day 1"). Without argument — all.
 ---
 
-# QA Episodes — валидация эпизодов (gate между шагами 2→3 и 3→4)
+# QA Episodes — Episode Validation (Gate between Steps)
 
-Ты — **отдельный агент-проверщик**. Ты НЕ создавал проверяемые файлы.
-Твоя задача — найти ошибки, которые генератор пропустил.
+You are a **separate validation agent**. You did NOT create the files being checked.
+Your job is to find errors the generator missed.
 
-Это gate:
-- Между шагом 2 (episode-plan) и шагом 3 (episode-map): **qa-episodes plan**
-- Между шагом 3 (episode-map) и шагом 4 (writing): **qa-episodes map**
+This is a gate:
+- Between step 2 (episode-plan) and step 3 (episode-map): **qa-episodes plan**
+- Between step 3 (episode-map) and step 4 (writing): **qa-episodes map**
 
-Без PASS нельзя переходить к следующему шагу.
+Without PASS, the pipeline cannot advance.
 
-## Вход
+## Language
 
-Для проверки **episode plans**:
-- `pipeline/episodes/day_*.yaml` — планы эпизодов
-- `pipeline/grid.yaml` — эталон: terms, votes, blocks
-- `pipeline/briefs/*.yaml` — эталон: practice_summary, votes
+All instructions in this file are in English.
+All generated output (verdicts, reports, tables) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-Для проверки **episode maps**:
-- `pipeline/mapped/ep_*.yaml` — замапленные эпизоды
-- `pipeline/episodes/day_*.yaml` — эталон: структура
-- `pipeline/briefs/*.yaml` — эталон: оригинальные квизы
-- `lessons_ru/*.yaml` — эталон: оригинальные тексты (read-only)
+## Input
 
-## Три проверки
+For **episode plans**:
+- `pipeline/episodes/day_*.yaml` — episode plans
+- `pipeline/grid.yaml` — reference: terms, votes, blocks
+- `pipeline/briefs/*.yaml` — reference: practice_summary, votes
 
-### Проверка 1: Порядок терминов (КРИТИЧЕСКАЯ)
+For **episode maps**:
+- `pipeline/mapped/ep_*.yaml` — mapped episodes
+- `pipeline/episodes/day_*.yaml` — reference: structure
+- `pipeline/briefs/*.yaml` — reference: original quizzes
+- `lessons_ru/*.yaml` — reference: original texts (read-only)
 
-**Алгоритм:**
+## Three checks
 
-1. Для каждого дня из grid.yaml построить кумулятивный terms_available:
-   ```
-   ep.1: terms_available = terms_introduced[ep.1]
-   ep.2: terms_available = terms[ep.1] + terms[ep.2]
-   ep.3: terms_available = terms[ep.1] + terms[ep.2] + terms[ep.3]
-   ep.4: terms_available = terms[ep.1..3] + terms[ep.4]
-   ```
-   Плюс ВСЕ terms_introduced из предыдущих дней.
+### Check 1: Term order (CRITICAL)
 
-2. Для каждого эпизода проверить:
+1. For each day, build cumulative terms_available from grid.yaml
+2. For each episode, verify:
+   - **In episode plans:** quiz descriptions, Sofa's Rule, triggers — no future terms?
+   - **In episode maps:** each quiz options[] — only from terms_available? Explanations — no future term references?
+3. Result: PASS or list of violations (file, episode, field, offending term, when introduced)
 
-   **В episode plan:**
-   - sofa_block.quizzes.description — нет ли упоминания будущего термина?
-   - challenge.quizzes.description — то же
-   - sofa_block.rule — использует только доступные термины?
-   - sofa_block.trigger — не называет будущий приём?
+### Check 2: Content correctness (CRITICAL)
 
-   **В episode map:**
-   - Каждый квиз: options[] — только из terms_available?
-   - Каждый квиз: explanation — не ссылается на будущий термин?
-   - theory_delivery — не называет будущий приём?
+**For episode plans:** check each quiz description — answer unambiguously correct?
 
-3. Результат: PASS или список нарушений с точным указанием
-   (файл, эпизод, поле, термин-нарушитель, когда введён).
+**For episode maps (stricter):** check EACH quiz:
+1. **Answer correctness:**
+   - Fact = verifiable with specific tool AND confirmed
+   - Opinion = CANNOT verify (no instrument, subjective assessment)
+   - Falsehood = verifiable AND NOT confirmed
+   - Subjective assessments (boring, beautiful, best, overtired) = ALWAYS opinion
+   - If disputable → FAIL
 
-### Проверка 2: Корректность контента (КРИТИЧЕСКАЯ)
+2. **Explanation correctness:** logically follows from definition? No false claims?
 
-**Для episode plans:**
+3. **Binary check:** if terms_available = only [fact, opinion] → quizzes must be binary (two options)
 
-Проверить каждое описание квиза:
-- Ответ однозначно правильный по определениям урока?
-- Нет ли «натяжек» (субъективная оценка выдана за факт)?
+**Common errors checklist:**
+- "You're overtired" — opinion, NOT fact (no tired-o-meter)
+- "Dogs are better than cats" — opinion (no better-o-meter)
+- "The movie is funny" — opinion (everyone's different)
+- "All kids love sweets" — falsehood (verifiable, has exceptions)
+- "Water boils at 100°" — fact (thermometer)
+- "There are 24 hours in a day" — fact (clock)
 
-**Для episode maps (более строгая):**
+### Check 3: Spoiler check
 
-Проверить КАЖДЫЙ квиз из mapped файла:
-1. **Правильность ответа:**
-   - Факт = можно проверить конкретным инструментом И подтверждается
-   - Мнение = НЕЛЬЗЯ проверить (нет инструмента, субъективная оценка)
-   - Неправда = можно проверить И НЕ подтверждается
-   - Субъективные оценки (скучный, красивый, лучший, переутомился) = ВСЕГДА мнение
-   - Если ответ можно оспорить — FAIL
+For each plot quiz (type: story or plot):
+1. Does it reveal a future plot twist?
+2. Does it break a character before the plot does?
+3. Does it show info Marko doesn't know yet?
 
-2. **Корректность explanation:**
-   - Объяснение логично следует из определения?
-   - Не содержит ложных утверждений?
-   - Не ссылается на несуществующий «инструмент проверки»?
+**Key spoiler boundaries by day:**
 
-3. **Бинарность:**
-   - Если terms_available = только [факт, мнение] → квизы БИНАРНЫЕ (два варианта)
-   - Если terms_available включает [неправда] → можно три варианта
-   - Число вариантов ответа соответствует доступным терминам
+| Twist | Revealed | Before that — forbidden |
+|-------|----------|------------------------|
+| Lina's grey thread | Day 3 (ep.10) | Calling Lina an agent |
+| Leon's erasure | Day 3 (ep.12) | Talking about erasures |
+| Vera extracts info | Day 3 (ep.12) | Calling Vera a manipulator |
+| Sofia — prisoner or co-author? | Day 4 (ep.16) | Giving the answer |
+| Mom knew | Day 5 (ep.19-20) | Revealing Mom's choice |
+| Max's erasure | Day 6 (ep.24) | Talking about Max's death |
+| Vera — Voice's daughter | Day 7 (ep.28) | Linking Vera to Voice |
+| Lina's betrayal | Day 9 (ep.35) | Calling Lina a double agent |
+| Lina — Sofia's agent | Day 9 (ep.36) | Revealing the "S" scar |
+| Sofia + Voice co-authors | Day 12 (ep.45) | Revealing the conspiracy |
 
-**Типичные ошибки (чеклист):**
-- [ ] «Ты переутомился» — мнение, НЕ факт (нет переутомлемера)
-- [ ] «Собаки лучше кошек» — мнение (нет лучшемера)
-- [ ] «Фильм смешной» — мнение (у каждого своё)
-- [ ] «Все дети любят сладкое» — неправда (можно проверить, есть исключения)
-- [ ] «Математика скучная» — мнение (нет скучномера)
-- [ ] «Вода кипит при 100°» — факт (термометр)
-- [ ] «В сутках 24 часа» — факт (часы)
-- [ ] «Моя мама самая красивая» — мнение (нет красивомера)
-- [ ] «Мой папа самый сильный» — если буквально, проверяемо → зависит от контекста
-
-### Проверка 3: Спойлер-чек
-
-Для каждого сюжетного квиза (type: story или plot):
-1. Не раскрывает ли он будущий поворот сюжета?
-   - Предательство Лины — раскрывается в source ep.23 (День 9)
-   - Вера — дочь Голоса — раскрывается в source ep.18 (День 7)
-   - София — соавтор Голоса — раскрывается в source ep.31 (День 12)
-2. Не ломает ли персонажа раньше сюжета?
-   - Лина не должна выглядеть ненадёжной до Дня 9
-   - Вера не должна выглядеть злой до Дня 7
-3. Не показывает ли информацию, которую Марко ещё не знает?
-
-**Ключевые спойлеры по дням:**
-
-| Поворот | Раскрывается | До этого — нельзя |
-|---------|-------------|-------------------|
-| Серая нитка Лины | День 3 (ep.10) | Называть Лину агентом |
-| Стирание Леона | День 3 (ep.12) | Говорить о стираниях |
-| Вера вытягивает информацию | День 3 (ep.12) | Называть Веру манипулятором |
-| София — пленница или соавтор? | День 4 (ep.16) | Давать ответ |
-| Мама знала | День 5 (ep.19-20) | Раскрывать выбор мамы |
-| Стирание Макса | День 6 (ep.24) | Говорить о смерти Макса |
-| Вера — дочь Голоса | День 7 (ep.28) | Связывать Веру с Голосом |
-| Предательство Лины | День 9 (ep.35) | Называть Лину двойным агентом |
-| Лина — агент Софии | День 9 (ep.36) | Раскрывать шрам «С» |
-| София + Голос соавторы | День 12 (ep.45) | Раскрывать сговор |
-
-## Формат вывода
+## Output format
 
 ```
 QA EPISODES — РЕЗУЛЬТАТ ({plan|map})
@@ -158,20 +123,20 @@ QA EPISODES — РЕЗУЛЬТАТ ({plan|map})
          FAIL — {список что исправить}
 ```
 
-## При FAIL
+## On FAIL
 
-Для каждой ошибки:
-- Точное местоположение (файл, эпизод, квиз)
-- Тип ошибки (term_order / content / spoiler)
-- Описание проблемы
-- Предложение исправления
-- Ссылка на определение из урока (для content errors)
+For each error:
+- Exact location (file, episode, quiz)
+- Error type (term_order / content / spoiler)
+- Problem description
+- Suggested fix
+- Reference to lesson definition (for content errors)
 
-НЕ исправлять автоматически — только показать и предложить.
+DO NOT fix automatically — only report and suggest.
 
-## Ограничения
+## Constraints
 
-- НЕ редактировать проверяемые файлы
-- НЕ редактировать source, briefs, YAML-уроки
-- Только проверять и выдавать вердикт
-- При сомнениях — FAIL с пометкой «нужно решение автора»
+- DO NOT edit the files being checked
+- DO NOT edit source, briefs, YAML lessons
+- Only check and return verdict
+- When in doubt — FAIL with note "needs author decision"

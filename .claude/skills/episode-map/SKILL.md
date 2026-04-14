@@ -1,135 +1,107 @@
 ---
 name: episode-map
 description: |
-  Пересаживает generic-квизы и теорию из брифов в сюжетный контекст эпизода.
-  Работает с episode plan + briefs + source. Выход — mapped-эпизод, готовый к writing.
-  Триггеры: «пересади эпизод», «episode map», «маппинг эпизода 1».
-  Аргумент: номер эпизода (1–50) или «day N» (все эпизоды дня).
-  Без аргумента — спросить какой эпизод.
+  Transplants generic quizzes and theory from briefs into the episode's plot context.
+  Works with episode plan + briefs + source. Output — a mapped episode ready for writing.
+  Triggers: "transplant episode", "episode map", "episode mapping 1".
+  Argument: episode number (1–50) or "day N" (all episodes of a day).
+  Without argument — asks which episode.
 ---
 
-# Episode Map — пересадка квизов и теории в сюжет (шаг 3)
+# Episode Map — Transplanting Quizzes and Theory into the Plot (Step 3)
 
-Ты пересаживаешь содержание урока (generic-примеры, квизы, теорию) в конкретный
-сюжетный контекст эпизода. На входе — абстрактный урок + структура эпизода.
-На выходе — эпизод с квизами и теорией, привязанными к сюжету, готовый к writing.
+You transplant lesson content (generic examples, quizzes, theory) into the specific
+plot context of an episode. Input — abstract lesson + episode structure.
+Output — episode with quizzes and theory tied to the plot, ready for writing.
 
-## Чем отличается от lesson-map
+## Language
 
-| | lesson-map (старый) | episode-map (этот) |
+All instructions in this file are in English.
+All generated output (mapped episodes, quizzes, theory) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
+
+## How it differs from lesson-map
+
+| | lesson-map | episode-map (this one) |
 |---|---|---|
-| Единица | Урок целиком (1A) | Один эпизод (ep.1) |
-| Контекст | Общий сюжет source | Конкретная драма из episode plan |
-| Квизы | Разминка/середина/финал | Софа-блок / испытание (из episode plan) |
-| Знает | Какой урок | Какая сцена, кто в ней, какой конфликт |
+| Unit | Entire lesson (1A) | One episode (ep.1) |
+| Context | General source plot | Specific drama from episode plan |
+| Quizzes | Warmup/middle/finale | Sofa block / challenge |
+| Knows | Which lesson | Which scene, who's in it, what conflict |
 
-## Вход
+## Input
 
-- Episode plan дня: `pipeline/episodes/day_{NN}.yaml` (конкретный эпизод)
-- Бриф урока: `pipeline/briefs/brief_{ID}.yaml` (для блоков этого эпизода)
-- YAML урока: `lessons_ru/lesson_{ID}.yaml` (read-only, только ru-ключи, тексты квизов)
-- Сюжет: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only, source_episodes эпизода)
+- Episode plan: `pipeline/episodes/day_{NN}.yaml` (specific episode)
+- Lesson brief: `pipeline/briefs/brief_{ID}.yaml` (for this episode's blocks)
+- YAML lesson: `lessons_ru/lesson_{ID}.yaml` (read-only, only ru keys)
+- Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
 - Grid: `pipeline/grid.yaml` (terms, story_beat)
-- Стиль: `pipeline/style_profile.yaml`
+- Style: `pipeline/style_profile.yaml`
 
-## Выход
+## Output
 
-- `pipeline/mapped/ep_{NNN}.yaml` (NNN = 001..050, с ведущими нулями)
+- `pipeline/mapped/ep_{NNN}.yaml` (NNN = 001..050, with leading zeros)
 
-## Алгоритм
+## Algorithm
 
-### Фаза 1: Explore
+### Phase 1: Explore
 
-1. Прочитай эпизод из episode plan (drama, sofa_block, challenge, cliffhanger)
-2. Прочитай блоки этого эпизода из брифа (key_material, practice_summary, summary)
-3. Прочитай оригинальные тексты квизов из YAML урока (ru-ключи)
-4. Прочитай source episodes для контекста сцен
-5. Выпиши:
-   - Все generic-квизы из брифа с оригинальными формулировками
-   - Все generic-истории и примеры из брифа
-   - Контекст драмы: кто, где, какой конфликт, какой gut feeling
-   - terms_available на этот момент (кумулятивно)
+1. Read the episode from episode plan (drama, sofa_block, challenge, cliffhanger)
+2. Read this episode's blocks from the brief
+3. Read original quiz texts from the YAML lesson (ru keys)
+4. Read source episodes for scene context
+5. Note: all generic quizzes, stories, drama context, terms_available (cumulative)
 
-### Фаза 2: Plan
+### Phase 2: Plan
 
-Для каждого квиза из episode plan решить: **оставить generic или пересадить в сюжет**.
+For each quiz, decide: **keep generic or transplant into the plot**.
 
-**Софа-блок (теория + первичная практика):**
+**Sofa block (theory + primary practice, ~40% of quizzes):**
+- How Sofa introduces the term through a scene moment
+- First 2–3 quizzes: can be generic (warmup)
+- Rest: transplant into current scene context
+- Wordings tied to what Marko SEES and HEARS
 
-Теория:
-- КАК Софа вводит термин? Через какой момент из драмы?
-- Generic-история из урока (Витя и камень, Дмитрик и забег) → пересаживается
-  в сюжет или остаётся как аналогия Софы?
-- Правило: если generic-история хорошо иллюстрирует понятие — можно оставить
-  как «пример из жизни», который Софа рассказывает. Но ОСНОВНАЯ иллюстрация
-  должна быть из текущей сцены.
+**Challenge (application in plot, ~60% of quizzes):**
+- ALL plot-based — tied to character actions
+- Use character names, plot situations
+- Provocative: tied to cliffhanger or inter-episode intrigue
 
-Квизы софа-блока (~40%):
-- Первые 2-3: могут быть generic (разминка, знакомство с термином)
-- Остальные: пересаживаем в контекст текущей сцены
-- Формулировки привязаны к тому, что Марко ВИДИТ и СЛЫШИТ в драме
+**Character replacement:**
+- Generic children → plot characters, matched by role
+- Do not overload one character
+- Antagonists (Ray, Voice) — only if in this episode
+- Vera — "benign" context; Lina — don't reveal early; Max — honest roles
 
-**Испытание (применение в сюжете):**
+**Checks (CRITICAL, before showing to author):**
 
-Квизы испытания (~60%):
-- ВСЕ сюжетные — привязаны к действиям персонажей в этой сцене
-- Используют имена персонажей (Марко, Лина, Вера, Макс...)
-- Ситуации из drama/challenge episode plan
-- Провокационные: привязка к клиффхэнгеру или межэпизодной интриге
+1. **Term order:** quizzes use ONLY terms_available (cumulative)
+2. **Answer correctness:** every answer unambiguous per lesson definitions
+3. **Spoiler check:** plot quizzes don't spoil future twists
 
-**Замена персонажей:**
-- Generic дети из урока → персонажи сюжета
-- Правила (из decision_log):
-  - Не нагружать одного персонажа чрезмерно
-  - Антагонисты (Рей, Голос) — только если они в этом эпизоде
-  - Вера — в «добром» ключе (пока ребёнок верит ей)
-  - Лина — осторожно, не раскрывать раньше сюжета
-  - Макс — честные, простые роли
-  - Безымянные одноклассники — для проходных ролей
+**Show the author:**
+1. Table: quiz / type / original → mapping / answer
+2. How Sofa introduces each term
+3. Controversial replacements + questions
 
-**Проверки (КРИТИЧЕСКИЕ, перед показом автору):**
+**STOP. Wait for approval.**
 
-1. Порядок терминов:
-   - Квизы используют ТОЛЬКО terms_available (кумулятивно)
-   - Варианты ответа — только из доступных терминов
-   - Если эпизод бинарный (факт/мнение) — квизы бинарные
+### Phase 3: Write
 
-2. Корректность ответов:
-   - Каждый ответ однозначно правильный по определениям урока
-   - Нет пограничных случаев, которые ребёнок может оспорить
-   - Субъективные оценки = ВСЕГДА мнение (нет «скучномера»)
+After approval — write `pipeline/mapped/ep_{NNN}.yaml` using the template.
 
-3. Спойлер-чек:
-   - Сюжетные квизы не спойлерят будущие повороты
-   - Персонажи не раскрыты раньше сюжета
-   - Лина не выглядит ненадёжной до нужного момента
+## Parallel run
 
-**Показать автору:**
-1. Таблица: квиз / тип (generic/story/plot) / оригинал → маппинг / ответ
-2. Как Софа вводит каждый термин (через какую сцену)
-3. Спорные замены + вопросы
+With argument `day N`:
+- Episodes within a day are sequential (terms_available is cumulative)
+- Days are independent — can parallelize across days
 
-**СТОП. Жди утверждения.**
+## Constraints
 
-### Фаза 3: Write
-
-После утверждения — записать `pipeline/mapped/ep_{NNN}.yaml`.
-
-## Параллельный запуск
-
-При аргументе `day N`:
-1. Прочитать episode plan дня
-2. Для каждого эпизода дня — запустить маппинг
-3. Эпизоды дня зависимы (terms_available кумулятивен) — последовательно внутри дня
-4. Но ДНИ независимы — можно параллелить по дням
-
-## Ограничения
-
-- НЕ редактировать source/, briefs/, YAML-уроки, episode plans
-- НЕ менять структуру эпизода (drama/sofa/challenge/cliffhanger из episode plan)
-- НЕ менять определения терминов и теорию из урока
-- НЕ придумывать сюжетные события, которых нет в source
-- Можно менять формулировки квизов (generic → сюжетные)
-- Можно менять порядок квизов внутри софа-блока и испытания
-- Можно добавлять сюжетные квизы (помечать type: added)
-- Имена кириллицей: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос
+- DO NOT edit source/, briefs/, YAML lessons, episode plans
+- DO NOT change episode structure (drama/sofa/challenge/cliffhanger)
+- DO NOT change term definitions or theory
+- DO NOT invent plot events not in source
+- CAN change quiz wordings (generic → plot-based)
+- CAN change quiz order within sofa block and challenge
+- CAN add plot quizzes (mark type: added)

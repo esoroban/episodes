@@ -1,119 +1,92 @@
 ---
 name: lesson-brief
 description: |
-  Создаёт бриф урока: читает YAML урока, разбивает на теоретические блоки,
-  даёт текстовое резюме каждому блоку, записывает в pipeline/briefs/.
-  Триггеры: «сделай бриф урока», «разбей урок», «lesson brief», «бриф 1A».
-  Аргумент: ID урока (например, 1A, 5B, 12A). Без аргумента — спросить какой урок.
+  Creates a lesson brief: reads the YAML lesson, splits it into theory blocks,
+  writes a text summary for each block to pipeline/briefs/.
+  Triggers: "create lesson brief", "split lesson", "lesson brief", "brief 1A".
+  Argument: lesson ID (e.g., 1A, 5B, 12A). Without argument — asks which lesson.
 ---
 
-# Lesson Brief — разбиение урока на блоки для эпизодов
+# Lesson Brief — Splitting a Lesson into Blocks for Episodes
 
-Ты создаёшь бриф урока — промежуточный документ между YAML-уроком и эпизодными брифами.
-Бриф разбивает урок на логические блоки. Каждый блок станет основой одного эпизода.
+You create a lesson brief — an intermediate document between a YAML lesson and episode plans.
+The brief splits the lesson into logical blocks. Each block becomes the basis for one episode.
 
-## Вход
+## Language
 
-- YAML урока: `lessons_ru/lesson_{ID}.yaml` (read-only, не редактировать)
-- Аргумент: ID урока (1A, 1B, 2A ... 13A)
+All instructions in this file are in English.
+All generated output (briefs, summaries) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Выход
+## Input
 
-- Файл: `pipeline/briefs/brief_{ID}.yaml`
+- YAML lesson: `lessons_ru/lesson_{ID}.yaml` (read-only, do not edit)
+- Argument: lesson ID (1A, 1B, 2A ... 13A)
 
-## Правило разбиения на блоки
+## Output
 
-**Единица разбиения — теоретический блок.**
+- File: `pipeline/briefs/brief_{ID}.yaml`
 
-Теоретический блок = сцена (или группа сцен), которая вводит НОВОЕ понятие,
-термин или инструмент, плюс практика, которая это понятие закрепляет.
+## Block Splitting Rule
 
-### Алгоритм
+**Unit of splitting — theory block.**
 
-1. Читай YAML урока сцена за сценой (только `ru`-ключи)
-2. Каждый раз, когда появляется **новое понятие** — это начало нового блока
-3. Всё, что идёт после (практика, примеры, голосования) — часть этого блока,
-   пока не начнётся следующее понятие
-4. Вводные сцены (разминка, история-зацепка) — прикрепляются к первому блоку
-5. Завершающие сцены (синтез, финальная проверка, закрытие) — прикрепляются к последнему блоку
+A theory block = a scene (or group of scenes) that introduces a NEW concept,
+term, or tool, plus the practice that reinforces it.
 
-### Что считать новым понятием
+### Algorithm
 
-- Новый термин с определением (факт, мнение, неправда, причина, обобщение...)
-- Новый инструмент или приём (светофор повторений, вопрос-детектор, дерево спора...)
-- Новый тип/вид чего-то (вид запугивания, вид нападения, вид вопроса...)
+1. Read the YAML lesson scene by scene (only `ru` keys)
+2. Every time a **new concept** appears — that starts a new block
+3. Everything after (practice, examples, votes) belongs to this block
+   until the next concept begins
+4. Introductory scenes (warm-up, hook story) — attach to the first block
+5. Closing scenes (synthesis, final check, wrap-up) — attach to the last block
 
-### Что НЕ считать новым понятием
+### What counts as a new concept
 
-- Практику (голосования, кейсы) — это часть предыдущего блока
-- Повторение/разминку по прошлым урокам — прикрепляется к первому блоку
-- Историю-зацепку без нового термина — прикрепляется к ��ервому блоку
+- A new term with a definition (fact, opinion, falsehood, cause, generalization...)
+- A new tool or technique (repetition stoplight, detective question, argument tree...)
+- A new type/kind (type of intimidation, type of attack, type of question...)
 
-### Исключение: неразрывные пары
+### What does NOT count as a new concept
 
-Если два понятия образуют неразрывную пару (одно без другого не имеет смысла),
-они идут в один блок. Пример: факт + мнение в уроке 1A — это контрастная пара,
-которая вводится вместе.
+- Practice (votes, cases) — part of the previous block
+- Review/warm-up from past lessons — attach to the first block
+- A hook story without a new term — attach to the first block
 
-Признак неразрывной пары: определение одного понятия СОДЕРЖИТ другое
-(«мнение — это то, что НЕ факт»).
+### Exception: inseparable pairs
 
-### Сколько получится — столько и получится
+If two concepts form an inseparable pair (one without the other makes no sense),
+they go into one block. Example: fact + opinion in lesson 1A — a contrastive pair
+introduced together.
 
-Не подгоняй количество блоков под какое-то число.
-Один урок может дать 2, 3 или 4 блока — как идёт, так и идёт.
+Sign of an inseparable pair: one concept's definition CONTAINS the other
+("opinion is something that is NOT a fact").
 
-## Формат выходного файла
+### However many you get — that's how many it is
 
-```yaml
-# LESSON BRIEF — lesson_{ID}
-# Сгенерирован из lessons_ru/lesson_{ID}.yaml
+Do not force the block count to any specific number.
+One lesson may yield 2, 3, or 4 blocks — however it goes.
 
-lesson_id: lesson_{ID}
-title: "Название урока (ru)"
+## Output file format
 
-# Какие термины вводит этот урок (все блоки суммарно)
-terms_introduced:
-  - term: "название"
-    definition: "определение из урока"
+Uses the template from `templates/brief_template.yaml`.
 
-# Блоки (каждый блок = один будущий эпизод)
-blocks:
+## Procedure
 
-  - id: "{ID}.1"
-    title: "Краткое название блока"
-    scenes: [sc1, sc2, sc3]        # какие сцены YAML входят
-    terms_introduced: ["факт"]      # что вводит этот блок ([] если ничего)
-    terms_used: ["мнение"]          # из предыдущих блоков/уроков
-    votes: 5                        # количество vote-шагов в этих сценах
-    summary: >
-      2-4 предложения: что происходит в этом блоке.
-      Какое поняти�� вводится, через какую ситуацию/историю,
-      что ребёнок понимает к концу блока.
-    key_material:
-      - "Конкретная история или пример из урока"
-      - "Ключевая фраза или определение"
-      - "Важный кейс из практики"
-    practice_summary: >
-      Что проверяется в голосованиях этого блока.
-      Какие типы вопросов, на что направлены.
-```
+1. Read the entire YAML lesson (only ru keys)
+2. List all scenes with their titles
+3. Count vote steps in each scene
+4. Identify where new concepts are introduced — these are block boundaries
+5. Group scenes into blocks per the rules above
+6. For each block, write summary and key_material
+7. Write the result to `pipeline/briefs/brief_{ID}.yaml`
+8. Show the user a brief summary: how many blocks, what terms in each
 
-## Процедура
+## Constraints
 
-1. Прочитай YAML урока целиком (только ru-ключи)
-2. Выпиши все сцены с названиями
-3. Посчитай vote-шаги в каждой сцене
-4. Определи, где вводятся новые понятия — это границы блоков
-5. Сгруппируй сцены в блоки по правилам выше
-6. Для каждого блока напиши summary и key_material
-7. Запиши результат в `pipeline/briefs/brief_{ID}.yaml`
-8. Покажи пользователю краткую сводку: сколько блоков, какие термины в каждом
-
-## Ограничения
-
-- НЕ редактировать YAML урока (read-only)
-- НЕ придумывать теорию, которой нет в YAML
-- НЕ пропускать практику — каждый vote должен попасть в какой-то блок
-- Из YAML брать ТОЛЬКО ru-ключи
-- Имена кириллицей: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос
+- DO NOT edit the YAML lesson (read-only)
+- DO NOT invent theory not present in the YAML
+- DO NOT skip practice — every vote must belong to a block
+- From YAML, take ONLY ru keys

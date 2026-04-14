@@ -1,190 +1,129 @@
 ---
 name: episode-plan
 description: |
-  Создаёт детальный план эпизодов для ОДНОГО дня: сцены, квизы, story beats,
-  расстановка терминов. Работает с grid.yaml + брифами + source.
-  Триггеры: «план эпизодов», «episode plan», «планы дня 3», «episode-plan».
-  Аргумент: номер дня (1–13) или «all» (запуск по всем дням параллельно).
-  Без аргумента — спросить какой день.
+  Creates a detailed episode plan for ONE day: scenes, quizzes, story beats,
+  term placement. Works with grid.yaml + briefs + source.
+  Triggers: "episode plan", "plan day 3", "episode-plan".
+  Argument: day number (1–13) or "all" (parallel run for all days).
+  Without argument — asks which day.
 ---
 
-# Episode Plan — детальный план эпизодов (шаг 2)
+# Episode Plan — Detailed Episode Plan (Step 2)
 
-Ты создаёшь детальный план эпизодов для одного дня.
-Это Проход 2 двухпроходного маппинга (грубый grid → детальный plan).
+You create a detailed episode plan for one day.
+This is Pass 2 of the two-pass mapping (rough grid → detailed plan).
 
-Grid дал: какие блоки в каком дне, с каким куском сюжета.
-Episode Plan даёт: что конкретно происходит в каждом эпизоде — сцена за сценой.
+Grid provided: which blocks in which day, with which plot segment.
+Episode Plan provides: what specifically happens in each episode — scene by scene.
 
-## Вход
+## Language
 
-- `pipeline/grid.yaml` — грубая сетка (читаем ТОЛЬКО свой день)
-- Брифы дня: `pipeline/briefs/brief_{lesson_id}.yaml` (для каждого урока дня)
-- Сюжет: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only, читаем ТОЛЬКО source_episodes дня)
-- Стиль: `pipeline/style_profile.yaml` (если существует)
-- Аргумент: номер дня (1–13)
+All instructions in this file are in English.
+All generated output (plans, quizzes, story beats) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Выход
+## Input
 
-- `pipeline/episodes/day_{NN}.yaml` (NN = 01..13, с ведущим нулём)
+- `pipeline/grid.yaml` — rough grid (read ONLY your day)
+- Day's briefs: `pipeline/briefs/brief_{lesson_id}.yaml`
+- Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only, ONLY source_episodes for this day)
+- Style: `pipeline/style_profile.yaml` (if exists)
+- Argument: day number (1–13)
 
-## Алгоритм
+## Output
 
-### Фаза 1: Explore
+- `pipeline/episodes/day_{NN}.yaml` (NN = 01..13, with leading zero)
 
-1. Прочитай из grid.yaml секцию своего дня:
-   - episodes (блоки, terms, votes, story_beat)
-   - source_episodes
-   - story_arc, story_summary
-2. Прочитай брифы всех уроков дня (key_material, practice_summary, summary)
-3. Прочитай из source ТОЛЬКО эпизоды, указанные в source_episodes
-4. Выпиши ключевые данные:
-   - Сколько эпизодов в дне
-   - Какие термины вводятся (порядок!)
-   - Какие story beats
-   - Какие квизы есть в брифах (votes, practice_summary)
-   - Какие драматические события в source
+## Algorithm
 
-### Фаза 2: Plan
+### Phase 1: Explore
 
-Для каждого эпизода дня составь план из трёх частей:
+1. Read your day's section from grid.yaml
+2. Read briefs for all lessons of the day
+3. Read from source ONLY the episodes in source_episodes
+4. Note: episode count, terms (order matters!), story beats, quizzes, dramatic events
 
-**ДРАМА (3–4 мин)**
-- Что происходит в сюжете (из story_beat + source)
-- Какие персонажи участвуют
-- Где и когда (локация, обстоятельства)
-- Какой конфликт / напряжение
-- GUT FEELING HINT: что Марко чувствует телом до того, как Софа назовёт приём
-- Как урок возникает ЕСТЕСТВЕННО из ситуации (не лекция, а ситуация)
+### Phase 2: Plan
 
-**СОФА-БЛОК (4–5 мин)**
-- Какой термин вводится (из terms)
-- Через какую ситуацию из драмы Софа подсвечивает понятие
-- Квизы: сколько, какие (из practice_summary брифа)
-- Правило Софы: 1–2 предложения, как пословица (формулируется ПОСЛЕ квизов)
-- Вопрос «из жизни»: один бытовой пример для закрепления
+For each episode, compose a plan with four parts:
 
-**ИСПЫТАНИЕ (5–6 мин)**
-- Драматический вызов, где термин проверяется в действии
-- Квизы в контексте сюжета (из practice_summary)
-- Как Марко (не) справляется (учитывая его изъян — соглашатель)
-- Роль Веры / Рея / Голоса (если есть в этом дне)
+**DRAMA (3–4 min):**
+Plot events, characters, location, conflict, gut feeling hint,
+how the lesson arises NATURALLY from the situation
 
-**КЛИФФХЭНГЕР (1–2 мин)**
-- Твист, must-watch-next
-- Связка к следующему эпизоду
+**SOFA BLOCK (4–5 min):**
+Term introduced, trigger from drama, quizzes (count and type),
+Sofa's Rule (1–2 sentences, like a proverb, formulated AFTER quizzes),
+one "real life" question
 
-### Распределение квизов
+**CHALLENGE (5–6 min):**
+Dramatic test where the term is applied, plot-context quizzes,
+how Marko copes (considering his flaw — people-pleaser),
+roles of Vera / Ray / Voice if present
 
-Из брифа берём votes для каждого блока. Распределяем:
-- СОФА-БЛОК: ~40% квизов (теория + первичная практика)
-- ИСПЫТАНИЕ: ~60% квизов (применение в сюжете)
-- Минимум 10 квизов на эпизод, максимум 15
-- Если в блоке < 10 votes — добавить сюжетные квизы (помечаются как added)
-- Если в блоке > 15 votes — часть перенести в допрактику (помечаются как extra)
+**CLIFFHANGER (1–2 min):**
+Twist, must-watch-next, connection to next episode
 
-### Порядок терминов (КРИТИЧЕСКАЯ ПРОВЕРКА)
+### Quiz distribution
 
-Термин нельзя использовать ДО его введения. Это касается:
-- Вариантов ответа в квизах (нельзя предлагать «неправда» если термин ещё не введён)
-- Объяснений ответов (нельзя ссылаться на будущие термины)
-- Текста драмы и софа-блока (нельзя называть приём до введения)
-- Правила Софы (только термины, введённые в этом или предыдущих эпизодах)
+- SOFA BLOCK: ~40% of quizzes (theory + primary practice)
+- CHALLENGE: ~60% of quizzes (application in plot)
+- Minimum 10, maximum 15 per episode
+- If < 10 votes → add plot quizzes (marked as `added`)
+- If > 15 votes → move some to extra practice (marked as `extra`)
 
-**Алгоритм проверки (обязателен ПЕРЕД показом автору):**
+### Term order check (CRITICAL)
 
-1. Построй кумулятивный список доступных терминов:
-   - Эп.1: terms_available = terms_introduced эп.1
-   - Эп.2: terms_available = terms_introduced эп.1 + terms_introduced эп.2
-   - Эп.3: terms_available = эп.1 + эп.2 + эп.3
-   - Эп.4: terms_available = эп.1 + эп.2 + эп.3 + эп.4
-   - Плюс terms_used из предыдущих дней (уже введены раньше)
+A term cannot be used BEFORE it is introduced. This applies to:
+- Answer options in quizzes
+- Answer explanations
+- Drama and sofa block text
+- Sofa's Rule
 
-2. Для КАЖДОГО квиза в каждом эпизоде проверь:
-   - Варианты ответа — только из terms_available на этот момент
-   - Если квиз бинарный (факт/мнение) — НЕ добавляй третий вариант из будущего
-   - Объяснение — не ссылается на термины, которых ещё нет
+**Check algorithm (mandatory BEFORE showing to author):**
 
-3. Для текста драмы, софа-блока, правила Софы:
-   - Приём можно показать в ДЕЙСТВИИ (ситуация без названия)
-   - Но НАЗЫВАТЬ приём можно только после введения термина
+1. Build cumulative terms_available per episode
+2. For EACH quiz: verify options use only available terms
+3. For text: technique can be shown in ACTION but NAMED only after introduction
+4. If violation found: **STOP. Fix BEFORE showing to author.**
 
-4. Если нарушение найдено: **СТОП. Исправить ДО показа автору.**
-   Вывести: «НАРУШЕНИЕ: в эп.X используется термин Y, введённый только в эп.Z»
+### Content correctness check (CRITICAL)
 
-### Проверка корректности контента (КРИТИЧЕСКАЯ ПРОВЕРКА)
+Every quiz answer must be unambiguously correct per lesson definitions.
 
-Каждый квиз и каждое объяснение должны быть **однозначно правильными**
-по определениям из урока. Пограничные случаи — разрешать в пользу однозначности.
+Key rules:
+- Fact = can be verified with a specific tool AND confirmed
+- Opinion = CANNOT be verified (no instrument, subjective)
+- Falsehood = can be verified AND NOT confirmed
+- Subjective assessments (boring, beautiful, best) = ALWAYS opinion
 
-**Алгоритм (обязателен ПЕРЕД показом автору):**
+If error found: **STOP. Fix BEFORE showing to author.**
 
-1. Для каждого квиза проверь:
-   - Правильный ответ — действительно правильный по определению термина?
-   - Нет ли пограничных случаев, которые ребёнок 8-12 лет может оспорить?
-   - Объяснение — логически корректное, без натяжек?
+### Show the author (STOP)
 
-2. Проверь определения терминов по урокам:
-   - Факт = можно проверить И подтверждается
-   - Мнение = НЕЛЬЗЯ проверить (нет инструмента, нет «вкусомера»/«скучномера»)
-   - Неправда = можно проверить, но НЕ подтверждается
+1. Table: ep / blocks / terms / quizzes / story_beat
+2. Each episode plan in 3–5 lines
+3. Check results: term order PASS/FAIL, content correctness PASS/FAIL
+4. Questions on controversial points
 
-3. Типичные ошибки (проверить каждую!):
-   - «Ты переутомился» — НЕ факт и НЕ неправда, это мнение (нет «переутомлемера»)
-   - «Собаки лучше кошек» — мнение (нет «лучшемера»)
-   - «На Земле 8 континентов» — неправда (можно проверить — не подтверждается)
-   - «Фильм смешной» — мнение (у каждого своё)
-   - «Фильм идёт два часа» — факт (можно измерить часами)
-   - Субъективные оценки (скучный, красивый, лучший) = ВСЕГДА мнение
+**STOP. Wait for approval.**
 
-4. Проверка на «утечку» из будущих уроков:
-   - Некоторые примеры из YAML-урока являются ЛОВУШКАМИ для будущих тем
-   - «Если не съешь суп — заболеешь» — в уроке 1A это «неправда», но по сути
-     это МАНИПУЛЯЦИЯ СТРАХОМ (урок 8B) и СТРАШНАЯ ЦЕПОЧКА (урок 9A)
-   - Если пример требует инструмента из БУДУЩЕГО урока для правильного понимания —
-     НЕ использовать в текущем эпизоде. Перенести в тот день, где инструмент введён.
-   - Правило: если ответ «технически правильный, но грубое упрощение» — это утечка.
+### Phase 3: Write
 
-4. Для текста драмы и софа-блока:
-   - Софа не должна делать ошибок в классификации
-   - Если Софа говорит «это можно проверить» — проверь: КАКИМ инструментом?
-   - Если инструмента нет — это мнение, не факт
+After approval — write `pipeline/episodes/day_{NN}.yaml` using the template.
 
-5. Если найдена ошибка: **СТОП. Исправить ДО показа автору.**
+## Parallel run (all)
 
-### Показать автору (СТОП)
+With argument `all`:
+1. Read grid.yaml entirely
+2. For each day — launch a subagent via Agent tool
+3. Subagents work in parallel, results collected for author approval
 
-Вывести компактно:
-1. Таблица: эп / блоки / термины / квизы / story_beat
-2. Для каждого эпизода — план (драма / софа-блок / испытание / клиффхэнгер) в 3–5 строк
-3. Результат проверок: порядок терминов PASS/FAIL, корректность контента PASS/FAIL
-4. Вопросы по спорным местам
+## Constraints
 
-**СТОП. Жди утверждения.**
-
-### Фаза 3: Write
-
-После утверждения — записать `pipeline/episodes/day_{NN}.yaml` по шаблону.
-
-## Параллельный запуск (all)
-
-При аргументе `all`:
-1. Прочитать grid.yaml целиком
-2. Для каждого дня (1–13) — запустить субагента через Agent tool
-3. Каждый субагент получает:
-   - Номер дня
-   - Секцию grid.yaml для этого дня
-   - Пути к нужным брифам
-   - Диапазон source_episodes
-4. Субагенты работают параллельно
-5. Результаты собираются, показываются автору для утверждения
-
-## Ограничения
-
-- НЕ редактировать source/, briefs/, grid.yaml
-- НЕ менять порядок терминов из grid
-- НЕ придумывать сюжетные события, которых нет в source
-- НЕ добавлять теорию, которой нет в брифах
-- Можно расширять story_beat (добавлять детали из source)
-- Можно перераспределять квизы между софа-блоком и испытанием
-- Имена кириллицей: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос
+- DO NOT edit source/, briefs/, grid.yaml
+- DO NOT change term order from grid
+- DO NOT invent plot events not in source
+- DO NOT add theory not in briefs
+- CAN expand story_beat with source details
+- CAN redistribute quizzes between sofa block and challenge

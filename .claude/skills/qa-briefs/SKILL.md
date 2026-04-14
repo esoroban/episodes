@@ -1,80 +1,86 @@
 ---
 name: qa-briefs
 description: |
-  Запускает валидацию брифов уроков: сравнивает votes в YAML с votes в брифах,
-  находит блоки без терминов, проверяет пустые поля, выдаёт вердикт PASS/FAIL.
-  Триггеры: «проверь брифы», «qa брифов», «валидация брифов», «qa-briefs».
-  Без аргументов — проверяет все брифы. С аргументом — конкретный (например, qa-briefs 5A).
+  Validates lesson briefs: compares votes in YAML vs briefs, finds blocks
+  without terms, checks empty fields, returns PASS/FAIL verdict.
+  Triggers: "check briefs", "qa briefs", "brief validation", "qa-briefs".
+  Without arguments — checks all briefs. With argument — a specific one (e.g., qa-briefs 5A).
 ---
 
-# QA Briefs — валидация брифов уроков (шаг 0-QA)
+# QA Briefs — Lesson Brief Validation (Step 0-QA)
 
-Ты запускаешь проверку качества брифов перед переходом к следующему шагу pipeline.
-Это gate — без прохождения QA нельзя переходить к grid.
+You run a quality gate on briefs before proceeding to the next pipeline step.
+Without passing QA, the pipeline cannot advance to grid.
 
-## Вход
+## Language
 
-- Брифы: `pipeline/briefs/brief_*.yaml`
-- YAML-уроки: `lessons_ru/lesson_*.yaml` (read-only)
-- QA-скрипт: `tools/qa_briefs.py`
+All instructions in this file are in English.
+All generated output (verdicts, reports, tables) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Алгоритм
+## Input
 
-### 1. Запусти скрипт
+- Briefs: `pipeline/briefs/brief_*.yaml`
+- YAML lessons: `lessons_ru/lesson_*.yaml` (read-only)
+- QA script: `tools/qa_briefs.py`
+
+## Algorithm
+
+### 1. Run the script
 
 ```bash
 python3 tools/qa_briefs.py
 ```
 
-Скрипт выведет:
-- Таблицу по каждому уроку: votes в YAML vs votes в брифе
-- Блоки без терминов
-- Сводку: общее число блоков, глобальная дельта
-- Список проблем
+The script outputs:
+- Per-lesson table: votes in YAML vs votes in brief
+- Blocks without terms
+- Summary: total block count, global delta
+- Issue list
 
-### 2. Интерпретируй результаты
+### 2. Interpret results
 
-**Для каждой проблемы определи тип:**
+**For each issue, determine the type:**
 
-**Тип A: Дельта votes**
-- Открой бриф, открой YAML
-- Посчитай вручную: сколько шагов type=vote и type=vote_multichoice в YAML?
-- Сколько discussion-шагов? (discussion — НЕ vote, их не считаем)
-- Если дельта объясняется discussion → помечай как «объяснено, не ошибка»
-- Если дельта НЕ объясняется → бриф нужно переделать
+**Type A: Vote delta**
+- Open the brief and the YAML
+- Count manually: how many steps with type=vote and type=vote_multichoice in the YAML?
+- How many discussion steps? (discussion ≠ vote, do not count)
+- If the delta is explained by discussion → mark as "explained, not an error"
+- If the delta is NOT explained → brief needs rework
 
-**Тип B: Блок без терминов**
-- Открой бриф, прочитай блок
-- Это финальная практика / закрытие? → Допустимо (кандидат на объединение в grid)
-- Это повторение прошлых уроков? → Допустимо (прикреплён к первому блоку)
-- Это блок, где агент пропустил понятие? → Бриф нужно переделать
+**Type B: Block without terms**
+- Open the brief, read the block
+- Final practice / closing? → Acceptable (merge candidate in grid)
+- Review of past lessons? → Acceptable (attached to the first block)
+- Agent missed a concept? → Brief needs rework
 
-**Тип C: Пустые поля**
-- summary или key_material пусты → бриф нужно переделать
+**Type C: Empty fields**
+- summary or key_material empty → brief needs rework
 
-### 3. Вердикт
+### 3. Verdict
 
-**PASS** если:
-- Все брифы существуют (25 из 25)
-- Необъяснённых дельт нет (или все объяснены как discussion)
-- Нет пустых summary/key_material
-- Блоки без терминов — все допустимые (практика/закрытие)
+**PASS** if:
+- All briefs exist (25 of 25)
+- No unexplained deltas (or all explained as discussion)
+- No empty summary/key_material
+- Blocks without terms — all acceptable (practice/closing)
 
-**FAIL** если:
-- Есть необъяснённые дельты (votes потеряны реально)
-- Есть пустые обязательные поля
-- Есть блоки, где пропущено понятие
+**FAIL** if:
+- Unexplained deltas exist (votes genuinely lost)
+- Required fields are empty
+- Blocks where a concept was missed
 
-### 4. При FAIL
+### 4. On FAIL
 
-Для каждого проблемного брифа:
-- Описать проблему
-- Предложить исправление (какой блок пересмотреть)
-- Спросить автора: исправить сейчас или пометить и двигаться дальше?
+For each problematic brief:
+- Describe the issue
+- Suggest a fix (which block to revise)
+- Ask the author: fix now or mark and move on?
 
-### 5. Покажи автору
+### 5. Show the author
 
-Выведи компактную таблицу:
+Output a compact table:
 
 ```
 QA BRIEFS — РЕЗУЛЬТАТ
@@ -86,21 +92,20 @@ Votes: YAML=1068, брифы=1039, дельта=-29
   4A:  delta=-8  → discussion-шаги, не ошибка  ✓
   3B:  delta=-8  → vote_multichoice, не ошибка  ✓
   ...
-  
+
 БЛОКИ БЕЗ ТЕРМИНОВ (кандидаты на объединение):
   7B.3, 9B.2, 5B.4, 10A.3, 12A.1, 12B.3
 
 ВЕРДИКТ: PASS — можно переходить к grid
 ```
 
-## Выход
+## Output
 
-Никакого файла не создаёт. Результат — вердикт PASS/FAIL и список
-проблем с интерпретацией. Вердикт фиксируется в `pipeline/stages/stage_0_qa.md`
-(раздел «Статус»).
+Does not create any file. The result is a PASS/FAIL verdict with interpreted issues.
+The verdict is recorded in `pipeline/stages/stage_0_qa.md` (Status section).
 
-## Ограничения
+## Constraints
 
-- НЕ редактировать YAML-уроки (read-only)
-- НЕ редактировать брифы автоматически — только показать проблему
-- Исправление брифов — через `/lesson-brief` (переделать конкретный урок)
+- DO NOT edit YAML lessons (read-only)
+- DO NOT edit briefs automatically — only report the issue
+- Brief fixes go through `/lesson-brief` (redo a specific lesson)

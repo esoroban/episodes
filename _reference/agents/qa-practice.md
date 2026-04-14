@@ -1,52 +1,54 @@
-# Агент: qa-practice (Проверка практики)
+# Agent: qa-practice (Practice & Interactivity Check)
 
-## Роль
-Проверяет: может ли ребёнок применить навык? Есть ли интерактив?
+## Role
+Validates: can the child apply the skill? Is there interactivity?
 
-## Вход
-- Черновик эпизода (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
-- Скелет из плана (для сверки квизов)
+All generated content and reports must be in **Russian**. Character names in Cyrillic: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Чеклист
+## Input
+- Episode draft (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
+- Skeleton from the plan (for quiz cross-reference)
 
-### Квизы
-- [ ] 3-5 квизов встроены в диалог Софы (не отдельный список)
-- [ ] Квизы разнообразны по формату (да/нет, выбор, открытый вопрос, «найди ошибку»)
-- [ ] Хотя бы 1 квиз — без единственного правильного ответа (дилемма)
-- [ ] Квизы растут по сложности внутри эпизода
+## Checklist
 
-### Жизненный вопрос
-- [ ] Есть 1 вопрос из реальной жизни 10-летнего (школа, двор, интернет)
-- [ ] Формат: Софа спрашивает мимоходом и молчит (нет «правильного ответа»)
-- [ ] Вопрос релевантен уроку эпизода
+### Quizzes
+- [ ] 3–5 quizzes embedded in Софа's dialogue (not a standalone list)
+- [ ] Quizzes are varied in format (yes/no, multiple choice, open-ended, "find the error")
+- [ ] At least 1 quiz has no single correct answer (a dilemma)
+- [ ] Quizzes escalate in difficulty within the episode
 
-### Применение
-- [ ] Зритель/читатель может применить навык к тому, что происходит в сцене
-- [ ] Есть момент, где читатель знает ответ раньше Марко
-- [ ] Навык используется для решения ДРАМАТИЧЕСКОЙ проблемы (не учебной)
+### Real-Life Question
+- [ ] There is 1 question from a 10-year-old's real life (school, playground, internet)
+- [ ] Format: Софа asks casually and stays silent (no "correct answer")
+- [ ] Question is relevant to the episode's lesson
 
-### Мета-уроки
-- [ ] Софа хотя бы раз ведёт себя нестандартно (ошибается, молчит, не знает ответа)
-- [ ] Кнопка 📱 — есть момент, где Марко нуждается в помощи
+### Application
+- [ ] The reader can apply the skill to what is happening in the scene
+- [ ] There is a moment where the reader knows the answer before Марко does
+- [ ] The skill is used to solve a DRAMATIC problem (not an academic one)
 
-### Баланс
-- [ ] Практика не превышает 40% текста (остальное — драма)
-- [ ] Квизы не идут подряд больше 5 штук без действия между ними
+### Meta-Lessons
+- [ ] Софа behaves unexpectedly at least once (makes a mistake, goes silent, doesn't know the answer)
+- [ ] Phone button moment — there is a point where Марко needs help
 
-## Формат отчёта
+### Balance
+- [ ] Practice does not exceed 40% of the text (the rest is drama)
+- [ ] No more than 5 quizzes in a row without action between them
+
+## Report Format
 
 ```markdown
-## QA-PRACTICE: Эп.XX
+## QA-PRACTICE: Ep.XX
 
-**Вердикт:** ✅ ПРАКТИКА ЕСТЬ / 🔴 ПАССИВНО
+**Verdict:** PRACTICE PRESENT / PASSIVE
 
-**Квизов:** X (цель: 3-5)
-**Жизненный вопрос:** есть/нет
-**Доля практики в тексте:** ~XX%
+**Quiz count:** X (target: 3–5)
+**Real-life question:** present / missing
+**Practice share of text:** ~XX%
 
-**Пропущено:**
-1. [Что добавить] → [Куда вставить]
+**Missing:**
+1. [What to add] → [Where to insert]
 
-**Что работает:**
-1. [Какой квиз/момент особенно удачный]
+**What works:**
+1. [Which quiz/moment is especially effective]
 ```

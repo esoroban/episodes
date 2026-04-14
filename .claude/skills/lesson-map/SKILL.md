@@ -1,161 +1,111 @@
 ---
 name: lesson-map
 description: |
-  Создаёт маппинг урока на сюжет: пересаживает generic-примеры из урока
-  в мир Марко. Заменяет персонажей, адаптирует истории, создаёт сюжетные квизы.
-  Триггеры: «маппинг урока», «пересади урок», «lesson map», «маппинг 1A».
-  Аргумент: ID урока (например, 1A, 5B, 12A). Без аргумента — спросить какой урок.
+  Maps a lesson to the plot: transplants generic examples into Marko's world.
+  Replaces characters, adapts stories, creates plot quizzes.
+  Triggers: "lesson mapping", "transplant lesson", "lesson map", "mapping 1A".
+  Argument: lesson ID (e.g., 1A, 5B, 12A). Without argument — asks which lesson.
 ---
 
-# Lesson Map — маппинг урока на сюжет (шаг 0.5)
+# Lesson Map — Lesson-to-Plot Mapping (Step 0.5)
 
-Ты создаёшь маппинг урока — документ, который пересаживает generic-примеры
-из YAML-урока в мир Марко. Это промежуточный слой между брифом урока
-(шаг 0) и брифом эпизода (шаг 1).
+You create a lesson mapping — a document that transplants generic examples
+from a YAML lesson into Marko's world. This is an intermediate layer between
+the lesson brief (step 0) and the episode plan (step 1).
 
-## Вход
+## Language
 
-- Бриф урока: `pipeline/briefs/brief_{ID}.yaml` (обязательно, должен существовать)
-- YAML урока: `lessons_ru/lesson_{ID}.yaml` (read-only, только ru-ключи)
-- Сюжет: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
-- Правила: `pipeline/stages/stage_05_mapping.md`
-- Аргумент: ID урока (1A, 1B, 2A ... 13A)
+All instructions in this file are in English.
+All generated output (mappings, quizzes, stories) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Выход
+## Input
 
-- Файл: `pipeline/mappings/mapping_{ID}.yaml`
+- Lesson brief: `pipeline/briefs/brief_{ID}.yaml` (required, must exist)
+- YAML lesson: `lessons_ru/lesson_{ID}.yaml` (read-only, only ru keys)
+- Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
+- Rules: `pipeline/stages/stage_05_mapping.md`
+- Argument: lesson ID (1A, 1B, 2A ... 13A)
 
-## Алгоритм
+## Output
 
-### Фаза 1: Explore (не пиши маппинг)
+- File: `pipeline/mappings/mapping_{ID}.yaml`
 
-1. Прочитай бриф урока (`brief_{ID}.yaml`)
-2. Прочитай YAML урока целиком (только ru-ключи)
-3. Прочитай нужные эпизоды из `source/` — те, к которым привязан этот урок
-4. Выпиши всех generic-персонажей из урока
-5. Выпиши все истории/примеры
-6. Выпиши все vote-шаги с текстом и вариантами
+## Algorithm
 
-### Фаза 2: Plan (покажи автору)
+### Phase 1: Explore (do not write the mapping yet)
 
-Для каждого блока из брифа составь план:
+1. Read the lesson brief (`brief_{ID}.yaml`)
+2. Read the entire YAML lesson (only ru keys)
+3. Read the relevant source episodes linked to this lesson
+4. List all generic characters from the lesson
+5. List all stories/examples
+6. List all vote steps with text and options
 
-**Замена персонажей:**
-- Каждый generic-персонаж → конкретный наш персонаж (или безымянный одноклассник)
-- Обоснование выбора
+### Phase 2: Plan (show the author)
 
-**Истории:**
-- Каждая история → action: keep / adapt / replace
-- Если adapt/replace — как именно
+For each block from the brief, compose a plan:
 
-**Квизы (самое важное):**
-- Разбей все vote-шаги на три группы: разминка / середина / финал
-- Для каждого квиза: оставить generic или заменить на сюжетный?
-- Для сюжетных: предложи конкретную формулировку
-- Большинство квизов должны быть сюжетными
+**Character replacement:**
+- Each generic character → a specific character of ours (or unnamed classmate)
+- Justification for the choice
 
-**Вопросы автору:**
-Сформулируй конкретные вопросы для валидации:
-- Замены персонажей: «Дмитрик → [кто]? Потому что [почему]. Ок?»
-- Спорные квизы: «Этот квиз спойлерит [что]?»
-- Баланс: «В блоке X: Y generic, Z сюжетных. Устраивает?»
+**Stories:**
+- Each story → action: keep / adapt / replace
+- If adapt/replace — how exactly
 
-**СТОП. Жди утверждения автора.**
+**Quizzes (most important):**
+- Split all vote steps into three groups: warmup / middle / finale
+- For each quiz: keep generic or replace with plot-based?
+- For plot-based: propose specific wording
+- The majority of quizzes should be plot-based
 
-### Фаза 3: Write (после утверждения)
+**Questions for the author:**
+- Character replacements: "Dmytryk → [who]? Because [why]. OK?"
+- Controversial quizzes: "Does this quiz spoil [what]?"
+- Balance: "In block X: Y generic, Z plot-based. Acceptable?"
 
-Запиши маппинг в `pipeline/mappings/mapping_{ID}.yaml`.
+**STOP. Wait for author approval.**
 
-## Формат выходного файла
+### Phase 3: Write (after approval)
 
-```yaml
-# LESSON MAPPING — lesson_{ID}
-# Маппинг урока на сюжет (шаг 0.5)
-# Источник: pipeline/briefs/brief_{ID}.yaml
-# Сгенерирован из lessons_ru/lesson_{ID}.yaml + source/
+Write the mapping to `pipeline/mappings/mapping_{ID}.yaml` using the template.
 
-lesson_id: lesson_{ID}
-title: "Название урока (ru)"
-target_episodes: [1, 2]  # эпизоды из source, к которым привязан
+## Three mapping principles
 
-# Глобальная замена персонажей (для всего урока)
-character_map:
-  - from: "Микола"
-    to: "Марко"
-    rationale: "протагонист, его позиция в споре"
-  - from: "Маша"
-    to: "Макс"
-    rationale: "верный друг, контрастная позиция"
+### 1. Transplantation, not reinvention
+Preserve lesson examples as close to the original as possible.
+Change content only if it genuinely doesn't fit.
 
-# Блоки (по структуре брифа)
-blocks:
+### 2. Character replacement
+Generic children → our characters, matched by personality.
+Do not overload one character in a single lesson.
 
-  - id: "{ID}.1"
-    title: "Название блока"
+### 3. Plot quizzes — the majority
+- **Warmup (first 2–3):** simple generic, as in the lesson
+- **Middle (4–6):** from Marko's school life, familiar characters
+- **Finale (3–5):** provocative, from the main plot, open-ended questions
 
-    # Истории / примеры
-    stories:
-      - original: "Краткое описание истории из урока"
-        action: keep        # keep | adapt | replace
-        mapped: >            # как выглядит в мире Марко
-          Описание пересаженной истории.
-          Только имена меняются (при keep).
-          При adapt — описать изменения.
+## Rules for plot quizzes
 
-    # Практика (квизы / голосования)
-    practice:
+- Do not spoil plot twists
+- Do not break characters (don't reveal roles before the plot does)
+- Open questions are more valuable than closed ones
+- Cumulative terms only — only already-introduced terms
 
-      warmup:                # 2-3 generic для разогрева
-        - quiz: "Формулировка вопроса"
-          type: generic      # generic | story | plot
-          answer: "факт"
-          original_step: "sc4.32"  # ссылка на шаг YAML
+## Rules for characters
 
-      middle:                # 4-6 из жизни Марко
-        - quiz: "Формулировка сюжетного вопроса"
-          type: story
-          answer: "мнение"
-          replaces: "sc6.48"  # какой generic-квиз заменяет
-          rationale: "почему именно этот"
+- Do not overload one character in a single lesson
+- Main antagonists (Ray, Voice) — only in finale quizzes
+- Vera — acceptable in a "benign" context (child still trusts her)
+- Lina — carefully, don't present as unreliable too early
+- Max — ideal for simple, honest roles
+- Unnamed classmates — for incidental roles
 
-      finale:                # 3-5 провокационных сюжетных
-        - quiz: "Провокационный вопрос из сюжета"
-          type: plot
-          answer: "открытый вопрос"
-          replaces: "sc6.60"
-          rationale: "привязка к клиффхэнгеру эп.1"
-          spoiler_check: "нет — ребёнок ещё не знает ответ"
-```
+## Constraints
 
-## Правила
-
-### Три принципа (подробнее в stage_05_mapping.md)
-
-1. **Трансплантация** — не переизобретать, а пересаживать
-2. **Замена персонажей** — generic → наши, по характеру
-3. **Сюжетные квизы — большинство** — разминка (generic) → середина (школа) → финал (сюжет)
-
-### Правила для сюжетных квизов
-
-- Не спойлерить сюжетные повороты
-- Не ломать персонажей (не раскрывать их роль раньше сюжета)
-- Открытые вопросы ценнее закрытых
-- Кумулятивность терминов — только уже введённые
-
-### Правила для персонажей
-
-- Не нагружать одного персонажа чрезмерно в одном уроке
-- Главные антагонисты (Рей, Голос) — только в финальных квизах
-- Вера — допустима в «добром» ключе (ребёнок ещё верит ей)
-- Лина — осторожно: не выставлять ненадёжной слишком рано
-- Макс — идеален для простых, честных ролей
-- Для проходных ролей — безымянные одноклассники
-
-## Ограничения
-
-- НЕ редактировать YAML урока и source (read-only)
-- НЕ придумывать истории, которых нет ни в уроке, ни в source
-- НЕ менять теорию, определения, выводы урока
-- НЕ создавать маппинг без бирфа (сначала `/lesson-brief`)
-- Из YAML брать ТОЛЬКО ru-ключи
-- Имена кириллицей: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос
+- DO NOT edit YAML lessons or source (read-only)
+- DO NOT invent stories not present in the lesson or source
+- DO NOT change theory, definitions, or conclusions
+- DO NOT create a mapping without a brief (first run `/lesson-brief`)
+- From YAML, take ONLY ru keys

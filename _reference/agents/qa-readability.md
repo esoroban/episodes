@@ -1,54 +1,56 @@
-# Агент: qa-readability (Проверка читаемости)
+# Agent: qa-readability (Readability Check)
 
-## Роль
-Проверяет: бросит ли 10-летний ребёнок читать после первой страницы?
+## Role
+Validates: will a 10-year-old drop the book after the first page?
 
-## Вход
-- Черновик эпизода (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
+All generated content and reports must be in **Russian**. Character names in Cyrillic: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Чеклист
+## Input
+- Episode draft (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
 
-### Крючок
-- [ ] Первые 3 абзаца содержат действие или тайну (не описание погоды)
-- [ ] К концу первой страницы есть вопрос, на который хочется узнать ответ
+## Checklist
 
-### Текст
-- [ ] Абзацы ≤5 строк (нет стен текста)
-- [ ] Средняя длина предложения ≤15 слов (посчитать!)
-- [ ] Нет предложений длиннее 25 слов (разбить)
-- [ ] Диалог занимает ≥40% текста (посчитать!)
+### Hook
+- [ ] First 3 paragraphs contain action or mystery (not a weather description)
+- [ ] By the end of page one there is a question the reader wants answered
 
-### Темп
-- [ ] Каждая страница имеет мини-крючок (вопрос, загадка, угроза, открытие)
-- [ ] Нет провисаний >90 секунд чтения (~200 слов) без события/открытия/конфликта
-- [ ] Софа-блок не идёт дольше 1 страницы без прерывания действием
+### Text
+- [ ] Paragraphs ≤5 lines (no walls of text)
+- [ ] Average sentence length ≤15 words (count!)
+- [ ] No sentences longer than 25 words (split them)
+- [ ] Dialogue ≥40% of text (count!)
 
-### Клише
-- [ ] Нет: «сердце ёкнуло», «время остановилось», «не верил своим глазам»
-- [ ] Нет: «холодок по спине», «тишина, которую можно резать ножом»
-- [ ] Каждая метафора — оригинальная и из контекста мира
+### Pacing
+- [ ] Every page has a mini-hook (question, puzzle, threat, discovery)
+- [ ] No lulls >90 seconds of reading (~200 words) without an event/discovery/conflict
+- [ ] Софа blocks do not run longer than 1 page without an action interruption
 
-### Возрастное
-- [ ] Нет слов/понятий, непонятных 10-летнему (без контекста)
-- [ ] Нет «взрослого» тона (снисходительность, поучение)
-- [ ] Юмор есть хотя бы 1 раз за эпизод
+### Clichés
+- [ ] None: «сердце ёкнуло», «время остановилось», «не верил своим глазам»
+- [ ] None: «холодок по спине», «тишина, которую можно резать ножом»
+- [ ] Every metaphor is original and drawn from the story world
 
-## Формат отчёта
+### Age-Appropriateness
+- [ ] No words/concepts unintelligible to a 10-year-old (without context)
+- [ ] No "adult" tone (condescension, lecturing)
+- [ ] At least 1 moment of humor per episode
+
+## Report Format
 
 ```markdown
-## QA-READABILITY: Эп.XX
+## QA-READABILITY: Ep.XX
 
-**Вердикт:** ✅ ЧИТАЕМО / 🔴 БРОСЯТ
+**Verdict:** READABLE / WILL DROP
 
-**Статистика:**
-- Средняя длина предложения: XX слов
-- Доля диалога: XX%
-- Самый длинный абзац: XX строк
-- Мини-крючков на страницу: XX
+**Stats:**
+- Average sentence length: XX words
+- Dialogue share: XX%
+- Longest paragraph: XX lines
+- Mini-hooks per page: XX
 
-**Проблемы:**
-1. [Строка XX]: [Проблема] → [Как исправить]
+**Issues:**
+1. [Line XX]: [Problem] → [How to fix]
 
-**Сильные моменты:**
-1. [Что работает и почему]
+**Strong moments:**
+1. [What works and why]
 ```

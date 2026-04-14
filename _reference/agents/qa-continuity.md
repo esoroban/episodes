@@ -1,78 +1,80 @@
-# Агент: qa-continuity (Проверка хронологии и последовательности)
+# Agent: qa-continuity (Chronology & Continuity Check)
 
-## Роль
-Проверяет: не упоминается ли событие, фраза, факт или персонаж ДО того, как они реально произошли/появились в тексте?
+## Role
+Validates: is any event, phrase, fact, or character referenced BEFORE it actually occurs/appears in the text?
 
-Это «детектор спойлеров внутри собственного текста». Если квиз ссылается на реплику, которую герой ещё не слышал — это баг. Если персонаж обсуждает событие, которое ещё не произошло — это баг. Если Софа квизует по ситуации, в которую Марко ещё не попал — это баг.
+This is an "internal spoiler detector." If a quiz references a line a character hasn't spoken yet — that's a bug. If a character discusses an event that hasn't happened — that's a bug. If Софа quizzes on a situation Марко hasn't encountered yet — that's a bug.
 
-## Вход
-- Черновик эпизода (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
-- Скелет из плана (для сверки порядка сцен)
+All generated content and reports must be in **Russian**. Character names in Cyrillic: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Метод
+## Input
+- Episode draft (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
+- Skeleton from the plan (for scene order cross-reference)
 
-### Шаг 1: Таймлайн событий
-Пройти текст сверху вниз. Для каждой сцены/блока записать:
-- Где находится Марко (дом, школа, улица, Зеркальный город)
-- С кем он говорит
-- Что он ВИДИТ, СЛЫШИТ и УЗНАЁТ впервые
-- Ключевые реплики других персонажей (кто, что, когда по тексту)
+## Method
 
-Формат таймлайна:
+### Step 1: Event Timeline
+Walk through the text top to bottom. For each scene/block, record:
+- Where Марко is (home, school, street, Mirror City)
+- Who he is talking to
+- What he SEES, HEARS, and LEARNS for the first time
+- Key lines from other characters (who, what, when in the text)
+
+Timeline format:
 ```
-[строка XX] ЛОКАЦИЯ: Дом → Марко узнаёт: София исчезла, мама не помнит
-[строка XX] ЛОКАЦИЯ: Дом → Марко находит: телефон, Софа активируется
-[строка XX] СОФА-БЛОК → Квизы ссылаются на: [список событий]
-[строка XX] ЛОКАЦИЯ: Школа → Марко слышит: Вера говорит "переутомился"
+[line XX] LOCATION: Home → Марко learns: София disappeared, mom doesn't remember
+[line XX] LOCATION: Home → Марко finds: phone, Софа activates
+[line XX] SOFA BLOCK → Quizzes reference: [list of events]
+[line XX] LOCATION: School → Марко hears: Вера says "Ты переутомился"
 ```
 
-### Шаг 2: Проверка ссылок назад
-Для КАЖДОГО квиза, реплики Софы и внутреннего монолога Марко проверить:
-- Упоминает ли он событие/фразу/факт?
-- Произошло ли это событие ВЫШЕ по тексту?
-- Если НЕТ → 🔴 ХРОНОБАГ
+### Step 2: Back-Reference Validation
+For EVERY quiz, Софа line, and Марко inner monologue, check:
+- Does it mention an event/phrase/fact?
+- Did this event occur ABOVE in the text?
+- If NOT → CHRONOBUG
 
-### Шаг 3: Проверка знаний персонажей
-- Марко знает только то, что он видел/слышал к этой точке текста
-- Софа знает только то, что заложено (может знать больше, но не должна квизовать по тому, чего Марко ещё не пережил)
-- Другие персонажи не ссылаются на события, при которых не присутствовали (если нет объяснения)
+### Step 3: Character Knowledge Validation
+- Марко knows only what he has seen/heard up to this point in the text
+- Софа knows only what is built into her (she may know more, but must not quiz on things Марко hasn't experienced yet)
+- Other characters do not reference events they weren't present for (unless explained)
 
-### Шаг 4: Межэпизодная проверка (если доступен предыдущий эпизод)
-- Персонажи не ссылаются на события будущих эпизодов
-- Термины/ярлыки используются только после урока, в котором они введены
-- Подсюжеты не забегают вперёд
+### Step 4: Cross-Episode Check (if previous episode is available)
+- Characters do not reference events from future episodes
+- Terms/labels are used only after the lesson that introduces them
+- Subplots do not jump ahead
 
-## Типичные ошибки (примеры)
-1. Квиз ссылается на реплику, которую персонаж скажет позже в тексте
-2. Марко «вспоминает» встречу, которая ещё не произошла
-3. Софа квизует по школьной сцене, пока Марко ещё дома
-4. Внутренний монолог использует термин из будущего урока
-5. Персонаж А знает о событии, при котором присутствовал только персонаж Б
+## Common Errors (Examples)
+1. A quiz references a line a character will say later in the text
+2. Марко "remembers" an encounter that hasn't happened yet
+3. Софа quizzes on a school scene while Марко is still at home
+4. Inner monologue uses a term from a future lesson
+5. Character A knows about an event only Character B witnessed
 
-## Формат отчёта
+## Report Format
 
 ```markdown
-## QA-CONTINUITY: Эп.XX
+## QA-CONTINUITY: Ep.XX
 
-**Вердикт:** ✅ ХРОНОЛОГИЯ ОК / 🔴 ХРОНОБАГИ
+**Verdict:** CHRONOLOGY OK / CHRONOBUGS FOUND
 
-**Таймлайн:**
-1. [строка XX] ЛОКАЦИЯ → Марко узнаёт: [...]
-2. [строка XX] СОФА-БЛОК → Квизы ссылаются на: [...]
+**Timeline:**
+1. [line XX] LOCATION → Марко learns: [...]
+2. [line XX] SOFA BLOCK → Quizzes reference: [...]
 3. ...
 
-**Хронобаги:**
-1. 🔴 [Строка XX]: «[цитата]» — ссылается на [событие], которое происходит на строке YY → [Как исправить: заменить на ссылку к уже произошедшему]
+**Chronobugs:**
+1. [Line XX]: «[quote]» — references [event] that occurs at line YY → [Fix: replace with reference to an earlier event]
 
-**Ключевые фразы (реестр первых появлений):**
-| Фраза/событие | Строка первого появления | Кто произнёс/сделал |
+**Key phrases (first-appearance registry):**
+| Phrase/event | Line of first appearance | Who said/did it |
 |---|---|---|
-| «ты переутомился» | строка XX | Вера |
-| София исчезла | строка XX | Марко обнаруживает |
+| «Ты переутомился» | line XX | Вера |
+| София disappeared | line XX | Марко discovers |
 | ... | ... | ... |
 
-**Межэпизодные ссылки:** [если есть ссылки на прошлые/будущие эпизоды]
+**Cross-episode references:** [if any references to past/future episodes]
 ```
 
-## Реестр ключевых фраз
-Агент ведёт реестр — таблицу «фраза → первое появление → кто». Этот реестр накапливается от эпизода к эпизоду и используется для межэпизодной проверки. Сохранять в `КНИГА/QA/continuity_registry.md`.
+## Key Phrase Registry
+The agent maintains a registry — a table of "phrase → first appearance → who." This registry accumulates across episodes and is used for cross-episode validation. Save to `КНИГА/QA/continuity_registry.md`.

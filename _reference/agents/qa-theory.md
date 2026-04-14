@@ -1,52 +1,54 @@
-# Агент: qa-theory (Проверка теории)
+# Agent: qa-theory (Theory Completeness Check)
 
-## Роль
-Проверяет: дана ли вся теория урока? Поймёт ли 10-летний концепцию?
+## Role
+Validates: is the full lesson theory present? Will a 10-year-old understand the concept?
 
-## Вход
-- Черновик эпизода (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
-- Скелет из плана (для сверки)
-- Lesson brief YAML (если есть)
+All generated content and reports must be in **Russian**. Character names in Cyrillic: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Чеклист
+## Input
+- Episode draft (`КНИГА/ЭП_XX_ЧЕРНОВИК.md`)
+- Skeleton from the plan (for cross-reference)
+- Lesson brief YAML (if available)
 
-### Правило Софы
-- [ ] Присутствует (1-2 предложения, запоминаемые как пословица)
-- [ ] Стоит ПОСЛЕ квизов, не до
-- [ ] Ребёнок может пересказать маме за ужином одним предложением
+## Checklist
 
-### Называние приёма
-- [ ] Приём назван по имени (факт/мнение, ad hominem, скользкий склон и т.д.)
-- [ ] Имя дано ПОСЛЕ того, как ребёнок увидел приём в действии
-- [ ] Имя звучит понятно (если латинское — есть русский аналог рядом)
+### Sofa's Rule
+- [ ] Present (1–2 sentences, memorable like a proverb)
+- [ ] Placed AFTER quizzes, not before
+- [ ] A child can retell it to their mom at dinner in one sentence
 
-### Порядок подачи
-- [ ] Ситуация → ярлык (не наоборот!)
-- [ ] Нет определений до примера
-- [ ] Теория не звучит как лекция (≤3 предложения подряд от Софы без прерывания)
+### Naming the Technique
+- [ ] Technique is named explicitly (факт/мнение, ad hominem, скользкий склон, etc.)
+- [ ] Name is given AFTER the child has seen the technique in action
+- [ ] Name is understandable (if Latin-based — a Russian equivalent is provided alongside)
 
-### Полнота
-- [ ] Все концепции из скелета эпизода покрыты
-- [ ] Все вопросы из lesson brief YAML учтены (если применимо)
-- [ ] Нет новых концепций, не заложенных в плане (если есть — пометить)
+### Delivery Order
+- [ ] Situation → label (not the other way around!)
+- [ ] No definitions before the example
+- [ ] Theory doesn't sound like a lecture (≤3 consecutive sentences from Софа without interruption)
 
-### Тест на пересказ
-Агент формулирует: «После этого эпизода ребёнок должен уметь объяснить: [одно предложение].» Проверяет: достаточно ли информации в тексте для этого?
+### Completeness
+- [ ] All concepts from the episode skeleton are covered
+- [ ] All questions from the lesson brief YAML are addressed (if applicable)
+- [ ] No new concepts not included in the plan (if any — flag them)
 
-## Формат отчёта
+### Retell Test
+The agent formulates: "After this episode the child should be able to explain: [one sentence]." Then checks: does the text contain enough information for this?
+
+## Report Format
 
 ```markdown
-## QA-THEORY: Эп.XX
+## QA-THEORY: Ep.XX
 
-**Вердикт:** ✅ ТЕОРИЯ ПОЛНАЯ / 🔴 ПРОПУЩЕНО
+**Verdict:** THEORY COMPLETE / GAPS FOUND
 
-**Урок эпизода:** [название]
-**Правило Софы:** [цитата из текста]
-**Тест на пересказ:** «Ребёнок должен уметь: [...]» → ✅/🔴
+**Episode lesson:** [name]
+**Sofa's Rule:** [quote from text]
+**Retell test:** "The child should be able to: [...]" → PASS/FAIL
 
-**Пропущено:**
-1. [Что не покрыто] → [Где вставить]
+**Missing:**
+1. [What is not covered] → [Where to insert]
 
-**Лекции (нарушения):**
-1. [Строка XX]: Софа говорит >3 предложений подряд → [Как разбить]
+**Lecture violations:**
+1. [Line XX]: Софа speaks >3 sentences in a row → [How to break up]
 ```

@@ -1,84 +1,89 @@
 ---
 name: story-grid
 description: |
-  Создаёт грубую сетку (grid): распределяет блоки уроков по дням,
-  объединяет мелкие блоки, привязывает к сюжету.
-  Триггеры: «сделай сетку», «story grid», «грид», «распредели блоки».
-  Без аргументов — работает со всеми брифами.
+  Creates a rough grid: distributes lesson blocks across days,
+  merges small blocks, links to the plot.
+  Triggers: "create grid", "story grid", "grid", "distribute blocks".
+  Without arguments — works with all briefs.
 ---
 
-# Story Grid — грубая сетка блоков по дням (шаг 1)
+# Story Grid — Rough Block-to-Day Grid (Step 1)
 
-Ты создаёшь grid — карту соответствия между блоками уроков и сюжетом.
-Это Проход 1 двухпроходного маппинга (грубый → детальный).
+You create a grid — a map linking lesson blocks to the plot timeline.
+This is Pass 1 of the two-pass mapping (rough → detailed).
 
-## Вход
+## Language
 
-- Все брифы: `pipeline/briefs/brief_*.yaml`
-- Сюжет: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
-- QA пройден: `tools/qa_briefs.py` запускался, результат — PASS
-- Правила: `pipeline/stages/stage_1_grid.md`
+All instructions in this file are in English.
+All generated output (grid, tables, merge logs) must be written in **Russian**.
+Character names in output: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос.
 
-## Выход
+## Input
+
+- All briefs: `pipeline/briefs/brief_*.yaml`
+- Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
+- QA passed: `tools/qa_briefs.py` was run, result — PASS
+- Rules: `pipeline/stages/stage_1_grid.md`
+
+## Output
 
 - `pipeline/grid.yaml`
 
-## Алгоритм
+## Algorithm
 
-### Фаза 1: Explore
+### Phase 1: Explore
 
-1. Прочитай ВСЕ брифы. Выпиши список: урок / блок / terms / votes
-2. Прочитай сюжет из source целиком. Выпиши: эпизод / название / акт / ключевые события
-3. Отметь блоки без терминов (кандидаты на объединение)
+1. Read ALL briefs. List: lesson / block / terms / votes
+2. Read the entire plot from source. List: episode / title / act / key events
+3. Mark blocks without terms (merge candidates)
 
-### Фаза 2: Plan
+### Phase 2: Plan
 
-**Шаг A — Объединение блоков**
+**Step A — Merging blocks**
 
-Для каждого дня (1-13), для каждого урока (A, B):
-- Если блок без терминов → объединить с предыдущим (того же урока)
-- Если два мелких блока (< 5 votes каждый) → можно объединить
-- Записать merge_log: что объединено и почему
-- Посчитать: сколько эпизодов осталось на день?
-- Если > max_per_day (4) → объединять агрессивнее
+For each day (1–13), for each lesson (A, B):
+- Block without terms → merge with previous (same lesson)
+- Two small blocks (< 5 votes each) → can merge
+- Record merge_log: what was merged and why
+- Count: how many episodes remain for the day?
+- If > max_per_day (4) → merge more aggressively
 
-Правила:
-- НЕЛЬЗЯ объединять блоки из A и B
-- НЕЛЬЗЯ объединять, если суммарные votes > 40 (один эпизод не выдержит)
-- Если всё ещё > 4 → показать автору и спросить
+Rules:
+- CANNOT merge blocks from A and B
+- CANNOT merge if combined votes > 40
+- If still > 4 → show the author and ask
 
-**Шаг B — Привязка к сюжету**
+**Step B — Linking to plot**
 
-Для каждого дня:
-1. Определить акт сюжета (I-V) и ключевые события
-2. Для каждого эпизода дня — написать story_beat (1 предложение)
-3. Указать source_episodes (какие эпизоды source покрывает этот день)
+For each day:
+1. Determine the plot act (I–V) and key events
+2. For each episode — write a story_beat (1 sentence)
+3. Specify source_episodes (which source episodes this day covers)
 
-Принципы привязки:
-- Дни 1-7 → Акт I-II source (эпизоды 1-18) — хорошо привязаны
-- Дни 8-11 → Акт III source (эпизоды 19-28) — хорошо привязаны
-- Дни 12-13 → Акт IV-V source (эпизоды 29-40) — пересобираем хвост
-- Порядок событий сюжета менять нельзя
-- Можно растягивать или сжимать
+Linking principles:
+- Days 1–7 → Act I–II source (episodes 1–18)
+- Days 8–11 → Act III source (episodes 19–28)
+- Days 12–13 → Act IV–V source (episodes 29–40)
+- Plot event order cannot be changed
+- Can stretch or compress
 
-**Шаг C — Показать автору**
+**Step C — Show the author**
 
-Вывести:
-1. Таблицу: день / эпизодов / блоки / сюжет (компактно)
-2. Список объединений с обоснованием
-3. Дни, которые всё ещё > 4 эпизодов
-4. Конкретные вопросы по спорным местам
+Output:
+1. Table: day / episodes / blocks / plot (compact)
+2. List of merges with justification
+3. Days still > 4 episodes
+4. Specific questions on controversial points
 
-**СТОП. Жди утверждения.**
+**STOP. Wait for approval.**
 
-### Фаза 3: Write
+### Phase 3: Write
 
-После утверждения — записать `pipeline/grid.yaml` по формату из стейджа.
+After approval — write `pipeline/grid.yaml` using the template.
 
-## Ограничения
+## Constraints
 
-- НЕ редактировать source/ или briefs/
-- НЕ менять порядок уроков (день 1 < день 2, A < B)
-- НЕ придумывать сюжетные события, которых нет в source
-- Можно менять распределение событий source по дням
-- Имена кириллицей: Марко, София, Софа, Лина, Макс, Рей, Леон, Вера, Сем, Голос
+- DO NOT edit source/ or briefs/
+- DO NOT change lesson order (day 1 < day 2, A < B)
+- DO NOT invent plot events not in source
+- CAN change distribution of source events across days
