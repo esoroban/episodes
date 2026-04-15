@@ -10,17 +10,25 @@ Use when:
 Acceptance rule:
 - exactly one defendable correct answer.
 
-## 2. open_question_teacher_answer
+## 2. open_question_game_input
 
 Use when:
 - the methodology intentionally asks an open question;
-- the teacher answer is an accepted pedagogical response type.
+- the episode explicitly marks it as an open-input task;
+- the future game can present it as a free-text or open-response interaction.
 
 Acceptance rules:
 - must be explicitly marked as open;
 - must belong to the lesson logic;
 - must not replace a spot where a closed quiz is required;
-- teacher answer must be clear, useful, and educationally sufficient.
+- must include a clear hint or algorithm;
+- must include an example-model answer;
+- must be logically usable in the future game without pretending to have one
+  hidden exact answer.
+- if it is reflective or philosophical, it must be treated as reflection,
+  not as scored correctness.
+- if it changes the plot or values, it should usually be treated as a
+  dramatic choice, not as pedagogical open input.
 
 ## 3. open_hypothesis
 
