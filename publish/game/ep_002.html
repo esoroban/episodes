@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эпизод 2 — «Неправда и её виды»</title>
+<style>
+:root {
+  --bg: #0d0d12;
+  --bg-card: #16161e;
+  --bg-card-hover: #1c1c28;
+  --text: #e8e6e3;
+  --text-muted: #8b8a88;
+  --accent: #7c9fd4;
+  --accent-soft: #4a6fa520;
+  --correct: #4caf50;
+  --correct-bg: #1b3a1b;
+  --wrong: #ef5350;
+  --wrong-bg: #3a1b1b;
+  --sofa: #b39ddb;
+  --cliffhanger: #7c4dff;
+  --branch: #ff9800;
+  --border: #2a2a35;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  --font-main: 'Georgia', 'Times New Roman', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+}
+.episode-header {
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+.episode-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.ep-lesson {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+}
+.ep-terms {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  margin-top: 0.5rem;
+}
+.scene {
+  margin: 0 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.scene.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.scene-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+.scene-counter { font-weight: 600; margin-bottom: 0.3rem; color: var(--accent); }
+.scene-location { color: var(--text-muted); }
+.scene-chars { color: var(--text-muted); font-size: 0.8rem; }
+.scene-mood { color: var(--text-muted); font-size: 0.8rem; font-style: italic; margin-top: 0.2rem; }
+.scene-branch { color: var(--branch); font-size: 0.8rem; font-weight: 600; margin-top: 0.3rem; }
+.scene-content { padding: 1.25rem; }
+.author-text p { margin-bottom: 0.75rem; }
+.dialogue-block { margin: 0.75rem 0; }
+.dl-char, .dl-sofa, .dl-narrator {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border);
+}
+.dl-who { font-weight: 600; font-family: var(--font-ui); font-size: 0.9rem; }
+.dl-sofa { border-left-color: var(--sofa); }
+.dl-sofa .dl-who { color: var(--sofa); }
+.dl-narrator { border-left-color: transparent; color: var(--text-muted); font-style: italic; padding-left: 0; }
+.visual-brief {
+  font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-ui);
+  background: #12121a; padding: 0.75rem 1rem; border-radius: 8px;
+  margin-bottom: 1rem; line-height: 1.5; display: none;
+}
+.visual-brief.open { display: block; }
+.vb-label { color: var(--accent); font-weight: 600; }
+.vb-toggle {
+  font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+  font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
+}
+.vb-toggle:hover { color: var(--accent); }
+.quiz {
+  background: #1a1a28; border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem; margin: 1rem 0;
+}
+.quiz-question {
+  font-weight: 600; font-size: 1.05rem; margin-bottom: 1rem;
+  font-family: var(--font-ui); color: var(--text);
+}
+.quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-option {
+  flex: 1 1 auto; min-width: 120px; padding: 0.7rem 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: var(--bg-card); color: var(--text); font-size: 0.95rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui);
+}
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.quiz-option.selected-correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+.quiz-option.selected-wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); text-decoration: line-through; }
+.quiz-option.reveal-correct { border-color: var(--correct); background: var(--correct-bg); }
+.quiz-option:disabled { cursor: default; opacity: 0.8; }
+.quiz-feedback {
+  margin-top: 0.8rem; padding: 0.75rem 1rem; border-radius: 8px;
+  font-size: 0.9rem; font-family: var(--font-ui);
+}
+.quiz-feedback-ok { background: var(--correct-bg); color: var(--correct); border: 1px solid #2e7d3240; }
+.quiz-feedback-fail { background: var(--wrong-bg); color: var(--wrong); border: 1px solid #c6282840; }
+.quiz-explanation {
+  margin-top: 0.5rem; padding: 0.6rem 1rem; font-size: 0.85rem;
+  color: var(--text-muted); font-style: italic;
+}
+.story-choice { margin: 1rem 0; }
+.choice-question { font-weight: 600; font-family: var(--font-ui); margin-bottom: 0.75rem; }
+.choice-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.choice-option {
+  padding: 0.8rem 1.2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); text-align: left;
+}
+.choice-option:hover { background: var(--accent-soft); }
+.choice-option.chosen { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+.scene-flags { padding: 0.5rem 1.25rem 0.75rem; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-ui); }
+.scene-cliffhanger { border-color: var(--cliffhanger); background: linear-gradient(135deg, #1a1528 0%, var(--bg-card) 100%); }
+.scene-cliffhanger .scene-counter { color: var(--cliffhanger); }
+.scene-branch-card { border-color: var(--branch); border-style: dashed; }
+.scene-previously { border-color: #5c6bc0; background: linear-gradient(135deg, #1a1a2e 0%, var(--bg-card) 100%); }
+.scene-previously .scene-counter { color: #9fa8da; }
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #0d0d12ee; backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border); padding: 0.75rem 1rem;
+  display: flex; justify-content: center; gap: 0.75rem; z-index: 100;
+}
+.nav-btn {
+  padding: 0.6rem 2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; font-family: var(--font-ui); transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--accent-soft); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.nav-btn.primary { background: var(--accent); color: var(--bg); font-weight: 600; }
+.nav-btn.primary:hover { background: #8ab0e0; }
+.nav-btn.primary:disabled { background: var(--accent); opacity: 0.3; }
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+.end-screen { text-align: center; padding: 3rem 1.5rem; display: none; }
+.end-screen.active { display: block; }
+.end-screen h2 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
+.end-screen p { color: var(--text-muted); font-family: var(--font-ui); }
+.end-screen .stats { margin-top: 1.5rem; font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); }
+.nav-spacer { height: 4rem; }
+@media (max-width: 600px) {
+  .scene { margin: 0 0.5rem 1rem; }
+  .quiz-options { flex-direction: column; }
+  .quiz-option { min-width: 100%; }
+  .episode-header h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header class="episode-header">
+  <h1>Эпизод 2 — «Неправда и её виды»</h1>
+  <p class="ep-lesson">1A.2</p>
+  <p class="ep-terms">Новые термины: неправда</p>
+</header>
+
+
+  <section class="scene scene-previously active" data-scene-id="previously" data-index="-1">
+    <div class="scene-header">
+      <div class="scene-counter">📜 Ранее</div>
+    </div>
+    <div class="scene-content">
+      <div class="author-text"><p>Марко проснулся — кровать сестры пуста, фотографии исчезли. Мама не помнит Софию. На полке — старый телефон с треснутым экраном. Софа включилась: «Я — Софа. Образовательный помощник. Версия 0.7.» Марко научился отличать факт от мнения. Факт — можно проверить. Мнение — нельзя. Вера Андреевна попросила принести дневник. Лина сказала: «Я помню Софию. Но нам нельзя говорить. Они слушают.»</p></div>
+    </div>
+    <div class="scene-flags">🔒 Требуется: Эпизод 1, sofa_activated</div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep002_s01" data-index="1" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">📖 Сцена 2/13</div>
+      <div class="scene-location">Школа, коридор · учебный день</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">одиночество, давление</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор, перемена, шум<br><span class="vb-label">Атмосфера:</span> Марко один среди шёпота — мир повернулся против<br><span class="vb-label">Камера:</span> over-shoulder<br><span class="vb-label">Марко:</span> напряжённость, стоит в конце коридора, один<br><span class="vb-label">Предметы:</span> телефон в кармане</div><div class="author-text"><p>Марко стоит в конце коридора. Лина ушла — быстро, не оглядываясь. На перемене Олена шепчется с Витей у раковины. «Говорит, у него сестра пропала...» — «Какая сестра? У него нет никакой сестры.» — «Может, он просто хочет, чтобы его пожалели?»</p></div>
+    <div class="quiz" data-quiz-id="ep002_s01">
+      <p class="quiz-question">«Марко хочет, чтобы его пожалели.» Факт, мнение или неправда?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Факт</button><button class="quiz-option" data-correct="true" data-index="1">Мнение</button><button class="quiz-option" data-correct="false" data-index="2">Неправда</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Верно. Олена подаёт своё предположение как факт.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Можно ли измерить, чего Марко хочет? Есть прибор?»</div>
+      <div class="quiz-explanation" hidden>Нет «хотемера» — Олена не может залезть в голову Марко.</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep002_s02" data-index="2" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">💬 Сцена 3/13</div>
+      <div class="scene-location">Школа, коридор · перемена</div>
+      <div class="scene-chars">Марко, Витя, Софа</div>
+      <div class="scene-mood">давление, боль</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор, у раковины<br><span class="vb-label">Атмосфера:</span> лобовое столкновение с «нормой»<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Витя:</span> прямолинейность, без злости, стоит напротив Марко<br><span class="vb-label">Марко:</span> боль, сжатые кулаки, стоит, рюкзак на плече</div><div class="author-text"><p>«Все говорят.» Слово «все» бьёт как мяч в живот. Марко ЗНАЕТ, что София была. Но как доказать то, чего никто не помнит?</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Витя:</span> — Марко, без обид. Но все говорят, что ты выдумал сестру. Ни один человек в школе её не помнит.</p></div>
+    <div class="quiz" data-quiz-id="ep002_s02">
+      <p class="quiz-question">«Все говорят, что Марко выдумал сестру.» Факт, мнение или неправда?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Факт</button><button class="quiz-option" data-correct="false" data-index="1">Мнение</button><button class="quiz-option" data-correct="true" data-index="2">Неправда</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Верно. Одного исключения достаточно — Лина помнит.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Можно ли проверить, что &quot;все&quot; так думают? Спроси каждого. Лина — помнит.»</div>
+      <div class="quiz-explanation" hidden>Можно проверить: спросить каждого. Лина помнит — значит не «все».</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep002_s03" data-index="3" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">📖 Сцена 4/13</div>
+      <div class="scene-location">Школа, коридор · перемена</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">удар, бессилие</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор, экран чужого телефона<br><span class="vb-label">Атмосфера:</span> цифровая травля — слова множатся и бьют<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> сообщение в чате с лайками<br><span class="vb-label">Марко:</span> шок, бессилие, стоит, смотрит через плечо на чужой экран<br><span class="vb-label">Предметы:</span> экран телефона с чатом, лайки, пересылки</div><div class="author-text"><p>Марко видит через плечо чужой телефон. В чате: «Марко из 5-Б выдумал сестру, чтобы не делать домашку. Жесть.» Шесть лайков. Пересылки. Кто-то: «Серьёзно?» Позже — другое сообщение: «У Марко серьёзные проблемы. Мама его водила к психологу. Он всем врёт про сестру.» Никакого психолога не было. Но написано уверенно. 11 лайков.</p></div>
+    <div class="quiz" data-quiz-id="ep002_s03">
+      <p class="quiz-question">«Мама Марко водила его к психологу.» Шутка, сказка или фейк?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Шутка</button><button class="quiz-option" data-correct="false" data-index="1">Сказка</button><button class="quiz-option" data-correct="true" data-index="2">Фейк</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Фейк. Самый опасный вид неправды — выглядит как правда, но придумано.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Шутка — чтобы посмешить. Сказка — все понимают. А здесь цель — чтобы ПОВЕРИЛИ.»</div>
+      <div class="quiz-explanation" hidden>Специально придумано, чтобы поверили. Цель — навредить, не посмешить.</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep002_s04" data-index="4" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">💬 Сцена 5/13</div>
+      <div class="scene-location">Школа, столовая · обед</div>
+      <div class="scene-chars">Марко, Софа, Олена</div>
+      <div class="scene-mood">обучение, систематизация</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьная столовая, шум, подносы<br><span class="vb-label">Атмосфера:</span> обычная школьная суета вокруг Марко, который внутри — один<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Марко:</span> отрешённость, сидит, ест молча, телефон под столом<br><span class="vb-label">Олена:</span> весёлость, жестикулирует, рассказывает</div><div class="author-text"><p>Столовая. Олена рассказывает младшим про дракона, который ел блинчики и от этого чешуя стала золотой. Все смеются — все понимают, что это сказка.</p></div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Неправда бывает трёх видов. ШУТКА — знает, что неправда, хочет посмешить. СКАЗКА — все понимают, что не взаправду. ФЕЙК — специально придумано, чтобы поверили. Самый опасный.»</em></p></div>
+    <div class="quiz" data-quiz-id="ep002_s04">
+      <p class="quiz-question">«В Зеркальном Городе по ночам по крышам ходят стеклянные птицы.» Шутка, сказка или фейк?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Шутка</button><button class="quiz-option" data-correct="true" data-index="1">Сказка</button><button class="quiz-option" data-correct="false" data-index="2">Фейк</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Сказка. Никто не верит буквально — это фантазия.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Кто-то хочет, чтобы ты поверил в стеклянных птиц? Нет — все понимают, что это фантазия.»</div>
+      <div class="quiz-explanation" hidden>Все понимают, что не взаправду. Это фантазия, а не обман.</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep002_s05" data-index="5" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">📖 Сцена 6/13</div>
+      <div class="scene-location">Школа, у учительской · после обеда</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">предательство, холод</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор, приоткрытая дверь учительской<br><span class="vb-label">Атмосфера:</span> подслушанное предательство — тёплый голос говорит холодные вещи<br><span class="vb-label">Камера:</span> pov<br><span class="vb-label">Фокус:</span> щель в двери — голос Веры из-за неё<br><span class="vb-label">Марко:</span> шок, замирание, стоит у двери, прислонился к стене<br><span class="vb-label">Предметы:</span> приоткрытая дверь, полоска света из учительской</div><div class="author-text"><p>Марко проходит мимо приоткрытой двери учительской. Голос Веры — мягкий, заботливый: «Мальчик утверждает, что у него есть сестра-близнец, которую все забыли. Возможно, переутомление. Я попросила принести дневник — посмотрю, что там...» Холод в груди. Вера говорит «утверждает» — как будто это симптом.</p></div>
+    <div class="quiz" data-quiz-id="ep002_s05">
+      <p class="quiz-question">«Марко переутомился.» Факт, мнение или неправда?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Факт</button><button class="quiz-option" data-correct="true" data-index="1">Мнение</button><button class="quiz-option" data-correct="false" data-index="2">Неправда</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Верно. Мнение, которое притворяется диагнозом.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Вера — врач? Она проверяла? Есть &quot;переутомлемер&quot;?»</div>
+      <div class="quiz-explanation" hidden>Нет «переутомлемера». Вера — не врач. Это её субъективная оценка.</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep002_s06" data-index="6" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">❓ Сцена 7/13</div>
+      <div class="scene-location">Школа, подоконник в конце коридора · перемена</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">сосредоточенность</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Подоконник в школьном коридоре, Марко один<br><span class="vb-label">Атмосфера:</span> тихий момент учёбы среди бури<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Марко:</span> усталая сосредоточенность, сидит на подоконнике, телефон в руках</div><div class="author-text"><p>Перемена. Марко сидит на подоконнике. Один. Телефон в руках. Софа: «Секрет сложных случаев: МОЖНО ли это измерить?»</p></div>
+    <div class="quiz" data-quiz-id="ep002_s06">
+      <p class="quiz-question">«Мой папа самый сильный в мире.» Факт, мнение или неправда?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Факт</button><button class="quiz-option" data-correct="false" data-index="1">Мнение</button><button class="quiz-option" data-correct="true" data-index="2">Неправда</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Неправда — силу МОЖНО измерить, но в мире есть люди сильнее.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Можно ли измерить силу? Есть силомер? Да. Тогда проверяй: самый сильный В МИРЕ?»</div>
+      <div class="quiz-explanation" hidden>Можно измерить силу — силомер. При проверке: скорее всего, не самый сильный В МИРЕ. Проверяемо и не подтвердится.</div>
+    </div>
+    <div class="story-choice">
+      <p class="choice-question">Хочешь узнать больше о том, как работает неправда?</p>
+      <div class="choice-options">
+        <button class="choice-option" data-target="ep002_s06_detour">Расскажи про Дмитрика</button><button class="choice-option" data-target="ep002_s07">Давай дальше</button>
+      </div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep002_s06_detour" data-index="7">
+    <div class="scene-header">
+      <div class="scene-counter">📖 Сцена 8/13</div>
+      <div class="scene-location">Школа, подоконник · перемена</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">важный нюанс</div>
+      <div class="scene-branch">🌿 Бонусная сцена</div>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Подоконник, экран телефона с текстом Софы<br><span class="vb-label">Атмосфера:</span> ключевое различие — ложь vs неправда<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Софа:</span> объяснение, текст на экране</div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Помни: Дмитрик из истории про отмену уроков — не врал. Сам верил. Но информация — всё равно неправда. Человек может не врать — а информация всё равно неправда. Неправда — это свойство информации, а не человека.»</em></p></div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep002_s07" data-index="8">
+    <div class="scene-header">
+      <div class="scene-counter">💬 Сцена 9/13</div>
+      <div class="scene-location">Школа, класс · последний урок</div>
+      <div class="scene-chars">Марко, Вера, Софа</div>
+      <div class="scene-mood">давление мягкой силой</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Классная комната, после звонка, пусто<br><span class="vb-label">Атмосфера:</span> сладкий яд — забота, которая хочет забрать улику<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> рука Веры на плече — давление или забота?<br><span class="vb-label">Вера:</span> забота, чуть слишком широкая улыбка, рука на плече Марко, наклонилась<br><span class="vb-label">Марко:</span> внутренняя борьба, прижимает рюкзак к груди<br><span class="vb-label">Предметы:</span> рюкзак с дневником внутри</div><div class="author-text"><p>Марко хочет кивнуть. Вера говорит так заботливо. Но в рюкзаке — дневник. С почерком. С рисунком. С завитушками.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Вера:</span> — Марко, я разговаривала с твоей мамой. Она тоже переживает. Мы обе хотим тебе помочь.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Мне не нужна помощь. Мне нужно, чтобы мне поверили.</p>
+<p class="dl-char"><span class="dl-who">Вера:</span> — А ты сам-то веришь? Может быть, тебе просто... показалось?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — У меня есть доказательство. Дневник. С её почерком.</p>
+<p class="dl-char"><span class="dl-who">Вера:</span> — Принеси мне его завтра. Я посмотрю. За тебя переживаю.</p></div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep002_s08" data-index="9" data-blocking="true">
+    <div class="scene-header">
+      <div class="scene-counter">❓ Сцена 10/13</div>
+      <div class="scene-location">Школа, класс · после урока</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">аналитическое напряжение</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс, экран телефона<br><span class="vb-label">Атмосфера:</span> тихий момент анализа — что стоит за заботой Веры?<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Марко:</span> думает, сидит за партой, телефон под столом</div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Вера просит дневник. Второй раз. Зачем?»</em></p></div>
+    <div class="quiz" data-quiz-id="ep002_s08">
+      <p class="quiz-question">Вера дважды просит дневник. Она хочет помочь — или получить доступ к улике?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Хочет помочь</button><button class="quiz-option" data-correct="false" data-index="1">Хочет получить улику</button><button class="quiz-option" data-correct="true" data-index="2">Мы пока не знаем — но повторение подозрительно</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Софа: «Верно. Мы не знаем мотив — но замечаем паттерн.»</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Софа: «Вспомни детектива: мы не знаем, подтвердится ли. Но повторение — не случайность.»</div>
+      <div class="quiz-explanation" hidden>Мы не можем быть уверены в мотивах Веры, но повторение — закономерность, которую стоит отметить.</div>
+    </div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-feedback scene-branch-card" data-scene-id="ep002_s08_fail" data-index="10">
+    <div class="scene-header">
+      <div class="scene-counter">💡 Сцена 11/13</div>
+      <div class="scene-location">Школа, класс · после урока</div>
+      <div class="scene-chars">Марко, Софа</div>
+      <div class="scene-mood">мягкая помощь</div>
+      <div class="scene-branch">🔄 Мягкий тупик</div>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс, экран Софы<br><span class="vb-label">Атмосфера:</span> возврат к вопросу<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Софа:</span> терпеливость, текст подсказки</div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Подсказка: мы не можем влезть в голову Вере. Хочет помочь или забрать улику — это пока не проверено. Но факт: она просит дневник уже второй раз. Что мы ЗНАЕМ точно?»</em></p></div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep002_s09" data-index="11">
+    <div class="scene-header">
+      <div class="scene-counter">📖 Сцена 12/13</div>
+      <div class="scene-location">Школа, коридор · конец дня</div>
+      <div class="scene-chars">Марко</div>
+      <div class="scene-mood">тихая решимость</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор, конец дня, пусто<br><span class="vb-label">Атмосфера:</span> маленькая победа — не отдал, не сломался<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Марко:</span> усталая решимость, идёт по коридору, рюкзак у груди</div><div class="author-text"><p>Марко выходит из класса. Рюкзак прижат к груди. Дневник внутри. Никому не отдал.</p></div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Правило второе. Неправду можно разоблачить — потому что она проверяема. А в споре мнений победителя нет. Можно сказать «окей, у тебя своё мнение» — и пойти есть мороженое. Но если тебе врут — стоит проверить.»</em></p></div>
+    </div>
+    
+  </section>
+
+  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep002_s10" data-index="12">
+    <div class="scene-header">
+      <div class="scene-counter">⚡ Сцена 13/13</div>
+      <div class="scene-location">Школьный двор, ворота · конец дня</div>
+      <div class="scene-chars">Марко, Лина, Софа</div>
+      <div class="scene-mood">надежда с занозой</div>
+      
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный двор, серое небо, ворота<br><span class="vb-label">Атмосфера:</span> нить — тонкая, но единственная<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Лина:</span> серьёзность, ожидание, стоит у ворот, руки в карманах<br><span class="vb-label">Марко:</span> надежда, настороженность, идёт к ней с рюкзаком</div><div class="author-text"><p>Школьный двор. Серое небо. У ворот — Лина. Стоит, как будто ждала. Руки в карманах куртки.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Лина:</span> — Пойдём. Мне нужно тебе кое-что рассказать. Про Софию. Про то, как её забирали.</p></div><div class="author-text"><p>Марко идёт за ней. Он хочет верить. Лина — единственная, кто помнит. Но Лина рассказывает — и детали путаются. То «ночью», то «утром». Заноза. Маленькая, но острая. Марко отмахивается. Софа вибрирует в кармане. Марко не достаёт телефон. Пока не достаёт.</p></div>
+    </div>
+    
+  </section>
+
+<div class="end-screen" id="endScreen">
+  <h2>Конец эпизода 2</h2>
+  <p>«Неправда и её виды»</p>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="nav-spacer"></div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="btnPrev" disabled>← Назад</button>
+  <button class="nav-btn primary" id="btnNext">Дальше →</button>
+</div>
+
+<script>
+
+(function() {
+  const scenes = document.querySelectorAll('.scene');
+  const btnNext = document.getElementById('btnNext');
+  const btnPrev = document.getElementById('btnPrev');
+  const progress = document.getElementById('progress');
+  const endScreen = document.getElementById('endScreen');
+  const statsEl = document.getElementById('stats');
+
+  let currentIndex = 0;
+  let correctCount = 0;
+  let totalQuizzes = 0;
+  let answeredScenes = new Set();
+
+  const sceneMap = {};
+  scenes.forEach((s, i) => { sceneMap[s.dataset.sceneId] = i; });
+
+  function showScene(index) {
+    scenes.forEach(s => s.classList.remove('active'));
+    if (index < scenes.length) {
+      scenes[index].classList.add('active');
+      scenes[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    currentIndex = index;
+    btnPrev.disabled = (index === 0);
+    updateProgress();
+    updateNextButton();
+    if (index >= scenes.length) {
+      endScreen.classList.add('active');
+      statsEl.textContent = 'Правильных ответов: ' + correctCount + ' / ' + totalQuizzes;
+      btnNext.disabled = true;
+    } else {
+      endScreen.classList.remove('active');
+    }
+  }
+
+  function updateProgress() {
+    const pct = ((currentIndex + 1) / scenes.length) * 100;
+    progress.style.width = Math.min(pct, 100) + '%';
+  }
+
+  function updateNextButton() {
+    if (currentIndex >= scenes.length) { btnNext.disabled = true; return; }
+    const scene = scenes[currentIndex];
+    const isBlocking = scene.dataset.blocking === 'true';
+    const isAnswered = answeredScenes.has(currentIndex);
+    const hasUnansweredChoice = scene.querySelector('.story-choice') &&
+                                 !scene.querySelector('.choice-option.chosen');
+    btnNext.disabled = (isBlocking && !isAnswered) || hasUnansweredChoice;
+  }
+
+  btnNext.addEventListener('click', function() {
+    if (currentIndex < scenes.length) showScene(currentIndex + 1);
+  });
+  btnPrev.addEventListener('click', function() {
+    if (currentIndex > 0) showScene(currentIndex - 1);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      if (!btnNext.disabled) { e.preventDefault(); btnNext.click(); }
+    } else if (e.key === 'ArrowLeft') { btnPrev.click(); }
+  });
+
+  document.querySelectorAll('.quiz').forEach(function(quiz) {
+    var buttons = quiz.querySelectorAll('.quiz-option');
+    var feedbackOk = quiz.querySelector('.quiz-feedback-ok');
+    var feedbackFail = quiz.querySelector('.quiz-feedback-fail');
+    var explanation = quiz.querySelector('.quiz-explanation');
+    var answered = false;
+    totalQuizzes++;
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (answered) return;
+        answered = true;
+        var isCorrect = btn.dataset.correct === 'true';
+        var sceneEl = quiz.closest('.scene');
+        var sceneIdx = Array.from(scenes).indexOf(sceneEl);
+
+        if (isCorrect) {
+          btn.classList.add('selected-correct');
+          correctCount++;
+          if (feedbackOk) feedbackOk.hidden = false;
+        } else {
+          btn.classList.add('selected-wrong');
+          buttons.forEach(function(b) {
+            if (b.dataset.correct === 'true') b.classList.add('reveal-correct');
+          });
+          if (feedbackFail) feedbackFail.hidden = false;
+        }
+        if (explanation) explanation.hidden = false;
+        buttons.forEach(function(b) { b.disabled = true; });
+        answeredScenes.add(sceneIdx);
+        updateNextButton();
+      });
+    });
+  });
+
+  document.querySelectorAll('.choice-option').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var choiceBlock = btn.closest('.story-choice');
+      choiceBlock.querySelectorAll('.choice-option').forEach(function(b) { b.classList.remove('chosen'); });
+      btn.classList.add('chosen');
+      var target = btn.dataset.target;
+      if (target && sceneMap[target] !== undefined) {
+        btnNext.onclick = function() {
+          showScene(sceneMap[target]);
+          btnNext.onclick = function() {
+            if (currentIndex < scenes.length) showScene(currentIndex + 1);
+          };
+        };
+      }
+      updateNextButton();
+    });
+  });
+
+  document.querySelectorAll('.visual-brief').forEach(function(vb) {
+    var toggle = document.createElement('span');
+    toggle.className = 'vb-toggle';
+    toggle.textContent = '\u{1f3a8} Visual brief \u25b8';
+    toggle.addEventListener('click', function() {
+      vb.classList.toggle('open');
+      toggle.textContent = vb.classList.contains('open')
+        ? '\u{1f3a8} Visual brief \u25be'
+        : '\u{1f3a8} Visual brief \u25b8';
+    });
+    vb.parentNode.insertBefore(toggle, vb);
+  });
+
+  showScene(0);
+})();
+
+</script>
+</body>
+</html>

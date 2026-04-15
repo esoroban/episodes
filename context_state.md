@@ -1,12 +1,25 @@
 # CONTEXT STATE — current project state
 
 > Updated after each work session.
-> Last updated: 2026-04-14
+> Last updated: 2026-04-15
 
 ---
 
 ## Project Phase
-Pipeline built. Steps 0–4 active. 40 episodes written (Days 1–10). Next: Day 11+.
+**Gameflow.** Episodes written (50 eps, Days 1–13). Now building game scene-flow layer.
+- Day 1 gameflow (ep_001–004): DONE
+- Days 2–13 gameflow: NOT STARTED
+- HTML renderer and validator: DONE
+
+### New Layer: Gameflow
+- `pipeline/gameflow/spec/` — schema, branching rules, visual briefs, pipeline rules
+- `pipeline/gameflow/episodes/ep_001..004.yaml` — 47 scenes, 4 flavor detours, 6 soft fails
+- `tools/build_game.py` — gameflow YAML → interactive HTML
+- `tools/validate_gameflow.py` — catches duplicate keys, broken links, unused flags
+- `publish/game/` — generated HTML (dark theme, scene-by-scene navigation)
+
+### Previous Phase (COMPLETED)
+Pipeline built. Steps 0–4 completed. 50 episodes written (Days 1–13).
 
 ## Source of Truth
 - **Episode structure:** `pipeline/grid.yaml` (50 episodes, 70 blocks, 13 days)

@@ -1,7 +1,10 @@
-# POWER OF WORDS — Drama + Lessons → Book
+# POWER OF WORDS — Drama + Lessons → Game
 
 ## What This Is
 An interactive educational drama for children ages 8–12. 25 critical thinking lessons woven into a fantasy thriller. This is a COURSE, not a show. 60% lesson, 40% drama. The number of episodes is determined by the lessons — as many as needed to fully cover all topics.
+
+## Current Phase
+**Gameflow.** Episodes are written (50 episodes, Days 1–13). We are now building the game scene-flow layer and generating playable HTML from it. See "Gameflow Pipeline" section below.
 
 ## Philosophy
 The existing story is the foundation. The plot (Sofia's disappearance, the Mirror City, the Voice) is already good and is not being rewritten from scratch. We make two improvements on top:
@@ -47,10 +50,13 @@ Working language: Russian. Ukrainian — only at the final localization stage.
 | `lessons_ru/` | 25 trilingual YAMLs (ru/en/uk). We use only `ru` keys | **NO** — read-only (protected by hook) |
 | `lessons_en/` | English extractions — not used | Ignore |
 | `pipeline/` | Pipeline: stages, rules, briefs, drafts, agents | Yes |
-| `book/` | Finished episodes | Yes |
-| `coverage/` | Lesson coverage map across episodes | Yes |
-| `output/` | HTML status dashboard | Yes |
-| `tools/` | Scripts (audio, generation) | Yes |
+| `pipeline/episodes/` | Episode plans by day (source of truth for episodes) | Yes |
+| `pipeline/gameflow/` | **Game scene-flow layer** (see Gameflow Pipeline) | Yes |
+| `pipeline/gameflow/spec/` | Schema, branching rules, visual brief rules | Yes |
+| `pipeline/gameflow/episodes/` | Gameflow YAML files per episode | Yes |
+| `server/book/` | Human-readable episode markdown | Yes |
+| `publish/game/` | Generated HTML game (output of build_game.py) | Yes (generated) |
+| `tools/` | Scripts: build_game.py, validate_gameflow.py, build_book.py | Yes |
 | `.claude/skills/` | Skills for agents | Yes |
 | `_reference/` | Old agent prompts, skills — for study | Read-only |
 
@@ -65,6 +71,55 @@ Working language: Russian. Ukrainian — only at the final localization stage.
 Existing story + lessons → improved book.
 Pipeline in development: `pipeline/pipeline.md`
 Rules: `pipeline/rules/content_rules.md`, `pipeline/rules/qa_rules.md`
+
+## Gameflow Pipeline
+
+### What it is
+A game scene-flow layer between episode plans and rendered HTML. Each episode is broken into interactive scenes with navigation, quizzes, choices, and visual briefs.
+
+### Data flow
+```
+pipeline/episodes/day_NN.yaml  ──→  pipeline/gameflow/episodes/ep_NNN.yaml  ──→  publish/game/ep_NNN.html
+server/book/ep_NNN.md  ──────────┘          ↑                                         ↑
+                                     (manual, with skills)                    (python3 tools/build_game.py)
+```
+
+### Key files
+| File | Purpose |
+|------|---------|
+| `pipeline/gameflow/spec/pipeline_rules.md` | How layers connect — **read this first** |
+| `pipeline/gameflow/spec/gameflow_schema.md` | Scene schema: all fields, enums, examples |
+| `pipeline/gameflow/spec/branching_rules.md` | 4 allowed branch types, merge rules, flag registry |
+| `pipeline/gameflow/spec/visual_brief_rules.md` | How to describe art briefs per scene |
+| `tools/build_game.py` | Renderer: gameflow YAML → interactive HTML |
+| `tools/validate_gameflow.py` | Validator: catches duplicate keys, broken links, unused flags |
+
+### Build commands
+```
+python3 tools/build_game.py              # generate all HTML from gameflow
+python3 tools/validate_gameflow.py       # validate all gameflow YAML
+```
+
+### Progress
+- Day 1 (ep_001–ep_004): gameflow DONE, HTML generated
+- Days 2–13: gameflow NOT STARTED (episode plans exist in pipeline/episodes/)
+
+## Creating Episodes (reusable for any story/season)
+
+### Full pipeline: lessons → episodes → gameflow → game
+1. **Lesson briefs** — skill `lesson-brief`: split YAML lesson into theory blocks
+2. **Story grid** — skill `story-grid`: distribute blocks across days
+3. **Episode plan** — skill `episode-plan`: create day plan with scenes, quizzes, story beats
+4. **Episode map** — skill `episode-map`: transplant quizzes into plot context
+5. **Gameflow** — manually or with future skill: break episode into interactive scenes
+6. **Build** — `python3 tools/build_game.py`: generate playable HTML
+
+### When starting a new season or story
+All skills, tools, and specs are **story-agnostic**. They work with any plot + lessons combination. To start fresh:
+1. Create new `source/` with plot
+2. Create new `lessons_ru/` with lessons
+3. Run the pipeline from step 1
+4. The gameflow spec and tools work as-is
 
 ## Prohibitions
 
