@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эпизод 12 — «Формула высказывания»</title>
+<style>
+:root {
+  --bg: #0d0d12;
+  --bg-card: #16161e;
+  --bg-card-hover: #1c1c28;
+  --text: #e8e6e3;
+  --text-muted: #8b8a88;
+  --accent: #7c9fd4;
+  --accent-soft: #4a6fa520;
+  --correct: #4caf50;
+  --correct-bg: #1b3a1b;
+  --wrong: #ef5350;
+  --wrong-bg: #3a1b1b;
+  --sofa: #b39ddb;
+  --cliffhanger: #7c4dff;
+  --branch: #ff9800;
+  --border: #2a2a35;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  --font-main: 'Georgia', 'Times New Roman', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+}
+.episode-header {
+  text-align: center;
+  padding: 1.2rem 1rem 0.8rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+.episode-header h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+.ep-lesson {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+}
+.ep-terms {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  margin-top: 0.3rem;
+}
+.scene {
+  margin: 0 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.scene.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.scene-header {
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.scene-counter { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; }
+.scene-meta { font-size: 0.75rem; }
+.scene-meta summary {
+  cursor: pointer; color: var(--text-muted); list-style: none;
+  font-size: 0.85rem; user-select: none;
+}
+.scene-meta summary::-webkit-details-marker { display: none; }
+.scene-meta[open] { padding-bottom: 0.3rem; }
+.scene-location { color: var(--text-muted); margin-top: 0.3rem; }
+.scene-chars { color: var(--text-muted); font-size: 0.75rem; }
+.scene-mood { color: var(--text-muted); font-size: 0.75rem; font-style: italic; margin-top: 0.15rem; }
+.scene-branch { color: var(--branch); font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem; }
+.scene-flags-inner { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+.scene-content { padding: 1.25rem; }
+.author-text p { margin-bottom: 0.75rem; }
+.dialogue-block { margin: 0.75rem 0; }
+.dl-char, .dl-sofa, .dl-narrator {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border);
+}
+.dl-who { font-weight: 600; font-family: var(--font-ui); font-size: 0.9rem; }
+.dl-sofa { border-left-color: var(--sofa); }
+.dl-sofa .dl-who { color: var(--sofa); }
+.dl-narrator { border-left-color: transparent; color: var(--text-muted); font-style: italic; padding-left: 0; }
+.visual-brief {
+  font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-ui);
+  background: #12121a; padding: 0.75rem 1rem; border-radius: 8px;
+  margin-bottom: 1rem; line-height: 1.5; display: none;
+}
+.visual-brief.open { display: block; }
+.vb-label { color: var(--accent); font-weight: 600; }
+.vb-toggle {
+  font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+  font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
+}
+.vb-toggle:hover { color: var(--accent); }
+.quiz {
+  background: #1a1a28; border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem; margin: 1rem 0;
+}
+.quiz-question {
+  font-weight: 600; font-size: 1.05rem; margin-bottom: 1rem;
+  font-family: var(--font-ui); color: var(--text);
+}
+.quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-option {
+  flex: 1 1 auto; min-width: 120px; padding: 0.7rem 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: var(--bg-card); color: var(--text); font-size: 0.95rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui);
+}
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.quiz-option.selected-correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+.quiz-option.selected-wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); text-decoration: line-through; }
+.quiz-option.reveal-correct { border-color: var(--correct); background: var(--correct-bg); }
+.quiz-option:disabled { cursor: default; opacity: 0.8; }
+.quiz-feedback {
+  margin-top: 0.8rem; padding: 0.75rem 1rem; border-radius: 8px;
+  font-size: 0.9rem; font-family: var(--font-ui);
+}
+.quiz-feedback-ok { background: var(--correct-bg); color: var(--correct); border: 1px solid #2e7d3240; }
+.quiz-feedback-fail { background: var(--wrong-bg); color: var(--wrong); border: 1px solid #c6282840; }
+.quiz-explanation {
+  margin-top: 0.5rem; padding: 0.6rem 1rem; font-size: 0.85rem;
+  color: var(--text-muted); font-style: italic;
+}
+.story-choice { margin: 1rem 0; }
+.choice-question { font-weight: 600; font-family: var(--font-ui); margin-bottom: 0.75rem; }
+.choice-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.choice-option {
+  padding: 0.8rem 1.2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); text-align: left;
+}
+.choice-option:hover { background: var(--accent-soft); }
+.choice-option.chosen { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+.scene-flags { padding: 0.5rem 1.25rem 0.75rem; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-ui); }
+.scene-cliffhanger { border-color: var(--cliffhanger); background: linear-gradient(135deg, #1a1528 0%, var(--bg-card) 100%); }
+.scene-cliffhanger .scene-counter { color: var(--cliffhanger); }
+.scene-branch-card { border-color: var(--branch); border-style: dashed; }
+.scene-previously { border-color: #5c6bc0; background: linear-gradient(135deg, #1a1a2e 0%, var(--bg-card) 100%); }
+.scene-previously .scene-counter { color: #9fa8da; }
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #0d0d12ee; backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border); padding: 0.75rem 1rem;
+  display: flex; justify-content: center; gap: 0.75rem; z-index: 100;
+}
+.nav-btn {
+  padding: 0.6rem 2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; font-family: var(--font-ui); transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--accent-soft); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.nav-btn.primary { background: var(--accent); color: var(--bg); font-weight: 600; }
+.nav-btn.primary:hover { background: #8ab0e0; }
+.nav-btn.primary:disabled { background: var(--accent); opacity: 0.3; }
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+.end-screen { text-align: center; padding: 3rem 1.5rem; display: none; }
+.end-screen.active { display: block; }
+.end-screen h2 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
+.end-screen p { color: var(--text-muted); font-family: var(--font-ui); }
+.end-screen .stats { margin-top: 1.5rem; font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); }
+/* ====== iPhone Telegram Chat ====== */
+.phone {
+  width: 340px; height: 680px;
+  border-radius: 42px; border: 4px solid #2a2a2a;
+  background: #fff; position: relative; overflow: hidden;
+  margin: 0.5rem auto;
+  box-shadow: 0 0 0 2px #1a1a1a, 0 12px 40px rgba(0,0,0,0.4), inset 0 0 0 1px #333;
+}
+.phone-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 28px; background: #000;
+  border-radius: 0 0 18px 18px; z-index: 50;
+}
+.phone-notch::after {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 50px; height: 5px; background: #1a1a1a; border-radius: 3px;
+}
+.phone-home {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 4px; background: rgba(0,0,0,0.2); border-radius: 3px; z-index: 50;
+}
+.crack-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100; pointer-events: none;
+}
+.crack-overlay svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.chat-wrap {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; flex-shrink: 0; background: #517da2;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 20px 4px; font-size: 11px; color: #fff; z-index: 40;
+}
+.sb-time { font-weight: 600; }
+.sb-icons { font-size: 10px; }
+.chat-header {
+  flex-shrink: 0; background: #517da2; border-bottom: 1px solid #4a7393;
+  padding: 6px 14px 8px; display: flex; align-items: center; gap: 8px; z-index: 30;
+}
+.ch-back { color: #fff; font-size: 18px; }
+.ch-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #7cb8e4, #4a90c4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.ch-info { display: flex; flex-direction: column; }
+.ch-name { font-size: 14px; font-weight: 600; color: #fff; }
+.ch-status { font-size: 11px; color: #d4e8f7; }
+.chat-messages {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 8px 7px; display: flex; flex-direction: column; gap: 2px;
+  background: #c8d9e6;
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 60%);
+}
+.chat-messages::-webkit-scrollbar { width: 0; }
+/* Bubbles — light theme */
+.msg-row { display: flex; max-width: 82%; animation: fadeIn 0.25s ease-out; }
+.msg-row.incoming { align-self: flex-start; }
+.msg-row.outgoing { align-self: flex-end; }
+.bubble {
+  padding: 5px 9px; border-radius: 12px; font-size: 13px;
+  line-height: 1.4; color: #000; word-wrap: break-word;
+}
+.msg-row.incoming .bubble { border-top-left-radius: 4px; }
+.msg-row.outgoing .bubble { border-top-right-radius: 4px; }
+.bubble.sofa, .bubble.sofia { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.bubble.author {
+  background: #f0f0f5; border-left: 3px solid #9e9e9e;
+  font-style: italic; box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.bubble.marko { background: #eeffde; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.sender-name { font-size: 11px; font-weight: 600; margin-bottom: 1px; }
+.sender-name.sofa, .sender-name.sofia { color: #3390ec; }
+.sender-name.author { color: #7a7a7a; }
+.sender-name.marko { color: #4fae3b; }
+.msg-time { font-size: 9px; color: rgba(0,0,0,0.35); text-align: right; margin-top: 1px; }
+/* Typing */
+.typing-row { display: flex; align-self: flex-start; animation: fadeIn 0.2s ease-out; }
+.typing-bubble {
+  background: #fff; padding: 9px 14px; border-radius: 12px;
+  border-top-left-radius: 4px; display: flex; align-items: center; gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.typing-dot {
+  width: 5px; height: 5px; background: #3390ec; border-radius: 50%;
+  animation: tBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tBounce {
+  0%,60%,100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+/* Voice messages */
+.voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
+.voice-play {
+  width: 28px; height: 28px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 11px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.voice-play:hover { background: #4aa0f0; }
+.voice-waveform {
+  flex: 1; display: flex; align-items: center; gap: 1.5px; height: 20px;
+}
+.voice-bar {
+  width: 2px; background: rgba(0,0,0,0.15); border-radius: 2px;
+  transition: background 0.08s;
+}
+.voice-bar.played { background: #3390ec; }
+.voice-duration { font-size: 10px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
+/* Quiz buttons */
+.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+.quiz-btn {
+  background: #3390ec; color: #fff; border: none; border-radius: 7px;
+  padding: 8px 10px; font-size: 12px; cursor: pointer;
+  transition: all 0.2s; text-align: center;
+}
+.quiz-btn:hover { background: #4aa0f0; }
+.quiz-btn.correct { background: #4caf50 !important; cursor: default; }
+.quiz-btn.wrong { background: #e53935 !important; cursor: default; }
+.quiz-btn.disabled { opacity: 0.45; cursor: default; pointer-events: none; }
+/* Unlock */
+.unlock-row { display: flex; justify-content: center; padding: 5px 0; animation: fadeIn 0.25s ease-out; }
+.unlock-btn {
+  background: rgba(255,255,255,0.85); color: #3390ec; border: 1.5px solid #3390ec;
+  border-radius: 16px; padding: 7px 16px; font-size: 12px; cursor: pointer;
+}
+.unlock-btn:hover { background: #fff; }
+.unlock-btn.unlocked { background: rgba(255,255,255,0.5); border-color: #aaa; color: #999; cursor: default; }
+/* Input bar */
+.chat-input-bar {
+  flex-shrink: 0; background: #fff; border-top: 1px solid #dfe3e7;
+  padding: 5px 8px 22px; display: flex; align-items: center; gap: 5px; z-index: 30;
+}
+.chat-input {
+  flex: 1; background: #f0f2f5; border: 1px solid #dfe3e7; border-radius: 16px;
+  padding: 7px 12px; color: #000; font-size: 13px; outline: none;
+}
+.chat-input::placeholder { color: rgba(0,0,0,0.3); }
+.chat-input:read-only { cursor: default; }
+.send-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.send-btn:hover { background: #4aa0f0; }
+.send-btn:active { transform: scale(0.9); }
+.mic-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mic-btn.recording { background: #e53935; animation: micPulse 0.9s infinite; }
+@keyframes micPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+.mic-label { flex: 1; color: rgba(0,0,0,0.35); font-size: 12px; padding: 0 3px; }
+.mic-label.rec { color: #e53935; }
+.ti-group, .vi-group { display: flex; flex: 1; gap: 5px; align-items: center; }
+.imode-text .vi-group, .imode-voice .ti-group,
+.imode-disabled .ti-group, .imode-disabled .vi-group { display: none; }
+.disabled-label {
+  flex: 1; text-align: center; color: rgba(0,0,0,0.25); font-size: 11px; display: none;
+}
+.imode-disabled .disabled-label { display: block; }
+
+.nav-spacer { height: 4rem; }
+@media (max-width: 600px) {
+  .scene { margin: 0 0.5rem 1rem; }
+  .quiz-options { flex-direction: column; }
+  .quiz-option { min-width: 100%; }
+  .episode-header h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header class="episode-header">
+  <h1>Эпизод 12 — «Формула высказывания»</h1>
+  <p class="ep-lesson">3B.3</p>
+  <p class="ep-terms">Новые термины: формула высказывания</p>
+</header>
+
+
+
+  <section class="scene scene-narrative" data-scene-id="ep012_s01" data-index="0" data-next="ep012_s01a1">
+    <div class="scene-header">
+      <span class="scene-counter">1 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">тревога, несоответствие слов и тела</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона: тесная комната, книги, карта на столе, кабель зарядки<br><span class="vb-label">Атмосфера:</span> слова говорят одно, тело — другое<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> кабель — оборудование Системы<br><span class="vb-label">Марко:</span> настороженность, стоит у двери, протянул телефон<br><span class="vb-label">Леон:</span> нервозность, торопливость, вставляет кабель, пальцы барабанят<br><span class="vb-label">Предметы:</span> книги, карта на столе, кабель зарядки, чашка с чаем</div><div class="author-text"><p>Марко бежит. Переулки Зеркального Города — одинаковые, как страницы чистой тетради. Но он уже знает дорогу. Четвёртый раз.</p>
+<p>Четвёртый раз к Леону. Первый — познакомились. Второй — число упало. Третий — Леон рассказал про артефакты. Четвёртый...</p>
+<p>Дверь открыта. Леон внутри — стоит у стола, пальцы барабанят по столешнице. Плечи сжаты. Взгляд — на дверь, на окно, на дверь.</p>
+<p>«Садись», — говорит Леон. Голос — тихий, торопливый. — «Я должен сказать тебе кое-что. Прежде чем...»</p>
+<p>Он замолкает. Достаёт из ящика стола кабель — короткий, с разъёмом, которого Марко не видел.</p>
+<p>«Дай телефон.»</p>
+<p>Марко протягивает Софу. Леон вставляет кабель. Экран вспыхивает — восемнадцать процентов.</p></div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Заряд... принят. Профессор... у вас оборудование Системы?»</em></p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Бывшее оборудование. Послушай, мальчик. Система не всегда была такой. Был человек — учитель. Лучший в городе. Он...</p></div><div class="author-text"><p>Леон моргает. Левый глаз — карий, тёплый. Правый — карий.</p>
+<p>«Он считал, что дети не должны...»</p>
+<p>Но тело кричит обратное. Марко смотрит — как учил Макс: не на слова, а на плечи, на руки, на взгляд.</p></div>
+    <div class="story-choice">
+      <p class="choice-question">Что делает Марко?</p>
+      <div class="choice-options">
+        <button class="choice-option" data-target="ep012_s01a1">Осмотреть комнату</button><button class="choice-option" data-target="ep012_s01b1">Спросить прямо</button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s01a1" data-index="1" data-next="ep012_s01a2">
+    <div class="scene-header">
+      <span class="scene-counter">2 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">визуальное доказательство стирания</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, стол с картой<br><span class="vb-label">Атмосфера:</span> масштаб катастрофы на одном листе<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> карта — половина Города зачёркнута<br><span class="vb-label">Марко:</span> ужас, понимание масштаба, наклоняется к столу<br><span class="vb-label">Предметы:</span> карта Зеркального Города, серые крестики, карандаш</div><div class="author-text"><p>Пока Леон ходит кругами, Марко осматривается. На столе — карта. Зеркальный Город сверху. Половина кварталов зачёркнута крестиками — серыми, жирными. Стёртые дома. Стёртые улицы. Город уменьшается с каждым днём.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s01a2" data-index="2" data-next="ep012_s02" data-merge-to="ep012_s02">
+    <div class="scene-header">
+      <span class="scene-counter">3 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">список — Леон следующий</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, оборот карты<br><span class="vb-label">Атмосфера:</span> обратный отсчёт — кто следующий уже известно<br><span class="vb-label">Камера:</span> extreme close-up<br><span class="vb-label">Фокус:</span> имя «Леон» — последнее живое<br><span class="vb-label">Марко:</span> шок, держит карту<br><span class="vb-label">Предметы:</span> список имён, серые зачёркивания, «Леон» — незачёркнутое</div><div class="author-text"><p>Марко переворачивает карту. На обороте — список имён. Большинство зачёркнуты серой ручкой. Марта. Олег. Даша. Ник. Серое, серое, серое. Последнее незачёркнутое: «Леон». Следующим будет он. Леон знает. Поэтому и дрожит.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s01b1" data-index="3" data-next="ep012_s01b2">
+    <div class="scene-header">
+      <span class="scene-counter">4 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">признание обречённого</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, тусклый свет<br><span class="vb-label">Атмосфера:</span> слова врут, тело — нет<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> руки Леона — трясутся, хотя голос ровный<br><span class="vb-label">Леон:</span> спокойствие на лице, дрожь в руках, стоит, руки трясутся</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Профессор, вы дрожите.</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Мальчик, я чувствую... как ластик. Внутри. Стирает по краям.</p></div><div class="author-text"><p>Леон говорит ровно. Как человек, который давно перестал бояться — потому что бояться больше нечем. Руки трясутся. Слова врут. Тело — нет.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s01b2" data-index="4" data-next="ep012_s02" data-merge-to="ep012_s02">
+    <div class="scene-header">
+      <span class="scene-counter">5 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">стирание изнутри</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, тусклый свет<br><span class="vb-label">Атмосфера:</span> прощание, которое ещё не произнесено<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> глаза Леона — ещё карие, но далёкие<br><span class="vb-label">Леон:</span> пустой взгляд, отстранённость, смотрит в стену</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Леон:</span> — Вчера я помнил — кто я. Сегодня — только имя. Завтра... может, и имя уйдёт.</p></div><div class="author-text"><p>Голос ровный. Руки трясутся. Слова врут. Тело — нет. Марко хочет обнять, но не решается. Леон уже где-то далеко — внутри себя, в тех комнатах, которые ластик ещё не стёр.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep012_s02" data-index="5" data-next="ep012_s03">
+    <div class="scene-header">
+      <span class="scene-counter">6 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">шок — союзник стёрт посреди фразы</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, момент стирания<br><span class="vb-label">Атмосфера:</span> вырвали страницу — прямо ту, которую читал<br><span class="vb-label">Камера:</span> extreme close-up<br><span class="vb-label">Фокус:</span> глаза Леона — радужка сереет на глазах<br><span class="vb-label">Леон:</span> радужка меняется — карая → серая, замирает посередине жеста<br><span class="vb-label">Марко:</span> ужас, рот приоткрыт, стоит напротив<br><span class="vb-label">Предметы:</span> серые глаза, число 40 на стене</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Профессор, что вы скрываете?</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Послушай, мальчик, я должен сказать тебе кое-что важное...</p>
+<p class="dl-narrator"><em>Прямо посередине фразы — глаза Леона СЕРЕЮТ. Радужка: карая, карая, серая. Как выцветающая фотография. Леон моргает.</em></p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — ...что? Кто ты? Где я?</p>
+<p class="dl-narrator"><em>Марко не дышит. Леон встаёт. Оглядывает комнату — как человек, который зашёл не в ту дверь. Берёт куртку со спинки стула. Идёт к выходу.</em></p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Профессор! Леон!</p>
+<p class="dl-narrator"><em>Человек оборачивается. Пустые глаза. Вежливая улыбка незнакомца.</em></p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Моё имя не Леон.</p></div><div class="author-text"><p>Уходит. Шаги — ровные, спокойные, чужие — затихают на лестнице.</p>
+<p>На стене напротив — число. Было 41. Теперь — 40.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep012_s03" data-index="6" data-next="ep012_s04">
+    <div class="scene-header">
+      <span class="scene-counter">7 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">пустота после стирания</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, пустая комната, открытая дверь<br><span class="vb-label">Атмосфера:</span> вырвали страницу — дочитать невозможно<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> пустой стул и чай для двоих<br><span class="vb-label">Марко:</span> оцепенение, стоит один посреди комнаты<br><span class="vb-label">Предметы:</span> пустой стул, чашка с паром, открытая дверь</div><div class="author-text"><p>Марко стоит один. Стул ещё тёплый. На столе — чашка чая. Пар поднимается. Леон заваривал чай. Для двоих. Секунду назад здесь был человек, который знал ответы. Теперь — пустой стул и остывающий чай.</p>
+<p>Как будто вырвали страницу из книги. Прямо ту, которую читал.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep012_s04" data-index="7" data-next="ep012_s04d1">
+    <div class="scene-header">
+      <span class="scene-counter">8 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">тепло после шока — но тепло ли?</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, Вера входит<br><span class="vb-label">Атмосфера:</span> забота или сбор информации?<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> объятие Веры — тепло снаружи, вопрос внутри<br><span class="vb-label">Вера:</span> тепло, забота, объятие, обнимает Марко<br><span class="vb-label">Марко:</span> слёзы, шок, прижимается к Вере<br><span class="vb-label">Предметы:</span> пустая комната, открытая дверь</div><div class="author-text"><p>Шаги. Другие — лёгкие, уверенные.</p>
+<p>Вера Андреевна. Тёплая улыбка. Мягкий голос. Руки — раскрытые, как для объятия.</p>
+<p>Она садится рядом. Обнимает. Тепло. Настоящее.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Вера:</span> — Марко. Бедный мальчик. Что случилось?</p>
+<p class="dl-narrator"><em>Марко открывает рот — и слова льются. Как вода из опрокинутого стакана.</em></p>
+<p class="dl-char"><span class="dl-who">Вера:</span> — Расскажи подробнее. Что именно он говорил? Мне нужно знать — чтобы тебя защитить.</p></div>
+    <div class="story-choice">
+      <p class="choice-question">Что рассказать Вере?</p>
+      <div class="choice-options">
+        <button class="choice-option" data-target="ep012_s04d1">Рассказать только про стирание</button><button class="choice-option" data-target="ep012_s05">Рассказать всё</button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s04d1" data-index="8" data-next="ep012_s04d2">
+    <div class="scene-header">
+      <span class="scene-counter">9 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">вопрос спрятан в заботу</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, Вера обнимает Марко<br><span class="vb-label">Атмосфера:</span> объятие как инструмент сбора информации<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> глаза Веры — собирающие<br><span class="vb-label">Вера:</span> забота, внимательные глаза, обнимает, наклоняется к уху<br><span class="vb-label">Марко:</span> слёзы, доверие, рассказывает</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Леон... стёрся. Прямо при мне. Посередине фразы.</p>
+<p class="dl-char"><span class="dl-who">Вера:</span> — Бедный мальчик. А что он говорил? До того, как...</p></div><div class="author-text"><p>Мягко. Вопрос внутри объятия. Марко не замечает — шок работает лучше любой манипуляции.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s04d2" data-index="9" data-next="ep012_s05" data-merge-to="ep012_s05">
+    <div class="scene-header">
+      <span class="scene-counter">10 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">информация ушла — бесплатно</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, Вера уходит к двери<br><span class="vb-label">Атмосфера:</span> тишина — как будто вынесли что-то ценное<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> спина Веры — уносит информацию<br><span class="vb-label">Вера:</span> спокойная улыбка, уходит, идёт к двери, спиной к Марко<br><span class="vb-label">Марко:</span> опустошение, сидит один</div><div class="author-text"><p>Марко рассказывает. Всё. Про Леона, про его оборудование, про то, что Леон хотел сказать про учителя. Про число. Про артефакты.</p>
+<p>Вера встаёт. Поправляет воротник. Улыбается — тепло.</p>
+<p>«Ты молодец. Тебе не нужно нести это одному.»</p>
+<p>Уходит.</p>
+<p>Тишина. Такая, как будто из комнаты вынесли что-то ценное.</p>
+<p>Стул Леона пустой. Чай остыл. Вера ушла. А Марко сидит и не может понять — почему после тёплых объятий так холодно.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep012_s05" data-index="10" data-blocking="true" data-next="ep012_s12" data-next-fail="ep012_s11">
+    <div class="scene-header">
+      <span class="scene-counter">11 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">урок из боли — формула вместо крика</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, Марко один, экран телефона<br><span class="vb-label">Атмосфера:</span> боль + знание — формула из необходимости<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> экран Софы — три шага формулы<br><span class="vb-label">Марко:</span> вина, сосредоточенность, сидит, смотрит на экран<br><span class="vb-label">Предметы:</span> {&#x27;экран телефона&#x27;: &#x27;наблюдение → чувство → предложение&#x27;}</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Камень. Тяжёлый. Прямо в середину груди. Марко привёл Голос к Леону. Четыре визита — четыре точки на карте. Его доверие — оружие. Которое убивает тех, кому он доверяет.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Марко... ты приходил к Леону четыре раза. Каждый раз — Голос узнавал. Леон стёрт не случайно.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Ты... привёл их к нему.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;И Вера только что спросила — и ты рассказал. Всё. Как ты рассказал? Ты НАПАДАЛ на неё словами? Нет. Ты даже не спорил. Ты просто... отдал.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Третий инструмент разведчика. ФОРМУЛА ВЫСКАЗЫВАНИЯ. Самый мощный — потому что он про то, КАК ты говоришь.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Три шага. Первый — НАБЛЮДЕНИЕ: «Я вижу, что...» Описываешь, что случилось. Без оценки. Просто факт. Не «ты вечно опаздываешь» — а «сегодня ты пришёл позже». Первое — обвинение. Второе — факт.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Второй — ЧУВСТВО: «Мне...» Говоришь, что чувствуешь ТЫ. Не что другой сделал плохо. Не «ты меня бесишь» — а «мне обидно». Своя карта, а не чужая.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Третий — ПРЕДЛОЖЕНИЕ: «Давай...» Приглашение, не приказ. Не «больше так не делай!» — а «давай спрашивать друг друга?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Контраст. Солдат: «Ты всегда берёшь мои вещи! Ты жадный!» Разведчик: «Я вижу, что ты взял мой карандаш. Мне неприятно. Давай спрашивать друг друга?» Одна ситуация. Солдат получает ссору. Разведчик — договорённость.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Подсказка. Слова-маркеры обвинения: «всегда», «никогда», «вечно», «специально», «ты такой-то». Услышал маркер — стоп. Это солдат. Голосование. Описание или обвинение?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Марко вспоминает, как кричал на Лину: «Ты никогда не слушаешь!»&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ты никогда не слушаешь!» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Никогда\&quot; — маркер обвинения! Разведчик скажет: \&quot;Я заметил, что ты не ответил.\&quot; Факт без атаки.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Никогда\&quot; — это правда? Ни разу в жизни? Или преувеличение?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Марко говорит Вере: «Я заметил, что вы не ответили на мой вопрос.»&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я заметил, что ты не ответил.» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Факт! Без \&quot;никогда\&quot;, без \&quot;вечно\&quot;. Наблюдение.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Есть слово-маркер? Или просто факт?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ты вечно опаздываешь!» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Вечно\&quot; — маркер! Разведчик скажет: \&quot;Сегодня ты пришёл позже.\&quot; Конкретный факт.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Вечно\&quot; — правда? Каждый раз без исключения?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Сегодня ты пришёл позже, чем мы договаривались.» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Сегодня. Позже. Конкретно. Без \&quot;вечно\&quot; — чистое наблюдение.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Сравни: \&quot;вечно опаздываешь\&quot; и \&quot;сегодня пришёл позже\&quot;. Где факт?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Марко вспоминает: когда одноклассники не помнили Софию, он крикнул: «Вы специально делаете вид, что её нет!»&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ты специально мешаешь!» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Специально\&quot; — ты решил за другого, что он ХОТЕЛ помешать. Обвинение, не факт.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Откуда знаешь, что специально? Читаешь мысли?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я заметила, что ты взял мою ручку без спроса.» Описание или обвинение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Описание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Обвинение&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Заметила — взял — ручку — без спроса. Факт. Ни одного маркера.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Есть \&quot;вечно\&quot;, \&quot;никогда\&quot;, \&quot;специально\&quot;? Или только факт?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep012_s12" data-index="11" data-next="ep012_s12d1">
+    <div class="scene-header">
+      <span class="scene-counter">12 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">вина и осознание</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, пустая комната<br><span class="vb-label">Атмосфера:</span> место преступления — Марко привёл сюда Голос<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> пустая комната — следы ушедших<br><span class="vb-label">Марко:</span> вина, решимость, стоит посреди комнаты, оглядывается<br><span class="vb-label">Предметы:</span> пустой стул, чашка, плед</div><div class="author-text"><p>Тормоз, зеркало, карта. Три инструмента. Сопереживание — почувствуй. Активное слушание — повтори. Формула — скажи про себя. Но с Верой... Марко не использовал ни одного. Вера обняла — и он отдал всё. Как солдат, который не сдался, а просто открыл ворота крепости и вышел навстречу.</p></div><div class="dialogue-block"><p class="dl-sofa"><span class="dl-who">📱 Софа:</span> <em>«Вера обнимала и спрашивала. Ты в шоке рассказал всё. Формула — не только для атаки. Это щит. Кто умеет говорить про себя — умеет и МОЛЧАТЬ про другое.»</em></p></div><div class="author-text"><p>Марко смотрит на комнату Леона. Пустая. Чашка на столе.</p></div>
+    <div class="story-choice">
+      <p class="choice-question">Что делает Марко?</p>
+      <div class="choice-options">
+        <button class="choice-option" data-target="ep012_s12d1">Проверить комнату Леона</button><button class="choice-option" data-target="ep012_s13">Уйти сразу</button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s12d1" data-index="12" data-next="ep012_s12d2">
+    <div class="scene-header">
+      <span class="scene-counter">13 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">тихие улики</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, пустая комната<br><span class="vb-label">Атмосфера:</span> тихая комната хранит следы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> чашка с остывшим чаем<br><span class="vb-label">Марко:</span> внимание, поиск улик, наклоняется к столу<br><span class="vb-label">Предметы:</span> чашка с остывшим чаем, сдвинутый плед, пустой стул</div><div class="author-text"><p>Комната Леона — пустая. Чашка на столе. Чай остыл. Плед сдвинут. Кто-то сидел здесь после Леона. Или ждал, пока он уйдёт.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s12d2" data-index="13" data-next="ep012_s12d3">
+    <div class="scene-header">
+      <span class="scene-counter">14 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">физическая улика — каблуки Веры</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, пол, следы<br><span class="vb-label">Атмосфера:</span> улика, которую страшно признать<br><span class="vb-label">Камера:</span> extreme close-up<br><span class="vb-label">Фокус:</span> следы каблуков — учительские<br><span class="vb-label">Марко:</span> шок, узнавание, присел, смотрит на пол<br><span class="vb-label">Предметы:</span> следы тонких каблуков, открытое окно</div><div class="author-text"><p>На полу — след. Каблуки. Тонкие, острые. Как у учительницы. Ведёт к окну. Окно открыто. Вера была здесь РАНЬШЕ. Или вернулась ПОСЛЕ. Марко стоит над следом. Сердце стучит в горле.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s12d3" data-index="14" data-next="ep012_s13" data-merge-to="ep012_s13">
+    <div class="scene-header">
+      <span class="scene-counter">15 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">хронология улик</div><div class="scene-branch">🌿 Бонусная сцена</div><div class="scene-flags-inner">🏁 found_vera_traces</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, экран Софы с данными<br><span class="vb-label">Атмосфера:</span> математика доказала то, что Марко боялся понять<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> экран Софы — числа, которые не врут<br><span class="vb-label">Марко:</span> понимание, страх, стоит над следом, смотрит на телефон<br><span class="vb-label">Предметы:</span> экран Софы с метками, следы каблуков</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Временна́я метка чая: 47 минут. Вера ушла 12 минут назад. Чай налит ДО прихода Марко. Кто-то был с Леоном. До тебя.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div><div class="author-text"><p>Марко смотрит на каблучный след. Ответ очевиден. Произнести — страшно.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep012_s13" data-index="15" data-blocking="true" data-next="ep013_s01" data-next-ep="ep_013.html">
+    <div class="scene-header">
+      <span class="scene-counter">16 / 16</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">мобилизация — все три инструмента</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, экран телефона<br><span class="vb-label">Атмосфера:</span> собрать всё вместе<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три инструмента разведчика<br><span class="vb-label">Марко:</span> решимость, смотрит на экран<br><span class="vb-label">Предметы:</span> {&#x27;экран с тремя инструментами&#x27;: &#x27;тормоз&#x27;}, зеркало, карта</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Три инструмента. Какой из них использован? Сопереживание, активное слушание или формула высказывания?&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко говорит Максу: «Я вижу, что тебе тяжело. Мне тоже бывает так. Давай поговорим?» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Наблюдение — чувство — предложение. Все три шага! Формула.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Сколько шагов? Наблюдение, чувство, предложение — что это?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Лине: «То есть ты хочешь, чтобы мы использовали артефакты только в крайнем случае?» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;То есть ты хочешь...\&quot; — пересказ! Зеркало. Активное слушание.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Повторяет чужие слова? Или говорит свои?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Тебе, наверное, обидно, когда говорят \&quot;будь сильным\&quot;?» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Заглянул в чужую душу. Тормоз. Сопереживание.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Чьи чувства называет? Свои или чужие?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я заметила, что ты взял мой ластик. Мне неприятно. Давай будем спрашивать?» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Наблюдение, чувство, предложение — три шага! Формула.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Три шага: что вижу, что чувствую, что предлагаю. Все три есть?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Правильно ли я понял, что тебе не нравится, когда я шучу про твой рюкзак?» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «\&quot;Правильно ли я понял...\&quot; — пересказ! Зеркало. Активное слушание.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Переспрашивает, чтобы убедиться. Какой приём?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Марко смотрит на пустой стул Леона.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко: «Я вижу, что это было важно — то, что он хотел сказать.» Какой инструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула высказывания&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Увидел, что важно, и сказал. Сопереживание.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Чьи чувства? Свои или чужие?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Я вижу, что ты расстроен. То есть ты хочешь найти брата? Давай подумаем, как.» Какие инструменты?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Сопереживание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активное слушание&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Все три&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Все три! Сопереживание — увидел чувство. Пересказ — повторил суть. Формула — наблюдение + чувство + предложение.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Посчитай: увидел чувство, повторил суть, предложил решение. Сколько инструментов?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Вера обняла Марко и сказала: «Бедный мальчик. Расскажи мне всё.» Использовала ли Вера формулу высказывания?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, формула&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Нет, не формула&quot;, &quot;c&quot;: true}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Вера НЕ описала наблюдение, НЕ предложила решение. Она попросила — и получила. Забота без формулы.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Три шага есть? Наблюдение? Чувство? Предложение? Или просто — \&quot;расскажи\&quot;?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко мог бы сказать Вере: «Я вижу, что Леон стёрт. Мне страшно. Давайте разберёмся вместе.» Это формула?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, формула&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, не формула&quot;, &quot;c&quot;: false}]}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Наблюдение, чувство, предложение. Формула бы защитила — Марко контролировал бы, что рассказывать.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Софа: «Три шага: вижу, чувствую, предлагаю. Все три есть?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: false}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Марко. Ты приходил к Леону четыре раза. Каждый раз Голос узнавал. Леон стёрт. И ты только что рассказал Вере — всё. Вопрос... кому попадёт информация на этот раз?&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+<div class="end-screen" id="endScreen">
+  <h2>Конец эпизода 12</h2>
+  <p>«Формула высказывания»</p>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="nav-spacer"></div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="btnPrev" disabled>← Назад</button>
+  <button class="nav-btn primary" id="btnNext">Дальше →</button>
+</div>
+
+<script>
+
+(function() {
+  var scenes = document.querySelectorAll('.scene');
+  var btnNext = document.getElementById('btnNext');
+  var btnPrev = document.getElementById('btnPrev');
+  var progress = document.getElementById('progress');
+  var endScreen = document.getElementById('endScreen');
+  var statsEl = document.getElementById('stats');
+  var currentIndex = 0, correctCount = 0, totalQuizzes = 0;
+  var answeredScenes = new Set();
+  var sceneMap = {};
+  scenes.forEach(function(s,i){ sceneMap[s.dataset.sceneId]=i; });
+  var navHistory=[], quizResults={}, choiceTarget=null;
+
+  function resolveNext(id){ return (id&&sceneMap[id]!==undefined)?sceneMap[id]:null; }
+
+  function showScene(index){
+    scenes.forEach(function(s){s.classList.remove('active');});
+    if(index<scenes.length){
+      scenes[index].classList.add('active');
+      scenes[index].scrollIntoView({behavior:'smooth',block:'start'});
+      initPhoneChat(scenes[index]);
+    }
+    currentIndex=index;
+    btnPrev.disabled=(navHistory.length===0);
+    updateProgress(); updateNextButton();
+    if(index>=scenes.length){
+      endScreen.classList.add('active');
+      statsEl.textContent='\u041f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u044b\u0445: '+correctCount+'/'+totalQuizzes;
+      btnNext.disabled=true;
+    } else { endScreen.classList.remove('active'); }
+  }
+
+  function goForward(){
+    if(currentIndex>=scenes.length) return;
+    var sc=scenes[currentIndex]; navHistory.push(currentIndex); var ni=null;
+    if(choiceTarget){ni=resolveNext(choiceTarget);choiceTarget=null;}
+    if(ni===null&&quizResults[currentIndex]){
+      if(quizResults[currentIndex]==='correct'&&sc.dataset.nextSuccess) ni=resolveNext(sc.dataset.nextSuccess);
+      else if(quizResults[currentIndex]==='wrong'&&sc.dataset.nextFail) ni=resolveNext(sc.dataset.nextFail);
+    }
+    if(ni===null&&sc.dataset.next) ni=resolveNext(sc.dataset.next);
+    if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+    if(ni===null) ni=currentIndex+1;
+    showScene(ni);
+  }
+  function goBack(){if(navHistory.length>0) showScene(navHistory.pop());}
+
+  function updateProgress(){
+    var v=new Set(navHistory);v.add(currentIndex);
+    progress.style.width=Math.min((v.size/scenes.length)*100,100)+'%';
+  }
+  function updateNextButton(){
+    if(currentIndex>=scenes.length){btnNext.disabled=true;return;}
+    var sc=scenes[currentIndex];
+    var blocking=sc.dataset.blocking==='true';
+    var answered=answeredScenes.has(currentIndex);
+    var chatPending=sc.dataset.chatPending==='true';
+    var choiceWait=sc.querySelector('.story-choice')&&!sc.querySelector('.choice-option.chosen');
+    btnNext.disabled=chatPending||(blocking&&!answered)||choiceWait;
+  }
+
+  btnNext.addEventListener('click',goForward);
+  btnPrev.addEventListener('click',goBack);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){if(!btnNext.disabled){e.preventDefault();btnNext.click();}}
+    else if(e.key==='ArrowLeft'){if(!btnPrev.disabled){e.preventDefault();btnPrev.click();}}
+  });
+
+  /* ── iPhone Chat Controller ────────────────────────── */
+  function initPhoneChat(sceneEl){
+    var phone=sceneEl.querySelector('.phone[data-chat-live]');
+    if(!phone||phone.dataset.chatInit) return;
+    phone.dataset.chatInit='true';
+    sceneEl.dataset.chatPending='true';
+    updateNextButton();
+
+    var msgs=JSON.parse(phone.dataset.chatMessages);
+    var chatEl=phone.querySelector('.chat-messages');
+    var bar=phone.querySelector('.chat-input-bar');
+    var inp=phone.querySelector('.chat-input');
+    var sendBtn=phone.querySelector('.send-btn');
+    var micBtn=phone.querySelector('.mic-btn');
+    var micLabel=phone.querySelector('.mic-label');
+    var si=Array.from(scenes).indexOf(sceneEl);
+    var idx=0, quizOk=null, busy=false;
+
+    function scroll(){chatEl.scrollTo({top:chatEl.scrollHeight,behavior:'smooth'});}
+    function now(){var d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+    function barsHtml(n){var r='';for(var i=0;i<n;i++){r+='<div class="voice-bar" style="height:'+(3+Math.floor(Math.random()*18))+'px"></div>';}return r;}
+    function setMode(m,t){bar.className='chat-input-bar imode-'+m;if(m==='text'&&t)inp.value=t;}
+
+    function showTyping(){
+      return new Promise(function(res){
+        var el=document.createElement('div');
+        el.className='typing-row';
+        el.innerHTML='<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+        chatEl.appendChild(el);scroll();
+        setTimeout(function(){el.remove();res();},800+Math.random()*400);
+      });
+    }
+
+    function addText(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',author:'\u270d\ufe0f \u0410\u0432\u0442\u043e\u0440',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div>'+m.x+'</div><div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    function addVoice(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      var ds='0:'+m.d.toString().padStart(2,'0');
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div class="voice-msg"><button class="voice-play">\u25b6</button><div class="voice-waveform">'+barsHtml(24)+'</div><span class="voice-duration">'+ds+'</span></div><div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+      row.querySelector('.voice-play').onclick=function(){
+        var btn=this;if(btn.dataset.p)return;btn.dataset.p='1';btn.textContent='\u23f8';
+        var bb=btn.parentElement.querySelectorAll('.voice-bar');
+        var ms=m.d*1000/bb.length,i=0;
+        var iv=setInterval(function(){
+          if(i<bb.length){bb[i].classList.add('played');i++;}
+          else{clearInterval(iv);delete btn.dataset.p;btn.textContent='\u25b6';bb.forEach(function(x){x.classList.remove('played');});}
+        },ms);
+      };
+    }
+
+    function addQuiz(m){
+      return new Promise(function(resolve){
+        totalQuizzes++;
+        var row=document.createElement('div');
+        row.className='msg-row incoming';
+        var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+        row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
+        chatEl.appendChild(row);scroll();
+        row.querySelectorAll('.quiz-btn').forEach(function(b){
+          b.onclick=function(){
+            var ok=b.dataset.c==='true';
+            b.classList.add(ok?'correct':'wrong');
+            row.querySelectorAll('.quiz-btn').forEach(function(x){
+              if(x!==b)x.classList.add('disabled');
+              if(x.dataset.c==='true'&&x!==b)x.classList.add('correct');
+            });
+            quizOk=ok;
+            if(ok){correctCount++;quizResults[si]='correct';}
+            else{quizResults[si]='wrong';}
+            resolve(ok);
+          };
+        });
+      });
+    }
+
+    function addUnlock(m){
+      return new Promise(function(resolve){
+        var row=document.createElement('div');
+        row.className='unlock-row';
+        row.innerHTML='<button class="unlock-btn">'+m.x+'</button>';
+        chatEl.appendChild(row);scroll();
+        row.querySelector('.unlock-btn').onclick=function(){
+          this.textContent='\ud83d\udd13 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043e';
+          this.classList.add('unlocked');
+          resolve();
+        };
+      });
+    }
+
+    sendBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko')return;
+      addText(m);inp.value='';setMode('disabled');
+      idx++;setTimeout(processNext,400);
+    });
+    micBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko'||m.t!=='voice')return;
+      if(micBtn.classList.contains('recording'))return;
+      micBtn.classList.add('recording');
+      micLabel.textContent='\u0417\u0430\u043f\u0438\u0441\u044c...';micLabel.classList.add('rec');
+      setTimeout(function(){
+        micBtn.classList.remove('recording');
+        micLabel.textContent='\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435';micLabel.classList.remove('rec');
+        addVoice(m);setMode('disabled');
+        idx++;setTimeout(processNext,400);
+      },1500);
+    });
+
+    async function processNext(){
+      if(idx>=msgs.length){
+        setMode('disabled');
+        delete sceneEl.dataset.chatPending;
+        answeredScenes.add(si);
+        updateNextButton();return;
+      }
+      busy=true;var m=msgs[idx];
+
+      if(m.s==='marko'){
+        busy=false;
+        setMode(m.t==='voice'?'voice':'text',m.x);
+        return;
+      }
+      if(m.wq&&quizOk===null){busy=false;setTimeout(processNext,300);return;}
+      if(m.wq){
+        if(m.ok===true&&!quizOk){idx++;busy=false;processNext();return;}
+        if(m.ok===false&&quizOk){idx++;busy=false;processNext();return;}
+      }
+      if(m.t==='unlock'){setMode('disabled');await addUnlock(m);idx++;busy=false;processNext();return;}
+      await showTyping();
+      if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='voice'){addVoice(m);}
+      else{addText(m);}
+      idx++;busy=false;setTimeout(processNext,350);
+    }
+
+    setTimeout(processNext,600);
+  }
+
+  /* ── Standard Quiz (non-chat) ──────────────────────── */
+  document.querySelectorAll('.quiz').forEach(function(quiz){
+    var buttons=quiz.querySelectorAll('.quiz-option');
+    var feedOk=quiz.querySelector('.quiz-feedback-ok');
+    var feedFail=quiz.querySelector('.quiz-feedback-fail');
+    var explanation=quiz.querySelector('.quiz-explanation');
+    var done=false;totalQuizzes++;
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done)return;done=true;
+        var ok=btn.dataset.correct==='true';
+        var se=quiz.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){btn.classList.add('selected-correct');correctCount++;if(feedOk)feedOk.hidden=false;quizResults[si]='correct';}
+        else{btn.classList.add('selected-wrong');buttons.forEach(function(b){if(b.dataset.correct==='true')b.classList.add('reveal-correct');});if(feedFail)feedFail.hidden=false;quizResults[si]='wrong';}
+        if(explanation)explanation.hidden=false;
+        buttons.forEach(function(b){b.disabled=true;});
+        answeredScenes.add(si);updateNextButton();
+      });
+    });
+  });
+
+  /* ── Choice (auto-advance) ─────────────────────────── */
+  document.querySelectorAll('.choice-option').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var block=btn.closest('.story-choice');
+      block.querySelectorAll('.choice-option').forEach(function(b){b.classList.remove('chosen');});
+      btn.classList.add('chosen');
+      var t=btn.dataset.target;
+      if(t&&sceneMap[t]!==undefined) choiceTarget=t;
+      updateNextButton();
+      setTimeout(goForward,400);
+    });
+  });
+
+  /* ── Visual Brief Toggle ───────────────────────────── */
+  document.querySelectorAll('.visual-brief').forEach(function(vb){
+    var toggle=document.createElement('span');
+    toggle.className='vb-toggle';
+    toggle.textContent='\ud83c\udfa8 Visual brief \u25b8';
+    toggle.addEventListener('click',function(){
+      vb.classList.toggle('open');
+      toggle.textContent=vb.classList.contains('open')?'\ud83c\udfa8 Visual brief \u25be':'\ud83c\udfa8 Visual brief \u25b8';
+    });
+    vb.parentNode.insertBefore(toggle,vb);
+  });
+
+  showScene(0);
+})();
+
+</script>
+</body>
+</html>

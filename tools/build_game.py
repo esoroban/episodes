@@ -11,6 +11,7 @@ Usage:
     python tools/build_game.py ep_001 ep_002    # multiple
 """
 
+import re
 import sys
 import yaml
 import html
@@ -18,10 +19,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
+EPISODES_DIR = ROOT / "pipeline" / "episodes"
 OUTPUT_DIR = ROOT / "publish" / "game"
 
 
 def load_episode(path: Path) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_yaml(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -85,6 +92,253 @@ def render_author_text(text) -> str:
     paragraphs = [p.strip() for p in text.split("\n") if p.strip()]
     return "\n".join(f"<p>{esc(p)}</p>" for p in paragraphs)
 
+
+def is_sofa_chat_scene(scene: dict) -> bool:
+    """True if this scene should render as an iPhone Telegram chat."""
+    chars = scene.get("characters_present", [])
+    if not any(c.lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars):
+        return False
+    return bool(
+        scene.get("dialogue")
+        or scene.get("unlock_button")
+        or any("correct" in o for o in scene.get("options", []))
+    )
+
+
+def build_chat_messages(scene: dict) -> list:
+    """Build list of chat message dicts for one scene."""
+    msgs = []
+
+    at = scene.get("author_text", "")
+    if at:
+        for p in str(at).strip().split("\n"):
+            p = p.strip()
+            if p:
+                msgs.append({"t": "text", "s": "author", "x": p})
+
+    for d in scene.get("dialogue", []):
+        if not isinstance(d, dict):
+            continue
+        who = d.get("who", "")
+        line = str(d.get("line", "")).strip()
+        w = who.lower()
+        if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
+            msgs.append({"t": "text", "s": "author", "x": line})
+        elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
+            msgs.append({"t": "text", "s": "sofa", "x": line})
+        elif w in ("\u043c\u0430\u0440\u043a\u043e", "marko"):
+            msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
+        else:
+            msgs.append({"t": "text", "s": w, "x": line})
+
+    quiz_opts = [o for o in scene.get("options", []) if "correct" in o]
+    if quiz_opts:
+        q = scene.get("question", "")
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in quiz_opts]
+        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
+        fb_ok = str(scene.get("feedback_success", "")).strip()
+        fb_fail = str(scene.get("feedback_soft_fail", "")).strip()
+        # correct_logic is shown only in the hidden quiz-explanation div,
+        # NOT as a chat message — to avoid duplicating feedback_success
+        if fb_ok:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
+        if fb_fail:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
+
+    unlock = scene.get("unlock_button")
+    if unlock:
+        msgs.append({"t": "unlock", "x": unlock.get("text", "\U0001f513 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u0442\u044c")})
+        rev = unlock.get("reveals", {})
+        if rev:
+            ds = str(rev.get("duration", "3"))
+            dur = int(ds.split(":")[-1]) if ":" in ds else int(ds)
+            msgs.append({"t": "voice", "s": "sofia", "d": dur})
+
+    return msgs
+
+
+def group_phone_chains(scenes: list) -> list:
+    """
+    Group consecutive main-line Sofa scenes into phone chains.
+    Branch scenes (soft_fail_loop etc.) are skipped — their content is
+    already embedded in quiz JSON as wq:true feedback messages.
+    Returns list of units: {"type": "single"|"chain", "scene"|"scenes": ...}
+    """
+    units = []
+    absorbed = set()  # scene_ids absorbed into chains
+
+    i = 0
+    while i < len(scenes):
+        s = scenes[i]
+        sid = s.get("scene_id", "")
+
+        if s.get("branch_type"):
+            # Branch scenes: if absorbed into a chain, skip; else render standalone
+            if sid not in absorbed:
+                units.append({"type": "single", "scene": s})
+            i += 1
+            continue
+
+        if is_sofa_chat_scene(s):
+            chain = [s]
+            chain_loc = s.get("location", "")
+            j = i + 1
+            while j < len(scenes):
+                ns = scenes[j]
+                if ns.get("branch_type"):
+                    # Mark branch scenes as absorbed (skip their standalone render)
+                    absorbed.add(ns.get("scene_id", ""))
+                    j += 1
+                    continue
+                # Only merge consecutive Sofa scenes at THE SAME location
+                if is_sofa_chat_scene(ns) and ns.get("location", "") == chain_loc:
+                    chain.append(ns)
+                    j += 1
+                else:
+                    break
+            if len(chain) > 1:
+                units.append({"type": "chain", "scenes": chain})
+            else:
+                units.append({"type": "single", "scene": chain[0]})
+            i = j
+        else:
+            units.append({"type": "single", "scene": s})
+            i += 1
+
+    return units
+
+
+def _phone_html(msg_attr: str) -> str:
+    """Build the iPhone frame HTML around a chat."""
+    crack = (
+        '<svg viewBox="0 0 375 812" fill="none">'
+        '<path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315'
+        'L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780'
+        'L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/>'
+        '<path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342"'
+        ' stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/>'
+        '<path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/>'
+        '<path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/>'
+        '<path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342'
+        'L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812"'
+        ' stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg>'
+    )
+    return (
+        f'<div class="phone" data-chat-messages="{msg_attr}" data-chat-live="true">'
+        '<div class="phone-notch"></div><div class="phone-home"></div>'
+        f'<div class="crack-overlay">{crack}</div>'
+        '<div class="chat-wrap">'
+        '<div class="status-bar"><span class="sb-time">9:41</span>'
+        '<span class="sb-icons">\u26a1 5G \U0001f50b</span></div>'
+        '<div class="chat-header">'
+        '<span class="ch-back">\u2039</span>'
+        '<div class="ch-avatar">\U0001f4f1</div>'
+        '<div class="ch-info"><div class="ch-name">\u0421\u043e\u0444\u0430</div>'
+        '<div class="ch-status">\u043e\u043d\u043b\u0430\u0439\u043d</div></div></div>'
+        '<div class="chat-messages"></div>'
+        '<div class="chat-input-bar imode-disabled">'
+        '<div class="ti-group">'
+        '<input type="text" class="chat-input" readonly placeholder="\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435...">'
+        '<button class="send-btn">\u27a4</button></div>'
+        '<div class="vi-group"><button class="mic-btn">\U0001f3a4</button>'
+        '<span class="mic-label">\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435</span></div>'
+        '<span class="disabled-label">\u041e\u0436\u0438\u0434\u0430\u0439\u0442\u0435...</span>'
+        '</div></div></div>'
+    )
+
+
+def render_scene_chain(chain: list, index: int, total: int) -> str:
+    """Render a merged phone chain (multiple Sofa scenes) as one scene section."""
+    import json as _json
+
+    first = chain[0]
+    last = chain[-1]
+
+    sid = first.get("scene_id", f"chain_{index}")
+    chars = first.get("characters_present", [])
+    location = first.get("location", "")
+    time_str = first.get("time", "")
+    mood = first.get("mood", "")
+    vb = first.get("visual_brief", {})
+
+    # Collect all messages from all scenes in chain
+    all_msgs = []
+    for s in chain:
+        all_msgs.extend(build_chat_messages(s))
+
+    # Blocking if any scene has quiz or unlock
+    has_blocking = any(
+        s.get("unlock_button") or any("correct" in o for o in s.get("options", []))
+        for s in chain
+    )
+    blocking_attr = ' data-blocking="true"' if has_blocking else ""
+
+    # Navigation from last main-line scene
+    next_default = last.get("next_default", "")
+    next_success = last.get("next_success", "")
+    next_fail = last.get("next_fail", "")
+    merge_to = last.get("merge_to", "")
+
+    nav_attrs = ""
+    if next_default:
+        nav_attrs += f' data-next="{esc(next_default)}"'
+    if next_success:
+        nav_attrs += f' data-next-success="{esc(next_success)}"'
+    if next_fail:
+        nav_attrs += f' data-next-fail="{esc(next_fail)}"'
+    if merge_to:
+        nav_attrs += f' data-merge-to="{esc(merge_to)}"'
+
+    ep_prefix = f"ep{int(first.get('episode_id', 0)):03d}_"
+    for target in (next_default, next_success):
+        if target and not target.startswith(ep_prefix):
+            m = re.match(r"ep(\d+)_", target)
+            if m:
+                nav_attrs += f' data-next-ep="ep_{int(m.group(1)):03d}.html"'
+                break
+
+    msg_attr = html.escape(_json.dumps(all_msgs, ensure_ascii=False), quote=True)
+    phone = _phone_html(msg_attr)
+    vb_html = render_visual_brief(vb)
+
+    loc_time = ""
+    if location or time_str:
+        parts = []
+        if location:
+            parts.append(esc(location))
+        if time_str:
+            parts.append(esc(time_str))
+        loc_time = f'<div class="scene-location">{" \u00b7 ".join(parts)}</div>'
+    chars_html = f'<div class="scene-chars">{", ".join(esc(c) for c in chars)}</div>' if chars else ""
+    mood_html = f'<div class="scene-mood">{esc(mood)}</div>' if mood else ""
+    meta_parts = [p for p in [loc_time, chars_html, mood_html] if p]
+    meta_html = ""
+    if meta_parts:
+        meta_html = (
+            '<details class="scene-meta"><summary>\u2139\ufe0f</summary>'
+            + "".join(meta_parts)
+            + "</details>"
+        )
+
+    return f"""
+  <section class="scene scene-dialogue" data-scene-id="{esc(sid)}" data-index="{index}"{blocking_attr}{nav_attrs}>
+    <div class="scene-header">
+      <span class="scene-counter">{index + 1} / {total}</span>
+      {meta_html}
+    </div>
+    <div class="scene-content">
+      {vb_html}{phone}
+    </div>
+  </section>"""
+
+
+def render_chat(scene: dict) -> str:
+    """Render scene as iPhone Telegram chat with cracked screen."""
+    import json as _json
+
+    msgs = build_chat_messages(scene)
+    msg_attr = html.escape(_json.dumps(msgs, ensure_ascii=False), quote=True)
+    return _phone_html(msg_attr)
 
 def render_quiz(scene: dict, scene_id: str) -> str:
     """Render quiz interaction."""
@@ -150,19 +404,6 @@ def render_choice(scene: dict) -> str:
     </div>"""
 
 
-def scene_type_icon(t: str) -> str:
-    icons = {
-        "narrative": "\U0001f4d6",
-        "dialogue": "\U0001f4ac",
-        "quiz": "\u2753",
-        "choice": "\U0001f500",
-        "feedback": "\U0001f4a1",
-        "transition": "\U0001f6b6",
-        "cliffhanger": "\u26a1",
-    }
-    return icons.get(t, "\u25b8")
-
-
 def render_scene(scene: dict, index: int, total: int) -> str:
     """Render a single scene as a game card."""
     sid = scene.get("scene_id", f"scene_{index}")
@@ -201,56 +442,65 @@ def render_scene(scene: dict, index: int, total: int) -> str:
         }
         branch_html = f'<div class="scene-branch">{labels.get(branch_type, branch_type)}</div>'
 
-    icon = scene_type_icon(stype)
-
     content_parts = []
 
     vb_html = render_visual_brief(vb)
     if vb_html:
         content_parts.append(vb_html)
 
-    author_text = scene.get("author_text", "")
-    if author_text:
-        content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')
-
     dialogue = scene.get("dialogue", [])
-    if dialogue:
-        content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue)}</div>')
-
-    # author_text_after (appears after dialogue in some scenes)
+    author_text = scene.get("author_text", "")
     author_text_after = scene.get("author_text_after", "")
-    if author_text_after:
-        content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
 
-    # Standard options (quiz or choice)
-    if scene.get("options") and any("correct" in o for o in scene.get("options", [])):
-        content_parts.append(render_quiz(scene, sid))
+    # Sofa scenes render as Telegram-style chat (dialogue, quiz, unlock)
+    is_sofa_chat = (
+        any(c.lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars)
+        and (
+            dialogue
+            or scene.get("unlock_button")
+            or (scene.get("options") and any("correct" in o for o in scene.get("options", [])))
+        )
+    )
 
-    if scene.get("options") and any(
-        "next" in o and "correct" not in o for o in scene.get("options", [])
-    ):
-        content_parts.append(render_choice(scene))
+    if is_sofa_chat:
+        content_parts.append(render_chat(scene))
+        # author_text_after renders OUTSIDE chat (narrative reflection)
+        if author_text_after:
+            content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
+    else:
+        if author_text:
+            content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')
+        if dialogue:
+            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue)}</div>')
+        if author_text_after:
+            content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
 
-    # interactions list (ep_004 style: multiple interactions in one scene)
-    for idx, inter in enumerate(scene.get("interactions", [])):
-        inter_id = f"{sid}_i{idx}"
-        if inter.get("interaction_type") == "vote" or any("correct" in o for o in inter.get("options", [])):
-            content_parts.append(render_quiz(inter, inter_id))
-        elif inter.get("interaction_type") == "choice" or any("next" in o and "correct" not in o for o in inter.get("options", [])):
-            content_parts.append(render_choice(inter))
+        # Standard options (quiz or choice) — only in non-chat mode
+        if scene.get("options") and any("correct" in o for o in scene.get("options", [])):
+            content_parts.append(render_quiz(scene, sid))
 
-    # followup_interaction (ep_002 style: secondary interaction after quiz)
-    followup = scene.get("followup_interaction", {})
-    if followup and followup.get("options"):
-        if any("correct" in o for o in followup["options"]):
-            content_parts.append(render_quiz(followup, f"{sid}_followup"))
-        elif any("next" in o for o in followup["options"]):
-            content_parts.append(render_choice(followup))
+        if scene.get("options") and any(
+            "next" in o and "correct" not in o for o in scene.get("options", [])
+        ):
+            content_parts.append(render_choice(scene))
+
+        # interactions list (ep_004 style)
+        for idx, inter in enumerate(scene.get("interactions", [])):
+            inter_id = f"{sid}_i{idx}"
+            if inter.get("interaction_type") == "vote" or any("correct" in o for o in inter.get("options", [])):
+                content_parts.append(render_quiz(inter, inter_id))
+            elif inter.get("interaction_type") == "choice" or any("next" in o and "correct" not in o for o in inter.get("options", [])):
+                content_parts.append(render_choice(inter))
+
+        # followup_interaction (ep_002 style)
+        followup = scene.get("followup_interaction", {})
+        if followup and followup.get("options"):
+            if any("correct" in o for o in followup["options"]):
+                content_parts.append(render_quiz(followup, f"{sid}_followup"))
+            elif any("next" in o for o in followup["options"]):
+                content_parts.append(render_choice(followup))
 
     flags_set = scene.get("set_flags", [])
-    flags_html = ""
-    if flags_set:
-        flags_html = f'<div class="scene-flags">\U0001f3c1 {", ".join(esc(f) for f in flags_set)}</div>'
 
     extra_class = f" scene-{stype}"
     if branch_type:
@@ -261,22 +511,65 @@ def render_scene(scene: dict, index: int, total: int) -> str:
     has_blocking_quiz = bool(
         (scene.get("options") and any("correct" in o for o in scene.get("options", [])))
         or any(any("correct" in o for o in inter.get("options", [])) for inter in scene.get("interactions", []))
+        or scene.get("unlock_button")
     )
     blocking_attr = ' data-blocking="true"' if has_blocking_quiz else ""
 
+    # Navigation data attributes for graph-based navigation
+    nav_attrs = ""
+    next_default = scene.get("next_default", "")
+    next_success = scene.get("next_success", "")
+    next_fail = scene.get("next_fail", "")
+    merge_to = scene.get("merge_to", "")
+    if next_default:
+        nav_attrs += f' data-next="{esc(next_default)}"'
+    if next_success:
+        nav_attrs += f' data-next-success="{esc(next_success)}"'
+    if next_fail:
+        nav_attrs += f' data-next-fail="{esc(next_fail)}"'
+    if merge_to:
+        nav_attrs += f' data-merge-to="{esc(merge_to)}"'
+
+    # Cross-episode link: next_default points to another episode's scene
+    ep_prefix = f"ep{int(scene.get('episode_id', 0)):03d}_"
+    for target in (next_default, next_success):
+        if target and not target.startswith(ep_prefix):
+            m = re.match(r"ep(\d+)_", target)
+            if m:
+                nav_attrs += f' data-next-ep="ep_{int(m.group(1)):03d}.html"'
+                break
+
+    # Build collapsible metadata
+    meta_parts = []
+    if loc_time:
+        meta_parts.append(loc_time)
+    if chars_html:
+        meta_parts.append(chars_html)
+    if mood_html:
+        meta_parts.append(mood_html)
+    if branch_html:
+        meta_parts.append(branch_html)
+    if flags_set:
+        meta_parts.append(f'<div class="scene-flags-inner">\U0001f3c1 {", ".join(esc(f) for f in flags_set)}</div>')
+
+    meta_html = ""
+    if meta_parts:
+        meta_html = (
+            '<details class="scene-meta">'
+            '<summary>\u2139\ufe0f</summary>'
+            f'{"".join(meta_parts)}'
+            '</details>'
+        )
+
     return f"""
-  <section class="scene{extra_class}" data-scene-id="{esc(sid)}" data-index="{index}"{blocking_attr}>
+  <section class="scene{extra_class}" data-scene-id="{esc(sid)}" data-index="{index}"{blocking_attr}{nav_attrs}>
     <div class="scene-header">
-      <div class="scene-counter">{icon} \u0421\u0446\u0435\u043d\u0430 {index + 1}/{total}</div>
-      {loc_time}
-      {chars_html}
-      {mood_html}
-      {branch_html}
+      <span class="scene-counter">{index + 1} / {total}</span>
+      {meta_html}
     </div>
     <div class="scene-content">
       {"".join(content_parts)}
     </div>
-    {flags_html}
   </section>"""
 
 
@@ -314,25 +607,25 @@ body {
 }
 .episode-header {
   text-align: center;
-  padding: 3rem 1.5rem 2rem;
+  padding: 1.2rem 1rem 0.8rem;
   background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
 }
 .episode-header h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
   letter-spacing: -0.02em;
 }
 .ep-lesson {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   font-family: var(--font-ui);
 }
 .ep-terms {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--accent);
   font-family: var(--font-ui);
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 .scene {
   margin: 0 1rem 1.5rem;
@@ -349,16 +642,27 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 .scene-header {
-  padding: 1rem 1.25rem 0.75rem;
+  padding: 0.4rem 1rem;
   border-bottom: 1px solid var(--border);
   font-family: var(--font-ui);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.scene-counter { font-weight: 600; margin-bottom: 0.3rem; color: var(--accent); }
-.scene-location { color: var(--text-muted); }
-.scene-chars { color: var(--text-muted); font-size: 0.8rem; }
-.scene-mood { color: var(--text-muted); font-size: 0.8rem; font-style: italic; margin-top: 0.2rem; }
-.scene-branch { color: var(--branch); font-size: 0.8rem; font-weight: 600; margin-top: 0.3rem; }
+.scene-counter { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; }
+.scene-meta { font-size: 0.75rem; }
+.scene-meta summary {
+  cursor: pointer; color: var(--text-muted); list-style: none;
+  font-size: 0.85rem; user-select: none;
+}
+.scene-meta summary::-webkit-details-marker { display: none; }
+.scene-meta[open] { padding-bottom: 0.3rem; }
+.scene-location { color: var(--text-muted); margin-top: 0.3rem; }
+.scene-chars { color: var(--text-muted); font-size: 0.75rem; }
+.scene-mood { color: var(--text-muted); font-size: 0.75rem; font-style: italic; margin-top: 0.15rem; }
+.scene-branch { color: var(--branch); font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem; }
+.scene-flags-inner { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
 .scene-content { padding: 1.25rem; }
 .author-text p { margin-bottom: 0.75rem; }
 .dialogue-block { margin: 0.75rem 0; }
@@ -451,6 +755,175 @@ body {
 .end-screen h2 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
 .end-screen p { color: var(--text-muted); font-family: var(--font-ui); }
 .end-screen .stats { margin-top: 1.5rem; font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); }
+/* ====== iPhone Telegram Chat ====== */
+.phone {
+  width: 340px; height: 680px;
+  border-radius: 42px; border: 4px solid #2a2a2a;
+  background: #fff; position: relative; overflow: hidden;
+  margin: 0.5rem auto;
+  box-shadow: 0 0 0 2px #1a1a1a, 0 12px 40px rgba(0,0,0,0.4), inset 0 0 0 1px #333;
+}
+.phone-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 28px; background: #000;
+  border-radius: 0 0 18px 18px; z-index: 50;
+}
+.phone-notch::after {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 50px; height: 5px; background: #1a1a1a; border-radius: 3px;
+}
+.phone-home {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 4px; background: rgba(0,0,0,0.2); border-radius: 3px; z-index: 50;
+}
+.crack-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100; pointer-events: none;
+}
+.crack-overlay svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.chat-wrap {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; flex-shrink: 0; background: #517da2;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 20px 4px; font-size: 11px; color: #fff; z-index: 40;
+}
+.sb-time { font-weight: 600; }
+.sb-icons { font-size: 10px; }
+.chat-header {
+  flex-shrink: 0; background: #517da2; border-bottom: 1px solid #4a7393;
+  padding: 6px 14px 8px; display: flex; align-items: center; gap: 8px; z-index: 30;
+}
+.ch-back { color: #fff; font-size: 18px; }
+.ch-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #7cb8e4, #4a90c4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.ch-info { display: flex; flex-direction: column; }
+.ch-name { font-size: 14px; font-weight: 600; color: #fff; }
+.ch-status { font-size: 11px; color: #d4e8f7; }
+.chat-messages {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 8px 7px; display: flex; flex-direction: column; gap: 2px;
+  background: #c8d9e6;
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 60%);
+}
+.chat-messages::-webkit-scrollbar { width: 0; }
+/* Bubbles — light theme */
+.msg-row { display: flex; max-width: 82%; animation: fadeIn 0.25s ease-out; }
+.msg-row.incoming { align-self: flex-start; }
+.msg-row.outgoing { align-self: flex-end; }
+.bubble {
+  padding: 5px 9px; border-radius: 12px; font-size: 13px;
+  line-height: 1.4; color: #000; word-wrap: break-word;
+}
+.msg-row.incoming .bubble { border-top-left-radius: 4px; }
+.msg-row.outgoing .bubble { border-top-right-radius: 4px; }
+.bubble.sofa, .bubble.sofia { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.bubble.author {
+  background: #f0f0f5; border-left: 3px solid #9e9e9e;
+  font-style: italic; box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.bubble.marko { background: #eeffde; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.sender-name { font-size: 11px; font-weight: 600; margin-bottom: 1px; }
+.sender-name.sofa, .sender-name.sofia { color: #3390ec; }
+.sender-name.author { color: #7a7a7a; }
+.sender-name.marko { color: #4fae3b; }
+.msg-time { font-size: 9px; color: rgba(0,0,0,0.35); text-align: right; margin-top: 1px; }
+/* Typing */
+.typing-row { display: flex; align-self: flex-start; animation: fadeIn 0.2s ease-out; }
+.typing-bubble {
+  background: #fff; padding: 9px 14px; border-radius: 12px;
+  border-top-left-radius: 4px; display: flex; align-items: center; gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.typing-dot {
+  width: 5px; height: 5px; background: #3390ec; border-radius: 50%;
+  animation: tBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tBounce {
+  0%,60%,100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+/* Voice messages */
+.voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
+.voice-play {
+  width: 28px; height: 28px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 11px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.voice-play:hover { background: #4aa0f0; }
+.voice-waveform {
+  flex: 1; display: flex; align-items: center; gap: 1.5px; height: 20px;
+}
+.voice-bar {
+  width: 2px; background: rgba(0,0,0,0.15); border-radius: 2px;
+  transition: background 0.08s;
+}
+.voice-bar.played { background: #3390ec; }
+.voice-duration { font-size: 10px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
+/* Quiz buttons */
+.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+.quiz-btn {
+  background: #3390ec; color: #fff; border: none; border-radius: 7px;
+  padding: 8px 10px; font-size: 12px; cursor: pointer;
+  transition: all 0.2s; text-align: center;
+}
+.quiz-btn:hover { background: #4aa0f0; }
+.quiz-btn.correct { background: #4caf50 !important; cursor: default; }
+.quiz-btn.wrong { background: #e53935 !important; cursor: default; }
+.quiz-btn.disabled { opacity: 0.45; cursor: default; pointer-events: none; }
+/* Unlock */
+.unlock-row { display: flex; justify-content: center; padding: 5px 0; animation: fadeIn 0.25s ease-out; }
+.unlock-btn {
+  background: rgba(255,255,255,0.85); color: #3390ec; border: 1.5px solid #3390ec;
+  border-radius: 16px; padding: 7px 16px; font-size: 12px; cursor: pointer;
+}
+.unlock-btn:hover { background: #fff; }
+.unlock-btn.unlocked { background: rgba(255,255,255,0.5); border-color: #aaa; color: #999; cursor: default; }
+/* Input bar */
+.chat-input-bar {
+  flex-shrink: 0; background: #fff; border-top: 1px solid #dfe3e7;
+  padding: 5px 8px 22px; display: flex; align-items: center; gap: 5px; z-index: 30;
+}
+.chat-input {
+  flex: 1; background: #f0f2f5; border: 1px solid #dfe3e7; border-radius: 16px;
+  padding: 7px 12px; color: #000; font-size: 13px; outline: none;
+}
+.chat-input::placeholder { color: rgba(0,0,0,0.3); }
+.chat-input:read-only { cursor: default; }
+.send-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.send-btn:hover { background: #4aa0f0; }
+.send-btn:active { transform: scale(0.9); }
+.mic-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mic-btn.recording { background: #e53935; animation: micPulse 0.9s infinite; }
+@keyframes micPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+.mic-label { flex: 1; color: rgba(0,0,0,0.35); font-size: 12px; padding: 0 3px; }
+.mic-label.rec { color: #e53935; }
+.ti-group, .vi-group { display: flex; flex: 1; gap: 5px; align-items: center; }
+.imode-text .vi-group, .imode-voice .ti-group,
+.imode-disabled .ti-group, .imode-disabled .vi-group { display: none; }
+.disabled-label {
+  flex: 1; text-align: center; color: rgba(0,0,0,0.25); font-size: 11px; display: none;
+}
+.imode-disabled .disabled-label { display: block; }
+
 .nav-spacer { height: 4rem; }
 @media (max-width: 600px) {
   .scene { margin: 0 0.5rem 1rem; }
@@ -460,134 +933,270 @@ body {
 }"""
 
 
-JS = """
+JS = r"""
 (function() {
-  const scenes = document.querySelectorAll('.scene');
-  const btnNext = document.getElementById('btnNext');
-  const btnPrev = document.getElementById('btnPrev');
-  const progress = document.getElementById('progress');
-  const endScreen = document.getElementById('endScreen');
-  const statsEl = document.getElementById('stats');
+  var scenes = document.querySelectorAll('.scene');
+  var btnNext = document.getElementById('btnNext');
+  var btnPrev = document.getElementById('btnPrev');
+  var progress = document.getElementById('progress');
+  var endScreen = document.getElementById('endScreen');
+  var statsEl = document.getElementById('stats');
+  var currentIndex = 0, correctCount = 0, totalQuizzes = 0;
+  var answeredScenes = new Set();
+  var sceneMap = {};
+  scenes.forEach(function(s,i){ sceneMap[s.dataset.sceneId]=i; });
+  var navHistory=[], quizResults={}, choiceTarget=null;
 
-  let currentIndex = 0;
-  let correctCount = 0;
-  let totalQuizzes = 0;
-  let answeredScenes = new Set();
+  function resolveNext(id){ return (id&&sceneMap[id]!==undefined)?sceneMap[id]:null; }
 
-  const sceneMap = {};
-  scenes.forEach((s, i) => { sceneMap[s.dataset.sceneId] = i; });
-
-  function showScene(index) {
-    scenes.forEach(s => s.classList.remove('active'));
-    if (index < scenes.length) {
+  function showScene(index){
+    scenes.forEach(function(s){s.classList.remove('active');});
+    if(index<scenes.length){
       scenes[index].classList.add('active');
-      scenes[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scenes[index].scrollIntoView({behavior:'smooth',block:'start'});
+      initPhoneChat(scenes[index]);
     }
-    currentIndex = index;
-    btnPrev.disabled = (index === 0);
-    updateProgress();
-    updateNextButton();
-    if (index >= scenes.length) {
+    currentIndex=index;
+    btnPrev.disabled=(navHistory.length===0);
+    updateProgress(); updateNextButton();
+    if(index>=scenes.length){
       endScreen.classList.add('active');
-      statsEl.textContent = 'Правильных ответов: ' + correctCount + ' / ' + totalQuizzes;
-      btnNext.disabled = true;
-    } else {
-      endScreen.classList.remove('active');
+      statsEl.textContent='\u041f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u044b\u0445: '+correctCount+'/'+totalQuizzes;
+      btnNext.disabled=true;
+    } else { endScreen.classList.remove('active'); }
+  }
+
+  function goForward(){
+    if(currentIndex>=scenes.length) return;
+    var sc=scenes[currentIndex]; navHistory.push(currentIndex); var ni=null;
+    if(choiceTarget){ni=resolveNext(choiceTarget);choiceTarget=null;}
+    if(ni===null&&quizResults[currentIndex]){
+      if(quizResults[currentIndex]==='correct'&&sc.dataset.nextSuccess) ni=resolveNext(sc.dataset.nextSuccess);
+      else if(quizResults[currentIndex]==='wrong'&&sc.dataset.nextFail) ni=resolveNext(sc.dataset.nextFail);
     }
+    if(ni===null&&sc.dataset.next) ni=resolveNext(sc.dataset.next);
+    if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+    if(ni===null) ni=currentIndex+1;
+    showScene(ni);
+  }
+  function goBack(){if(navHistory.length>0) showScene(navHistory.pop());}
+
+  function updateProgress(){
+    var v=new Set(navHistory);v.add(currentIndex);
+    progress.style.width=Math.min((v.size/scenes.length)*100,100)+'%';
+  }
+  function updateNextButton(){
+    if(currentIndex>=scenes.length){btnNext.disabled=true;return;}
+    var sc=scenes[currentIndex];
+    var blocking=sc.dataset.blocking==='true';
+    var answered=answeredScenes.has(currentIndex);
+    var chatPending=sc.dataset.chatPending==='true';
+    var choiceWait=sc.querySelector('.story-choice')&&!sc.querySelector('.choice-option.chosen');
+    btnNext.disabled=chatPending||(blocking&&!answered)||choiceWait;
   }
 
-  function updateProgress() {
-    const pct = ((currentIndex + 1) / scenes.length) * 100;
-    progress.style.width = Math.min(pct, 100) + '%';
+  btnNext.addEventListener('click',goForward);
+  btnPrev.addEventListener('click',goBack);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){if(!btnNext.disabled){e.preventDefault();btnNext.click();}}
+    else if(e.key==='ArrowLeft'){if(!btnPrev.disabled){e.preventDefault();btnPrev.click();}}
+  });
+
+  /* ── iPhone Chat Controller ────────────────────────── */
+  function initPhoneChat(sceneEl){
+    var phone=sceneEl.querySelector('.phone[data-chat-live]');
+    if(!phone||phone.dataset.chatInit) return;
+    phone.dataset.chatInit='true';
+    sceneEl.dataset.chatPending='true';
+    updateNextButton();
+
+    var msgs=JSON.parse(phone.dataset.chatMessages);
+    var chatEl=phone.querySelector('.chat-messages');
+    var bar=phone.querySelector('.chat-input-bar');
+    var inp=phone.querySelector('.chat-input');
+    var sendBtn=phone.querySelector('.send-btn');
+    var micBtn=phone.querySelector('.mic-btn');
+    var micLabel=phone.querySelector('.mic-label');
+    var si=Array.from(scenes).indexOf(sceneEl);
+    var idx=0, quizOk=null, busy=false;
+
+    function scroll(){chatEl.scrollTo({top:chatEl.scrollHeight,behavior:'smooth'});}
+    function now(){var d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+    function barsHtml(n){var r='';for(var i=0;i<n;i++){r+='<div class="voice-bar" style="height:'+(3+Math.floor(Math.random()*18))+'px"></div>';}return r;}
+    function setMode(m,t){bar.className='chat-input-bar imode-'+m;if(m==='text'&&t)inp.value=t;}
+
+    function showTyping(){
+      return new Promise(function(res){
+        var el=document.createElement('div');
+        el.className='typing-row';
+        el.innerHTML='<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+        chatEl.appendChild(el);scroll();
+        setTimeout(function(){el.remove();res();},800+Math.random()*400);
+      });
+    }
+
+    function addText(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',author:'\u270d\ufe0f \u0410\u0432\u0442\u043e\u0440',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div>'+m.x+'</div><div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    function addVoice(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      var ds='0:'+m.d.toString().padStart(2,'0');
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div class="voice-msg"><button class="voice-play">\u25b6</button><div class="voice-waveform">'+barsHtml(24)+'</div><span class="voice-duration">'+ds+'</span></div><div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+      row.querySelector('.voice-play').onclick=function(){
+        var btn=this;if(btn.dataset.p)return;btn.dataset.p='1';btn.textContent='\u23f8';
+        var bb=btn.parentElement.querySelectorAll('.voice-bar');
+        var ms=m.d*1000/bb.length,i=0;
+        var iv=setInterval(function(){
+          if(i<bb.length){bb[i].classList.add('played');i++;}
+          else{clearInterval(iv);delete btn.dataset.p;btn.textContent='\u25b6';bb.forEach(function(x){x.classList.remove('played');});}
+        },ms);
+      };
+    }
+
+    function addQuiz(m){
+      return new Promise(function(resolve){
+        totalQuizzes++;
+        var row=document.createElement('div');
+        row.className='msg-row incoming';
+        var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+        row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
+        chatEl.appendChild(row);scroll();
+        row.querySelectorAll('.quiz-btn').forEach(function(b){
+          b.onclick=function(){
+            var ok=b.dataset.c==='true';
+            b.classList.add(ok?'correct':'wrong');
+            row.querySelectorAll('.quiz-btn').forEach(function(x){
+              if(x!==b)x.classList.add('disabled');
+              if(x.dataset.c==='true'&&x!==b)x.classList.add('correct');
+            });
+            quizOk=ok;
+            if(ok){correctCount++;quizResults[si]='correct';}
+            else{quizResults[si]='wrong';}
+            resolve(ok);
+          };
+        });
+      });
+    }
+
+    function addUnlock(m){
+      return new Promise(function(resolve){
+        var row=document.createElement('div');
+        row.className='unlock-row';
+        row.innerHTML='<button class="unlock-btn">'+m.x+'</button>';
+        chatEl.appendChild(row);scroll();
+        row.querySelector('.unlock-btn').onclick=function(){
+          this.textContent='\ud83d\udd13 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043e';
+          this.classList.add('unlocked');
+          resolve();
+        };
+      });
+    }
+
+    sendBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko')return;
+      addText(m);inp.value='';setMode('disabled');
+      idx++;setTimeout(processNext,400);
+    });
+    micBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko'||m.t!=='voice')return;
+      if(micBtn.classList.contains('recording'))return;
+      micBtn.classList.add('recording');
+      micLabel.textContent='\u0417\u0430\u043f\u0438\u0441\u044c...';micLabel.classList.add('rec');
+      setTimeout(function(){
+        micBtn.classList.remove('recording');
+        micLabel.textContent='\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435';micLabel.classList.remove('rec');
+        addVoice(m);setMode('disabled');
+        idx++;setTimeout(processNext,400);
+      },1500);
+    });
+
+    async function processNext(){
+      if(idx>=msgs.length){
+        setMode('disabled');
+        delete sceneEl.dataset.chatPending;
+        answeredScenes.add(si);
+        updateNextButton();return;
+      }
+      busy=true;var m=msgs[idx];
+
+      if(m.s==='marko'){
+        busy=false;
+        setMode(m.t==='voice'?'voice':'text',m.x);
+        return;
+      }
+      if(m.wq&&quizOk===null){busy=false;setTimeout(processNext,300);return;}
+      if(m.wq){
+        if(m.ok===true&&!quizOk){idx++;busy=false;processNext();return;}
+        if(m.ok===false&&quizOk){idx++;busy=false;processNext();return;}
+      }
+      if(m.t==='unlock'){setMode('disabled');await addUnlock(m);idx++;busy=false;processNext();return;}
+      await showTyping();
+      if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='voice'){addVoice(m);}
+      else{addText(m);}
+      idx++;busy=false;setTimeout(processNext,350);
+    }
+
+    setTimeout(processNext,600);
   }
 
-  function updateNextButton() {
-    if (currentIndex >= scenes.length) { btnNext.disabled = true; return; }
-    const scene = scenes[currentIndex];
-    const isBlocking = scene.dataset.blocking === 'true';
-    const isAnswered = answeredScenes.has(currentIndex);
-    const hasUnansweredChoice = scene.querySelector('.story-choice') &&
-                                 !scene.querySelector('.choice-option.chosen');
-    btnNext.disabled = (isBlocking && !isAnswered) || hasUnansweredChoice;
-  }
-
-  btnNext.addEventListener('click', function() {
-    if (currentIndex < scenes.length) showScene(currentIndex + 1);
-  });
-  btnPrev.addEventListener('click', function() {
-    if (currentIndex > 0) showScene(currentIndex - 1);
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === ' ') {
-      if (!btnNext.disabled) { e.preventDefault(); btnNext.click(); }
-    } else if (e.key === 'ArrowLeft') { btnPrev.click(); }
-  });
-
-  document.querySelectorAll('.quiz').forEach(function(quiz) {
-    var buttons = quiz.querySelectorAll('.quiz-option');
-    var feedbackOk = quiz.querySelector('.quiz-feedback-ok');
-    var feedbackFail = quiz.querySelector('.quiz-feedback-fail');
-    var explanation = quiz.querySelector('.quiz-explanation');
-    var answered = false;
-    totalQuizzes++;
-
-    buttons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        if (answered) return;
-        answered = true;
-        var isCorrect = btn.dataset.correct === 'true';
-        var sceneEl = quiz.closest('.scene');
-        var sceneIdx = Array.from(scenes).indexOf(sceneEl);
-
-        if (isCorrect) {
-          btn.classList.add('selected-correct');
-          correctCount++;
-          if (feedbackOk) feedbackOk.hidden = false;
-        } else {
-          btn.classList.add('selected-wrong');
-          buttons.forEach(function(b) {
-            if (b.dataset.correct === 'true') b.classList.add('reveal-correct');
-          });
-          if (feedbackFail) feedbackFail.hidden = false;
-        }
-        if (explanation) explanation.hidden = false;
-        buttons.forEach(function(b) { b.disabled = true; });
-        answeredScenes.add(sceneIdx);
-        updateNextButton();
+  /* ── Standard Quiz (non-chat) ──────────────────────── */
+  document.querySelectorAll('.quiz').forEach(function(quiz){
+    var buttons=quiz.querySelectorAll('.quiz-option');
+    var feedOk=quiz.querySelector('.quiz-feedback-ok');
+    var feedFail=quiz.querySelector('.quiz-feedback-fail');
+    var explanation=quiz.querySelector('.quiz-explanation');
+    var done=false;totalQuizzes++;
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done)return;done=true;
+        var ok=btn.dataset.correct==='true';
+        var se=quiz.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){btn.classList.add('selected-correct');correctCount++;if(feedOk)feedOk.hidden=false;quizResults[si]='correct';}
+        else{btn.classList.add('selected-wrong');buttons.forEach(function(b){if(b.dataset.correct==='true')b.classList.add('reveal-correct');});if(feedFail)feedFail.hidden=false;quizResults[si]='wrong';}
+        if(explanation)explanation.hidden=false;
+        buttons.forEach(function(b){b.disabled=true;});
+        answeredScenes.add(si);updateNextButton();
       });
     });
   });
 
-  document.querySelectorAll('.choice-option').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var choiceBlock = btn.closest('.story-choice');
-      choiceBlock.querySelectorAll('.choice-option').forEach(function(b) { b.classList.remove('chosen'); });
+  /* ── Choice (auto-advance) ─────────────────────────── */
+  document.querySelectorAll('.choice-option').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var block=btn.closest('.story-choice');
+      block.querySelectorAll('.choice-option').forEach(function(b){b.classList.remove('chosen');});
       btn.classList.add('chosen');
-      var target = btn.dataset.target;
-      if (target && sceneMap[target] !== undefined) {
-        btnNext.onclick = function() {
-          showScene(sceneMap[target]);
-          btnNext.onclick = function() {
-            if (currentIndex < scenes.length) showScene(currentIndex + 1);
-          };
-        };
-      }
+      var t=btn.dataset.target;
+      if(t&&sceneMap[t]!==undefined) choiceTarget=t;
       updateNextButton();
+      setTimeout(goForward,400);
     });
   });
 
-  document.querySelectorAll('.visual-brief').forEach(function(vb) {
-    var toggle = document.createElement('span');
-    toggle.className = 'vb-toggle';
-    toggle.textContent = '\\u{1f3a8} Visual brief \\u25b8';
-    toggle.addEventListener('click', function() {
+  /* ── Visual Brief Toggle ───────────────────────────── */
+  document.querySelectorAll('.visual-brief').forEach(function(vb){
+    var toggle=document.createElement('span');
+    toggle.className='vb-toggle';
+    toggle.textContent='\ud83c\udfa8 Visual brief \u25b8';
+    toggle.addEventListener('click',function(){
       vb.classList.toggle('open');
-      toggle.textContent = vb.classList.contains('open')
-        ? '\\u{1f3a8} Visual brief \\u25be'
-        : '\\u{1f3a8} Visual brief \\u25b8';
+      toggle.textContent=vb.classList.contains('open')?'\ud83c\udfa8 Visual brief \u25be':'\ud83c\udfa8 Visual brief \u25b8';
     });
-    vb.parentNode.insertBefore(toggle, vb);
+    vb.parentNode.insertBefore(toggle,vb);
   });
 
   showScene(0);
@@ -635,9 +1244,20 @@ def render_episode_html(data: dict) -> str:
     {req_html}
   </section>"""
 
+    # Group consecutive Sofa scenes into single phone chains
+    units = group_phone_chains(scenes)
+
     scene_offset = 1 if previously else 0
-    total = len(scenes) + scene_offset
-    scenes_html = "\n".join(render_scene(s, i + scene_offset, total) for i, s in enumerate(scenes))
+    total = len(units) + scene_offset
+
+    scenes_html_parts = []
+    for i, unit in enumerate(units):
+        idx = i + scene_offset
+        if unit["type"] == "chain":
+            scenes_html_parts.append(render_scene_chain(unit["scenes"], idx, total))
+        else:
+            scenes_html_parts.append(render_scene(unit["scene"], idx, total))
+    scenes_html = "\n".join(scenes_html_parts)
 
     return f"""<!DOCTYPE html>
 <html lang="ru">
@@ -700,21 +1320,68 @@ def build_episode(yaml_path: Path):
 
 
 def build_index(episode_files: list):
-    """Build index.html with links to all episodes."""
-    links = []
+    """Build index.html from episode plans, marking gameflow coverage honestly."""
+    built_episode_map = {}
     for ep_file in sorted(episode_files):
         data = load_episode(ep_file)
-        ep_id = data.get("episode_id", "?")
-        title = html.escape(data.get("episode_title", f"Эпизод {ep_id}"))
-        lesson = html.escape(data.get("lesson", ""))
-        scene_count = len(data.get("scenes", []))
-        links.append(
-            f'<a href="ep_{int(ep_id):03d}.html" class="ep-link">'
-            f'<span class="ep-num">Эпизод {ep_id}</span>'
-            f'<span class="ep-title">«{title}»</span>'
-            f'<span class="ep-meta">{lesson} \u00b7 {scene_count} сцен</span>'
-            f"</a>"
+        ep_id = int(data.get("episode_id", 0))
+        built_episode_map[ep_id] = {
+            "title": html.escape(data.get("episode_title", f"Эпизод {ep_id}")),
+            "lesson": html.escape(data.get("lesson", "")),
+            "scene_count": len(data.get("scenes", [])),
+            "href": f'ep_{ep_id:03d}.html',
+        }
+
+    day_sections = []
+    total_episode_count = 0
+    built_count = 0
+    for day_file in sorted(EPISODES_DIR.glob("day_*.yaml")):
+        day_data = load_yaml(day_file) or {}
+        day_num = day_data.get("day", "?")
+        arc = html.escape(day_data.get("story_arc", ""))
+        lessons = ", ".join(day_data.get("lessons", []))
+
+        cards = []
+        for episode in day_data.get("episodes", []):
+            ep_id = int(episode.get("ep", 0))
+            total_episode_count += 1
+
+            built = built_episode_map.get(ep_id)
+            title = html.escape(episode.get("title", f"Эпизод {ep_id}"))
+            blocks = ", ".join(episode.get("blocks", []))
+
+            if built:
+                built_count += 1
+                lesson_meta = built["lesson"] or html.escape(blocks)
+                cards.append(
+                    f'<a href="{built["href"]}" class="ep-card ep-card-ready">'
+                    f'<span class="ep-num">Эпизод {ep_id}</span>'
+                    f'<span class="ep-title">«{title}»</span>'
+                    f'<span class="ep-meta">{lesson_meta} \u00b7 {built["scene_count"]} сцен</span>'
+                    f'<span class="ep-status ep-status-ready">HTML готов</span>'
+                    f"</a>"
+                )
+            else:
+                block_meta = html.escape(blocks) if blocks else "Без блока"
+                cards.append(
+                    f'<div class="ep-card ep-card-missing">'
+                    f'<span class="ep-num">Эпизод {ep_id}</span>'
+                    f'<span class="ep-title">«{title}»</span>'
+                    f'<span class="ep-meta">{block_meta}</span>'
+                    f'<span class="ep-status ep-status-missing">Нет gameflow / HTML</span>'
+                    f"</div>"
+                )
+
+        day_sections.append(
+            f'<section class="day-section">'
+            f'<h2>День {day_num}</h2>'
+            f'<p class="day-meta">{arc}</p>'
+            f'<p class="day-lessons">Уроки: {html.escape(lessons)}</p>'
+            f'{"".join(cards)}'
+            f"</section>"
         )
+
+    coverage_text = f"Покрытие игры: {built_count} из {total_episode_count} эпизодов"
 
     index_html = f"""<!DOCTYPE html>
 <html lang="ru">
@@ -726,30 +1393,52 @@ def build_index(episode_files: list):
 :root {{
   --bg: #0d0d12; --card: #16161e; --text: #e8e6e3;
   --muted: #8b8a88; --accent: #7c9fd4; --border: #2a2a35;
+  --ok: #7fb069; --warn: #d8a657;
 }}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
 body {{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg); color: var(--text);
-  max-width: 600px; margin: 0 auto; padding: 2rem 1rem;
+  max-width: 760px; margin: 0 auto; padding: 2rem 1rem 3rem;
 }}
 h1 {{ text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; }}
-.subtitle {{ text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }}
-.ep-link {{
+.subtitle {{ text-align: center; color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem; }}
+.coverage {{
+  text-align: center; color: var(--accent); font-size: 0.9rem;
+  margin-bottom: 2rem; font-weight: 600;
+}}
+.day-section {{
+  margin-bottom: 1.5rem; padding: 1rem; background: #12121a;
+  border: 1px solid var(--border); border-radius: 14px;
+}}
+.day-section h2 {{ font-size: 1.1rem; margin-bottom: 0.25rem; }}
+.day-meta {{ color: var(--muted); font-size: 0.9rem; margin-bottom: 0.2rem; }}
+.day-lessons {{ color: var(--accent); font-size: 0.82rem; margin-bottom: 0.9rem; }}
+.ep-card {{
   display: block; padding: 1rem 1.25rem; margin-bottom: 0.75rem;
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
   text-decoration: none; color: var(--text); transition: all 0.2s;
 }}
-.ep-link:hover {{ border-color: var(--accent); background: #1c1c28; }}
+.ep-card-ready:hover {{ border-color: var(--accent); background: #1c1c28; }}
+.ep-card-missing {{
+  opacity: 0.9; border-style: dashed; background: #14141b;
+}}
 .ep-num {{ font-size: 0.8rem; color: var(--accent); font-weight: 600; }}
 .ep-title {{ display: block; font-size: 1.1rem; margin: 0.2rem 0; }}
 .ep-meta {{ font-size: 0.8rem; color: var(--muted); }}
+.ep-status {{
+  display: inline-block; margin-top: 0.55rem; font-size: 0.78rem;
+  font-weight: 600;
+}}
+.ep-status-ready {{ color: var(--ok); }}
+.ep-status-missing {{ color: var(--warn); }}
 </style>
 </head>
 <body>
 <h1>Сила Слова</h1>
-<p class="subtitle">День 1 — Акт I: Пробуждение</p>
-{"".join(links)}
+<p class="subtitle">Каталог собирается из `pipeline/episodes`, а кликабельность зависит от наличия gameflow/HTML.</p>
+<p class="coverage">{coverage_text}</p>
+{"".join(day_sections)}
 </body>
 </html>"""
 

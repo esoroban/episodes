@@ -111,8 +111,12 @@ python3 tools/validate_gameflow.py       # validate all gameflow YAML
 2. **Story grid** — skill `story-grid`: distribute blocks across days
 3. **Episode plan** — skill `episode-plan`: create day plan with scenes, quizzes, story beats
 4. **Episode map** — skill `episode-map`: transplant quizzes into plot context
-5. **Gameflow** — manually or with future skill: break episode into interactive scenes
-6. **Build** — `python3 tools/build_game.py`: generate playable HTML
+5. **Gameflow** — skill `gameflow-build`: break episode into interactive scenes
+6. **Drama restoration** — skill `gameflow-drama`: restore drama from book, break quiz streaks, reconnect quizzes to story
+7. **Branches** — skill `gameflow-branch`: add optional branch scenes
+8. **QA references** — skill `qa-references`: validate back-reference consistency
+9. **QA branches** — skill `qa-branches`: validate branch continuity
+10. **Build** — `python3 tools/build_game.py`: generate playable HTML
 
 ### When starting a new season or story
 All skills, tools, and specs are **story-agnostic**. They work with any plot + lessons combination. To start fresh:
@@ -128,3 +132,5 @@ All skills, tools, and specs are **story-agnostic**. They work with any plot + l
 - A term cannot be used before it has been introduced
 - The number of episodes is not fixed
 - Do not generate text without an approved plan
+- No `previously` blocks in gameflow episodes — the player just played the previous episode
+- Lesson characters (Дмитрик, Витя, etc.) must be told as fresh stories, never as "помнишь?"
