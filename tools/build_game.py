@@ -3,7 +3,8 @@
 Gameflow → HTML renderer.
 
 Reads YAML scene-flow files from pipeline/gameflow/episodes/
-and generates interactive HTML game pages to publish/game/.
+and generates interactive HTML game pages directly into server/game/
+(the directory served by server/server.js on Render).
 
 Usage:
     python tools/build_game.py                  # all episodes
@@ -20,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
 EPISODES_DIR = ROOT / "pipeline" / "episodes"
-OUTPUT_DIR = ROOT / "publish" / "game"
+OUTPUT_DIR = ROOT / "server" / "game"
 
 
 def load_episode(path: Path) -> dict:
@@ -1527,7 +1528,7 @@ def main():
     if OUTPUT_DIR.exists():
         for old in OUTPUT_DIR.glob("*.html"):
             old.unlink()
-        print(f"  \u2713 Cleaned publish/game/")
+        print(f"  \u2713 Cleaned server/game/")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
