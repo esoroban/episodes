@@ -16,6 +16,22 @@ trigger: деплой игры, deploy game, задеплой, обнови ре
 - `tools/build_game.py` пишет **сразу** в `server/game/` (не через `publish/`).
 - Книга: `book/*.md` — источник; в `server/book/` кладём копию для сервера.
 
+## Настройки Render-сервиса (обязательно)
+
+Node.js-приложение живёт в подкаталоге `server/`, поэтому в дашборде Render
+должны стоять:
+
+| Настройка | Значение |
+|-----------|----------|
+| **Root Directory** | `server` |
+| **Build Command** | `npm install` |
+| **Start Command** | `node server.js` (или `npm start`) |
+| **Branch** | `main` |
+
+Без `Root Directory = server` билд упадёт с
+`ENOENT: package.json` — Render будет искать `package.json` в корне репо,
+где его нет. Это не чинится из репо — только из дашборда Render.
+
 ## Шаги
 
 1. Собрать HTML игры из YAML:
@@ -58,3 +74,7 @@ trigger: деплой игры, deploy game, задеплой, обнови ре
   одним пушем из корня.
 - **Ветка — только `main`**. `master` в репозитории нет (удалён). Если по привычке
   пишешь `git push origin master` — получишь `error: src refspec master does not match any`.
+- **`Build failed: ENOENT package.json`** — у Render-сервиса сброшена настройка
+  **Root Directory**. Должна быть `server`. Чинится только в дашборде Render
+  (Settings → Build & Deploy → Root Directory → `server` → Save →
+  Manual Deploy → Clear build cache & deploy). Коммитом в репо не решается.
