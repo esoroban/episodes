@@ -2,7 +2,7 @@
 # GAMEFLOW — Эпизод 1: «Утро без сестры»
 # Урок: факт и мнение (1A.1)
 # Source: pipeline/episodes/day_01.yaml → ep: 1
-# Quizzes: 15 (sofa_block: 6 / challenge: 9 экспресс)
+# Quizzes: 16 (sofa_block: 7 / challenge: 9 экспресс)
 # =====================================================================
 #
 # Flow:
@@ -10,7 +10,7 @@
 #   s01 → s02 → s03 ──→ s04 → s04a → s04b → s05 → s06 → s07 → s08 → s09 → s10
 #                │               ↑
 #                └→ s03_detour ──┘
-#   s10 → s11 → s11a → s11b
+#   s10 → s11 → s11a_quiz → s11a → s11b
 #
 #   ШКОЛА (утро):
 #   s11b → s12a → s12b → s12c → s12d → s13 → s14 → s15 → s16 → s17 → s18 → s19 → s20 → s21
@@ -32,6 +32,7 @@
 # s09        — Quiz: «Математика — скучный предмет» → Мнение
 # s10        — Quiz: «Киев — столица Украины» → Факт
 # s11        — Голосовое сообщение Софии (dialogue+unlock)
+# s11a_quiz  — Quiz (life_question): «Все так делают» → Мнение
 # s11a       — Марко слушает 3 раза, решение идти в школу (narrative)
 # s11b       — Рефлексия: факты противоречат (narrative)
 # s12a       — Школа: запах мела, пустая парта, 9 наклеек (narrative)
@@ -577,7 +578,7 @@ scenes:
         line: "Братик, начни с дневника. Я верю в тебя."
         duration: "0:03"
     mood: "надежда, тайна"
-    next_default: ep001_s11a
+    next_default: ep001_s11a_quiz
     visual_brief:
       background: "Комната Марко, крупный план телефона"
       camera: close-up
@@ -590,6 +591,41 @@ scenes:
       atmosphere: "голос сестры — первый контакт"
       ui_mode: dialogue
 
+  # ── СЦЕНА s11a_quiz: Quiz 7 (life_question) — «Все так делают» → Мнение ──
+  - scene_id: ep001_s11a_quiz
+    episode_id: 1
+    source_ref: day_01.ep1.sofa_block.life_question
+    scene_type: quiz
+    location: "Квартира Марко, комната"
+    time: "утро"
+    characters_present: [Марко, Софа]
+    interaction_type: vote
+    question: "Друг сказал: «Все так делают.» Это факт или мнение?"
+    options:
+      - id: fact
+        text: "Факт"
+        correct: false
+      - id: opinion
+        text: "Мнение"
+        correct: true
+    correct_logic: "«Все» — значит абсолютно каждый. Проверить каждого нельзя. Даже если звучит уверенно, обобщение без проверки — это мнение, завёрнутое в форму факта."
+    feedback_success: "Софа: «Мнение. «Все» — это никто конкретно. Пока не проверил — это не факт, даже если друг очень уверен.»"
+    feedback_soft_fail: "Софа: «Можно ли проверить, что ВСЕ так делают? Нужно спросить каждого. Если нельзя проверить — это мнение в обёртке факта.»"
+    mood: "перенос правила в реальную жизнь"
+    next_default: ep001_s11a
+    next_fail: ep001_s11a_quiz
+    visual_brief:
+      background: "Комната Марко, экран телефона"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: сосредоточенность, правило в голове
+          pose: держит телефон, дневник на коленях
+      props: [телефон, дневник рядом]
+      focus_object: "вопрос Софы на экране"
+      atmosphere: "тёплое утро, правило переходит из учебного в жизненное"
+      ui_mode: quiz
+
   # ── СЦЕНА s11a: Марко слушает 3 раза ─────────────────────────────
   - scene_id: ep001_s11a
     episode_id: 1
@@ -597,13 +633,10 @@ scenes:
     scene_type: narrative
     location: "Квартира Марко, комната"
     time: "утро"
-    characters_present: [Марко, Софа]
+    characters_present: [Марко]
     author_text: >
       Марко слушает три раза. Потом ещё раз. Потом кладёт телефон в карман
       и берёт дневник.
-    dialogue:
-      - who: Софа
-        line: "А вот... из жизни. Друг сказал: «Все так делают.» Это факт... или мнение?"
     mood: "решимость, тихая боль"
     next_default: ep001_s11b
     visual_brief:

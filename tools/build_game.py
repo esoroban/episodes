@@ -106,7 +106,14 @@ def is_sofa_chat_scene(scene: dict) -> bool:
 
 
 def build_chat_messages(scene: dict) -> list:
-    """Build list of chat message dicts for one scene."""
+    """Build list of chat message dicts for one scene.
+
+    Chat bubble rules (WHO speaks in chat vs voice-over):
+      - Софа         → chat bubble (she's the only character who TEXTS)
+      - Марко        → chat bubble (player input: send/mic)
+      - автор и все  → voice-over strip in timeline (живой голос за кадром)
+        остальные     — остаётся на своей позиции, не в плашке
+    """
     msgs = []
 
     at = scene.get("author_text", "")
@@ -114,7 +121,7 @@ def build_chat_messages(scene: dict) -> list:
         for p in str(at).strip().split("\n"):
             p = p.strip()
             if p:
-                msgs.append({"t": "text", "s": "author", "x": p})
+                msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": p})
 
     for d in scene.get("dialogue", []):
         if not isinstance(d, dict):
@@ -123,13 +130,13 @@ def build_chat_messages(scene: dict) -> list:
         line = str(d.get("line", "")).strip()
         w = who.lower()
         if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
-            msgs.append({"t": "text", "s": "author", "x": line})
+            msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": line})
         elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
             msgs.append({"t": "text", "s": "sofa", "x": line})
         elif w in ("\u043c\u0430\u0440\u043a\u043e", "marko"):
             msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
         else:
-            msgs.append({"t": "text", "s": w, "x": line})
+            msgs.append({"t": "voiceover", "s": w, "name": who, "x": line})
 
     quiz_opts = [o for o in scene.get("options", []) if "correct" in o]
     if quiz_opts:
@@ -835,6 +842,30 @@ body {
 .sender-name.author { color: #7a7a7a; }
 .sender-name.marko { color: #4fae3b; }
 .msg-time { font-size: 9px; color: rgba(0,0,0,0.35); text-align: right; margin-top: 1px; }
+/* Voice-over strip — живой голос за кадром внутри чата
+   (автор, мама, Вера и т.д. — всё, кроме Софы и Марко).
+   Потом каждый такой блок заменяется на <audio> в озвучке. */
+.voice-row {
+  align-self: stretch; display: flex; flex-direction: column;
+  margin: 4px 4px; padding: 7px 10px 8px;
+  background: rgba(35, 40, 55, 0.88);
+  border-radius: 10px; color: #e8e6e3;
+  font-family: var(--font-main);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  animation: fadeIn 0.25s ease-out;
+}
+.voice-row .vo-head {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-ui); font-size: 10px;
+  color: #9db4d6; text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.voice-row .vo-icon { font-size: 11px; opacity: 0.85; }
+.voice-row .vo-name { font-weight: 600; }
+.voice-row .vo-body {
+  font-size: 13px; line-height: 1.5; font-style: italic; color: #f0eee9;
+}
+.voice-row.vo-author .vo-head { color: #c7b8e8; }
 /* Typing */
 .typing-row { display: flex; align-self: flex-start; animation: fadeIn 0.2s ease-out; }
 .typing-bubble {
@@ -1037,11 +1068,27 @@ JS = r"""
 
     function addText(m){
       var out=m.s==='marko';
-      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',author:'\u270d\ufe0f \u0410\u0432\u0442\u043e\u0440',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
       var row=document.createElement('div');
       row.className='msg-row '+(out?'outgoing':'incoming');
       row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div>'+m.x+'</div><div class="msg-time">'+now()+'</div></div>';
       chatEl.appendChild(row);scroll();
+    }
+
+    /* Voice-over strip inside chat: автор / мама / Вера / ... — живой голос за кадром.
+       Остаётся на своей позиции в потоке. Потом x заменяется на <audio>. */
+    function addVoiceover(m){
+      var row=document.createElement('div');
+      var icon=m.s==='author'?'\u270d\ufe0f':'\ud83d\udd0a';
+      row.className='voice-row vo-'+m.s;
+      row.innerHTML='<div class="vo-head"><span class="vo-icon">'+icon+'</span><span class="vo-name">'+(m.name||m.s)+'</span></div><div class="vo-body">'+m.x+'</div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    /* Estimate reading/voice duration (ms) from text length — later replaced by audio.duration */
+    function voDuration(text){
+      var n=(text||'').length;
+      return Math.max(900, Math.min(4500, 55*n));
     }
 
     function addVoice(m){
@@ -1142,6 +1189,14 @@ JS = r"""
         if(m.ok===false&&quizOk){idx++;busy=false;processNext();return;}
       }
       if(m.t==='unlock'){setMode('disabled');await addUnlock(m);idx++;busy=false;processNext();return;}
+      if(m.t==='voiceover'){
+        /* Без typing-индикатора: голос просто звучит. Пауза соразмерна длине текста. */
+        setMode('disabled');
+        addVoiceover(m);
+        idx++;
+        setTimeout(function(){busy=false;processNext();}, voDuration(m.x));
+        return;
+      }
       await showTyping();
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
       if(m.t==='voice'){addVoice(m);}
