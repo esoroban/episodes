@@ -215,6 +215,80 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
             if quiz_i_opts and not any(o.get("correct") for o in quiz_i_opts):
                 result.error(f"QUIZ NO CORRECT: {sid} interactions has options but none correct")
 
+    # ── Check 7: No speaker-prefix wrapping in feedback fields ────
+    # Feedbacks are rendered inside Sofa's chat bubble — renderer adds her name.
+    # "Софа: «...»" wrapper creates tautology "Sofa: Sofa said ..."
+    import re as _re
+    SPEAKER_PREFIX = _re.compile(r"^\s*(Софа|Марко|Автор|автор)\s*[:—-]\s*[«\"']")
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        for field in ("feedback_success", "feedback_soft_fail"):
+            val = scene.get(field)
+            if isinstance(val, str) and SPEAKER_PREFIX.match(val):
+                result.error(
+                    f"FEEDBACK PREFIX: {sid}.{field} starts with speaker prefix "
+                    f"(e.g. 'Софа: «...»'). Remove — renderer auto-attributes to Софа."
+                )
+
+    # ── Check 8: voice_message unlock buttons must have `line` ────
+    # Subtitle field is required for proofreading before audio is recorded.
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        unlock = scene.get("unlock_button")
+        if not unlock:
+            continue
+        rev = unlock.get("reveals", {}) if isinstance(unlock, dict) else {}
+        if rev.get("type") == "voice_message":
+            missing = [k for k in ("who", "line", "duration") if not rev.get(k)]
+            if missing:
+                result.error(
+                    f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals missing {missing}. "
+                    f"All voice messages need who/line/duration for subtitle + audio."
+                )
+
+    # ── Check 9: Voice-channel violations in Sofa dialogue ────────
+    # Софа is text-only. Her lines must not describe voice/sound,
+    # nor use hearing verbs like «слышишь». See pipeline_rules.md.
+    SOFA_FORBIDDEN = _re.compile(
+        r"\b(слышишь|услышишь|услышь|слышно|треск|электронн\w*|шипени\w*|"
+        r"голос\s+Соф\w*|мой\s+голос|твой\s+голос)\b",
+        _re.IGNORECASE,
+    )
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        chars = set(scene.get("characters_present", []))
+        # Collect Sofa's own lines
+        sofa_lines = []
+        for d in scene.get("dialogue", []) or []:
+            if isinstance(d, dict) and d.get("who") == "Софа":
+                sofa_lines.append(("dialogue", d.get("line", "")))
+        for field in ("feedback_success", "feedback_soft_fail"):
+            v = scene.get(field)
+            if isinstance(v, str):
+                sofa_lines.append((field, v))
+        for src, line in sofa_lines:
+            m = SOFA_FORBIDDEN.search(line or "")
+            if m:
+                result.error(
+                    f"SOFA VOICE VIOLATION: {sid}.{src} uses forbidden word "
+                    f"'{m.group(0)}' — Софа is text-only. Use 'читаешь' / 'видишь' / "
+                    f"remove sound description."
+                )
+        # Also check author lines in Sofa scenes for describing Sofa's voice
+        if "Софа" in chars:
+            SOFA_VOICE_DESC = _re.compile(
+                r"(треск|электронн\w*|шипени\w*)", _re.IGNORECASE
+            )
+            for d in scene.get("dialogue", []) or []:
+                if isinstance(d, dict) and d.get("who") == "автор":
+                    line = d.get("line", "") or ""
+                    m = SOFA_VOICE_DESC.search(line)
+                    if m:
+                        result.error(
+                            f"AUTHOR DESCRIBES SOFA SOUND: {sid}.dialogue[автор] contains "
+                            f"'{m.group(0)}'. Софа has no sound. Describe screen behavior instead."
+                        )
+
     return result
 
 
