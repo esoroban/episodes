@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
-EPISODES_DIR = ROOT / "pipeline" / "episodes"
+EPISODES_DIR = ROOT / "pipeline" / "source" / "episodes"
 OUTPUT_DIR = ROOT / "server" / "game"
 
 
