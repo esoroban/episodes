@@ -28,7 +28,7 @@ All report output must be in **Russian** (error messages, descriptions).
 ## Input
 
 - `pipeline/gameflow/episodes/ep_NNN.yaml` — episode(s) to validate
-- `pipeline/episodes/day_NN.yaml` — episode plans (for cross-checking terms)
+- `pipeline/source/episodes/day_NN.yaml` — episode plans (for cross-checking terms)
 - `lessons_ru/lesson_*.yaml` — lesson source (for identifying lesson-only characters)
 
 ## Output

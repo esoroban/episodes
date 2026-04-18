@@ -1,7 +1,7 @@
 # =====================================================================
 # GAMEFLOW — Эпизод 6: «Светофор»
 # Урок: светофор повторений (2A.2)
-# Source: pipeline/episodes/day_02.yaml → ep: 6
+# Source: pipeline/source/episodes/day_02.yaml → ep: 6
 # Book: server/book/ep_006.md — PRIMARY source for drama text
 # Quizzes: 15 (sofa_block: 6 светофор + 2 условия / challenge: 3 испытание / cliffhanger: 0)
 #        → фактически 11 quiz interactions + drama

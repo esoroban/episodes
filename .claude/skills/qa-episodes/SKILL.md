@@ -28,14 +28,14 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 ## Input
 
 For **episode plans**:
-- `pipeline/episodes/day_*.yaml` — episode plans
-- `pipeline/grid.yaml` — reference: terms, votes, blocks
-- `pipeline/briefs/*.yaml` — reference: practice_summary, votes
+- `pipeline/source/episodes/day_*.yaml` — episode plans
+- `pipeline/source/grid.yaml` — reference: terms, votes, blocks
+- `pipeline/source/briefs/*.yaml` — reference: practice_summary, votes
 
 For **episode maps**:
-- `pipeline/mapped/ep_*.yaml` — mapped episodes
-- `pipeline/episodes/day_*.yaml` — reference: structure
-- `pipeline/briefs/*.yaml` — reference: original quizzes
+- `pipeline/work/mapped/ep_*.yaml` — mapped episodes
+- `pipeline/source/episodes/day_*.yaml` — reference: structure
+- `pipeline/source/briefs/*.yaml` — reference: original quizzes
 - `lessons_ru/*.yaml` — reference: original texts (read-only)
 
 ## Three checks

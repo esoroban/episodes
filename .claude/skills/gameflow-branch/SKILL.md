@@ -41,7 +41,7 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 3. Read the target episode YAML — identify all scenes
 4. Identify drama scenes (non-quiz, non-phone-chain) — these are branch candidates
 5. Read the branch plan file if it exists (`pipeline/gameflow/branches/ep_NNN_branches.md`)
-6. Read the day plan (`pipeline/episodes/day_NN.yaml`) — know the story context
+6. Read the day plan (`pipeline/source/episodes/day_NN.yaml`) — know the story context
 
 ### Phase 2: Plan (STOP — show author)
 

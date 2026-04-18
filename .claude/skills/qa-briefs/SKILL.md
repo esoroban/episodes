@@ -20,7 +20,7 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- Briefs: `pipeline/briefs/brief_*.yaml`
+- Briefs: `pipeline/source/briefs/brief_*.yaml`
 - YAML lessons: `lessons_ru/lesson_*.yaml` (read-only)
 - QA script: `tools/qa_briefs.py`
 
@@ -102,7 +102,7 @@ Votes: YAML=1068, брифы=1039, дельта=-29
 ## Output
 
 Does not create any file. The result is a PASS/FAIL verdict with interpreted issues.
-The verdict is recorded in `pipeline/stages/stage_0_qa.md` (Status section).
+The verdict is recorded in `pipeline/docs/stages/stage_0_qa.md` (Status section).
 
 ## Constraints
 

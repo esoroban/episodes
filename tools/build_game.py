@@ -1502,7 +1502,7 @@ h1 {{ text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; }}
 </head>
 <body>
 <h1>Сила Слова</h1>
-<p class="subtitle">Каталог собирается из `pipeline/episodes`, а кликабельность зависит от наличия gameflow/HTML.</p>
+<p class="subtitle">Каталог собирается из `pipeline/source/episodes`, а кликабельность зависит от наличия gameflow/HTML.</p>
 <p class="coverage">{coverage_text}</p>
 {"".join(day_sections)}
 </body>

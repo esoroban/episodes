@@ -21,15 +21,15 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- Lesson brief: `pipeline/briefs/brief_{ID}.yaml` (required, must exist)
+- Lesson brief: `pipeline/source/briefs/brief_{ID}.yaml` (required, must exist)
 - YAML lesson: `lessons_ru/lesson_{ID}.yaml` (read-only, only ru keys)
 - Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
-- Rules: `pipeline/stages/stage_05_mapping.md`
+- Rules: `pipeline/docs/stages/stage_05_mapping.md`
 - Argument: lesson ID (1A, 1B, 2A ... 13A)
 
 ## Output
 
-- File: `pipeline/mappings/mapping_{ID}.yaml`
+- File: `pipeline/work/mappings/mapping_{ID}.yaml`
 
 ## Algorithm
 
@@ -69,7 +69,7 @@ For each block from the brief, compose a plan:
 
 ### Phase 3: Write (after approval)
 
-Write the mapping to `pipeline/mappings/mapping_{ID}.yaml` using the template.
+Write the mapping to `pipeline/work/mappings/mapping_{ID}.yaml` using the template.
 
 ## Three mapping principles
 

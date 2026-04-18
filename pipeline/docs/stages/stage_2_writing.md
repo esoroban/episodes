@@ -19,7 +19,7 @@ Pilot: lessons 1A → 1B → 2A → 2B. Then scaling (Step 3).
 
 ## Input
 - `episodes/ep_XX.md` — existing episode with lesson annotation
-- `pipeline/briefs/brief_XX.yaml` — lesson brief with blocks
+- `pipeline/source/briefs/brief_XX.yaml` — lesson brief with blocks
 
 ## Agents
 

@@ -16,7 +16,7 @@ ep_050.yaml
 ## Источник
 
 Каждый файл создаётся на основе:
-- `pipeline/episodes/day_NN.yaml` — структура и quiz
+- `pipeline/source/episodes/day_NN.yaml` — структура и quiz
 - `server/book/ep_NNN.md` — авторский текст
 
 ## Схема

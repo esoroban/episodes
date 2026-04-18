@@ -8,7 +8,7 @@ An interactive educational drama for children ages 8–12. 25 critical thinking 
 
 ## Philosophy
 The existing story is the foundation. The plot (Sofia's disappearance, the Mirror City, the Voice) is already good and is not being rewritten from scratch. We make two improvements on top:
-1. **Style** — rewrite the prose according to the profile in `pipeline/style_profile.yaml` (school-mystery + detective clue chain, close Marko focalization)
+1. **Style** — rewrite the prose according to the profile in `pipeline/docs/style_profile.yaml` (school-mystery + detective clue chain, close Marko focalization)
 2. **Lessons** — weave them in deeper so that each episode develops the lesson's topic and the lesson cannot be removed without breaking the plot
 
 ## Language
@@ -50,7 +50,7 @@ Working language: Russian. Ukrainian — only at the final localization stage.
 | `lessons_ru/` | 25 trilingual YAMLs (ru/en/uk). We use only `ru` keys | **NO** — read-only (protected by hook) |
 | `lessons_en/` | English extractions — not used | Ignore |
 | `pipeline/` | Pipeline: stages, rules, briefs, drafts, agents | Yes |
-| `pipeline/episodes/` | Episode plans by day (source of truth for episodes) | Yes |
+| `pipeline/source/episodes/` | Episode plans by day (source of truth for episodes) | Yes |
 | `pipeline/gameflow/` | **Game scene-flow layer** (see Gameflow Pipeline) | Yes |
 | `pipeline/gameflow/spec/` | Schema, branching rules, visual brief rules | Yes |
 | `pipeline/gameflow/episodes/` | Gameflow YAML files per episode | Yes |
@@ -69,8 +69,8 @@ Working language: Russian. Ukrainian — only at the final localization stage.
 ## Pipeline
 
 Existing story + lessons → improved book.
-Pipeline in development: `pipeline/pipeline.md`
-Rules: `pipeline/rules/content_rules.md`, `pipeline/rules/qa_rules.md`
+Pipeline in development: `pipeline/docs/pipeline.md`
+Rules: `pipeline/docs/rules/content_rules.md`, `pipeline/docs/rules/qa_rules.md`
 
 ## Gameflow Pipeline
 
@@ -79,7 +79,7 @@ A game scene-flow layer between episode plans and rendered HTML. Each episode is
 
 ### Data flow
 ```
-pipeline/episodes/day_NN.yaml  ──→  pipeline/gameflow/episodes/ep_NNN.yaml  ──→  publish/game/ep_NNN.html
+pipeline/source/episodes/day_NN.yaml  ──→  pipeline/gameflow/episodes/ep_NNN.yaml  ──→  publish/game/ep_NNN.html
 server/book/ep_NNN.md  ──────────┘          ↑                                         ↑
                                      (manual, with skills)                    (python3 tools/build_game.py)
 ```
@@ -102,7 +102,7 @@ python3 tools/validate_gameflow.py       # validate all gameflow YAML
 
 ### Progress
 - Day 1 (ep_001–ep_004): gameflow DONE, HTML generated
-- Days 2–13: gameflow NOT STARTED (episode plans exist in pipeline/episodes/)
+- Days 2–13: gameflow NOT STARTED (episode plans exist in pipeline/source/episodes/)
 
 ## Creating Episodes (reusable for any story/season)
 

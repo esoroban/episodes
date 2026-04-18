@@ -1,7 +1,7 @@
 # =====================================================================
 # GAMEFLOW — Эпизод 5: «Если верно — верно всегда»
 # Урок: повторяемость, закономерность, совпадение (2A.1)
-# Source: pipeline/episodes/day_02.yaml → ep: 5
+# Source: pipeline/source/episodes/day_02.yaml → ep: 5
 # Book: server/book/ep_005.md — PRIMARY source for drama text
 # Quizzes: 15 (разминка: 9 повторение Дня 1 / sofa_block: 8 Леон + закономерность/совпадение / challenge: 5 Леон + Зеркало / cliffhanger: 1)
 #        → фактически 23 quiz interaction, но группированы в сценах

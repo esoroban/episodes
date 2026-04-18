@@ -11,13 +11,13 @@ the same situations, but with our characters and tied to book events.
 
 ## Input
 
-- `pipeline/briefs/brief_{ID}.yaml` — lesson brief (from step 0)
+- `pipeline/source/briefs/brief_{ID}.yaml` — lesson brief (from step 0)
 - `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` — plot (read-only)
 - `lessons_ru/lesson_{ID}.yaml` — lesson YAML (read-only, only ru keys)
 
 ## Output
 
-- `pipeline/mappings/mapping_{ID}.yaml` — lesson-to-plot mapping
+- `pipeline/work/mappings/mapping_{ID}.yaml` — lesson-to-plot mapping
 
 ## Skill
 

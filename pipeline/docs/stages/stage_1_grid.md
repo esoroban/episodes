@@ -12,13 +12,13 @@ with which piece of the plot, which blocks are merged.
 
 ## Input
 
-- `pipeline/briefs/*.yaml` — all briefs (after QA)
+- `pipeline/source/briefs/*.yaml` — all briefs (after QA)
 - `source/` — plot (read-only)
 - Parameter: max_per_day (episode limit per day, default 4)
 
 ## Output
 
-- `pipeline/grid.yaml` — rough grid
+- `pipeline/source/grid.yaml` — rough grid
 
 ## Skill
 

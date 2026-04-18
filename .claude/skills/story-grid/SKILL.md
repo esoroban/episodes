@@ -20,14 +20,14 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- All briefs: `pipeline/briefs/brief_*.yaml`
+- All briefs: `pipeline/source/briefs/brief_*.yaml`
 - Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
 - QA passed: `tools/qa_briefs.py` was run, result — PASS
-- Rules: `pipeline/stages/stage_1_grid.md`
+- Rules: `pipeline/docs/stages/stage_1_grid.md`
 
 ## Output
 
-- `pipeline/grid.yaml`
+- `pipeline/source/grid.yaml`
 
 ## Algorithm
 
@@ -79,7 +79,7 @@ Output:
 
 ### Phase 3: Write
 
-After approval — write `pipeline/grid.yaml` using the template.
+After approval — write `pipeline/source/grid.yaml` using the template.
 
 ## Constraints
 

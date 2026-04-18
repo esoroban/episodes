@@ -3,7 +3,7 @@
 ## Архитектура слоёв
 
 ```
-pipeline/episodes/          ← source of truth (YAML планы эпизодов)
+pipeline/source/episodes/          ← source of truth (YAML планы эпизодов)
         ↓
 pipeline/gameflow/episodes/ ← игровой scene-flow (этот слой)
         ↓
@@ -12,11 +12,11 @@ publish/game/               ← HTML-превью
 pipeline/gameflow/visuals/  ← visual briefs для художки
 ```
 
-## Отношение к pipeline/episodes
+## Отношение к pipeline/source/episodes
 
 | Правило | Описание |
 |---------|----------|
-| Source of truth | `pipeline/episodes/day_*.yaml` — единственный источник сюжета и уроков |
+| Source of truth | `pipeline/source/episodes/day_*.yaml` — единственный источник сюжета и уроков |
 | Ссылки обязательны | Каждая сцена в gameflow содержит `source_ref`, указывающий на блок в episodes |
 | Не дублировать контент | Gameflow не повторяет полный текст из episodes — он структурирует его в сцены |
 | Не противоречить | Gameflow не может менять сюжет, порядок терминов или quiz-логику из episodes |
@@ -172,7 +172,7 @@ UI-режим на drama.
 
 ## Порядок работы при создании нового эпизода
 
-1. **Читай** `pipeline/episodes/day_NN.yaml` — найди нужный эпизод.
+1. **Читай** `pipeline/source/episodes/day_NN.yaml` — найди нужный эпизод.
 2. **Читай** `server/book/ep_NNN.md` — возьми развёрнутый текст.
 3. **Создай** `pipeline/gameflow/episodes/ep_NNN.yaml` — разбей на сцены.
 4. **Проверь**: каждая сцена имеет `source_ref`, каждый quiz из source сохранён, навигация замкнута (нет висячих ссылок).

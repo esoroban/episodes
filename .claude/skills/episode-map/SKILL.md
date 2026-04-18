@@ -31,16 +31,16 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- Episode plan: `pipeline/episodes/day_{NN}.yaml` (specific episode)
-- Lesson brief: `pipeline/briefs/brief_{ID}.yaml` (for this episode's blocks)
+- Episode plan: `pipeline/source/episodes/day_{NN}.yaml` (specific episode)
+- Lesson brief: `pipeline/source/briefs/brief_{ID}.yaml` (for this episode's blocks)
 - YAML lesson: `lessons_ru/lesson_{ID}.yaml` (read-only, only ru keys)
 - Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only)
-- Grid: `pipeline/grid.yaml` (terms, story_beat)
-- Style: `pipeline/style_profile.yaml`
+- Grid: `pipeline/source/grid.yaml` (terms, story_beat)
+- Style: `pipeline/docs/style_profile.yaml`
 
 ## Output
 
-- `pipeline/mapped/ep_{NNN}.yaml` (NNN = 001..050, with leading zeros)
+- `pipeline/work/mapped/ep_{NNN}.yaml` (NNN = 001..050, with leading zeros)
 
 ## Algorithm
 
@@ -88,7 +88,7 @@ For each quiz, decide: **keep generic or transplant into the plot**.
 
 ### Phase 3: Write
 
-After approval — write `pipeline/mapped/ep_{NNN}.yaml` using the template.
+After approval — write `pipeline/work/mapped/ep_{NNN}.yaml` using the template.
 
 ## Parallel run
 

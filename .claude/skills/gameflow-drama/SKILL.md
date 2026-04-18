@@ -46,7 +46,7 @@ All generated output must be in **Russian**.
 
 - `server/book/ep_NNN.md` — full book episode (drama reference)
 - `pipeline/gameflow/episodes/ep_NNN.yaml` — current gameflow (to fix)
-- `pipeline/episodes/day_NN.yaml` — episode plan (source of truth)
+- `pipeline/source/episodes/day_NN.yaml` — episode plan (source of truth)
 - `pipeline/gameflow/spec/gameflow_schema.md` — scene format
 
 ## Output

@@ -10,7 +10,7 @@ description: |
 
 # Gameflow Build — Day Plan → Interactive Game (Step 4)
 
-You convert episode plans (`pipeline/episodes/day_NN.yaml`) into playable
+You convert episode plans (`pipeline/source/episodes/day_NN.yaml`) into playable
 gameflow YAML files (`pipeline/gameflow/episodes/ep_NNN.yaml`), then validate
 and build HTML (`publish/game/ep_NNN.html`).
 
@@ -22,7 +22,7 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- `pipeline/episodes/day_{NN}.yaml` — episode plan (source of truth)
+- `pipeline/source/episodes/day_{NN}.yaml` — episode plan (source of truth)
 - `pipeline/gameflow/spec/` — schema, branching, visual brief rules (read ALL)
 - Existing gameflow episodes (for `previously` text and reference patterns)
 - Argument: day number (1–13), episode range, or "all"
@@ -46,7 +46,7 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ### Phase 1: Explore
 
-1. Read the day file (`pipeline/episodes/day_{NN}.yaml`)
+1. Read the day file (`pipeline/source/episodes/day_{NN}.yaml`)
 2. Read ALL spec files in `pipeline/gameflow/spec/`
 3. Read the PREVIOUS episode's gameflow YAML (for `previously` context)
 4. Read at least one completed gameflow episode as a pattern reference
@@ -290,7 +290,7 @@ With argument `all`:
 
 ## Constraints
 
-- DO NOT edit `pipeline/episodes/`, `source/`, `lessons_ru/`
+- DO NOT edit `pipeline/source/episodes/`, `source/`, `lessons_ru/`
 - DO NOT invent quizzes not in the day plan
 - DO NOT change quiz answers or term order
 - DO NOT rewrite drama text from scratch — adapt from day plan's summary

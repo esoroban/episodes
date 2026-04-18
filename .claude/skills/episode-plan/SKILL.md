@@ -24,15 +24,15 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Input
 
-- `pipeline/grid.yaml` — rough grid (read ONLY your day)
-- Day's briefs: `pipeline/briefs/brief_{lesson_id}.yaml`
+- `pipeline/source/grid.yaml` — rough grid (read ONLY your day)
+- Day's briefs: `pipeline/source/briefs/brief_{lesson_id}.yaml`
 - Plot: `source/СИЛА_СЛОВА_40_ЭПИЗОДОВ.md` (read-only, ONLY source_episodes for this day)
-- Style: `pipeline/style_profile.yaml` (if exists)
+- Style: `pipeline/docs/style_profile.yaml` (if exists)
 - Argument: day number (1–13)
 
 ## Output
 
-- `pipeline/episodes/day_{NN}.yaml` (NN = 01..13, with leading zero)
+- `pipeline/source/episodes/day_{NN}.yaml` (NN = 01..13, with leading zero)
 
 ## Algorithm
 
@@ -110,7 +110,7 @@ If error found: **STOP. Fix BEFORE showing to author.**
 
 ### Phase 3: Write
 
-After approval — write `pipeline/episodes/day_{NN}.yaml` using the template.
+After approval — write `pipeline/source/episodes/day_{NN}.yaml` using the template.
 
 ## Parallel run (all)
 

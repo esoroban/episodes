@@ -4,7 +4,7 @@ We don't write the story from scratch. We take the existing plot and decide whic
 
 ## Input
 - `source/` — existing plot (read-only)
-- `pipeline/briefs/brief_XX.yaml` — lesson briefs with blocks (from Step 0)
+- `pipeline/source/briefs/brief_XX.yaml` — lesson briefs with blocks (from Step 0)
 
 ## Agents
 

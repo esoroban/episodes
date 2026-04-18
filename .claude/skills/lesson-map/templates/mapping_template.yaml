@@ -1,6 +1,6 @@
 # LESSON MAPPING — lesson_{ID}
 # Маппинг урока на сюжет (шаг 3)
-# Источник: pipeline/briefs/brief_{ID}.yaml
+# Источник: pipeline/source/briefs/brief_{ID}.yaml
 
 lesson_id: lesson_{ID}
 title: "Название урока (ru)"

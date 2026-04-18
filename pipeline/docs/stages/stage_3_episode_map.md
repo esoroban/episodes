@@ -13,16 +13,16 @@ instead of story-specific ones (Mom and the missing sister).
 
 ## Input
 
-- `pipeline/episodes/day_{NN}.yaml` — episode plans (from step 2)
-- `pipeline/briefs/*.yaml` — lesson briefs
+- `pipeline/source/episodes/day_{NN}.yaml` — episode plans (from step 2)
+- `pipeline/source/briefs/*.yaml` — lesson briefs
 - `lessons_ru/*.yaml` — original quiz texts (read-only, ru keys only)
 - `source/` — plot (read-only)
-- `pipeline/grid.yaml` — terms and story beats
-- `pipeline/style_profile.yaml` — style
+- `pipeline/source/grid.yaml` — terms and story beats
+- `pipeline/docs/style_profile.yaml` — style
 
 ## Output
 
-- `pipeline/mapped/ep_{NNN}.yaml` (NNN = 001..050)
+- `pipeline/work/mapped/ep_{NNN}.yaml` (NNN = 001..050)
 
 ## Skill
 

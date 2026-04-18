@@ -25,7 +25,7 @@ The unit of splitting is a **theory block**: a scene (or group of scenes) that i
 Detailed rules are in the skill.
 
 ## Output
-- `pipeline/briefs/brief_{ID}.yaml` — lesson brief with blocks
+- `pipeline/source/briefs/brief_{ID}.yaml` — lesson brief with blocks
 
 ## Status
 - [x] brief_1A.yaml — done (2 blocks)

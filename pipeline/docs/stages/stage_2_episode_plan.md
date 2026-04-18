@@ -12,14 +12,14 @@ challenge, cliffhanger, quiz distribution.
 
 ## Input
 
-- `pipeline/grid.yaml` — rough grid (after QA)
-- `pipeline/briefs/*.yaml` — all briefs (after QA)
+- `pipeline/source/grid.yaml` — rough grid (after QA)
+- `pipeline/source/briefs/*.yaml` — all briefs (after QA)
 - `source/` — plot (read-only)
-- `pipeline/style_profile.yaml` — style (if available)
+- `pipeline/docs/style_profile.yaml` — style (if available)
 
 ## Output
 
-- `pipeline/episodes/day_01.yaml` ... `pipeline/episodes/day_13.yaml`
+- `pipeline/source/episodes/day_01.yaml` ... `pipeline/source/episodes/day_13.yaml`
 
 ## Skill
 

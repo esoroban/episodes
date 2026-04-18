@@ -2,7 +2,7 @@
 name: lesson-brief
 description: |
   Creates a lesson brief: reads the YAML lesson, splits it into theory blocks,
-  writes a text summary for each block to pipeline/briefs/.
+  writes a text summary for each block to pipeline/source/briefs/.
   Triggers: "create lesson brief", "split lesson", "lesson brief", "brief 1A".
   Argument: lesson ID (e.g., 1A, 5B, 12A). Without argument — asks which lesson.
 ---
@@ -25,7 +25,7 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Output
 
-- File: `pipeline/briefs/brief_{ID}.yaml`
+- File: `pipeline/source/briefs/brief_{ID}.yaml`
 
 ## Block Splitting Rule
 
@@ -81,7 +81,7 @@ Uses the template from `templates/brief_template.yaml`.
 4. Identify where new concepts are introduced — these are block boundaries
 5. Group scenes into blocks per the rules above
 6. For each block, write summary and key_material
-7. Write the result to `pipeline/briefs/brief_{ID}.yaml`
+7. Write the result to `pipeline/source/briefs/brief_{ID}.yaml`
 8. Show the user a brief summary: how many blocks, what terms in each
 
 ## Constraints
