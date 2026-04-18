@@ -672,7 +672,7 @@ body {
 .scene-branch { color: var(--branch); font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem; }
 .scene-flags-inner { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
 .scene-content { padding: 1.25rem; }
-.author-text p { margin-bottom: 0.75rem; }
+.author-text p { margin-bottom: 0.75rem; font-style: italic; }
 .dialogue-block { margin: 0.75rem 0; }
 .dl-char, .dl-sofa, .dl-narrator {
   margin-bottom: 0.5rem;
