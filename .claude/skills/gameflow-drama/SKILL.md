@@ -1,9 +1,11 @@
 ---
 name: gameflow-drama
 description: |
-  Restores and preserves drama in gameflow episodes.
+  Restores drama that was in the book but got stripped during gameflow conversion.
   Reads book episodes (server/book/), compares with gameflow YAML,
-  finds missing drama beats, breaks quiz streaks, reconnects quizzes to story.
+  restores missing drama beats, reconnects quizzes to story.
+  Does NOT enforce artificial chain-length limits — if the book shows
+  Софа teaching uninterrupted, gameflow keeps it that way.
   Triggers: "restore drama", "gameflow-drama", "drama check", "fix drama".
   Argument: episode number, range ("ep 1-4"), or "all".
   Without argument — asks which episode.
@@ -17,13 +19,23 @@ The gameflow layer structures content into scenes but must NOT strip drama.
 ## The Problem This Skill Solves
 
 When converting book episodes to gameflow, drama gets lost:
-1. **Quiz streaks** — 6-9 quizzes in a row with no story between them
+1. **Stripped drama beats** — when the book had narrative/dialogue between
+   quizzes but the gameflow dropped it. (The issue is NOT quiz count per se
+   — it's drama that was in the book being missing in gameflow. If the book
+   had a long uninterrupted teaching sequence by Софа, gameflow keeps it
+   long; if the book broke to Марко's reaction or a scene change, gameflow
+   must too.)
 2. **Missing drama beats** — school scenes, emotional moments, character
    interactions cut from gameflow
 3. **Disconnected quizzes** — abstract examples replace story-connected
    quizzes (e.g., "арбуз 8 кг" instead of "Витя сказал 'все говорят'")
 4. **Recap contamination** — references to "помнишь?" or "ранее"
    instead of flowing forward
+
+**Length principle:** phone chain length has NO numerical limit. If the book
+shows Софа teaching 20 messages straight without a drama break, gameflow
+keeps 20 messages straight. Drama breaks the chain when the book says so —
+not every N quizzes by artificial rule.
 
 ## Language
 
@@ -79,9 +91,8 @@ no "в предыдущей серии". The player just experienced it.
 
 1. Read the gameflow YAML
 2. Map every scene: DRAMA / QUIZ / TRANSITION
-3. Find quiz streaks (consecutive quiz scenes)
-4. Count drama:quiz ratio
-5. List all quiz questions — note which are story-connected vs abstract
+3. Map natural drama breaks (scene/location changes, new characters, Марко reactions)
+4. List all quiz questions — note which are story-connected vs abstract
 
 ### Step 2: Analyze Book Episode
 
@@ -287,23 +298,28 @@ The sofa chain (e.g., s04b–s10) stays intact.
 Drama goes between s10 and s12.
 The challenge chain (e.g., s12–s21) stays intact.
 
-**Option B: Break within a chain**
-If a chain is > 6 quizzes, split it:
-- Quizzes 1-3 stay as chain
-- Drama breaker (different location or without Софа chat)
-- Quizzes 4-6 start a new chain (Софа: "Продолжаем.")
-The drama breaker MUST change location or remove Софа from
-characters_present to break the chain rendering.
+**Option B: Break within a chain — ONLY if the book shows a break there**
+Do NOT split chains by quiz count. If the book has uninterrupted Софа-teaching
+for 20 messages, gameflow keeps it as one chain. The telegram-bot metaphor
+tolerates arbitrary length — player is engaged with the bot.
 
-**Preferred approach:** Option A where possible (simpler, fewer
-rendering risks). Option B only for sofa_block chains > 6.
+Split a chain only when the book explicitly has:
+- Scene/location change
+- Another character enters
+- An emotional reaction or action beat from Марко
+
+When the book has such a break and gameflow missed it — restore it.
+When the book has no break — don't invent one.
+
+**Preferred approach:** Option A (insert drama between natural sub-sections).
+Never insert drama purely to limit chain length.
 
 ## Special Cases
 
 ### Quizzes that ARE drama
 Some book quizzes are embedded in story dialogue — a character says
-something, Софа comments, quiz follows naturally. These count as
-BOTH drama and quiz for ratio purposes. Mark them:
+something, Софа comments, quiz follows naturally. Mark them — they're
+both narrative flow AND quiz mechanic:
 
 ```yaml
   story_quiz: true  # this quiz is part of the narrative flow
@@ -311,9 +327,10 @@ BOTH drama and quiz for ratio purposes. Mark them:
 
 ### Challenge express quizzes
 Challenge blocks are designed for speed — rapid-fire quizzes.
-Here, a streak of 3 is still OK, but insert a brief Марко reaction
-(1-2 lines of author_text) every 3 quizzes as a breathing moment.
-These micro-breakers don't need to be full scenes:
+Streak length is whatever the book shows. Do NOT insert artificial
+Марко-reaction breathers every N quizzes. Only add author_text_before
+if the book explicitly has it at that point. When the book keeps
+quizzes back-to-back without reaction, gameflow does the same.
 
 ```yaml
 # Instead of separate scene, add to the quiz itself:
