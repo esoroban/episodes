@@ -325,6 +325,15 @@ body {
 }
 .voice-bar.played { background: #3390ec; }
 .voice-duration { font-size: 10px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
+.voice-subtitle {
+  margin-top: 6px; padding: 5px 7px; font-size: 11px; line-height: 1.35;
+  color: rgba(0,0,0,0.55); font-style: italic; background: rgba(51,144,236,0.08);
+  border-left: 2px solid #3390ec; border-radius: 3px;
+}
+.voice-subtitle::before {
+  content: "🎧 "; font-style: normal; opacity: 0.6;
+}
+body.debug-off .voice-subtitle { display: none; }
 /* Quiz buttons */
 .quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
 .quiz-options { display: flex; flex-direction: column; gap: 4px; }
@@ -933,7 +942,8 @@ body {
       var row=document.createElement('div');
       row.className='msg-row '+(out?'outgoing':'incoming');
       var ds='0:'+m.d.toString().padStart(2,'0');
-      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div class="voice-msg"><button class="voice-play">\u25b6</button><div class="voice-waveform">'+barsHtml(24)+'</div><span class="voice-duration">'+ds+'</span></div><div class="msg-time">'+now()+'</div></div>';
+      var sub=m.x?'<div class="voice-subtitle">'+m.x+'</div>':'';
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div class="voice-msg"><button class="voice-play">\u25b6</button><div class="voice-waveform">'+barsHtml(24)+'</div><span class="voice-duration">'+ds+'</span></div>'+sub+'<div class="msg-time">'+now()+'</div></div>';
       chatEl.appendChild(row);scroll();
       row.querySelector('.voice-play').onclick=function(){
         var btn=this;if(btn.dataset.p)return;btn.dataset.p='1';btn.textContent='\u23f8';
