@@ -178,8 +178,8 @@ scenes:
           - {id: yellow, text: "Жёлтый", correct: false}
           - {id: green, text: "Зелёный", correct: false}
         correct_logic: "Один раз — красный! СТОП, не делай вывод."
-        feedback_success: "Софа: «Красный! Один раз — СТОП. Не делай вывод.»"
-        feedback_soft_fail: "Софа: «Один раз — какой цвет? Вспомни: один = красный.»"
+        feedback_success: "Красный! Один раз — СТОП. Не делай вывод."
+        feedback_soft_fail: "Один раз — какой цвет? Вспомни: один = красный."
       - interaction_type: vote
         question: "Пять раз из пяти тень Леона не повторяет его улыбку. Какой цвет?"
         options:
@@ -187,8 +187,8 @@ scenes:
           - {id: yellow, text: "Жёлтый", correct: false}
           - {id: green, text: "Зелёный — закономерность", correct: true}
         correct_logic: "Пять раз одинаково — зелёный! Закономерность."
-        feedback_success: "Софа: «Зелёный! Пять раз — стабильный результат. Закономерность.»"
-        feedback_soft_fail: "Софа: «Пять раз одно и то же. Какой цвет для пяти и больше?»"
+        feedback_success: "Зелёный! Пять раз — стабильный результат. Закономерность."
+        feedback_soft_fail: "Пять раз одно и то же. Какой цвет для пяти и больше?"
       - interaction_type: vote
         question: "Марко дважды увидел лишний палец у Леона через Зеркало. Какой цвет?"
         options:
@@ -196,24 +196,24 @@ scenes:
           - {id: yellow, text: "Жёлтый — интересно, но проверяй", correct: true}
           - {id: green, text: "Зелёный", correct: false}
         correct_logic: "Два раза — жёлтый! Интересно, но проверяй дальше."
-        feedback_success: "Софа: «Жёлтый! Два раза — интересно, но рано делать вывод.»"
-        feedback_soft_fail: "Софа: «Два раза — какой цвет? Вспомни: два-три = жёлтый.»"
+        feedback_success: "Жёлтый! Два раза — интересно, но рано делать вывод."
+        feedback_soft_fail: "Два раза — какой цвет? Вспомни: два-три = жёлтый."
       - interaction_type: vote
         question: "Марко поднял Зеркало — и один раз увидел, что тень Леона не двигается. Совпадение или закономерность?"
         options:
           - {id: pattern, text: "Закономерность", correct: false}
           - {id: coincidence, text: "Совпадение — один раз, красный", correct: true}
         correct_logic: "Один раз — красный! Совпадение."
-        feedback_success: "Софа: «Один раз — красный. Совпадение.»"
-        feedback_soft_fail: "Софа: «Один раз. Какой цвет светофора?»"
+        feedback_success: "Один раз — красный. Совпадение."
+        feedback_soft_fail: "Один раз. Какой цвет светофора?"
       - interaction_type: vote
         question: "Тень Леона снова не машет, когда машет сам Леон. Пять раз из пяти. Совпадение или закономерность?"
         options:
           - {id: pattern, text: "Закономерность — стабильный результат", correct: true}
           - {id: coincidence, text: "Совпадение", correct: false}
         correct_logic: "Стабильный результат! Пять из пяти — закономерность."
-        feedback_success: "Софа: «Стабильный результат! Пять из пяти. Закономерность.»"
-        feedback_soft_fail: "Софа: «Пять раз одно и то же. Что это?»"
+        feedback_success: "Стабильный результат! Пять из пяти. Закономерность."
+        feedback_soft_fail: "Пять раз одно и то же. Что это?"
       - interaction_type: vote
         question: "Марко пришёл к Леону — тень не улыбалась. Три раза. Какой цвет?"
         options:
@@ -221,8 +221,8 @@ scenes:
           - {id: yellow, text: "Жёлтый — проверяй дальше", correct: true}
           - {id: green, text: "Зелёный", correct: false}
         correct_logic: "Три раза — жёлтый! Проверяй дальше."
-        feedback_success: "Софа: «Жёлтый! Три раза — проверяй дальше.»"
-        feedback_soft_fail: "Софа: «Три раза. Какой цвет для двух-трёх?»"
+        feedback_success: "Жёлтый! Три раза — проверяй дальше."
+        feedback_soft_fail: "Три раза. Какой цвет для двух-трёх?"
     mood: "практика светофора"
     next_default: ep006_s05
     visual_brief:
@@ -256,16 +256,16 @@ scenes:
           - {id: yes, text: "Да — то же место, тот же Леон, тот же свет", correct: true}
           - {id: no, text: "Нет — условия разные", correct: false}
         correct_logic: "То же место, тот же Леон, тот же свет."
-        feedback_success: "Софа: «Да! Одно место, один Леон, один свет. Условия одинаковые.»"
-        feedback_soft_fail: "Софа: «Место изменилось? Леон изменился? Свет изменился?»"
+        feedback_success: "Да! Одно место, один Леон, один свет. Условия одинаковые."
+        feedback_soft_fail: "Место изменилось? Леон изменился? Свет изменился?"
       - interaction_type: vote
         question: "Марко проверял дверь в парке три раза. Условия одинаковые?"
         options:
           - {id: yes, text: "Да — то же место, та же рука", correct: true}
           - {id: no, text: "Нет", correct: false}
         correct_logic: "То же место, та же рука."
-        feedback_success: "Софа: «Да! То же место, та же рука. Условия одинаковые.»"
-        feedback_soft_fail: "Софа: «Рука та же? Место то же? Тогда...»"
+        feedback_success: "Да! То же место, та же рука. Условия одинаковые."
+        feedback_soft_fail: "Рука та же? Место то же? Тогда..."
     author_text_after: >
       Софа: «Правило... шестое. Светофор повторений. Один раз — красный, стоп.
       Два-три — жёлтый, проверяй. Пять и больше — зелёный, закономерность.
@@ -302,8 +302,8 @@ scenes:
       - {id: yellow, text: "Жёлтый", correct: false}
       - {id: green, text: "Зелёный", correct: false}
     correct_logic: "Один раз — красный! СТОП, не делай вывод."
-    feedback_success: "Софа: «Красный! Один раз — СТОП. Не торопись с выводами.»"
-    feedback_soft_fail: "Софа: «Один раз. Какой цвет? Вспомни правило.»"
+    feedback_success: "Красный! Один раз — СТОП. Не торопись с выводами."
+    feedback_soft_fail: "Один раз. Какой цвет? Вспомни правило."
     mood: "связь с жизнью"
     next_default: ep006_s07
     visual_brief:
@@ -381,24 +381,24 @@ scenes:
           - {id: yes, text: "Да — можно пойти и увидеть", correct: true}
           - {id: no, text: "Нет", correct: false}
         correct_logic: "Можно пойти и увидеть."
-        feedback_success: "Софа: «Да! Проверяемо — пойди и увидь. Но...»"
-        feedback_soft_fail: "Софа: «Есть способ проверить? Пойти и посмотреть?»"
+        feedback_success: "Да! Проверяемо — пойди и увидь. Но..."
+        feedback_soft_fail: "Есть способ проверить? Пойти и посмотреть?"
       - interaction_type: vote
         question: "Леон уже говорил «безопасно» другим. Один не вернулся. Достаточно ли данных, чтобы идти?"
         options:
           - {id: yes, text: "Да — большинство вернулись", correct: false}
           - {id: no, text: "Недостаточно — два из трёх не закономерность безопасности", correct: true}
         correct_logic: "Два из трёх — не закономерность безопасности."
-        feedback_success: "Софа: «Недостаточно! Один не вернулся — нельзя игнорировать.»"
-        feedback_soft_fail: "Софа: «Один не вернулся. Это можно игнорировать?»"
+        feedback_success: "Недостаточно! Один не вернулся — нельзя игнорировать."
+        feedback_soft_fail: "Один не вернулся. Это можно игнорировать?"
       - interaction_type: vote
         question: "Что бы сделал детектив правды?"
         options:
           - {id: go, text: "Пошёл бы сразу", correct: false}
           - {id: ask, text: "Задал бы вопрос: а что случилось с тем, кто не вернулся?", correct: true}
         correct_logic: "Детектив задал бы вопрос."
-        feedback_success: "Софа: «Детектив задаёт вопрос! «А что случилось с тем, кто не вернулся?»»"
-        feedback_soft_fail: "Софа: «Детектив идёт сразу? Или сначала спрашивает?»"
+        feedback_success: "Детектив задаёт вопрос! «А что случилось с тем, кто не вернулся?»"
+        feedback_soft_fail: "Детектив идёт сразу? Или сначала спрашивает?"
     mood: "проверка перед действием"
     next_default: ep006_s09
     visual_brief:
