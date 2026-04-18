@@ -1,5 +1,69 @@
 # Pipeline Rules — Связь gameflow с другими слоями
 
+## Карта инвокации: правило → инструмент
+
+Каждое правило имеет один или несколько способов запуска. Если правило
+есть, а инвокации нет — это пробел, его нужно закрывать (validator или skill).
+
+### Автоматическая валидация (`python3 tools/validate_gameflow.py`)
+
+| # | Что проверяет | Файл-чек |
+|---|---|---|
+| 1 | Дубликаты ключей в YAML | строгий парсер |
+| 2 | Битые переходы (next_default/next_fail/merge_to) | граф сцен |
+| 3 | Недостижимые сцены | обход графа |
+| 4 | Неиспользуемые флаги | set vs require |
+| 5 | Персонажи без интродукции | characters_present |
+| 6 | Полнота квизов (≥1 correct) | options |
+| 7 | Префикс «Софа:» в feedback | feedback_success/soft_fail |
+| 8 | voice_message без who/line/duration | unlock_button.reveals |
+| 9 | Софа описывает звук («слышишь», «треск») | dialogue Софы |
+| 10 | Утечка «Софа: ...» в author_text | author_text/_after |
+| 11 | Имя персонажа до первого появления | cross-episode |
+| 12 | Отсутствует source_ref | каждая сцена |
+| 13 | Запрещённый блок `previously:` | top-level |
+| 14 | Невалидный branch_type | scenes[].branch_type |
+
+**Запуск перед каждым деплоем.** Падает на error — деплой блокируется.
+
+### Скиллы (вызываются по триггерам)
+
+| Триггер / задача | Скилл | Когда вызывать |
+|---|---|---|
+| Создать план эпизода из дня | `episode-plan` | новый день, ещё нет плана |
+| Привязать квизы к сюжету | `episode-map` | после `episode-plan` |
+| Собрать gameflow YAML | `gameflow-build` | после `episode-map` |
+| Восстановить драму из книги | `gameflow-drama` | после `gameflow-build`, если драма ушла |
+| Добавить ветвления | `gameflow-branch` | после `gameflow-drama`, если эпизод линеен |
+| Проверить ссылки на персонажей/факты/термины | `qa-references` | после любых правок текста |
+| Проверить замкнутость веток | `qa-branches` | после `gameflow-branch` |
+| Проверить эпизод на ответ-до-вопроса, теорию, чистоту | `qa-episodes` | финальный QA контента |
+| Проверить чистоту lesson briefs | `qa-briefs` | после `lesson-brief` |
+| Опубликовать на Render | `deploy-game` | финал, после всех QA |
+
+**Триггер-фразы скилла указаны в его SKILL.md** (поле `description`).
+
+### Рендер (`python3 tools/build_game.py`)
+
+Рендерер enforce'ит правила доставки:
+- Софа в `characters_present` + говорит → автоматически Telegram-режим
+- `who: автор` → voice-over карточка (никогда чат-пузырь)
+- `unlock_button.reveals.type: voice_message` → отдельная voice-плашка
+- `interactions[]`/`followup_interaction` → inline-keyboard квизы в чате
+
+### Что НЕ автоматизировано (контролируется через qa-* скиллы)
+
+- 100% переноса контента из book/source — `qa-episodes`
+- Глубина веток ≤ 3 сцены — `qa-branches`
+- Flavor_detour не содержит plot-critical info — `qa-branches`
+- Ответ к квизу не появляется до квиза — `qa-episodes`
+- Quiz count == план в day_NN.yaml — `qa-episodes`
+
+Если правило здесь — но скилл его не проверяет, открывай PR на новый Check
+в `validate_gameflow.py` или новый раздел в соответствующем скилле.
+
+---
+
 ## Архитектура слоёв
 
 ```

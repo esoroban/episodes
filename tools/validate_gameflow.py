@@ -303,6 +303,38 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                     f"move to dialogue/dialogue_after. Софа = всегда Telegram-чат."
                 )
 
+    # ── Check 12: source_ref required ────────────────────────────
+    # Каждая сцена должна ссылаться на источник в pipeline/source/episodes.
+    # Без source_ref теряется отслеживание происхождения.
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        if not scene.get("source_ref"):
+            result.error(
+                f"NO SOURCE_REF: {sid} — каждая сцена обязана указывать source_ref "
+                f"(напр. day_NN.epN.drama). Без него теряется связь со source of truth."
+            )
+
+    # ── Check 13: previously block forbidden ─────────────────────
+    # Игрок только что прошёл предыдущий эпизод — никаких «ранее в серии».
+    # См. CLAUDE.md и pipeline_rules.md.
+    if data.get("previously"):
+        result.error(
+            f"PREVIOUSLY FORBIDDEN: эпизод содержит блок `previously:` — "
+            f"запрещено. Игрок только что прошёл предыдущий эпизод."
+        )
+
+    # ── Check 14: branch_type must be from allowed set ───────────
+    # См. branching_rules.md — только эти 4 типа разрешены.
+    ALLOWED_BRANCH_TYPES = {"soft_fail_loop", "flavor_detour", "gated_response", "cosmetic_branch"}
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        bt = scene.get("branch_type")
+        if bt and bt not in ALLOWED_BRANCH_TYPES:
+            result.error(
+                f"INVALID BRANCH_TYPE: {sid}.branch_type='{bt}' — допустимы только "
+                f"{sorted(ALLOWED_BRANCH_TYPES)}. См. branching_rules.md."
+            )
+
     return result
 
 
