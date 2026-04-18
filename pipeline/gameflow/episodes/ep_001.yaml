@@ -1004,7 +1004,7 @@ scenes:
     time: "утро"
     characters_present: [Марко, Софа]
     interaction_type: vote
-    question: "«Вера Андреевна говорит тихо.» Факт или мнение?"
+    question: "«Мама говорит тихо.» Факт или мнение?"
     options:
       - id: fact
         text: "Факт"

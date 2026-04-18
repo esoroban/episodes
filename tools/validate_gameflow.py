@@ -330,6 +330,70 @@ def cross_validate(results: dict, all_data: dict):
         for f in sorted(globally_unused):
             first_result.warn(f"GLOBAL UNUSED FLAG: '{f}' is set somewhere but never required anywhere")
 
+    # ── Check 11: Character mention before first appearance ───────
+    # If a named character is mentioned in text/dialogue/quiz BEFORE
+    # they first appear in characters_present — fail.
+    CHARS = ["Софа", "София", "Марко", "Лина", "Макс", "Витя", "Олена", "Данила",
+             "Леон", "Вера Андреевна", "Вера", "Сем", "Голос", "Рей", "Дмитрик", "Мама",
+             "Сергей Палыч", "Маша", "Микола", "Оленка"]
+    CHARS_SORTED = sorted(CHARS, key=lambda x: -len(x))
+
+    mentions = {c: [] for c in CHARS}
+    presences = {c: [] for c in CHARS}
+
+    for filename in sorted(all_data.keys()):
+        m = re.search(r"ep_(\d+)", filename)
+        if not m:
+            continue
+        ep_num = int(m.group(1))
+        data = all_data[filename]
+        for idx, scene in enumerate(data.get("scenes", [])):
+            sid = scene.get("scene_id", "")
+            chars_present = scene.get("characters_present", []) or []
+            for c in CHARS:
+                if c in chars_present:
+                    presences[c].append((ep_num, idx, sid))
+            text_blob = []
+            for fld in ("question", "author_text", "author_text_after", "correct_logic",
+                        "feedback_success", "feedback_soft_fail"):
+                v = scene.get(fld)
+                if isinstance(v, str):
+                    text_blob.append(v)
+            for d in (scene.get("dialogue", []) or []) + (scene.get("dialogue_after", []) or []):
+                if isinstance(d, dict):
+                    text_blob.append(str(d.get("line", "")))
+            for o in scene.get("options", []) or []:
+                if isinstance(o, dict):
+                    text_blob.append(str(o.get("text", "")))
+            for inter in scene.get("interactions", []) or []:
+                if isinstance(inter, dict):
+                    for fld in ("question", "feedback_success", "feedback_soft_fail", "correct_logic"):
+                        v = inter.get(fld)
+                        if isinstance(v, str):
+                            text_blob.append(v)
+                    for o in inter.get("options", []) or []:
+                        if isinstance(o, dict):
+                            text_blob.append(str(o.get("text", "")))
+            full = " ".join(text_blob)
+            check_full = full
+            for c in CHARS_SORTED:
+                if re.search(r"\b" + re.escape(c) + r"\b", check_full):
+                    mentions[c].append((ep_num, idx, sid))
+                    check_full = re.sub(r"\b" + re.escape(c) + r"\b", "###", check_full)
+
+    first_result = next(iter(results.values()))
+    for c in CHARS:
+        if not mentions[c] or not presences[c]:
+            continue
+        first_m = mentions[c][0]
+        first_p = presences[c][0]
+        if first_m < first_p:
+            first_result.error(
+                f"NAME LEAK: '{c}' mentioned in ep_{first_m[0]:03d} {first_m[2]} "
+                f"BEFORE first appearance in ep_{first_p[0]:03d} {first_p[2]}. "
+                f"Rephrase the early mention or move the character introduction earlier."
+            )
+
 
 # ═══════════════════════════════════════════════════════════════════
 # 4. Main
