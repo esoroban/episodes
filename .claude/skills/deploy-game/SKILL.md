@@ -1,6 +1,6 @@
 ---
 name: deploy-game
-description: Build the HTML game from gameflow YAML, sync book/ to server/book/, commit and push. Render auto-deploys from master.
+description: Build the HTML game from gameflow YAML, sync book/ to server/book/, commit and push. Render auto-deploys from main.
 trigger: деплой игры, deploy game, задеплой, обнови рендер, запуши, push deploy
 ---
 
@@ -10,9 +10,9 @@ trigger: деплой игры, deploy game, задеплой, обнови ре
 
 ## Архитектура (важно)
 
-- Репозиторий один: `github.com:esoroban/episodes.git`, ветка `master`.
+- Репозиторий один: `github.com:esoroban/episodes.git`, ветка `main`.
 - `server/` — **НЕ** отдельный репо, это обычный каталог (никакого `cd server && git push`).
-- Render следит за `master` и раздаёт `server/game/` и `server/book/`.
+- Render следит за `main` и раздаёт `server/game/` и `server/book/`.
 - `tools/build_game.py` пишет **сразу** в `server/game/` (не через `publish/`).
 - Книга: `book/*.md` — источник; в `server/book/` кладём копию для сервера.
 
@@ -35,11 +35,11 @@ trigger: деплой игры, deploy game, задеплой, обнови ре
    git diff --stat HEAD
    ```
 
-4. Закоммитить и запушить в `master`:
+4. Закоммитить и запушить в `main`:
    ```bash
    git add server/ tools/ pipeline/gameflow/ book/
    git commit -m "Deploy: <что изменилось>"
-   git push origin master
+   git push origin main
    ```
 
 5. Render подхватит пуш автоматически (~1–2 минуты).
@@ -52,8 +52,9 @@ trigger: деплой игры, deploy game, задеплой, обнови ре
 
 ## Частые ошибки
 
-- **«Render не подхватил изменения»** — проверь, что коммит реально ушёл в `master`
+- **«Render не подхватил изменения»** — проверь, что коммит реально ушёл в `main`
   и что правились файлы именно в `server/game/` (или `server/book/`), а не где-то ещё.
 - **«cd server && git push»** — неверно: server/ не отдельный репо, всё идёт
   одним пушем из корня.
-- **Ветка `main`** — у нас `master`.
+- **Ветка — только `main`**. `master` в репозитории нет (удалён). Если по привычке
+  пишешь `git push origin master` — получишь `error: src refspec master does not match any`.
