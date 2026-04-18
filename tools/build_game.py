@@ -95,15 +95,28 @@ def render_author_text(text) -> str:
 
 
 def is_sofa_chat_scene(scene: dict) -> bool:
-    """True if this scene should render as an iPhone Telegram chat."""
+    """True if this scene should render as an iPhone Telegram chat.
+
+    Rule: Sofa ALWAYS speaks in Telegram. If Sofa is in characters_present
+    AND speaks anywhere (dialogue, dialogue_after, interactions, followup,
+    quiz options, unlock button) — render as chat.
+    """
     chars = scene.get("characters_present", [])
-    if not any(c.lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars):
+    if not any(str(c).lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars):
         return False
-    return bool(
-        scene.get("dialogue")
-        or scene.get("unlock_button")
-        or any("correct" in o for o in scene.get("options", []))
-    )
+    if scene.get("dialogue") or scene.get("dialogue_after"):
+        return True
+    if scene.get("unlock_button"):
+        return True
+    if any("correct" in o for o in scene.get("options", []) or []):
+        return True
+    interactions = scene.get("interactions", []) or []
+    if any(any("correct" in o for o in (inter.get("options", []) or [])) for inter in interactions):
+        return True
+    followup = scene.get("followup_interaction", {}) or {}
+    if any("correct" in o for o in followup.get("options", []) or []):
+        return True
+    return False
 
 
 def build_chat_messages(scene: dict) -> list:
@@ -161,6 +174,55 @@ def build_chat_messages(scene: dict) -> list:
             ds = str(rev.get("duration", "3"))
             dur = int(ds.split(":")[-1]) if ":" in ds else int(ds)
             msgs.append({"t": "voice", "s": "sofia", "d": dur, "x": rev.get("line", "")})
+
+    for inter in scene.get("interactions", []) or []:
+        opts_in = [o for o in (inter.get("options", []) or []) if "correct" in o]
+        if not opts_in:
+            continue
+        q = inter.get("question", "")
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in opts_in]
+        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
+        fb_ok = str(inter.get("feedback_success", "")).strip()
+        fb_fail = str(inter.get("feedback_soft_fail", "")).strip()
+        if fb_ok:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
+        if fb_fail:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
+
+    followup = scene.get("followup_interaction", {}) or {}
+    fu_opts = [o for o in (followup.get("options", []) or []) if "correct" in o]
+    if fu_opts:
+        q = followup.get("question", "")
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in fu_opts]
+        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
+        fb_ok = str(followup.get("feedback_success", "")).strip()
+        fb_fail = str(followup.get("feedback_soft_fail", "")).strip()
+        if fb_ok:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
+        if fb_fail:
+            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
+
+    for d in scene.get("dialogue_after", []) or []:
+        if not isinstance(d, dict):
+            continue
+        who = d.get("who", "")
+        line = str(d.get("line", "")).strip()
+        w = who.lower()
+        if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
+            msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": line})
+        elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
+            msgs.append({"t": "text", "s": "sofa", "x": line})
+        elif w in ("\u043c\u0430\u0440\u043a\u043e", "marko"):
+            msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
+        else:
+            msgs.append({"t": "voiceover", "s": w, "name": who, "x": line})
+
+    at_after = scene.get("author_text_after", "")
+    if at_after:
+        for p in str(at_after).strip().split("\n"):
+            p = p.strip()
+            if p:
+                msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": p})
 
     return msgs
 

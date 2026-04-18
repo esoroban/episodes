@@ -289,6 +289,20 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                             f"'{m.group(0)}'. Софа has no sound. Describe screen behavior instead."
                         )
 
+    # ── Check 10: Sofa speech leak in author_text/author_text_after ──
+    # Софа = всегда Telegram. Реплики Софы должны быть в dialogue,
+    # не в author_text — иначе уйдут как голос Автора.
+    SOFA_LEAK = _re.compile(r"^\s*Софа\s*[:—-]", _re.MULTILINE)
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        for field in ("author_text", "author_text_after"):
+            text = scene.get(field, "")
+            if isinstance(text, str) and SOFA_LEAK.search(text):
+                result.error(
+                    f"SOFA LEAK: {sid}.{field} contains 'Софа: ...' — "
+                    f"move to dialogue/dialogue_after. Софа = всегда Telegram-чат."
+                )
+
     return result
 
 

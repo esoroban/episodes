@@ -86,6 +86,8 @@ pipeline/gameflow/visuals/  ← visual briefs для художки
 
 | Правило | Описание |
 |---------|----------|
+| **Софа = ВСЕГДА Telegram** | Если Софа говорит (в `dialogue`, `dialogue_after`, через `interactions`, `followup_interaction`, `unlock_button`) — сцена **обязательно** рендерится как чат. Софа никогда не появляется в drama-режиме. Если Софа в `characters_present` молчит — убери её оттуда. |
+| Запрет на «Софа: ...» в `author_text*` | Реплики Софы должны быть в `dialogue`/`dialogue_after`, НЕ в `author_text`/`author_text_after`. Иначе они пойдут как голос Автора через voice-over — нарушение канала. |
 | Телеграм-чат = только Софа | В чате — только прямые вопросы/ответы Софы и квизы |
 | Драма = отдельный экран | Narrative, диалоги персонажей, автор — отдельные сцены с будущей иллюстрацией |
 | Софа в `characters_present` | Только в quiz-сценах и sofa_block-intro (где Софа объясняет термин) |
