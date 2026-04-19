@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-19T17:51:28Z",
+  "generated_at": "2026-04-19T19:08:22Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -32,13 +32,19 @@
           "html": "ep_002.html",
           "data": "ep_002.json",
           "content_hash": "4ad31f95445dc59d"
+        },
+        "uk": {
+          "html": "uk/ep_002.html",
+          "data": "uk/ep_002.json",
+          "content_hash": "470f3ec96f28c9cc"
         }
       },
       "title_ru": "Неправда и её виды",
       "lesson": "1A.2",
       "scene_count": 44,
       "quiz_count": 23,
-      "branch_count": 6
+      "branch_count": 6,
+      "title_uk": "Неправда та її види"
     },
     {
       "id": "ep_003",
@@ -48,13 +54,19 @@
           "html": "ep_003.html",
           "data": "ep_003.json",
           "content_hash": "afe30fc7b9894444"
+        },
+        "uk": {
+          "html": "uk/ep_003.html",
+          "data": "uk/ep_003.json",
+          "content_hash": "71a64ddcdb5dcc45"
         }
       },
       "title_ru": "Хитрые утверждения",
       "lesson": "1B.1",
       "scene_count": 37,
       "quiz_count": 15,
-      "branch_count": 3
+      "branch_count": 3,
+      "title_uk": "Хитрі твердження"
     },
     {
       "id": "ep_004",
@@ -64,13 +76,19 @@
           "html": "ep_004.html",
           "data": "ep_004.json",
           "content_hash": "a4795331c6f9b16f"
+        },
+        "uk": {
+          "html": "uk/ep_004.html",
+          "data": "uk/ep_004.json",
+          "content_hash": "5ae942f0629d2815"
         }
       },
       "title_ru": "Детектив правды",
       "lesson": "1B.3",
       "scene_count": 39,
       "quiz_count": 34,
-      "branch_count": 4
+      "branch_count": 4,
+      "title_uk": "Детектив правди"
     },
     {
       "id": "ep_005",
