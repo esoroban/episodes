@@ -441,8 +441,13 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
     # в тексте эпизодов до того, как они введены нарративом.
     # Map: entity stem (matched with regex) → first episode where entity appears in plot.
     NAMED_ENTITIES = {
-        # Зеркальный Город — впервые виден Марко в ep_004 (вход через дверь)
-        r"Зеркальн\w*\s+Город": 4,
+        # Зеркальный Город — впервые видим внутри в ep_004 s10.
+        r"Зеркальн\w*\s+Город\w*": 4,
+        # Note: «Голос» (антагонист) сознательно НЕ в автопроверке —
+        # из-за русской капитализации в начале предложений ("Голос
+        # застревает в горле", "Голос Софии тёплый") регэкс даёт
+        # слишком много false positives. Контроль за пре-ревелами
+        # этой сущности — ручной review + qa-references.
     }
     def _scene_ep(sid_: str) -> int:
         m = re.match(r"ep(\d+)_", sid_)
@@ -477,8 +482,10 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                         text_chunks.append(str(opt.get("text", "")))
         blob = " ".join(text_chunks)
         for entity_pat, reveal_ep in NAMED_ENTITIES.items():
-            if re.search(entity_pat, blob) and scene_ep and scene_ep < reveal_ep:
-                m = re.search(entity_pat, blob)
+            if not (scene_ep and scene_ep < reveal_ep):
+                continue
+            m = re.search(entity_pat, blob)
+            if m:
                 result.error(
                     f"PRE-REVEAL ENTITY: {sid} mentions '{m.group(0)}' before it is "
                     f"introduced in plot (first appears in ep_{reveal_ep:03d}). "
