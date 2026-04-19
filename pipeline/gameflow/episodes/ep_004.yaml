@@ -235,19 +235,45 @@ scenes:
       atmosphere: "момент вооружения — всё собрано в систему"
       ui_mode: reading
 
-  # ── СЦЕНА 5: Quiz — Лина «давай» — согласие или отговорка? ────────
+  # ── СЦЕНА 5: Марко спрашивает Лину про проверку (DRAMA) ──────────
   - scene_id: ep004_s05
     episode_id: 4
     source_ref: day_01.ep4.drama
-    scene_type: quiz
+    scene_type: dialogue
     location: "Парк, у забора"
     time: "вечер"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     dialogue:
       - who: Марко
         line: "Лина, можно я проверю?"
       - who: Лина
         line: "Давай."
+    mood: "зелёный свет"
+    next_default: ep004_s05_sofa
+    visual_brief:
+      background: "Парк, у забора"
+      camera: medium
+      characters:
+        - who: Лина
+          expression: спокойствие, пожимает плечами
+          pose: стоит у забора
+          position: right
+        - who: Марко
+          expression: решимость
+          pose: готовится протянуть руку к забору
+          position: left
+      atmosphere: "зелёный свет — проверка разрешена"
+      ui_mode: dialogue
+
+  # ── СЦЕНА 5_sofa: Quiz — согласие или отговорка? (CHAT) ───────────
+  - scene_id: ep004_s05_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: quiz
+    location: "Парк, у забора"
+    time: "вечер"
+    characters_present: [Марко, Софа]
+    dialogue:
       - who: Софа
         line: "Лина не отговаривается. Согласна проверить. Второй вопрос — пройден."
     interaction_type: vote
@@ -262,21 +288,16 @@ scenes:
     correct_logic: "Согласие! Лина не закрывает путь к проверке. Второй вопрос детектива — пройден."
     feedback_success: "Согласие! Не закрывает путь к проверке."
     feedback_soft_fail: "Лина мешает проверить? Или разрешает? Закрыт ли путь к проверке?"
-    mood: "зелёный свет"
+    mood: "второй вопрос детектива — пройден"
     next_default: ep004_s06
     visual_brief:
-      background: "Парк, у забора"
-      camera: medium
+      background: "Экран телефона в руке Марко, забор на фоне"
+      camera: close-up
       characters:
-        - who: Лина
-          expression: спокойствие, пожимает плечами
-          pose: стоит у забора
-          position: right
         - who: Марко
-          expression: решимость
-          pose: готовится протянуть руку к забору
-          position: left
-      atmosphere: "зелёный свет — проверка разрешена"
+          expression: концентрация
+          pose: смотрит на телефон
+      atmosphere: "Софа фиксирует согласие — путь к проверке открыт"
       ui_mode: quiz
 
   # ── СЦЕНА 6: Quiz — а если бы «нет, просто поверь мне»? ──────────
@@ -318,7 +339,7 @@ scenes:
     scene_type: narrative
     location: "Парк, у забора"
     time: "вечер"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Марко протягивает руку к забору. Пальцы касаются ржавой сетки...
       и проходят сквозь неё. Нет сопротивления. Как будто сетки нет.
@@ -326,13 +347,8 @@ scenes:
       Марко отдёргивает руку. Смотрит на пальцы — целые. Нормальные.
       Пробует снова. Пальцы проваливаются. Как в воду, только без воды.
       Третий раз. То же самое.
-    dialogue:
-      - who: Софа
-        line: >
-          Три повторения... достаточно для гипотезы... недостаточно для закона.
-          Но дверь... обнаружена. Третий вопрос детектива: проверили — подтвердилось? ДА.
     mood: "невозможное подтверждается"
-    next_default: ep004_s08
+    next_default: ep004_s07_sofa
     visual_brief:
       background: "Парк, забор, рука проходит сквозь сетку"
       camera: close-up
@@ -347,6 +363,32 @@ scenes:
       focus_object: "рука Марко, проходящая сквозь ржавую сетку"
       atmosphere: "реальность ломается — невозможное стало фактом"
       ui_mode: reading
+
+  # ── СЦЕНА s07_sofa: Софа про три повторения (CHAT) ─────────────────
+  - scene_id: ep004_s07_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Парк, у забора"
+    time: "вечер"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: >
+          Три повторения... достаточно для гипотезы... недостаточно для закона.
+          Но дверь... обнаружена. Третий вопрос детектива: проверили — подтвердилось? ДА.
+    mood: "невозможное — но подтверждённое"
+    next_default: ep004_s08
+    visual_brief:
+      background: "Экран телефона в руке Марко, забор на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: шок и сосредоточенность
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа фиксирует результат"
+      atmosphere: "Софа помечает результат проверки — дверь обнаружена"
+      ui_mode: dialogue
 
   # ── СЦЕНА 8: Quiz — трижды сквозь забор — подтвердилось? ──────────
   - scene_id: ep004_s08
@@ -479,14 +521,14 @@ scenes:
       atmosphere: "уверенность — не доказательство; Марко это впервые понял"
       ui_mode: quiz
 
-  # ── СЦЕНА 10: Вход в Зеркальный Город — «Добро пожаловать» ───────
+  # ── СЦЕНА 10: Вход в Зеркальный Город — «Добро пожаловать» (DRAMA) ─
   - scene_id: ep004_s10
     episode_id: 4
     source_ref: day_01.ep4.drama
     scene_type: narrative
     location: "Зеркальный Город, первая улица"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Лина шагает в забор — и исчезает. Растворяется, как ложка в стакане чая.
       Была — и нет.
@@ -502,11 +544,8 @@ scenes:
       и кажется, что дома смотрят.
       Громкоговорители на столбах. Голос — мягкий, тёплый, как тёплое одеяло:
       «Добро пожаловать домой, потомок.»
-    dialogue:
-      - who: Софа
-        line: "«Добро пожаловать домой.» Три слова. Три вопроса детектива."
     mood: "красота и страх одновременно"
-    next_default: ep004_s11
+    next_default: ep004_s10_sofa
     set_flags: [entered_mirror_city]
     visual_brief:
       background: "Зеркальный Город: фиолетовое небо, ровные дома-солдаты, громкоговорители на столбах"
@@ -524,6 +563,30 @@ scenes:
       focus_object: "громкоговоритель — тёплый голос из холодного города"
       atmosphere: "красиво и страшно — город, который обнимает и не отпускает"
       ui_mode: reading
+
+  # ── СЦЕНА 10_sofa: Софа про три слова (CHAT) ──────────────────────
+  - scene_id: ep004_s10_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, первая улица"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "«Добро пожаловать домой.» Три слова. Три вопроса детектива."
+    mood: "подсказка сквозь страх"
+    next_default: ep004_s11
+    visual_brief:
+      background: "Экран телефона в руке Марко, фиолетовое небо на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: оцепенение
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа выделяет три слова"
+      atmosphere: "рекламный голос снаружи, Софа внутри — подсказывает проверку"
+      ui_mode: dialogue
 
   # ── СЦЕНА 11: Quiz — «Добро пожаловать» / «Домой» / «Потомок» ────
   - scene_id: ep004_s11
@@ -583,14 +646,14 @@ scenes:
       atmosphere: "тёплые слова — но при проверке рассыпаются"
       ui_mode: quiz
 
-  # ── СЦЕНА 12: Три утверждения из громкоговорителей ─────────────────
+  # ── СЦЕНА 12: Три утверждения из громкоговорителей (DRAMA) ─────────
   - scene_id: ep004_s12
     episode_id: 4
     source_ref: day_01.ep4.drama
     scene_type: narrative
     location: "Зеркальный Город, первая улица"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Марко оглядывается. Лина стоит рядом — спокойная, руки в карманах.
       Ни удивления, ни страха. Как будто пришла в знакомый двор.
@@ -599,11 +662,8 @@ scenes:
       «Вы в лучшем городе мира.»
       «Никто не хочет вам зла.»
       Три утверждения. Одно за другим. Уверенные. Тёплые.
-    dialogue:
-      - who: Софа
-        line: "Три утверждения из громкоговорителей. Давай проверим каждое."
     mood: "город обволакивает словами"
-    next_default: ep004_s13
+    next_default: ep004_s12_sofa
     visual_brief:
       background: "Зеркальный Город, улица, громкоговорители, Лина спокойна"
       camera: wide
@@ -619,6 +679,30 @@ scenes:
       props: [громкоговорители на столбах, фиолетовые фонари]
       atmosphere: "тёплые слова из холодных динамиков"
       ui_mode: reading
+
+  # ── СЦЕНА 12_sofa: Софа предлагает проверить (CHAT) ───────────────
+  - scene_id: ep004_s12_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, первая улица"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Три утверждения из громкоговорителей. Давай проверим каждое."
+    mood: "переход к проверке"
+    next_default: ep004_s13
+    visual_brief:
+      background: "Экран телефона в руке Марко, город вокруг"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: тревога + концентрация
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа предлагает проверку"
+      atmosphere: "город громко, Софа тихо — инструмент в руке"
+      ui_mode: dialogue
 
   # ── СЦЕНА 13: Quiz — три утверждения громкоговорителей ─────────────
   - scene_id: ep004_s13
@@ -697,7 +781,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, улицы"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Улица. Прямая, как линейка. Фонари горят фиолетовым.
       Тени на асфальте слишком тёмные — чернее, чем должны быть.
@@ -713,10 +797,8 @@ scenes:
         line: "Ты точно была здесь один раз?"
       - who: Лина
         line: "Один раз. Но я хорошо запоминаю дорогу."
-      - who: Софа
-        line: "Лина уверенно ведёт по городу. «Была один раз, но хорошо запоминаю.» Проверь детективом."
     mood: "тревожная красота, тени запаздывают"
-    next_default: ep004_s15
+    next_default: ep004_s14_sofa
     visual_brief:
       background: "Зеркальный Город: прямая улица, фиолетовые фонари, слишком тёмные тени"
       camera: wide
@@ -733,6 +815,30 @@ scenes:
       focus_object: "тень Лины, которая отстаёт на полсекунды"
       atmosphere: "красивый кошмар — всё ровно, но всё неправильно"
       ui_mode: reading
+
+  # ── СЦЕНА 14_sofa: Софа про «хорошо запоминаю» (CHAT) ─────────────
+  - scene_id: ep004_s14_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, улицы"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Лина уверенно ведёт по городу. «Была один раз, но хорошо запоминаю.» Проверь детективом."
+    mood: "подсказка к детективу"
+    next_default: ep004_s15
+    visual_brief:
+      background: "Экран телефона в руке Марко, улица на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: настороженность
+          pose: идёт, смотрит на телефон
+      focus_object: "экран телефона — Софа просит проверить"
+      atmosphere: "Лина уверенно идёт, Софа сомневается"
+      ui_mode: dialogue
 
   # ── СЦЕНА 15: Quiz — «хорошо запоминаю» + «завтра +20» + «хороший день» ──
   - scene_id: ep004_s15
@@ -797,24 +903,21 @@ scenes:
       atmosphere: "quizы по дороге — город не даёт остановиться"
       ui_mode: quiz
 
-  # ── СЦЕНА 16: Плакаты — «Проверять — невежливо» + «Счастливый ребёнок» ──
+  # ── СЦЕНА 16: Плакаты — «Проверять — невежливо» (DRAMA) ──────────
   - scene_id: ep004_s16
     episode_id: 4
     source_ref: day_01.ep4.drama
     scene_type: narrative
     location: "Зеркальный Город, площадь и переулок"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Они проходят мимо площади. На площади — экран. Огромный, во всю стену.
       На экране — текст, белые буквы на чёрном:
       «ПРОВЕРЯТЬ — НЕВЕЖЛИВО. ВЕРИТЬ — МУДРО.»
       Марко читает. Перечитывает.
-    dialogue:
-      - who: Софа
-        line: "«Проверять — невежливо.» Интересно. Кому выгодно, чтобы ты не проверял?"
     mood: "пропаганда, давление"
-    next_default: ep004_s17
+    next_default: ep004_s16_sofa
     visual_brief:
       background: "Площадь с огромным экраном, белые буквы на чёрном"
       camera: wide
@@ -831,6 +934,30 @@ scenes:
       focus_object: "лозунг на стене — пропаганда, замаскированная под мудрость"
       atmosphere: "город, который не хочет, чтобы ты думал"
       ui_mode: reading
+
+  # ── СЦЕНА 16_sofa: Софа переворачивает лозунг (CHAT) ──────────────
+  - scene_id: ep004_s16_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, площадь"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "«Проверять — невежливо.» Интересно. Кому выгодно, чтобы ты не проверял?"
+    mood: "контр-вопрос пропаганде"
+    next_default: ep004_s17
+    visual_brief:
+      background: "Экран телефона в руке Марко, плакат на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: сомнение в лозунге
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа задаёт встречный вопрос"
+      atmosphere: "плакат в городе, вопрос в кармане"
+      ui_mode: dialogue
 
   # ── СЦЕНА 17: Quiz — «Проверять — невежливо» + хитрое с дверью ────
   - scene_id: ep004_s17
@@ -937,14 +1064,14 @@ scenes:
       atmosphere: "стены давят, лозунги требуют покорности"
       ui_mode: quiz
 
-  # ── СЦЕНА 19: Лина — «не читай» — совет или отговорка? ────────────
+  # ── СЦЕНА 19: Лина — «не читай» — совет или отговорка? (DRAMA) ────
   - scene_id: ep004_s19
     episode_id: 4
     source_ref: day_01.ep4.drama
     scene_type: dialogue
     location: "Зеркальный Город, переулок"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     author_text: >
       Марко смотрит на Лину. Она отводит взгляд.
       Пальцы теребят молнию куртки — тот же жест, что на скамейке у школы.
@@ -953,10 +1080,8 @@ scenes:
         line: "Лина, ты сказала «не читай». Это совет или отговорка?"
       - who: Лина
         line: "Совет. Здесь много вывесок. Если читать каждую — не дойдём."
-      - who: Софа
-        line: "Ответ разумный. Не отговорка — есть причина: времени мало. Продолжай."
     mood: "проверка Лины — прошла"
-    next_default: ep004_s20
+    next_default: ep004_s19_sofa
     visual_brief:
       background: "Переулок, Лина теребит молнию"
       camera: medium
@@ -970,6 +1095,30 @@ scenes:
           pose: стоит, теребит молнию куртки
           position: right
       atmosphere: "Марко впервые проверяет Лину — и получает разумный ответ"
+      ui_mode: dialogue
+
+  # ── СЦЕНА 19_sofa: Софа подтверждает — не отговорка (CHAT) ─────────
+  - scene_id: ep004_s19_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, переулок"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Ответ разумный. Не отговорка — есть причина: времени мало. Продолжай."
+    mood: "подтверждение"
+    next_default: ep004_s20
+    visual_brief:
+      background: "Экран телефона в руке Марко, переулок на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: облегчение — проверка прошла
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа подтверждает"
+      atmosphere: "Софа фиксирует: не отговорка"
       ui_mode: dialogue
 
   # ── СЦЕНА 20: Лужа — отражение Лины не совпадает ──────────────────

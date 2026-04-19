@@ -335,6 +335,54 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                 f"{sorted(ALLOWED_BRANCH_TYPES)}. См. branching_rules.md."
             )
 
+    # ── Check 18: Live character SPEAKS in a chat-rendered scene ─
+    # В chat-UI (phone rail) допустимы только реплики {Софа, Марко, автор}.
+    # Нарушение: в чат-сцене (Софа + её реплики/квизы/unlock) в
+    # dialogue/dialogue_after есть реплика от live-персонажа (мама, Вера,
+    # Данила, Олена, Витя, Лина, София, Макс, Леон, Сэм, Рэй и т.д.).
+    # Live-персонаж в characters_present без реплик — ОК (фигурирует в
+    # author_text narrative, но не в bubble-интерфейсе чата).
+    # Для split drama + комментарий Софы см. pipeline_rules.md → split-сцены.
+    CHAT_ALLOWED = {"Марко", "Софа", "автор"}
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        chars = scene.get("characters_present", []) or []
+        if "Софа" not in chars:
+            continue
+        # Does this scene render as chat?
+        renders_as_chat = False
+        for field in ("dialogue", "dialogue_after"):
+            items = scene.get(field, []) or []
+            if any(isinstance(d, dict) and d.get("who") == "Софа" for d in items):
+                renders_as_chat = True
+                break
+        if scene.get("unlock_button"):
+            renders_as_chat = True
+        if any("correct" in o for o in scene.get("options", []) or []):
+            renders_as_chat = True
+        for inter in scene.get("interactions", []) or []:
+            if any("correct" in o for o in (inter.get("options", []) or [])):
+                renders_as_chat = True
+                break
+        if not renders_as_chat:
+            continue
+        # Who actually speaks in dialogue?
+        speakers = set()
+        for field in ("dialogue", "dialogue_after"):
+            for d in scene.get(field, []) or []:
+                if isinstance(d, dict):
+                    w = d.get("who", "")
+                    if w:
+                        speakers.add(w)
+        live_speakers = [s for s in speakers if s not in CHAT_ALLOWED]
+        if live_speakers:
+            result.error(
+                f"LIVE CHAR SPEAKS IN CHAT: {sid} renders as Telegram chat but "
+                f"{live_speakers} speak(s) in dialogue. "
+                f"Split into drama scene (with live chars' lines) + chat scene "
+                f"(only [Марко, Софа, автор]). See pipeline_rules.md → split-сцены."
+            )
+
     # ── Check 15: Sofa speaks but not in characters_present ──────
     # Если Софа в dialogue/dialogue_after, она обязана быть в characters_present —
     # иначе рендерер размещает её реплики в drama-UI, не в Telegram.
