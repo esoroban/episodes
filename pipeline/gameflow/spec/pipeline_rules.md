@@ -330,6 +330,76 @@ UI-режим на drama.
 
 Переключение — флагом `debug_author_text` (по умолчанию ON до релиза, OFF в проде).
 
+**UK-слой (локализация) — оверлей, не отдельный формат (обязательно):**
+
+Украинский перевод лежит в `pipeline/gameflow/episodes_uk/ep_NNN.yaml`
+как **текстовый оверлей**: повторяет структуру RU-эпизода, но содержит
+ТОЛЬКО переводимые поля. Вся структура (scene_id, навигация, branches,
+visual_brief, characters_present, флаги) берётся из RU при сборке.
+
+**Что переводится:**
+- `episode_title`, `terms_introduced`
+- `author_text`, `author_text_after`
+- `dialogue[].line`, `dialogue_after[].line` (порядок совпадает с RU,
+  merge по индексу; `who` остаётся для валидации)
+- `question`, `correct_logic`, `feedback_success`, `feedback_soft_fail`
+- `options[].text` (merge по `id`)
+- `interactions[].*` (индекс) и `followup_interaction.*`
+- `unlock_button.text` и `unlock_button.reveals.line`
+- `mood` (опционально)
+
+**Что НЕ переводится / не лежит в оверлее:**
+- `scene_id`, `next_default`, `next_success`, `next_fail`, `merge_to`
+- `branch_type`, `set_flags`, `require_flags`, `enter_requires`
+- `visual_brief` (источник для картинок; переводится отдельно, если
+  визуальный пайплайн UK-специфичен — но по умолчанию art-брифы
+  остаются RU как технический язык)
+- `scene_type`, `interaction_type`, `source_ref`
+- `location`, `time`, `characters_present`
+
+**Сборка:**
+```
+python3 tools/build_game.py --lang uk          # все UK-эпизоды → server/game/uk/
+python3 tools/build_game.py --lang uk ep_001   # один эпизод
+```
+
+`load_episode_lang()` подмешивает overlay в RU data model. Рендер
+использует merged data. Если overlay отсутствует — эпизод пропускается
+(с предупреждением).
+
+**Имена в UK-тексте:**
+
+| RU | UK | Примечание |
+|---|---|---|
+| Марко | Марко | vocative «Марку» при обращении |
+| Софа | Софа | имя AI-бота, не переводится |
+| София | Софія | |
+| Лина | Ліна | |
+| Вера Андреевна | Віра Андріївна | |
+| Витя | Вітя | |
+| Данила | Данило | |
+| Олена | Олена | |
+| Макс, Рей, Леон, Сем | те же | |
+| Голос | Голос | антагонист, имя собственное |
+
+**Термины (из `lessons_ru/lesson_*.yaml` uk-ключа):**
+
+| RU | UK |
+|---|---|
+| факт | факт |
+| мнение | думка |
+| неправда | неправда |
+| хитрое утверждение | хитре твердження |
+| отговорка | виправдання |
+| шутка | жарт |
+| сказка | казка |
+| фейк | фейк |
+| инструменты проверки | інструменти перевірки |
+
+**Правило заморозки:** UK-перевод создаётся ТОЛЬКО после заморозки
+RU-версии соответствующего дня (см. `project_day_by_day_localization`).
+Никаких параллельных правок RU и UK одного эпизода — только RU frozen → UK.
+
 **Debug-бургер: навигация по сценам и эпизодам (обязательно):**
 
 Каждый эпизодный HTML обязан содержать бургер-меню (иконка `☰` в правом

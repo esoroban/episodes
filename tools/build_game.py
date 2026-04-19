@@ -21,7 +21,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
 EPISODES_DIR = ROOT / "pipeline" / "source" / "episodes"
-OUTPUT_DIR = ROOT / "server" / "game"
+UK_OVERLAY_DIR = ROOT / "pipeline" / "gameflow" / "episodes_uk"
+OUTPUT_DIR_RU = ROOT / "server" / "game"
+OUTPUT_DIR_UK = ROOT / "server" / "game" / "uk"
+# Current output dir — set by main() based on --lang.
+OUTPUT_DIR = OUTPUT_DIR_RU
 
 # ─────────────────────────────────────────────────────────────────────
 # DEBUG_FAST — sped-up chat timings for iterative bug-fix pass.
@@ -53,6 +57,108 @@ def _js_timings_config() -> str:
 def load_episode(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# UK overlay merger — overlays text-only translation into RU structure.
+# Структура (scene_id, ветки, навигация, visual_brief) остаётся из RU.
+# ─────────────────────────────────────────────────────────────────────
+_TEXT_FIELDS = (
+    "author_text", "author_text_after",
+    "question", "correct_logic",
+    "feedback_success", "feedback_soft_fail",
+    "mood",
+)
+
+
+def _merge_dialogue_list(ru_list, uk_list):
+    if not isinstance(ru_list, list) or not isinstance(uk_list, list):
+        return
+    for i, d_uk in enumerate(uk_list):
+        if i >= len(ru_list) or not isinstance(ru_list[i], dict) or not isinstance(d_uk, dict):
+            continue
+        if "line" in d_uk:
+            ru_list[i]["line"] = d_uk["line"]
+
+
+def _merge_options_by_id(ru_opts, uk_opts):
+    if not isinstance(ru_opts, list) or not isinstance(uk_opts, list):
+        return
+    uk_by_id = {o.get("id"): o for o in uk_opts if isinstance(o, dict)}
+    for o in ru_opts:
+        if not isinstance(o, dict):
+            continue
+        uo = uk_by_id.get(o.get("id"))
+        if uo and "text" in uo:
+            o["text"] = uo["text"]
+
+
+def _merge_interaction(ru_inter, uk_inter):
+    for key in ("question", "correct_logic", "feedback_success", "feedback_soft_fail"):
+        if key in uk_inter:
+            ru_inter[key] = uk_inter[key]
+    if "options" in uk_inter:
+        _merge_options_by_id(ru_inter.get("options", []), uk_inter["options"])
+
+
+def merge_uk_overlay(ru_data: dict, uk_data: dict) -> None:
+    """Overwrite text fields of ru_data with UK equivalents from uk_data (in-place)."""
+    if "episode_title" in uk_data:
+        ru_data["episode_title"] = uk_data["episode_title"]
+    if "terms_introduced" in uk_data:
+        ru_data["terms_introduced"] = uk_data["terms_introduced"]
+
+    uk_scenes = {}
+    for s in uk_data.get("scenes", []) or []:
+        if isinstance(s, dict) and s.get("scene_id"):
+            uk_scenes[s["scene_id"]] = s
+
+    for ru_scene in ru_data.get("scenes", []) or []:
+        sid = ru_scene.get("scene_id")
+        uk_scene = uk_scenes.get(sid)
+        if not uk_scene:
+            continue
+        for key in _TEXT_FIELDS:
+            if key in uk_scene:
+                ru_scene[key] = uk_scene[key]
+        if "dialogue" in uk_scene:
+            _merge_dialogue_list(ru_scene.get("dialogue", []), uk_scene["dialogue"])
+        if "dialogue_after" in uk_scene:
+            _merge_dialogue_list(ru_scene.get("dialogue_after", []), uk_scene["dialogue_after"])
+        if "options" in uk_scene:
+            _merge_options_by_id(ru_scene.get("options", []), uk_scene["options"])
+        if "interactions" in uk_scene and isinstance(ru_scene.get("interactions"), list):
+            for i, uk_inter in enumerate(uk_scene["interactions"]):
+                if i < len(ru_scene["interactions"]) and isinstance(uk_inter, dict):
+                    _merge_interaction(ru_scene["interactions"][i], uk_inter)
+        if "followup_interaction" in uk_scene and isinstance(ru_scene.get("followup_interaction"), dict):
+            _merge_interaction(ru_scene["followup_interaction"], uk_scene["followup_interaction"])
+        if "unlock_button" in uk_scene and isinstance(ru_scene.get("unlock_button"), dict):
+            ub_uk = uk_scene["unlock_button"]
+            if isinstance(ub_uk, dict):
+                if "text" in ub_uk:
+                    ru_scene["unlock_button"]["text"] = ub_uk["text"]
+                if "reveals" in ub_uk and isinstance(ub_uk["reveals"], dict):
+                    rev_uk = ub_uk["reveals"]
+                    if "reveals" in ru_scene["unlock_button"] and isinstance(ru_scene["unlock_button"]["reveals"], dict):
+                        for k in ("line", "who"):
+                            if k in rev_uk:
+                                ru_scene["unlock_button"]["reveals"][k] = rev_uk[k]
+
+
+def load_episode_lang(path: Path, lang: str) -> dict:
+    """Load episode YAML; if lang='uk' and overlay exists, merge it in."""
+    data = load_episode(path)
+    if lang == "uk":
+        uk_path = UK_OVERLAY_DIR / path.name
+        if uk_path.exists():
+            try:
+                uk_data = yaml.safe_load(uk_path.read_text(encoding="utf-8"))
+                if uk_data:
+                    merge_uk_overlay(data, uk_data)
+            except yaml.YAMLError as e:
+                print(f"  ! UK overlay parse error {uk_path.name}: {e}")
+    return data
 
 
 def load_yaml(path: Path) -> dict:
@@ -1649,9 +1755,9 @@ def render_episode_html(data: dict, all_eps: list = None) -> str:
 </html>"""
 
 
-def build_episode(yaml_path: Path, all_eps: list = None):
-    """Build HTML for a single episode YAML."""
-    data = load_episode(yaml_path)
+def build_episode(yaml_path: Path, all_eps: list = None, lang: str = "ru"):
+    """Build HTML for a single episode YAML (optionally with UK overlay merged)."""
+    data = load_episode_lang(yaml_path, lang)
     ep_id = data.get("episode_id", 0)
     filename = f"ep_{int(ep_id):03d}.html"
     output_path = OUTPUT_DIR / filename
@@ -1796,7 +1902,17 @@ h1 {{ text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; }}
 
 
 def main():
+    global OUTPUT_DIR
     args = sys.argv[1:]
+
+    # --lang uk → read UK overlays, emit to server/game/uk/
+    lang = "ru"
+    if "--lang" in args:
+        i = args.index("--lang")
+        if i + 1 < len(args):
+            lang = args[i + 1]
+            args = args[:i] + args[i + 2:]
+    OUTPUT_DIR = OUTPUT_DIR_UK if lang == "uk" else OUTPUT_DIR_RU
 
     if args:
         yaml_files = []
@@ -1814,24 +1930,35 @@ def main():
         print("No gameflow YAML files found.")
         return
 
-    print(f"Building {len(yaml_files)} episode(s)...")
+    print(f"Building {len(yaml_files)} episode(s) [lang={lang}]...")
 
     if OUTPUT_DIR.exists():
         for old in OUTPUT_DIR.glob("*.html"):
             old.unlink()
-        print(f"  \u2713 Cleaned server/game/")
+        rel = OUTPUT_DIR.relative_to(ROOT)
+        print(f"  \u2713 Cleaned {rel}/")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # Debug burger needs the FULL episode catalog, not only the current build
     # subset (so jump-menu lists every episode that exists, even for ep_001-only rebuild).
     all_yaml_files = sorted(GAMEFLOW_DIR.glob("ep_*.yaml"))
-    all_eps = _collect_all_episodes_meta(all_yaml_files)
+    if lang == "uk":
+        # For UK, list only episodes that have an overlay (otherwise menu would
+        # list an episode that renders in RU when clicked — confusing).
+        all_yaml_files_for_menu = [p for p in all_yaml_files if (UK_OVERLAY_DIR / p.name).exists()]
+    else:
+        all_yaml_files_for_menu = all_yaml_files
+    all_eps = _collect_all_episodes_meta(all_yaml_files_for_menu)
 
     for yf in yaml_files:
-        build_episode(yf, all_eps=all_eps)
+        if lang == "uk" and not (UK_OVERLAY_DIR / yf.name).exists():
+            print(f"  \u26a0 {yf.name}: нет UK-перевода, пропускаю")
+            continue
+        build_episode(yf, all_eps=all_eps, lang=lang)
 
-    build_index(all_yaml_files)
+    if lang == "ru":
+        build_index(all_yaml_files)
     print("Done.")
 
 
