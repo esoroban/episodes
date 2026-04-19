@@ -335,6 +335,84 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                 f"{sorted(ALLOWED_BRANCH_TYPES)}. См. branching_rules.md."
             )
 
+    # ── Check 15: Sofa speaks but not in characters_present ──────
+    # Если Софа в dialogue/dialogue_after, она обязана быть в characters_present —
+    # иначе рендерер размещает её реплики в drama-UI, не в Telegram.
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        chars = set(scene.get("characters_present", []))
+        for field in ("dialogue", "dialogue_after"):
+            items = scene.get(field, []) or []
+            if any(isinstance(d, dict) and d.get("who") == "Софа" for d in items):
+                if "Софа" not in chars:
+                    result.error(
+                        f"SOFA NOT IN CAST: {sid}.{field} contains Софа's lines, but "
+                        f"Софа is not in characters_present={sorted(chars)}. "
+                        f"Add her — otherwise renderer puts her lines into drama-UI, not Telegram."
+                    )
+                    break  # one error per scene is enough
+
+    # ── Check 16: next_fail must not self-loop to same scene ─────
+    # Retry на неправильный ответ — ответственность рендера, не YAML-графа.
+    # Self-loop не работает: рендерер не re-инициализирует чат на той же сцене.
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        nf = scene.get("next_fail")
+        if nf and nf == sid:
+            result.error(
+                f"SELF-LOOP NEXT_FAIL: {sid}.next_fail points to itself. "
+                f"Remove — quiz retry is handled by renderer inline in chat."
+            )
+
+    # ── Check 17: Named plot entities before their reveal ────────
+    # Именованные сущности сюжета (Зеркальный Город и др.) не должны появляться
+    # в тексте эпизодов до того, как они введены нарративом.
+    # Map: entity stem (matched with regex) → first episode where entity appears in plot.
+    NAMED_ENTITIES = {
+        # Зеркальный Город — впервые виден Марко в ep_004 (вход через дверь)
+        r"Зеркальн\w*\s+Город": 4,
+    }
+    def _scene_ep(sid_: str) -> int:
+        m = re.match(r"ep(\d+)_", sid_)
+        return int(m.group(1)) if m else 0
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        scene_ep = _scene_ep(sid)
+        # collect all text fields (only user-visible ones — not comments/metadata)
+        text_chunks = []
+        for field in ("author_text", "author_text_after", "question",
+                       "feedback_success", "feedback_soft_fail", "correct_logic"):
+            v = scene.get(field)
+            if isinstance(v, str):
+                text_chunks.append(v)
+        for d in scene.get("dialogue", []) or []:
+            if isinstance(d, dict):
+                text_chunks.append(str(d.get("line", "")))
+        for d in scene.get("dialogue_after", []) or []:
+            if isinstance(d, dict):
+                text_chunks.append(str(d.get("line", "")))
+        for opt in scene.get("options", []) or []:
+            if isinstance(opt, dict):
+                text_chunks.append(str(opt.get("text", "")))
+        for inter in scene.get("interactions", []) or []:
+            if isinstance(inter, dict):
+                for field in ("question", "feedback_success", "feedback_soft_fail", "correct_logic"):
+                    v = inter.get(field)
+                    if isinstance(v, str):
+                        text_chunks.append(v)
+                for opt in inter.get("options", []) or []:
+                    if isinstance(opt, dict):
+                        text_chunks.append(str(opt.get("text", "")))
+        blob = " ".join(text_chunks)
+        for entity_pat, reveal_ep in NAMED_ENTITIES.items():
+            if re.search(entity_pat, blob) and scene_ep and scene_ep < reveal_ep:
+                m = re.search(entity_pat, blob)
+                result.error(
+                    f"PRE-REVEAL ENTITY: {sid} mentions '{m.group(0)}' before it is "
+                    f"introduced in plot (first appears in ep_{reveal_ep:03d}). "
+                    f"Replace with neutral example until the entity appears in the story."
+                )
+
     return result
 
 

@@ -144,7 +144,6 @@ scenes:
     feedback_soft_fail: "Можно ли потрогать забор? Попробовать пройти? Если да — есть инструмент проверки."
     mood: "первый вопрос у порога"
     next_default: ep004_s03
-    next_fail: ep004_s02
     visual_brief:
       background: "Парк, экран телефона, забор на заднем плане"
       camera: close-up
@@ -178,7 +177,6 @@ scenes:
     feedback_soft_fail: "Уверенность — это доказательство? Или ощущение? Есть ли в этом инструмент проверки?"
     mood: "уверенность ≠ доказательство"
     next_default: ep004_s04
-    next_fail: ep004_s03
     visual_brief:
       background: "Парк, экран телефона"
       camera: close-up
@@ -266,7 +264,6 @@ scenes:
     feedback_soft_fail: "Лина мешает проверить? Или разрешает? Закрыт ли путь к проверке?"
     mood: "зелёный свет"
     next_default: ep004_s06
-    next_fail: ep004_s05
     visual_brief:
       background: "Парк, у забора"
       camera: medium
@@ -304,7 +301,6 @@ scenes:
     feedback_soft_fail: "Если запрещают проверять — что это? Подумай о втором вопросе детектива."
     mood: "контраст: согласие vs отговорка"
     next_default: ep004_s07
-    next_fail: ep004_s06
     visual_brief:
       background: "Парк, экран телефона"
       camera: close-up
@@ -322,7 +318,7 @@ scenes:
     scene_type: narrative
     location: "Парк, у забора"
     time: "вечер"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Марко протягивает руку к забору. Пальцы касаются ржавой сетки...
       и проходят сквозь неё. Нет сопротивления. Как будто сетки нет.
@@ -374,7 +370,6 @@ scenes:
     feedback_soft_fail: "Три повторения, три одинаковых результата. Инструмент есть, отговорок нет, проверка подтвердилась."
     mood: "невозможное — но подтверждённое"
     next_default: ep004_s09
-    next_fail: ep004_s08
     visual_brief:
       background: "Парк, забор, экран телефона"
       camera: close-up
@@ -491,7 +486,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, первая улица"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Лина шагает в забор — и исчезает. Растворяется, как ложка в стакане чая.
       Была — и нет.
@@ -595,7 +590,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, первая улица"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Марко оглядывается. Лина стоит рядом — спокойная, руки в карманах.
       Ни удивления, ни страха. Как будто пришла в знакомый двор.
@@ -702,7 +697,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, улицы"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Улица. Прямая, как линейка. Фонари горят фиолетовым.
       Тени на асфальте слишком тёмные — чернее, чем должны быть.
@@ -809,7 +804,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, площадь и переулок"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Они проходят мимо площади. На площади — экран. Огромный, во всю стену.
       На экране — текст, белые буквы на чёрном:
@@ -925,7 +920,6 @@ scenes:
     feedback_soft_fail: "Можно ли проверить? Да — спроси счастливых детей. Задают ли они вопросы?"
     mood: "пропаганда, требующая слепоты"
     next_default: ep004_s19
-    next_fail: ep004_s18
     visual_brief:
       background: "Узкий переулок, плакат с ребёнком с закрытыми глазами"
       camera: medium
@@ -950,7 +944,7 @@ scenes:
     scene_type: dialogue
     location: "Зеркальный Город, переулок"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     author_text: >
       Марко смотрит на Лину. Она отводит взгляд.
       Пальцы теребят молнию куртки — тот же жест, что на скамейке у школы.
@@ -1061,7 +1055,7 @@ scenes:
     scene_type: narrative
     location: "Зеркальный Город, у лужи"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     branch_type: flavor_detour
     author_text: >
       Марко смотрит снова. Лина убирает руки из карманов — машет рукой.
@@ -1415,7 +1409,6 @@ scenes:
     feedback_soft_fail: "Сколько отговорок в этом утверждении? Что мешает проверить?"
     mood: "правило сформулировано"
     next_default: ep004_s27
-    next_fail: ep004_s26
     visual_brief:
       background: "Зеркальный Город, экран телефона с правилом"
       camera: close-up
@@ -1455,7 +1448,6 @@ scenes:
     feedback_soft_fail: "Что мешает проверить? «Они запрещают» — это отговорка или нет?"
     mood: "из жизни — система работает везде"
     next_default: ep004_s28
-    next_fail: ep004_s27
     visual_brief:
       background: "Зеркальный Город"
       camera: close-up
@@ -1473,7 +1465,7 @@ scenes:
     scene_type: cliffhanger
     location: "Зеркальный Город"
     time: "вне времени"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     dialogue:
       - who: Софа
         line: >

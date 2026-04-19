@@ -23,6 +23,32 @@ GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
 EPISODES_DIR = ROOT / "pipeline" / "source" / "episodes"
 OUTPUT_DIR = ROOT / "server" / "game"
 
+# ─────────────────────────────────────────────────────────────────────
+# DEBUG_FAST — sped-up chat timings for iterative bug-fix pass.
+# True: typing/pause/voiceover sped to ~200ms each. False: production.
+# See pipeline/gameflow/spec/pipeline_rules.md → DEBUG_FAST.
+# ─────────────────────────────────────────────────────────────────────
+DEBUG_FAST = True
+
+
+def _js_timings_config() -> str:
+    """JS snippet with all timing constants for renderer."""
+    f = DEBUG_FAST
+    return (
+        "var CFG={"
+        f"typingBase:{200 if f else 800},"
+        f"typingRand:{100 if f else 400},"
+        f"interMsg:{150 if f else 350},"
+        f"afterSend:{200 if f else 400},"
+        f"initDelay:{200 if f else 600},"
+        f"voMin:{200 if f else 900},"
+        f"voMax:{400 if f else 4500},"
+        f"voFactor:{10 if f else 55},"
+        f"retryDelay:{400 if f else 700},"
+        f"recSim:{500 if f else 1500}"
+        "};"
+    )
+
 
 def load_episode(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
@@ -156,15 +182,17 @@ def build_chat_messages(scene: dict) -> list:
     if quiz_opts:
         q = scene.get("question", "")
         opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in quiz_opts]
-        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
-        fb_ok = str(scene.get("feedback_success", "")).strip()
         fb_fail = str(scene.get("feedback_soft_fail", "")).strip()
+        quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
+        if fb_fail:
+            quiz_msg["fbFail"] = fb_fail
+        msgs.append(quiz_msg)
+        fb_ok = str(scene.get("feedback_success", "")).strip()
         # correct_logic is shown only in the hidden quiz-explanation div,
-        # NOT as a chat message — to avoid duplicating feedback_success
+        # NOT as a chat message — to avoid duplicating feedback_success.
+        # fb_fail shown inline inside addQuiz on wrong answer (retry flow).
         if fb_ok:
             msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
-        if fb_fail:
-            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
 
     unlock = scene.get("unlock_button")
     if unlock:
@@ -181,26 +209,28 @@ def build_chat_messages(scene: dict) -> list:
             continue
         q = inter.get("question", "")
         opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in opts_in]
-        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
-        fb_ok = str(inter.get("feedback_success", "")).strip()
         fb_fail = str(inter.get("feedback_soft_fail", "")).strip()
+        quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
+        if fb_fail:
+            quiz_msg["fbFail"] = fb_fail
+        msgs.append(quiz_msg)
+        fb_ok = str(inter.get("feedback_success", "")).strip()
         if fb_ok:
             msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
-        if fb_fail:
-            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
 
     followup = scene.get("followup_interaction", {}) or {}
     fu_opts = [o for o in (followup.get("options", []) or []) if "correct" in o]
     if fu_opts:
         q = followup.get("question", "")
         opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in fu_opts]
-        msgs.append({"t": "quiz", "s": "sofa", "q": q, "o": opts})
-        fb_ok = str(followup.get("feedback_success", "")).strip()
         fb_fail = str(followup.get("feedback_soft_fail", "")).strip()
+        quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
+        if fb_fail:
+            quiz_msg["fbFail"] = fb_fail
+        msgs.append(quiz_msg)
+        fb_ok = str(followup.get("feedback_success", "")).strip()
         if fb_ok:
             msgs.append({"t": "text", "s": "sofa", "x": fb_ok, "wq": True, "ok": True})
-        if fb_fail:
-            msgs.append({"t": "text", "s": "sofa", "x": fb_fail, "wq": True, "ok": False})
 
     for d in scene.get("dialogue_after", []) or []:
         if not isinstance(d, dict):
@@ -1134,7 +1164,7 @@ JS = r"""
         el.className='typing-row';
         el.innerHTML='<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
         chatEl.appendChild(el);scroll();
-        setTimeout(function(){el.remove();res();},800+Math.random()*400);
+        setTimeout(function(){el.remove();res();},CFG.typingBase+Math.random()*CFG.typingRand);
       });
     }
 
@@ -1160,7 +1190,7 @@ JS = r"""
     /* Estimate reading/voice duration (ms) from text length — later replaced by audio.duration */
     function voDuration(text){
       var n=(text||'').length;
-      return Math.max(900, Math.min(4500, 55*n));
+      return Math.max(CFG.voMin, Math.min(CFG.voMax, CFG.voFactor*n));
     }
 
     function addVoice(m){
@@ -1186,25 +1216,46 @@ JS = r"""
     function addQuiz(m){
       return new Promise(function(resolve){
         totalQuizzes++;
-        var row=document.createElement('div');
-        row.className='msg-row incoming';
-        var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
-        row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
-        chatEl.appendChild(row);scroll();
-        row.querySelectorAll('.quiz-btn').forEach(function(b){
-          b.onclick=function(){
-            var ok=b.dataset.c==='true';
-            b.classList.add(ok?'correct':'wrong');
-            row.querySelectorAll('.quiz-btn').forEach(function(x){
-              if(x!==b)x.classList.add('disabled');
-              if(x.dataset.c==='true'&&x!==b)x.classList.add('correct');
-            });
-            quizOk=ok;
-            if(ok){correctCount++;quizResults[si]='correct';}
-            else{quizResults[si]='wrong';}
-            resolve(ok);
-          };
-        });
+        var attempts=0;
+        function mountQuiz(){
+          var row=document.createElement('div');
+          row.className='msg-row incoming';
+          var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+          row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
+          chatEl.appendChild(row);scroll();
+          row.querySelectorAll('.quiz-btn').forEach(function(b){
+            b.onclick=function(){
+              var ok=b.dataset.c==='true';
+              /* Disable the whole keyboard of THIS attempt */
+              row.querySelectorAll('.quiz-btn').forEach(function(x){
+                x.classList.add('disabled');x.disabled=true;
+              });
+              b.classList.add(ok?'correct':'wrong');
+              if(ok){
+                row.querySelectorAll('.quiz-btn').forEach(function(x){
+                  if(x.dataset.c==='true'&&x!==b)x.classList.add('correct');
+                });
+                /* Count correctness ONLY if first try was correct */
+                if(attempts===0){correctCount++;quizResults[si]='correct';}
+                else{quizResults[si]='retry_correct';}
+                quizOk=true;
+                resolve(true);
+              } else {
+                attempts++;
+                quizResults[si]='wrong';
+                /* Inline fail feedback + re-inject same quiz below */
+                if(m.fbFail){
+                  var fb=document.createElement('div');
+                  fb.className='msg-row incoming';
+                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+m.fbFail+'</div><div class="msg-time">'+now()+'</div></div>';
+                  chatEl.appendChild(fb);scroll();
+                }
+                setTimeout(function(){showTyping().then(mountQuiz);},CFG.retryDelay);
+              }
+            };
+          });
+        }
+        mountQuiz();
       });
     }
 
@@ -1226,7 +1277,7 @@ JS = r"""
       if(busy)return;var m=msgs[idx];
       if(!m||m.s!=='marko')return;
       addText(m);inp.value='';setMode('disabled');
-      idx++;setTimeout(processNext,400);
+      idx++;setTimeout(processNext,CFG.afterSend);
     });
     micBtn.addEventListener('click',function(){
       if(busy)return;var m=msgs[idx];
@@ -1238,8 +1289,8 @@ JS = r"""
         micBtn.classList.remove('recording');
         micLabel.textContent='\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435';micLabel.classList.remove('rec');
         addVoice(m);setMode('disabled');
-        idx++;setTimeout(processNext,400);
-      },1500);
+        idx++;setTimeout(processNext,CFG.afterSend);
+      },CFG.recSim);
     });
 
     async function processNext(){
@@ -1256,7 +1307,7 @@ JS = r"""
         setMode(m.t==='voice'?'voice':'text',m.x);
         return;
       }
-      if(m.wq&&quizOk===null){busy=false;setTimeout(processNext,300);return;}
+      if(m.wq&&quizOk===null){busy=false;setTimeout(processNext,CFG.interMsg);return;}
       if(m.wq){
         if(m.ok===true&&!quizOk){idx++;busy=false;processNext();return;}
         if(m.ok===false&&quizOk){idx++;busy=false;processNext();return;}
@@ -1274,30 +1325,44 @@ JS = r"""
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
       if(m.t==='voice'){addVoice(m);}
       else{addText(m);}
-      idx++;busy=false;setTimeout(processNext,350);
+      idx++;busy=false;setTimeout(processNext,CFG.interMsg);
     }
 
-    setTimeout(processNext,600);
+    setTimeout(processNext,CFG.initDelay);
   }
 
-  /* ── Standard Quiz (non-chat) ──────────────────────── */
+  /* ── Standard Quiz (non-chat) — retry on wrong until correct ─ */
   document.querySelectorAll('.quiz').forEach(function(quiz){
     var buttons=quiz.querySelectorAll('.quiz-option');
     var feedOk=quiz.querySelector('.quiz-feedback-ok');
     var feedFail=quiz.querySelector('.quiz-feedback-fail');
     var explanation=quiz.querySelector('.quiz-explanation');
-    var done=false;totalQuizzes++;
+    var done=false, attempts=0;
+    totalQuizzes++;
     buttons.forEach(function(btn){
       btn.addEventListener('click',function(){
-        if(done)return;done=true;
+        if(done)return;
         var ok=btn.dataset.correct==='true';
         var se=quiz.closest('.scene');
         var si=Array.from(scenes).indexOf(se);
-        if(ok){btn.classList.add('selected-correct');correctCount++;if(feedOk)feedOk.hidden=false;quizResults[si]='correct';}
-        else{btn.classList.add('selected-wrong');buttons.forEach(function(b){if(b.dataset.correct==='true')b.classList.add('reveal-correct');});if(feedFail)feedFail.hidden=false;quizResults[si]='wrong';}
-        if(explanation)explanation.hidden=false;
-        buttons.forEach(function(b){b.disabled=true;});
-        answeredScenes.add(si);updateNextButton();
+        if(ok){
+          done=true;
+          btn.classList.add('selected-correct');
+          if(feedFail)feedFail.hidden=true;
+          if(feedOk)feedOk.hidden=false;
+          if(explanation)explanation.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          buttons.forEach(function(b){b.disabled=true;});
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('selected-wrong');
+          btn.disabled=true;
+          if(feedFail)feedFail.hidden=false;
+          /* Leave other buttons active so the player can retry */
+        }
       });
     });
   });
@@ -1311,7 +1376,7 @@ JS = r"""
       var t=btn.dataset.target;
       if(t&&sceneMap[t]!==undefined) choiceTarget=t;
       updateNextButton();
-      setTimeout(goForward,400);
+      setTimeout(goForward,CFG.afterSend);
     });
   });
 
@@ -1424,6 +1489,7 @@ def render_episode_html(data: dict) -> str:
 </div>
 
 <script>
+{_js_timings_config()}
 {JS}
 </script>
 </body>

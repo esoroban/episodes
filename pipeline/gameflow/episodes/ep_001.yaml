@@ -114,7 +114,7 @@ scenes:
       - who: мама
         line: "Какие фотки, солнце?"
       - who: Марко
-        line: "На стене. Наши с Софией."
+        line: "На стене. Наши с моей сестрой Софией."
       - who: автор
         line: "Мама ставит чашку. Медленно. Смотрит на Марко — не удивлённо, а терпеливо. Как на ребёнка, который в третий раз спрашивает, почему небо синее."
       - who: мама
@@ -211,9 +211,10 @@ scenes:
       Мама говорит — сестры нет. Дневник говорит — была.
 
       Ещё страницы: кот в шляпе, формула с улыбающимся лицом, карта
-      какого-то города с подписью «МОЙ ГОРОД». На последней заполненной
-      странице — одна строчка: «Братик, если ты это читаешь — значит,
-      я была права. Не верь тому, что кажется простым.»
+      какого-то города с подписью «МОЙ ГОРОД». Марко листает до конца —
+      сорок семь заполненных страниц. На последней — одна строчка:
+      «Братик, если ты это читаешь — значит, я была права. Не верь
+      тому, что кажется простым.»
 
       На полке вздрагивает телефон. Раз. Ещё раз. Треснутый экран
       загорается сам — белые буквы на чёрном, слишком быстро, не прочесть.
@@ -374,7 +375,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить, какое вкуснее? Есть прибор? Если нет — это мнение. У каждого своё."
     mood: "мягкий ввод через личное"
     next_default: ep001_s06
-    next_fail: ep001_s05
     visual_brief:
       background: "Комната Марко, экран телефона"
       camera: close-up
@@ -408,7 +408,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить «лучшая»? Есть прибор? Нет «лучшемера» — значит, мнение."
     mood: "практика"
     next_default: ep001_s07
-    next_fail: ep001_s06
     visual_brief:
       background: "Комната Марко, экран телефона"
       camera: close-up
@@ -441,7 +440,6 @@ scenes:
     feedback_soft_fail: "Можно ли проверить? Подойди и посмотри — лежит дневник или нет?"
     mood: "практика"
     next_default: ep001_s08
-    next_fail: ep001_s07
     visual_brief:
       background: "Комната Марко, полка с дневником"
       camera: close-up
@@ -474,7 +472,6 @@ scenes:
     feedback_soft_fail: "Можно ли пересчитать учеников? Если можно — это факт."
     mood: "практика"
     next_default: ep001_s09
-    next_fail: ep001_s08
     visual_brief:
       background: "Комната Марко, экран телефона"
       camera: close-up
@@ -507,7 +504,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить скуку? Есть прибор для этого?"
     mood: "практика"
     next_default: ep001_s10
-    next_fail: ep001_s09
     visual_brief:
       background: "Комната Марко, экран телефона"
       camera: close-up
@@ -540,7 +536,6 @@ scenes:
     feedback_soft_fail: "Является ли Киев столицей Украины? Это можно проверить в любом источнике."
     mood: "завершение sofa_block"
     next_default: ep001_s11
-    next_fail: ep001_s10
     visual_brief:
       background: "Комната Марко, экран телефона"
       camera: close-up
@@ -819,7 +814,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить «тёплый» голос? Есть прибор?"
     mood: "экспресс"
     next_default: ep001_s14
-    next_fail: ep001_s13
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -852,7 +846,6 @@ scenes:
     feedback_soft_fail: "Можно ли посчитать рамки? Четыре — это число."
     mood: "экспресс"
     next_default: ep001_s15
-    next_fail: ep001_s14
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -885,7 +878,6 @@ scenes:
     feedback_soft_fail: "Трещину на экране можно увидеть? Если да — факт."
     mood: "экспресс"
     next_default: ep001_s16
-    next_fail: ep001_s15
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -918,7 +910,6 @@ scenes:
     feedback_soft_fail: "Можно ли подойти и посмотреть, что в рамках? Если да — факт."
     mood: "экспресс"
     next_default: ep001_s17
-    next_fail: ep001_s16
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -951,7 +942,6 @@ scenes:
     feedback_soft_fail: "Громко — можно ли проверить? Громкость измерима."
     mood: "экспресс"
     next_default: ep001_s18
-    next_fail: ep001_s17
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -984,7 +974,6 @@ scenes:
     feedback_soft_fail: "Можно ли посчитать кровати? Если да — факт."
     mood: "экспресс"
     next_default: ep001_s19
-    next_fail: ep001_s18
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -1017,7 +1006,6 @@ scenes:
     feedback_soft_fail: "Тихо или громко — можно ли проверить? Громкость измерима."
     mood: "экспресс"
     next_default: ep001_s20
-    next_fail: ep001_s19
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -1050,7 +1038,6 @@ scenes:
     feedback_soft_fail: "Расположение предметов — можно ли увидеть? Если да — факт."
     mood: "экспресс"
     next_default: ep001_s21
-    next_fail: ep001_s20
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up
@@ -1083,7 +1070,6 @@ scenes:
     feedback_soft_fail: "Фотографии были — теперь рамки пустые. Можно увидеть? Если да — факт."
     mood: "завершение экспресс-теста"
     next_default: ep001_s21a
-    next_fail: ep001_s21
     visual_brief:
       background: "Школьный класс, экран телефона"
       camera: close-up

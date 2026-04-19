@@ -145,7 +145,6 @@ scenes:
     feedback_soft_fail: 'Не спеши. "Ночью увидела" и "утром подтвердилось" — это два разных момента. Оба могут быть правдой.'
     mood: "первая проверка"
     next_default: ep003_s04
-    next_fail: ep003_s03
     visual_brief:
       background: "Скамейка, экран телефона с текстом Софы"
       camera: close-up
@@ -269,7 +268,6 @@ scenes:
     feedback_soft_fail: 'Темно — бывает. Но если на КАЖДЫЙ вопрос один ответ — "было темно" — это закрывает путь к проверке.'
     mood: "первая отговорка Лины"
     next_default: ep003_s07
-    next_fail: ep003_s06
     visual_brief:
       background: "Скамейка, Лина повторяет жест — разводит руками"
       camera: medium
@@ -315,7 +313,6 @@ scenes:
       Но заноза не уходит.
     mood: "нюанс — не всё отговорка"
     next_default: ep003_s08
-    next_fail: ep003_s07
     visual_brief:
       background: "Скамейка, вечереет"
       camera: medium
@@ -372,7 +369,6 @@ scenes:
             text: "Продолжить разговор"
             next: ep003_s09
     next_default: ep003_s09
-    next_fail: ep003_s08
     mood: "первое вещественное доказательство"
     visual_brief:
       background: "Скамейка, смятый листок в руках Марко"
@@ -396,7 +392,7 @@ scenes:
     scene_type: narrative
     location: "Школьный двор, скамейка за спортзалом"
     time: "после школы"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     branch_type: flavor_detour
     author_text: >
       Марко разглядывает рисунок. Дом — похож на их подъезд. Дерево —
@@ -447,7 +443,6 @@ scenes:
     feedback_soft_fail: "Страх — реальная причина. Лина боялась — но всё равно нарисовала. Это не закрывает путь к проверке."
     mood: "нюанс — страх и проверка"
     next_default: ep003_s10
-    next_fail: ep003_s09
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -526,7 +521,6 @@ scenes:
     feedback_soft_fail: "Не спеши. Может быть правда страшно — а может, закрывает путь. На границе. Проверяй дальше."
     mood: "серая зона"
     next_default: ep003_s12
-    next_fail: ep003_s11
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -559,7 +553,6 @@ scenes:
     feedback_soft_fail: "Если назвать нельзя — проверить нельзя. Закрывает путь навсегда. Это отговорка."
     mood: "чёткая отговорка"
     next_default: ep003_s13
-    next_fail: ep003_s12
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -643,7 +636,6 @@ scenes:
     feedback_soft_fail: "Не спеши. Несовпадение — не значит ложь. Память путается. Но это факт, который нужно проверять дальше."
     mood: "пойманное несовпадение"
     next_default: ep003_s15
-    next_fail: ep003_s14
     visual_brief:
       background: "Скамейка, вечереет"
       camera: medium
@@ -712,7 +704,6 @@ scenes:
     feedback_soft_fail: '"Поверь мне" — это просьба. Просьба не заменяет проверку.'
     mood: "важное различие"
     next_default: ep003_s17
-    next_fail: ep003_s16
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -794,7 +785,6 @@ scenes:
     feedback_soft_fail: "Можно ли взвесить листок? Вспомни пять инструментов."
     mood: "инструменты в действии"
     next_default: ep003_s19
-    next_fail: ep003_s18
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -827,7 +817,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить температуру? Каким инструментом? Вспомни пять помощников."
     mood: "инструменты в действии"
     next_default: ep003_s20
-    next_fail: ep003_s19
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -860,7 +849,6 @@ scenes:
     feedback_soft_fail: 'Чем измерить "убедительность"? Весами? Линейкой? Нет такого прибора. Мнение.'
     mood: "ловушка — мнение без прибора"
     next_default: ep003_s21
-    next_fail: ep003_s20
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -912,7 +900,6 @@ scenes:
     feedback_soft_fail: "Можно ли измерить время? Каким инструментом?"
     mood: "Марко учится задавать вопросы с числами"
     next_default: ep003_s22
-    next_fail: ep003_s21
     visual_brief:
       background: "Скамейка, Марко показывает на скамейку — сравнивает размер"
       camera: medium
@@ -948,7 +935,6 @@ scenes:
     feedback_soft_fail: "Чем измерить страх? Весами? Термометром? Нет такого прибора. Мнение."
     mood: "завершение блока инструментов"
     next_default: ep003_s23
-    next_fail: ep003_s22
     visual_brief:
       background: "Скамейка, экран телефона"
       camera: close-up
@@ -996,7 +982,6 @@ scenes:
     feedback_soft_fail: "Одно объяснение — бывает. Но три разных подряд на один и тот же вопрос? Это верный признак."
     mood: "паттерн полностью усвоен"
     next_default: ep003_s24
-    next_fail: ep003_s23
     visual_brief:
       background: "Скамейка, вечер, ветер шевелит волосы Лины"
       camera: medium
@@ -1050,7 +1035,7 @@ scenes:
     scene_type: cliffhanger
     location: "Школьный двор → парк"
     time: "вечер"
-    characters_present: [Марко, Лина]
+    characters_present: [Марко, Лина, Софа]
     dialogue:
       - who: Лина
         line: "Пойдём. Я знаю, где дверь."
