@@ -14,8 +14,11 @@ Usage:
 
 import re
 import sys
+import json
+import hashlib
 import yaml
 import html
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -159,6 +162,262 @@ def load_episode_lang(path: Path, lang: str) -> dict:
             except yaml.YAMLError as e:
                 print(f"  ! UK overlay parse error {uk_path.name}: {e}")
     return data
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Per-episode JSON manifest — downstream-friendly structured format.
+# Consumed by voice (TTS) + image pipelines. Derived from the SAME
+# in-memory data model that renders HTML — so HTML ≡ JSON by construction.
+# ─────────────────────────────────────────────────────────────────────
+
+MANIFEST_SCHEMA_VERSION = 1
+
+
+def _paragraphs(text: str) -> list:
+    """Split a text field by newlines into atomic paragraph strings."""
+    if not isinstance(text, str):
+        return []
+    return [p.strip() for p in text.split("\n") if p.strip()]
+
+
+def _speaker_key(who: str) -> str:
+    """Normalize speaker names for voice/image pipelines."""
+    w = (who or "").strip()
+    wl = w.lower()
+    if wl in ("автор", "author"):
+        return "author"
+    if wl in ("софа", "sofa"):
+        return "sofa"
+    if wl in ("марко", "marko"):
+        return "marko"
+    return w  # keep as-is for named characters (Лина, Вера, мама, ...)
+
+
+def _dialogue_to_text(items: list) -> list:
+    """Convert dialogue[] YAML entries to manifest text[] format."""
+    out = []
+    for d in items or []:
+        if not isinstance(d, dict):
+            continue
+        who = _speaker_key(d.get("who", ""))
+        line = str(d.get("line", "")).strip()
+        if line:
+            out.append({"who": who, "line": line})
+    return out
+
+
+def _quiz_block(src: dict) -> dict:
+    """Convert a scene (or interaction) with options[] into a quiz manifest block."""
+    opts = []
+    for o in src.get("options", []) or []:
+        if not isinstance(o, dict):
+            continue
+        opts.append({
+            "id": o.get("id", ""),
+            "text": str(o.get("text", "")).strip(),
+            "correct": bool(o.get("correct", False)),
+        })
+    return {
+        "question": str(src.get("question", "")).strip(),
+        "options": opts,
+        "correct_logic": str(src.get("correct_logic", "")).strip(),
+        "feedback_success": str(src.get("feedback_success", "")).strip(),
+        "feedback_soft_fail": str(src.get("feedback_soft_fail", "")).strip(),
+    }
+
+
+def _choice_block(src: dict) -> dict:
+    """Convert a scene/interaction with options having `next` (not `correct`) into choice manifest."""
+    opts = []
+    for o in src.get("options", []) or []:
+        if not isinstance(o, dict) or "next" not in o:
+            continue
+        opts.append({
+            "id": o.get("id", ""),
+            "text": str(o.get("text", "")).strip(),
+            "next": o.get("next", ""),
+        })
+    return {"question": str(src.get("question", "")).strip(), "options": opts}
+
+
+def _scene_to_manifest(scene: dict) -> dict:
+    """Convert one YAML scene into the manifest JSON schema."""
+    sid = scene.get("scene_id", "")
+    chars = scene.get("characters_present", []) or []
+    is_chat = is_sofa_chat_scene(scene)
+
+    # Linear text[] — preserves order: author_text → dialogue → author_text_after → dialogue_after
+    text_blocks = []
+    for p in _paragraphs(scene.get("author_text", "")):
+        text_blocks.append({"who": "author", "line": p})
+    text_blocks.extend(_dialogue_to_text(scene.get("dialogue", [])))
+    for p in _paragraphs(scene.get("author_text_after", "")):
+        text_blocks.append({"who": "author", "line": p})
+    text_blocks.extend(_dialogue_to_text(scene.get("dialogue_after", [])))
+
+    # Quizzes: either top-level (scene.options with .correct) or interactions[] list.
+    quizzes = []
+    top_opts = [o for o in (scene.get("options", []) or []) if isinstance(o, dict) and "correct" in o]
+    if top_opts:
+        quizzes.append(_quiz_block(scene))
+    for inter in scene.get("interactions", []) or []:
+        if not isinstance(inter, dict):
+            continue
+        inter_opts = [o for o in (inter.get("options", []) or []) if isinstance(o, dict) and "correct" in o]
+        if inter_opts:
+            quizzes.append(_quiz_block(inter))
+    fu = scene.get("followup_interaction", {})
+    if isinstance(fu, dict):
+        fu_opts = [o for o in (fu.get("options", []) or []) if isinstance(o, dict) and "correct" in o]
+        if fu_opts:
+            quizzes.append(_quiz_block(fu))
+
+    # Choice: options with `next` (no `correct`), top-level OR inside interactions.
+    choice = None
+    top_choice = [o for o in (scene.get("options", []) or []) if isinstance(o, dict) and "next" in o and "correct" not in o]
+    if top_choice:
+        choice = _choice_block(scene)
+    else:
+        for inter in scene.get("interactions", []) or []:
+            if not isinstance(inter, dict):
+                continue
+            inter_choice = [o for o in (inter.get("options", []) or []) if isinstance(o, dict) and "next" in o and "correct" not in o]
+            if inter_choice:
+                choice = _choice_block(inter)
+                break
+
+    # Unlock
+    unlock = None
+    ub = scene.get("unlock_button")
+    if isinstance(ub, dict):
+        reveals = ub.get("reveals", {}) or {}
+        unlock = {
+            "button_text": str(ub.get("text", "")).strip(),
+            "reveals": {
+                "type": reveals.get("type", ""),
+                "who": reveals.get("who", ""),
+                "line": str(reveals.get("line", "")).strip(),
+                "duration": reveals.get("duration", ""),
+            },
+        }
+
+    return {
+        "id": sid,
+        "kind": scene.get("scene_type", "narrative"),
+        "is_chat": is_chat,
+        "location": scene.get("location", "") or "",
+        "time": scene.get("time", "") or "",
+        "chars": list(chars),
+        "mood": scene.get("mood", "") or "",
+        "branch_type": scene.get("branch_type") or None,
+        "set_flags": list(scene.get("set_flags", []) or []),
+        "require_flags": list(scene.get("require_flags", []) or []),
+        "nav": {
+            "next": scene.get("next_default") or None,
+            "next_success": scene.get("next_success") or None,
+            "next_fail": scene.get("next_fail") or None,
+            "merge_to": scene.get("merge_to") or None,
+        },
+        "text": text_blocks,
+        "quizzes": quizzes,
+        "choice": choice,
+        "unlock": unlock,
+        "visual_brief": scene.get("visual_brief", {}) or {},
+        "source_ref": scene.get("source_ref", "") or "",
+    }
+
+
+def _episode_to_manifest(data: dict, lang: str) -> dict:
+    """Full per-episode manifest JSON structure."""
+    scenes_json = [_scene_to_manifest(s) for s in data.get("scenes", []) or []]
+    return {
+        "schema_version": MANIFEST_SCHEMA_VERSION,
+        "episode_id": data.get("episode_id"),
+        "lang": lang,
+        "title": data.get("episode_title", ""),
+        "lesson": data.get("lesson", ""),
+        "terms_introduced": list(data.get("terms_introduced", []) or []),
+        "terms_used": list(data.get("terms_used", []) or []),
+        "enter_requires": data.get("enter_requires", {}) or {},
+        "scene_count": len(scenes_json),
+        "quiz_count": sum(len(s["quizzes"]) for s in scenes_json),
+        "branch_count": sum(1 for s in scenes_json if s["branch_type"] or s["kind"] == "choice"),
+        "scenes": scenes_json,
+    }
+
+
+def _content_hash(path: Path) -> str:
+    """SHA-256 of the file's content as hex, truncated to 16 chars."""
+    if not path.exists():
+        return ""
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+
+
+def _write_episode_manifest(data: dict, lang: str, output_dir: Path) -> Path:
+    """Emit ep_NNN.json next to its HTML."""
+    ep_id = int(data.get("episode_id", 0))
+    manifest = _episode_to_manifest(data, lang)
+    json_path = output_dir / f"ep_{ep_id:03d}.json"
+    json_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return json_path
+
+
+def build_top_manifest() -> Path:
+    """Scan server/game/ and server/game/uk/ for ep_*.json,
+    emit server/game/manifest.json as index."""
+    episodes = []
+    ep_ids = set()
+    for p in OUTPUT_DIR_RU.glob("ep_*.json"):
+        m = re.match(r"ep_(\d+)\.json$", p.name)
+        if m:
+            ep_ids.add(int(m.group(1)))
+    if OUTPUT_DIR_UK.exists():
+        for p in OUTPUT_DIR_UK.glob("ep_*.json"):
+            m = re.match(r"ep_(\d+)\.json$", p.name)
+            if m:
+                ep_ids.add(int(m.group(1)))
+
+    for eid in sorted(ep_ids):
+        ru_json = OUTPUT_DIR_RU / f"ep_{eid:03d}.json"
+        uk_json = OUTPUT_DIR_UK / f"ep_{eid:03d}.json"
+        entry = {"id": f"ep_{eid:03d}", "number": eid, "languages": {}}
+
+        if ru_json.exists():
+            d = json.loads(ru_json.read_text(encoding="utf-8"))
+            entry["title_ru"] = d.get("title", "")
+            entry["lesson"] = d.get("lesson", "")
+            entry["scene_count"] = d.get("scene_count", 0)
+            entry["quiz_count"] = d.get("quiz_count", 0)
+            entry["branch_count"] = d.get("branch_count", 0)
+            entry["languages"]["ru"] = {
+                "html": f"ep_{eid:03d}.html",
+                "data": f"ep_{eid:03d}.json",
+                "content_hash": _content_hash(ru_json),
+            }
+        if uk_json.exists():
+            d = json.loads(uk_json.read_text(encoding="utf-8"))
+            entry["title_uk"] = d.get("title", "")
+            entry["languages"]["uk"] = {
+                "html": f"uk/ep_{eid:03d}.html",
+                "data": f"uk/ep_{eid:03d}.json",
+                "content_hash": _content_hash(uk_json),
+            }
+        episodes.append(entry)
+
+    manifest = {
+        "schema_version": MANIFEST_SCHEMA_VERSION,
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "episodes": episodes,
+    }
+    path = OUTPUT_DIR_RU / "manifest.json"
+    path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return path
 
 
 def load_yaml(path: Path) -> dict:
@@ -672,6 +931,9 @@ def render_scene(scene: dict, index: int, total: int) -> str:
             content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue)}</div>')
         if author_text_after:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
+        dialogue_after = scene.get("dialogue_after", [])
+        if dialogue_after:
+            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue_after)}</div>')
 
         # Standard options (quiz or choice) — only in non-chat mode
         if scene.get("options") and any("correct" in o for o in scene.get("options", [])):
@@ -1756,7 +2018,7 @@ def render_episode_html(data: dict, all_eps: list = None) -> str:
 
 
 def build_episode(yaml_path: Path, all_eps: list = None, lang: str = "ru"):
-    """Build HTML for a single episode YAML (optionally with UK overlay merged)."""
+    """Build HTML + JSON manifest for a single episode (optionally with UK overlay)."""
     data = load_episode_lang(yaml_path, lang)
     ep_id = data.get("episode_id", 0)
     filename = f"ep_{int(ep_id):03d}.html"
@@ -1768,7 +2030,13 @@ def build_episode(yaml_path: Path, all_eps: list = None, lang: str = "ru"):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"  \u2713 {yaml_path.name} \u2192 {output_path.relative_to(ROOT)}")
+    # Emit per-episode JSON manifest alongside HTML (same data model).
+    json_path = _write_episode_manifest(data, lang, OUTPUT_DIR)
+
+    print(
+        f"  \u2713 {yaml_path.name} \u2192 "
+        f"{output_path.relative_to(ROOT)} + {json_path.name}"
+    )
     return output_path
 
 
@@ -1935,6 +2203,8 @@ def main():
     if OUTPUT_DIR.exists():
         for old in OUTPUT_DIR.glob("*.html"):
             old.unlink()
+        for old in OUTPUT_DIR.glob("ep_*.json"):
+            old.unlink()
         rel = OUTPUT_DIR.relative_to(ROOT)
         print(f"  \u2713 Cleaned {rel}/")
 
@@ -1959,6 +2229,10 @@ def main():
 
     if lang == "ru":
         build_index(all_yaml_files)
+
+    # Top-level manifest.json — always rebuilt (scans filesystem for all langs).
+    manifest_path = build_top_manifest()
+    print(f"  \u2713 {manifest_path.relative_to(ROOT)}")
     print("Done.")
 
 

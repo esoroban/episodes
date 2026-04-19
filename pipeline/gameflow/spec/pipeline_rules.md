@@ -330,6 +330,83 @@ UI-режим на drama.
 
 Переключение — флагом `debug_author_text` (по умолчанию ON до релиза, OFF в проде).
 
+**Артефакты для downstream: per-episode JSON + manifest.json (обязательно):**
+
+На каждый эпизод `build_game.py` эмитит ДВА артефакта из одной data model:
+
+| Файл | Для кого |
+|---|---|
+| `server/game/ep_NNN.html` (или `uk/ep_NNN.html`) | Игрок читает в браузере |
+| `server/game/ep_NNN.json` (или `uk/ep_NNN.json`) | Downstream: озвучка (TTS), картинки (image prompts), любой парсер |
+
+Плюс один глобальный индекс:
+
+| Файл | Содержит |
+|---|---|
+| `server/game/manifest.json` | Список всех эпизодов, обе языковые версии, content-hash каждого JSON |
+
+**Структура per-episode JSON** (ключевое):
+
+```json
+{
+  "schema_version": 1, "episode_id": 1, "lang": "ru",
+  "title": "...", "lesson": "1A.1",
+  "terms_introduced": [...], "terms_used": [...],
+  "enter_requires": {...},
+  "scene_count": N, "quiz_count": N, "branch_count": N,
+  "scenes": [
+    {
+      "id": "ep001_s01", "kind": "narrative", "is_chat": false,
+      "location": "...", "time": "...", "chars": [...],
+      "mood": "...", "branch_type": null,
+      "set_flags": [...], "require_flags": [...],
+      "nav": {"next": "...", "next_success": null, "next_fail": null, "merge_to": null},
+      "text": [
+        {"who": "author", "line": "..."},
+        {"who": "Марко", "line": "..."},
+        {"who": "мама", "line": "..."}
+      ],
+      "quizzes": [{"question": "...", "options": [...], "feedback_success": "...", "feedback_soft_fail": "...", "correct_logic": "..."}],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {...},
+      "source_ref": "day_01.ep1.drama"
+    }
+  ]
+}
+```
+
+- **`text[]`** — упорядоченная последовательность реплик (author / speaker / Sofa / Marko). Воспроизводит порядок из YAML: `author_text` → `dialogue[]` → `author_text_after` → `dialogue_after[]`. Каждый элемент — один атомарный speech-act.
+- **`who`**: `"author"` (narrator), `"sofa"` (bot), `"marko"` (protagonist), либо имя персонажа (`"Лина"`, `"Вера"`, `"мама"` и т.д.).
+- **`is_chat`**: `true` если сцена рендерится как Telegram-UI (Sofa chat). Озвучка может по этому флагу менять стиль TTS для Sofa.
+- **`quizzes[]`**: массив, потому что сцена может содержать batch (`interactions[]`) из нескольких квизов.
+- **`visual_brief`** — берётся из RU в обеих языках (тех-поле для художника).
+
+**Контракт «HTML ≡ JSON»** (инвариант, проверяется автоматически):
+
+Текст, видимый игроку в HTML, совпадает с текстом в `text[]`, `quizzes[].question/options/feedback`, `choice.question/options`, `unlock.button_text/reveals.line` в JSON.
+
+Не сравниваются: `correct_logic` (скрытое поле), `visual_brief` (dev-метаданные),
+заголовки эпизода и end-screen (UI chrome), debug-бургер.
+
+Инвариант гонит `tools/validate_artifacts.py`:
+```
+python3 tools/validate_artifacts.py           # все эпизоды, RU + UK
+python3 tools/validate_artifacts.py ep_001    # один эпизод (обе языка)
+python3 tools/validate_artifacts.py --lang ru # только RU
+```
+
+На drift — exit code 1 с точным diff'ом, где разошлось.
+
+**Зачем:** автор ревьюит в HTML. Озвучка/картинки потребляют JSON. Если артефакты разойдутся — approved правки пропадут в downstream. Инвариант делает drift невозможным: оба выходят из одной in-memory структуры build_game.py → проверка срабатывает, если кто-то разжёг руками один артефакт в обход билда.
+
+**Правило интеграции downstream:**
+
+Пайплайны озвучки и картинок **никогда не парсят HTML**. Они читают:
+1. `server/game/manifest.json` — discovery (какие эпизоды есть, хеши).
+2. `server/game/ep_NNN.json` (или `uk/ep_NNN.json`) — содержание.
+3. По `content_hash` в manifest определяют, что обновилось.
+
 **UK-слой (локализация) — оверлей, не отдельный формат (обязательно):**
 
 Украинский перевод лежит в `pipeline/gameflow/episodes_uk/ep_NNN.yaml`
