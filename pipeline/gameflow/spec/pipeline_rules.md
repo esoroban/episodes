@@ -27,6 +27,7 @@
 | 16 | Self-loop в `next_fail` | `next_fail == scene_id` |
 | 17 | Именованное место до его введения (`Зеркальный Город` и т.п.) | текст эпизодов кумулятивно |
 | 18 | Live-персонаж **говорит** в chat-сцене | `dialogue[].who` / `dialogue_after[].who` |
+| 19 | Ритм веток — ≥1 choice-точка на эпизод | `branch_type` / `scene_type: choice` |
 
 **Запуск перед каждым деплоем.** Падает на error — деплой блокируется.
 
@@ -79,6 +80,56 @@ server/book/                ← человекочитаемый markdown
 publish/game/               ← HTML-превью
 pipeline/gameflow/visuals/  ← visual briefs для художки
 ```
+
+## Source layer: поле `branch_intent` (опциональное)
+
+Чтобы автор мог **объявить развилки на уровне плана** (а не открывать их
+только на gameflow-этапе), в `pipeline/source/episodes/day_NN.yaml` в
+каждом эпизоде допускается поле `branch_intent` — список выборов, которые
+должны появиться в gameflow.
+
+Формат:
+```yaml
+- ep: 2
+  branch_intent:
+    - where: "s08 — чат про «выдумал сестру»"
+      type: "flavor_detour"
+      options: ["walk_away", "argue"]
+      purpose: "реакция Марко на публичное унижение"
+      merge_to: "s09"
+    - where: "s32 — Вера просит дневник"
+      type: "gated_response"
+      options: ["keep", "give"]
+      purpose: "проверка доверия к Вере; дневник больше не load-bearing после ep_002"
+      merge_to: "s33"
+```
+
+Поля элемента `branch_intent`:
+
+| Поле | Тип | Обязательно | Описание |
+|------|-----|-------------|----------|
+| `where` | string | да | На какую сцену gameflow навешивается выбор. Формат: `sNN — краткий маркер` |
+| `type` | enum | да | Один из допустимых `branch_type` (`flavor_detour`, `gated_response`, `cosmetic_branch`, `soft_fail_loop`) |
+| `options` | list[string] | да | ≥2 идентификаторов веток. Короткие id в snake_case |
+| `purpose` | string | да | Зачем эта развилка нужна — одна фраза. Нужно, чтобы `gameflow-build` понимал тон |
+| `merge_to` | string | да | В какую сцену сходятся ветки. Обычно следующая после `where` |
+
+**Как это читает `gameflow-build`:**
+1. Берёт каждый элемент `branch_intent` и создаёт:
+   - сцену `ep00X_sNN_choice` (drama, scene_type: choice) с options[], указывающими на детуры
+   - по одной сцене `ep00X_sNN_<option_id>` на каждую опцию (branch_type = type)
+   - `merge_to` на указанную сцену
+2. Выставляет `next_default` оригинальной сцены на `sNN_choice`.
+3. Содержимое веток (author_text) автор дописывает вручную или через `gameflow-branch`.
+
+**Ритм веток.** Правило: **минимум 1 `branch_intent` на эпизод**. Валидатор
+Check 19 проверяет, что в каждом ep-блоке `day_NN.yaml` есть хотя бы один
+`branch_intent` ИЛИ в соответствующем `ep_NNN.yaml` есть хотя бы одна
+сцена с `branch_type` / `scene_type: choice`.
+
+**Почему не отдельный слой.** `branch_intent` — это аннотация в существующем
+source-файле, а не новый формат. Скиллы без `branch_intent` работают как
+раньше. Никакой тройной синхронизации.
 
 ## Отношение к pipeline/source/episodes
 

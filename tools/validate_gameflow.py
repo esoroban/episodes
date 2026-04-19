@@ -335,6 +335,30 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                 f"{sorted(ALLOWED_BRANCH_TYPES)}. См. branching_rules.md."
             )
 
+    # ── Check 19: Branch rhythm — >=1 choice-point per episode ──
+    # Минимум 1 развилка (flavor_detour / gated_response / soft_fail_loop /
+    # cosmetic_branch / scene_type: choice) на каждый эпизод. Без веток
+    # интерактив схлопывается в линейный читательский сценарий.
+    has_branch = False
+    for scene in scenes:
+        if scene.get("branch_type"):
+            has_branch = True
+            break
+        if scene.get("scene_type") == "choice":
+            has_branch = True
+            break
+        # Interactions с choice-опциями (не quiz) тоже считаются
+        opts = scene.get("options", []) or []
+        if opts and any(("next" in o and "correct" not in o) for o in opts):
+            has_branch = True
+            break
+    if not has_branch:
+        result.warn(
+            f"NO BRANCH: эпизод {ep_id} не содержит ни одной choice-точки "
+            f"(branch_type / scene_type: choice / options.next). "
+            f"Добавь хотя бы одну развилку — минимум 1 на эпизод."
+        )
+
     # ── Check 18: Live character SPEAKS in a chat-rendered scene ─
     # В chat-UI (phone rail) допустимы только реплики {Софа, Марко, автор}.
     # Нарушение: в чат-сцене (Софа + её реплики/квизы/unlock) в

@@ -34,12 +34,12 @@ Character names in output: Марко, София, Софа, Лина, Макс,
 
 ## Mandatory reading before starting
 
-1. `pipeline/gameflow/spec/pipeline_rules.md`
+1. `pipeline/gameflow/spec/pipeline_rules.md` — **includes `branch_intent` spec and Chat-vs-Drama split rule**
 2. `pipeline/gameflow/spec/gameflow_schema.md`
 3. `pipeline/gameflow/spec/branching_rules.md`
 4. `pipeline/gameflow/spec/visual_brief_rules.md`
 5. `pipeline/gameflow/spec/render_rules.md`
-6. The day file you're building
+6. The day file you're building — **read `branch_intent` in every episode**
 7. Previous episode's gameflow YAML (for `previously` text)
 
 ## Algorithm
@@ -54,7 +54,34 @@ Character names in output: Марко, София, Софа, Лина, Макс,
    `pipeline/gameflow/episodes/ep_003.yaml` for episodes with `previously`)
 5. Note for each episode: ep number, title, terms, total_quizzes, sofa_block
    (count, descriptions), challenge (count, descriptions), drama summary,
-   cliffhanger summary
+   cliffhanger summary, **`branch_intent` list** (see below)
+
+### Reading `branch_intent` (source → scaffold)
+
+Each episode in `day_NN.yaml` MAY have a `branch_intent` field — a list of
+choices the author wants scaffolded in the gameflow. Format and field list
+are in `pipeline/gameflow/spec/pipeline_rules.md` → "Source layer: поле
+`branch_intent`".
+
+For **every** element of `branch_intent` you MUST:
+1. Create a `ep{NNN}_sNN_choice` scene (drama, `scene_type: choice`,
+   `characters_present` = live chars already on-screen, no Софа).
+   `interaction_type: choice` with `options[]` pointing to the detour IDs
+   derived from `options` field of intent.
+2. Create one scene per option: `ep{NNN}_sNN_<option_id>`.
+   Set `branch_type` to the intent's `type`, `merge_to` and `next_default`
+   to intent's `merge_to`.
+3. Redirect the ORIGINAL scene's `next_default` (the one named in `where`)
+   to the new `_choice` scene.
+4. Fill content (author_text per option) from the intent's `purpose` plus
+   episode tone. If more texture is needed — defer to `gameflow-branch`
+   skill; leave `author_text` as a concise placeholder describing the beat.
+
+**Rule (Check 19, soft):** Every episode must end up with ≥1 branch. If
+`branch_intent` is absent, add at least one sensible `flavor_detour` at
+a natural beat (choice with two emotional textures that merge to the same
+next scene). Mark such a self-initiated branch with a comment
+`# AUTO-BRANCH: no branch_intent in source` so the author can review.
 
 ### Phase 2: Plan (STOP — show author)
 
@@ -99,10 +126,11 @@ Each episode's `drama` section becomes 2–4 narrative/dialogue scenes:
 2. **Quiz scenes** (one per quiz): Each quiz from `sofa_block.quizzes`
    - `scene_type: quiz`
    - `interaction_type: vote`
-   - `characters_present: [Марко, Софа]`
+   - `characters_present: [Марко, Софа]` — **never** include live characters
    - SAME location as intro scene (so they merge into phone chain)
    - Each quiz has: question, options, correct_logic, feedback_success, feedback_soft_fail
-   - `next_fail: same_scene_id` (soft fail = retry)
+   - **Do NOT set** `next_fail` to the same scene id. Retry on wrong answer
+     is handled by the renderer inline in the chat (see Check 16).
 
 ### Challenge → scenes
 
@@ -207,22 +235,38 @@ See skill `gameflow-drama` for full rules.
 
 ## Telegram chat vs Drama separation (CRITICAL)
 
-The renderer merges consecutive scenes with Софа in `characters_present`
-at the same location into one phone chain (Telegram chat UI).
+The renderer merges consecutive Софа scenes at the same location into
+one phone chain (Telegram chat UI). Chat-UI admits **only** Софа, Марко
+(outgoing text), and автор (voice-over card). Live characters — мама,
+Вера, Данила, Олена, Витя, Лина, София, Макс, Леон, Сэм, Рэй — **never**
+appear in chat (no bubble, no voice-message, no dialogue line).
+
+**Scene must be split when both are needed:**
+
+If a beat needs drama (live characters speaking) AND Софа's commentary,
+create TWO scenes:
+- `ep00X_sNN` (drama): `characters_present: [Марко, X_live]`, live chars
+  in `dialogue`, no Софа.
+- `ep00X_sNN_sofa` (chat): `characters_present: [Марко, Софа]`, Софа's
+  lines in `dialogue`, any quiz content here.
+
+`next_default` of the drama scene → the `_sofa` scene. `next_default` of
+`_sofa` → whatever the original continued to.
 
 **Софа in `characters_present`** ONLY in:
 - `scene_type: quiz` — always
-- Sofa_block intro scenes where Софа explains a term — yes
-- `unlock_button` scenes — yes
+- `scene_type: dialogue` where only Софа speaks (sofa_block intro, term
+  introduction, chat commentary)
+- Scenes with `unlock_button`
 
-**Remove Софа from `characters_present`** in:
-- `scene_type: narrative` with `author_text` — drama screen, not chat
-- `scene_type: dialogue` between characters (Марко+Лина, etc.) — drama
-- `scene_type: cliffhanger` — drama
-- Any scene with `who: автор` in dialogue — move автор text to `author_text`
+**Never put Софа in `characters_present`** in:
+- Scenes where any live character speaks in `dialogue`/`dialogue_after`
+- `scene_type: cliffhanger` with live characters speaking — split instead
+- Any scene whose primary purpose is showing a drama moment with live chars
 
 **`correct_logic`** is NOT rendered in chat. Only `feedback_success` from
-Софа appears after a quiz answer. No duplication.
+Софа appears after a quiz answer. `feedback_soft_fail` is shown inline
+on wrong click (renderer auto-retries the quiz). No duplication.
 
 ## Visual brief rules
 
