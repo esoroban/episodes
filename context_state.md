@@ -1,15 +1,19 @@
 # CONTEXT STATE — current project state
 
 > Updated after each work session.
-> Last updated: 2026-04-15
+> Last updated: 2026-04-19
 
 ---
 
 ## Project Phase
-**Gameflow.** Episodes written (50 eps, Days 1–13). Now building game scene-flow layer.
-- Day 1 gameflow (ep_001–004): DONE
+**Gameflow + day-by-day freeze.** Work mode: close each day fully (RU → proofread → freeze → UK), then move on (see `project_day_by_day_localization` memory).
+
+- **Day 1 (ep_001–004, lessons 1A + 1B): FROZEN 2026-04-19.**
+  Git tag: `day-01-frozen` @ commit `8888c05`.
+  Author read-through complete. RU content locked; do not edit without explicit request.
 - Days 2–13 gameflow: NOT STARTED
-- HTML renderer and validator: DONE
+- UK translation layer for Day 1: NOT STARTED (next step after tooling)
+- HTML renderer, validator, artifact audit: DONE
 
 ### New Layer: Gameflow
 - `pipeline/gameflow/spec/` — schema, branching rules, visual briefs, pipeline rules
