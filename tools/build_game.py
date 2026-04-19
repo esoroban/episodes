@@ -554,10 +554,11 @@ def render_scene(scene: dict, index: int, total: int) -> str:
     is_sofa_chat = is_sofa_chat_scene(scene)
 
     if is_sofa_chat:
+        # Chat-UI fills the entire scene. Both author_text and author_text_after
+        # are emitted as voice-over cards INSIDE the chat by build_chat_messages.
+        # No external <div class="author-text"> allowed — that was a duplicate
+        # that appeared once gated_response scenes started rendering standalone.
         content_parts.append(render_chat(scene))
-        # author_text_after renders OUTSIDE chat (narrative reflection)
-        if author_text_after:
-            content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
     else:
         if author_text:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')

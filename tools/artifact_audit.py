@@ -251,12 +251,30 @@ def html_scene_texts(html_path: Path) -> dict:
     return cleaned
 
 
-def audit_episode(ep: str) -> None:
+def check_chat_scene_no_external_author_text(html_path: Path) -> list:
+    """Check 20 (post-build): chat scenes (with .phone) must not contain
+    an external <div class="author-text"> — that is a duplicate render of
+    what's already inside the chat as voice-over. Returns list of offenders."""
+    text = html_path.read_text(encoding="utf-8")
+    offenders = []
+    for m in re.finditer(
+        r'<section class="scene scene-[^"]+"\s+data-scene-id="([^"]+)"[^>]*>(.*?)</section>',
+        text,
+        re.DOTALL,
+    ):
+        sid = m.group(1)
+        body = m.group(2)
+        if '<div class="phone"' in body and '<div class="author-text">' in body:
+            offenders.append(sid)
+    return offenders
+
+
+def audit_episode(ep: str) -> bool:
     yaml_path = GAMEFLOW_DIR / f"{ep}.yaml"
     html_path = HTML_DIR / f"{ep}.html"
     if not yaml_path.exists() or not html_path.exists():
         print(f"  ! {ep}: missing files")
-        return
+        return False
 
     yaml_bag = yaml_texts(yaml_path)
     yaml_flat = set()
@@ -269,8 +287,14 @@ def audit_episode(ep: str) -> None:
     yaml_only = yaml_flat - html_flat
     html_only = html_flat - yaml_flat
 
-    status = "OK" if not yaml_only and not html_only else "DRIFT"
+    offenders = check_chat_scene_no_external_author_text(html_path)
+
+    status = "OK" if not yaml_only and not html_only and not offenders else "DRIFT"
     print(f"{ep}: {status}  (yaml: {len(yaml_flat)}  html: {len(html_flat)})")
+    if offenders:
+        print(f"  EXTERNAL author-text in chat scene(s) ({len(offenders)}):")
+        for sid in offenders:
+            print(f"    ! {sid} — chat-сцена содержит <div class=\"author-text\"> вне .phone")
 
     if yaml_only:
         print(f"  YAML → not in HTML ({len(yaml_only)}):")
@@ -284,6 +308,7 @@ def audit_episode(ep: str) -> None:
             print(f"    + {s[:140]}")
         if len(html_only) > 20:
             print(f"    ... +{len(html_only) - 20} more")
+    return status == "OK"
 
 
 def main():
