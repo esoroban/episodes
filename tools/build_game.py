@@ -1050,6 +1050,44 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
+.dbg-burger {
+  position: fixed; top: 8px; right: 8px; z-index: 10001;
+  width: 34px; height: 34px; padding: 0;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-size: 18px; line-height: 34px; text-align: center;
+  opacity: 0.6; transition: opacity 0.15s;
+}
+.dbg-burger:hover { opacity: 1; }
+.dbg-menu {
+  position: fixed; top: 48px; right: 8px; z-index: 10000;
+  width: min(360px, calc(100vw - 16px));
+  max-height: calc(100vh - 64px); overflow-y: auto;
+  background: #fff; color: #222;
+  border: 1px solid #bbb; border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+}
+.dbg-menu[hidden] { display: none; }
+.dbg-section { margin: 6px 0 10px; }
+.dbg-section h3 {
+  margin: 4px 0 6px; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #888; font-weight: 600;
+}
+.dbg-section ol { margin: 0; padding-left: 18px; }
+.dbg-section li { margin: 1px 0; }
+.dbg-section a, .dbg-jump {
+  display: block; width: 100%; text-align: left;
+  padding: 3px 6px; border: none; background: none;
+  color: #234; text-decoration: none; cursor: pointer;
+  font: inherit;
+}
+.dbg-section a:hover, .dbg-jump:hover { background: #f0f4ff; }
+.dbg-section a.dbg-current { font-weight: 700; color: #003; }
+.dbg-scenes { max-height: 40vh; overflow-y: auto; }
 @media (max-width: 600px) {
   .scene { margin: 0 0.5rem 1rem; }
   .quiz-options { flex-direction: column; }
@@ -1384,13 +1422,127 @@ JS = r"""
     vb.parentNode.insertBefore(toggle,vb);
   });
 
+  /* ── Debug burger: jump to any scene or episode ──────── */
+  (function initDebugBurger(){
+    var burger=document.getElementById('dbgBurger');
+    var menu=document.getElementById('dbgMenu');
+    if(!burger||!menu) return;
+    burger.addEventListener('click',function(e){
+      e.stopPropagation();
+      menu.hidden=!menu.hidden;
+    });
+    document.addEventListener('click',function(e){
+      if(!menu.hidden && !menu.contains(e.target) && e.target!==burger){
+        menu.hidden=true;
+      }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape' && !menu.hidden){menu.hidden=true;}
+    });
+    menu.querySelectorAll('.dbg-jump').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var sid=btn.dataset.jump;
+        var idx=sceneMap[sid];
+        if(idx===undefined) return;
+        if(currentIndex!==idx) navHistory.push(currentIndex);
+        showScene(idx);
+        menu.hidden=true;
+      });
+    });
+  })();
+
   showScene(0);
 })();
 """
 
 
-def render_episode_html(data: dict) -> str:
+def _collect_all_episodes_meta(yaml_files: list) -> list:
+    """Pre-compute minimal metadata for all episodes — used in debug burger."""
+    out = []
+    for p in sorted(yaml_files):
+        try:
+            d = load_episode(p)
+        except Exception:
+            continue
+        eid = int(d.get("episode_id", 0))
+        out.append({
+            "id": eid,
+            "title": d.get("episode_title", f"Эпизод {eid}"),
+            "href": f"ep_{eid:03d}.html",
+        })
+    return out
+
+
+def _dom_scene_list(units: list) -> list:
+    """Scene IDs that end up in the DOM (chain heads + singles),
+    with short labels for the debug menu."""
+    out = []
+    for unit in units:
+        if unit["type"] == "chain":
+            first = unit["scenes"][0]
+            sid = first.get("scene_id", "?")
+            n = len(unit["scenes"])
+            mood = first.get("mood", "").strip()
+            label = f"{sid} — чат ×{n}"
+            if mood:
+                label += f" · {mood}"
+            out.append({"id": sid, "label": label[:64]})
+        else:
+            s = unit["scene"]
+            sid = s.get("scene_id", "?")
+            stype = s.get("scene_type", "")
+            mood = s.get("mood", "").strip()
+            bt = s.get("branch_type", "")
+            marks = []
+            if bt:
+                marks.append(bt)
+            else:
+                marks.append(stype)
+            if mood:
+                marks.append(mood)
+            label = f"{sid} — {' · '.join(marks)}"
+            out.append({"id": sid, "label": label[:64]})
+    return out
+
+
+def _render_debug_burger(current_ep_id: int, all_eps: list, dom_scenes: list) -> tuple:
+    """Returns (html, css) for the debug burger + menu."""
+    ep_items = []
+    for ep in all_eps:
+        cls = "dbg-current" if ep["id"] == current_ep_id else ""
+        ep_items.append(
+            f'<li><a href="{esc(ep["href"])}" class="{cls}">'
+            f'{ep["id"]}. {esc(ep["title"])}</a></li>'
+        )
+    scene_items = []
+    for s in dom_scenes:
+        scene_items.append(
+            f'<li><button class="dbg-jump" data-jump="{esc(s["id"])}">'
+            f'{esc(s["label"])}</button></li>'
+        )
+    html_block = f"""
+<button class="dbg-burger" id="dbgBurger" aria-label="Отладочное меню" title="Отладка: сцены и эпизоды">\u2630</button>
+<nav class="dbg-menu" id="dbgMenu" hidden>
+  <section class="dbg-section">
+    <h3>Эпизод</h3>
+    <ol>
+      {"".join(ep_items)}
+    </ol>
+  </section>
+  <section class="dbg-section">
+    <h3>Сцены этого эпизода</h3>
+    <ol class="dbg-scenes">
+      {"".join(scene_items)}
+    </ol>
+  </section>
+</nav>"""
+    return html_block
+
+
+def render_episode_html(data: dict, all_eps: list = None) -> str:
     """Render full episode HTML."""
+    if all_eps is None:
+        all_eps = []
     ep_id = data.get("episode_id", "?")
     title = esc(data.get("episode_title", f"Эпизод {ep_id}"))
     lesson = esc(data.get("lesson", ""))
@@ -1444,6 +1596,13 @@ def render_episode_html(data: dict) -> str:
             scenes_html_parts.append(render_scene(unit["scene"], idx, total))
     scenes_html = "\n".join(scenes_html_parts)
 
+    dom_scenes = _dom_scene_list(units)
+    debug_burger_html = _render_debug_burger(
+        int(ep_id) if isinstance(ep_id, int) or (isinstance(ep_id, str) and ep_id.isdigit()) else 0,
+        all_eps,
+        dom_scenes,
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -1480,6 +1639,8 @@ def render_episode_html(data: dict) -> str:
   <button class="nav-btn primary" id="btnNext">Дальше \u2192</button>
 </div>
 
+{debug_burger_html}
+
 <script>
 {_js_timings_config()}
 {JS}
@@ -1488,14 +1649,14 @@ def render_episode_html(data: dict) -> str:
 </html>"""
 
 
-def build_episode(yaml_path: Path):
+def build_episode(yaml_path: Path, all_eps: list = None):
     """Build HTML for a single episode YAML."""
     data = load_episode(yaml_path)
     ep_id = data.get("episode_id", 0)
     filename = f"ep_{int(ep_id):03d}.html"
     output_path = OUTPUT_DIR / filename
 
-    html_content = render_episode_html(data)
+    html_content = render_episode_html(data, all_eps=all_eps or [])
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
@@ -1662,10 +1823,15 @@ def main():
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    for yf in yaml_files:
-        build_episode(yf)
+    # Debug burger needs the FULL episode catalog, not only the current build
+    # subset (so jump-menu lists every episode that exists, even for ep_001-only rebuild).
+    all_yaml_files = sorted(GAMEFLOW_DIR.glob("ep_*.yaml"))
+    all_eps = _collect_all_episodes_meta(all_yaml_files)
 
-    build_index(yaml_files)
+    for yf in yaml_files:
+        build_episode(yf, all_eps=all_eps)
+
+    build_index(all_yaml_files)
     print("Done.")
 
 

@@ -390,6 +390,44 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
+.dbg-burger {
+  position: fixed; top: 8px; right: 8px; z-index: 10001;
+  width: 34px; height: 34px; padding: 0;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-size: 18px; line-height: 34px; text-align: center;
+  opacity: 0.6; transition: opacity 0.15s;
+}
+.dbg-burger:hover { opacity: 1; }
+.dbg-menu {
+  position: fixed; top: 48px; right: 8px; z-index: 10000;
+  width: min(360px, calc(100vw - 16px));
+  max-height: calc(100vh - 64px); overflow-y: auto;
+  background: #fff; color: #222;
+  border: 1px solid #bbb; border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+}
+.dbg-menu[hidden] { display: none; }
+.dbg-section { margin: 6px 0 10px; }
+.dbg-section h3 {
+  margin: 4px 0 6px; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #888; font-weight: 600;
+}
+.dbg-section ol { margin: 0; padding-left: 18px; }
+.dbg-section li { margin: 1px 0; }
+.dbg-section a, .dbg-jump {
+  display: block; width: 100%; text-align: left;
+  padding: 3px 6px; border: none; background: none;
+  color: #234; text-decoration: none; cursor: pointer;
+  font: inherit;
+}
+.dbg-section a:hover, .dbg-jump:hover { background: #f0f4ff; }
+.dbg-section a.dbg-current { font-weight: 700; color: #003; }
+.dbg-scenes { max-height: 40vh; overflow-y: auto; }
 @media (max-width: 600px) {
   .scene { margin: 0 0.5rem 1rem; }
   .quiz-options { flex-direction: column; }
@@ -511,6 +549,23 @@ body.debug-off .voice-subtitle { display: none; }
   <button class="nav-btn" id="btnPrev" disabled>← Назад</button>
   <button class="nav-btn primary" id="btnNext">Дальше →</button>
 </div>
+
+
+<button class="dbg-burger" id="dbgBurger" aria-label="Отладочное меню" title="Отладка: сцены и эпизоды">☰</button>
+<nav class="dbg-menu" id="dbgMenu" hidden>
+  <section class="dbg-section">
+    <h3>Эпизод</h3>
+    <ol>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="dbg-current">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li>
+    </ol>
+  </section>
+  <section class="dbg-section">
+    <h3>Сцены этого эпизода</h3>
+    <ol class="dbg-scenes">
+      <li><button class="dbg-jump" data-jump="ep007_s01">ep007_s01 — narrative · ужас открытия</button></li><li><button class="dbg-jump" data-jump="ep007_s02">ep007_s02 — dialogue · ужас и вина</button></li><li><button class="dbg-jump" data-jump="ep007_s03">ep007_s03 — чат ×4 · урок из боли</button></li><li><button class="dbg-jump" data-jump="ep007_s07">ep007_s07 — narrative · цена желания</button></li><li><button class="dbg-jump" data-jump="ep007_s08">ep007_s08 — quiz · проверка перед решением</button></li><li><button class="dbg-jump" data-jump="ep007_s09">ep007_s09 — narrative · шок — проверка провалилась</button></li><li><button class="dbg-jump" data-jump="ep007_s10">ep007_s10 — cliffhanger · неизвестная угроза</button></li>
+    </ol>
+  </section>
+</nav>
 
 <script>
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
@@ -839,6 +894,35 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
     });
     vb.parentNode.insertBefore(toggle,vb);
   });
+
+  /* ── Debug burger: jump to any scene or episode ──────── */
+  (function initDebugBurger(){
+    var burger=document.getElementById('dbgBurger');
+    var menu=document.getElementById('dbgMenu');
+    if(!burger||!menu) return;
+    burger.addEventListener('click',function(e){
+      e.stopPropagation();
+      menu.hidden=!menu.hidden;
+    });
+    document.addEventListener('click',function(e){
+      if(!menu.hidden && !menu.contains(e.target) && e.target!==burger){
+        menu.hidden=true;
+      }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape' && !menu.hidden){menu.hidden=true;}
+    });
+    menu.querySelectorAll('.dbg-jump').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var sid=btn.dataset.jump;
+        var idx=sceneMap[sid];
+        if(idx===undefined) return;
+        if(currentIndex!==idx) navHistory.push(currentIndex);
+        showScene(idx);
+        menu.hidden=true;
+      });
+    });
+  })();
 
   showScene(0);
 })();

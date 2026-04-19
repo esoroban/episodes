@@ -390,6 +390,44 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
+.dbg-burger {
+  position: fixed; top: 8px; right: 8px; z-index: 10001;
+  width: 34px; height: 34px; padding: 0;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-size: 18px; line-height: 34px; text-align: center;
+  opacity: 0.6; transition: opacity 0.15s;
+}
+.dbg-burger:hover { opacity: 1; }
+.dbg-menu {
+  position: fixed; top: 48px; right: 8px; z-index: 10000;
+  width: min(360px, calc(100vw - 16px));
+  max-height: calc(100vh - 64px); overflow-y: auto;
+  background: #fff; color: #222;
+  border: 1px solid #bbb; border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+}
+.dbg-menu[hidden] { display: none; }
+.dbg-section { margin: 6px 0 10px; }
+.dbg-section h3 {
+  margin: 4px 0 6px; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #888; font-weight: 600;
+}
+.dbg-section ol { margin: 0; padding-left: 18px; }
+.dbg-section li { margin: 1px 0; }
+.dbg-section a, .dbg-jump {
+  display: block; width: 100%; text-align: left;
+  padding: 3px 6px; border: none; background: none;
+  color: #234; text-decoration: none; cursor: pointer;
+  font: inherit;
+}
+.dbg-section a:hover, .dbg-jump:hover { background: #f0f4ff; }
+.dbg-section a.dbg-current { font-weight: 700; color: #003; }
+.dbg-scenes { max-height: 40vh; overflow-y: auto; }
 @media (max-width: 600px) {
   .scene { margin: 0 0.5rem 1rem; }
   .quiz-options { flex-direction: column; }
@@ -778,6 +816,23 @@ body.debug-off .voice-subtitle { display: none; }
   <button class="nav-btn primary" id="btnNext">Дальше →</button>
 </div>
 
+
+<button class="dbg-burger" id="dbgBurger" aria-label="Отладочное меню" title="Отладка: сцены и эпизоды">☰</button>
+<nav class="dbg-menu" id="dbgMenu" hidden>
+  <section class="dbg-section">
+    <h3>Эпизод</h3>
+    <ol>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="dbg-current">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li>
+    </ol>
+  </section>
+  <section class="dbg-section">
+    <h3>Сцены этого эпизода</h3>
+    <ol class="dbg-scenes">
+      <li><button class="dbg-jump" data-jump="ep003_s01">ep003_s01 — dialogue · напряжённое доверие</button></li><li><button class="dbg-jump" data-jump="ep003_s02">ep003_s02 — dialogue · нарастающее напряжение</button></li><li><button class="dbg-jump" data-jump="ep003_s03">ep003_s03 — quiz · первая проверка</button></li><li><button class="dbg-jump" data-jump="ep003_s04">ep003_s04 — dialogue · заноза — паттерн отговорок</button></li><li><button class="dbg-jump" data-jump="ep003_s05">ep003_s05 — narrative · узнавание паттерна — в живую</button></li><li><button class="dbg-jump" data-jump="ep003_s05_sofa">ep003_s05_sofa — dialogue · ввод терминов: хитрое утверждение, о</button></li><li><button class="dbg-jump" data-jump="ep003_s06">ep003_s06 — dialogue · первая отговорка Лины</button></li><li><button class="dbg-jump" data-jump="ep003_s06_sofa">ep003_s06_sofa — quiz · распознаём паттерн</button></li><li><button class="dbg-jump" data-jump="ep003_s07">ep003_s07 — dialogue · нюанс — не всё отговорка</button></li><li><button class="dbg-jump" data-jump="ep003_s07_sofa">ep003_s07_sofa — quiz · нюанс</button></li><li><button class="dbg-jump" data-jump="ep003_s08">ep003_s08 — dialogue · первая физическая улика</button></li><li><button class="dbg-jump" data-jump="ep003_s08_sofa">ep003_s08_sofa — quiz · первое вещественное доказательство</button></li><li><button class="dbg-jump" data-jump="ep003_s08_choice">ep003_s08_choice — choice · задержаться на улике или двигаться</button></li><li><button class="dbg-jump" data-jump="ep003_s08_detour">ep003_s08_detour — flavor_detour · хрупкая улика</button></li><li><button class="dbg-jump" data-jump="ep003_s08_detour_sofa">ep003_s08_detour_sofa — flavor_detour · сомнение в слабой улике</button></li><li><button class="dbg-jump" data-jump="ep003_s09">ep003_s09 — quiz · нюанс — страх и проверка</button></li><li><button class="dbg-jump" data-jump="ep003_s10">ep003_s10 — dialogue · тайна сгущается</button></li><li><button class="dbg-jump" data-jump="ep003_s11">ep003_s11 — чат ×2 · серая зона</button></li><li><button class="dbg-jump" data-jump="ep003_s13">ep003_s13 — dialogue · контраст: расплывчатое и чёткое</button></li><li><button class="dbg-jump" data-jump="ep003_s14">ep003_s14 — dialogue · пойманное несовпадение</button></li><li><button class="dbg-jump" data-jump="ep003_s14_sofa">ep003_s14_sofa — quiz · разграничение несовпадения и лжи</button></li><li><button class="dbg-jump" data-jump="ep003_s15">ep003_s15 — dialogue · почти-вера</button></li><li><button class="dbg-jump" data-jump="ep003_s16">ep003_s16 — quiz · важное различие</button></li><li><button class="dbg-jump" data-jump="ep003_s17">ep003_s17 — dialogue · хрупкая связь памяти</button></li><li><button class="dbg-jump" data-jump="ep003_s17_sofa">ep003_s17_sofa — чат ×4 · вооружение знанием</button></li><li><button class="dbg-jump" data-jump="ep003_s21">ep003_s21 — dialogue · Марко учится задавать вопросы с числами</button></li><li><button class="dbg-jump" data-jump="ep003_s21_sofa">ep003_s21_sofa — чат ×2 · переход к инструментам</button></li><li><button class="dbg-jump" data-jump="ep003_s23">ep003_s23 — dialogue · второе несовпадение</button></li><li><button class="dbg-jump" data-jump="ep003_s23_sofa">ep003_s23_sofa — чат ×2 · паттерн полностью усвоен</button></li><li><button class="dbg-jump" data-jump="ep003_s25">ep003_s25 — cliffhanger · тяга в неизвестность</button></li><li><button class="dbg-jump" data-jump="ep003_s25_sofa">ep003_s25_sofa — cliffhanger · предупреждение</button></li>
+    </ol>
+  </section>
+</nav>
+
 <script>
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
@@ -1105,6 +1160,35 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
     });
     vb.parentNode.insertBefore(toggle,vb);
   });
+
+  /* ── Debug burger: jump to any scene or episode ──────── */
+  (function initDebugBurger(){
+    var burger=document.getElementById('dbgBurger');
+    var menu=document.getElementById('dbgMenu');
+    if(!burger||!menu) return;
+    burger.addEventListener('click',function(e){
+      e.stopPropagation();
+      menu.hidden=!menu.hidden;
+    });
+    document.addEventListener('click',function(e){
+      if(!menu.hidden && !menu.contains(e.target) && e.target!==burger){
+        menu.hidden=true;
+      }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape' && !menu.hidden){menu.hidden=true;}
+    });
+    menu.querySelectorAll('.dbg-jump').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var sid=btn.dataset.jump;
+        var idx=sceneMap[sid];
+        if(idx===undefined) return;
+        if(currentIndex!==idx) navHistory.push(currentIndex);
+        showScene(idx);
+        menu.hidden=true;
+      });
+    });
+  })();
 
   showScene(0);
 })();
