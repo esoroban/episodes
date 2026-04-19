@@ -461,32 +461,22 @@ scenes:
     location: "Школьный двор, скамейка за спортзалом"
     time: "после школы"
     characters_present: [Марко, Софа]
-    interactions:
-      - interaction_type: vote
-        question: "Лина нарисовала машину по памяти на следующий день. Это доказательство?"
-        options:
-          - id: weak
-            text: "Слабое доказательство"
-            correct: true
-          - id: strong
-            text: "Сильное доказательство"
-            correct: false
-          - id: none
-            text: "Не доказательство"
-            correct: false
-        correct_logic: "Рисунок по памяти — не фото. Но лучше, чем просто слова. Слабое доказательство."
-        feedback_success: "Рисунок по памяти, через день. Не фото — но лучше, чем просто слова. Слабое доказательство."
-        feedback_soft_fail: "Рисунок по памяти — не фото. Память искажает. Но это уже кое-что — можно потрогать."
-      - interaction_type: choice
-        question: "Марко разглядывает рисунок. Дом — похож на их подъезд. Дерево — то самое. А машина — просто прямоугольник с колёсами."
-        options:
-          - id: examine
-            text: "Рассмотреть рисунок подробнее"
-            next: ep003_s08_detour
-          - id: continue
-            text: "Продолжить разговор"
-            next: ep003_s09
-    next_default: ep003_s09
+    interaction_type: vote
+    question: "Лина нарисовала машину по памяти на следующий день. Это доказательство?"
+    options:
+      - id: weak
+        text: "Слабое доказательство"
+        correct: true
+      - id: strong
+        text: "Сильное доказательство"
+        correct: false
+      - id: none
+        text: "Не доказательство"
+        correct: false
+    correct_logic: "Рисунок по памяти — не фото. Но лучше, чем просто слова. Слабое доказательство."
+    feedback_success: "Рисунок по памяти, через день. Не фото — но лучше, чем просто слова. Слабое доказательство."
+    feedback_soft_fail: "Рисунок по памяти — не фото. Память искажает. Но это уже кое-что — можно потрогать."
+    next_default: ep003_s08_choice
     mood: "первое вещественное доказательство"
     visual_brief:
       background: "Экран телефона в руке Марко, листок рядом"
@@ -502,6 +492,41 @@ scenes:
       focus_object: "рисунок — кривые линии, но знакомый двор"
       atmosphere: "первое вещественное доказательство — хрупкое, но осязаемое"
       ui_mode: quiz
+
+  # ── СЦЕНА 8_choice: Рассмотреть рисунок подробнее? (DRAMA, choice) ──
+  - scene_id: ep003_s08_choice
+    episode_id: 3
+    source_ref: day_01.ep3.drama
+    scene_type: choice
+    location: "Школьный двор, скамейка за спортзалом"
+    time: "после школы"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Марко разглядывает рисунок. Дом — похож на их подъезд. Дерево —
+      то самое, под которым стоит лавочка. А машина... просто
+      прямоугольник с колёсами. Можно задержаться и рассмотреть
+      подробнее — а можно продолжить разговор.
+    interaction_type: choice
+    question: "Как поступить?"
+    options:
+      - id: examine
+        text: "Рассмотреть рисунок подробнее"
+        next: ep003_s08_detour
+      - id: continue
+        text: "Продолжить разговор"
+        next: ep003_s09
+    next_default: ep003_s09
+    mood: "задержаться на улике или двигаться"
+    visual_brief:
+      background: "Скамейка, смятый листок в руках Марко"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: выбор — всмотреться или идти дальше
+          pose: держит листок, смотрит на него
+      props: [смятый листок с рисунком]
+      atmosphere: "маленькая пауза — всматриваться или двигаться"
+      ui_mode: choice
 
   # ── СЦЕНА 8d: Flavor detour — рассматриваем рисунок ──────────────────
   - scene_id: ep003_s08_detour

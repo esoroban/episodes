@@ -260,22 +260,20 @@ def build_chat_messages(scene: dict) -> list:
 def group_phone_chains(scenes: list) -> list:
     """
     Group consecutive main-line Sofa scenes into phone chains.
-    Branch scenes (soft_fail_loop etc.) are skipped — their content is
-    already embedded in quiz JSON as wq:true feedback messages.
+    Branch scenes (branch_type set) terminate a chain — they are ALWAYS
+    rendered as standalone sections so choice/next navigation can reach
+    them (their scene_id lands in sceneMap).
     Returns list of units: {"type": "single"|"chain", "scene"|"scenes": ...}
     """
     units = []
-    absorbed = set()  # scene_ids absorbed into chains
 
     i = 0
     while i < len(scenes):
         s = scenes[i]
-        sid = s.get("scene_id", "")
 
         if s.get("branch_type"):
-            # Branch scenes: if absorbed into a chain, skip; else render standalone
-            if sid not in absorbed:
-                units.append({"type": "single", "scene": s})
+            # Branches always render standalone; DOM nav targets them by scene_id.
+            units.append({"type": "single", "scene": s})
             i += 1
             continue
 
@@ -285,11 +283,9 @@ def group_phone_chains(scenes: list) -> list:
             j = i + 1
             while j < len(scenes):
                 ns = scenes[j]
+                # Stop chain at any branch — branch will render as its own section.
                 if ns.get("branch_type"):
-                    # Mark branch scenes as absorbed (skip their standalone render)
-                    absorbed.add(ns.get("scene_id", ""))
-                    j += 1
-                    continue
+                    break
                 # Only merge consecutive Sofa scenes at THE SAME location
                 if is_sofa_chat_scene(ns) and ns.get("location", "") == chain_loc:
                     chain.append(ns)
@@ -552,15 +548,10 @@ def render_scene(scene: dict, index: int, total: int) -> str:
     author_text = scene.get("author_text", "")
     author_text_after = scene.get("author_text_after", "")
 
-    # Sofa scenes render as Telegram-style chat (dialogue, quiz, unlock)
-    is_sofa_chat = (
-        any(c.lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars)
-        and (
-            dialogue
-            or scene.get("unlock_button")
-            or (scene.get("options") and any("correct" in o for o in scene.get("options", [])))
-        )
-    )
+    # Sofa scenes render as Telegram-style chat. Use the same helper that
+    # group_phone_chains uses — they MUST agree, otherwise a scene can be
+    # classified as chain-material but rendered standalone as standard quiz.
+    is_sofa_chat = is_sofa_chat_scene(scene)
 
     if is_sofa_chat:
         content_parts.append(render_chat(scene))

@@ -1143,17 +1143,8 @@ scenes:
         correct_logic: "Нет! Одного раза мало — может быть рябь, угол, показалось."
         feedback_success: "Одного раза мало! Может быть рябь, угол, показалось. Нужно повторить."
         feedback_soft_fail: "Вспомни: сколько раз Марко проверял забор? Три. Одного раза мало."
-      - interaction_type: choice
-        question: "Проверить ещё раз?"
-        options:
-          - id: check_again
-            text: "Посмотреть в лужу ещё раз"
-            next: ep004_s20_detour
-          - id: go_on
-            text: "Идти дальше"
-            next: ep004_s21
     mood: "жуткое открытие"
-    next_default: ep004_s21
+    next_default: ep004_s20_choice
     set_flags: [spotted_reflection]
     visual_brief:
       background: "Широкая улица, большая тёмная лужа, два разных отражения"
@@ -1172,14 +1163,48 @@ scenes:
       atmosphere: "зеркало показывает то, что глаза не ловят"
       ui_mode: dialogue
 
-  # ── СЦЕНА 20d: Flavor detour — третье наблюдение за лужей ─────────
+  # ── СЦЕНА 20_choice: Проверить ещё раз? (DRAMA, choice) ──────────
+  - scene_id: ep004_s20_choice
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: choice
+    location: "Зеркальный Город, у лужи"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Марко застыл над лужей. Одного наблюдения мало — это он уже
+      усвоил. Можно задержаться и посмотреть ещё раз — или сделать
+      вид, что ничего не было, и идти за Линой дальше.
+    interaction_type: choice
+    question: "Проверить ещё раз?"
+    options:
+      - id: check_again
+        text: "Посмотреть в лужу ещё раз"
+        next: ep004_s20_detour
+      - id: go_on
+        text: "Идти дальше"
+        next: ep004_s21
+    next_default: ep004_s21
+    mood: "остановиться на несовпадении или уйти"
+    visual_brief:
+      background: "Широкая улица, лужа, Лина рядом"
+      camera: medium
+      characters:
+        - who: Марко
+          expression: внутренний выбор
+          pose: стоит над лужей, взгляд вниз
+      props: [тёмная лужа]
+      atmosphere: "задержаться на несовпадении или сделать вид, что всё нормально"
+      ui_mode: choice
+
+  # ── СЦЕНА 20d: Третье наблюдение за лужей (DRAMA, flavor) ─────────
   - scene_id: ep004_s20_detour
     episode_id: 4
     source_ref: day_01.ep4.drama
     scene_type: narrative
     location: "Зеркальный Город, у лужи"
     time: "вне времени"
-    characters_present: [Марко, Лина, Софа]
+    characters_present: [Марко, Лина]
     branch_type: flavor_detour
     author_text: >
       Марко смотрит снова. Лина убирает руки из карманов — машет рукой.
@@ -1187,23 +1212,8 @@ scenes:
       Второй раз.
       Лина наклоняется к луже — отражение НЕ НАКЛОНЯЕТСЯ.
       Третий раз.
-    dialogue:
-      - who: Софа
-        line: >
-          Три повторения. Три несовпадения. Достаточно для гипотезы:
-          отражение Лины... не совпадает с Линой.
-          Данных... недостаточно для объяснения. Но факт зафиксирован.
-    author_text_after: >
-      Марко выпрямляется. Лужа — просто лужа. Но она показала то,
-      что глаза не ловили: Лина снаружи и Лина внутри — разные.
-      — Лина, — говорит Марко. Голос ровный, как линейка. — Ты правда была здесь только один раз?
-      Лина смотрит ему в глаза. Долго. Потом:
-      — Пойдём. Нам нужно найти Софию.
-      Не ответила. Не отговорилась. Просто — сменила тему.
-      Софа: «Вопрос задан. Ответ не получен. Зафиксировано.»
     mood: "подтверждённая аномалия"
-    merge_to: ep004_s21
-    next_default: ep004_s21
+    next_default: ep004_s20_detour_sofa
     visual_brief:
       background: "Лужа, крупный план двух отражений"
       camera: close-up
@@ -1217,6 +1227,73 @@ scenes:
       focus_object: "два отражения — одно дрожит, другое неподвижно"
       atmosphere: "подтверждённая аномалия — три раза одно и то же"
       ui_mode: reading
+
+  # ── СЦЕНА 20d_sofa: Софа фиксирует гипотезу (CHAT, flavor) ─────────
+  - scene_id: ep004_s20_detour_sofa
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, у лужи"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    branch_type: flavor_detour
+    dialogue:
+      - who: Софа
+        line: >
+          Три повторения. Три несовпадения. Достаточно для гипотезы:
+          отражение Лины... не совпадает с Линой.
+          Данных... недостаточно для объяснения. Но факт зафиксирован.
+    mood: "гипотеза зафиксирована"
+    next_default: ep004_s20_detour_after
+    visual_brief:
+      background: "Экран телефона в руке Марко, лужа на фоне"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: холодная сосредоточенность
+          pose: смотрит на телефон
+      focus_object: "экран телефона — Софа фиксирует гипотезу"
+      atmosphere: "аномалия названа по научному"
+      ui_mode: dialogue
+
+  # ── СЦЕНА 20d_after: Марко спрашивает Лину напрямую (DRAMA) ───────
+  - scene_id: ep004_s20_detour_after
+    episode_id: 4
+    source_ref: day_01.ep4.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, у лужи"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    branch_type: flavor_detour
+    author_text: >
+      Марко выпрямляется. Лужа — просто лужа. Но она показала то,
+      что глаза не ловили: Лина снаружи и Лина внутри — разные.
+    dialogue:
+      - who: Марко
+        line: "Лина, ты правда была здесь только один раз?"
+      - who: автор
+        line: "Лина смотрит ему в глаза. Долго. Потом:"
+      - who: Лина
+        line: "Пойдём. Нам нужно найти Софию."
+    author_text_after: >
+      Не ответила. Не отговорилась. Просто — сменила тему.
+    mood: "вопрос без ответа"
+    merge_to: ep004_s21
+    next_default: ep004_s21
+    visual_brief:
+      background: "Лужа, Марко и Лина, вечерний свет"
+      camera: medium
+      characters:
+        - who: Марко
+          expression: прямой взгляд
+          pose: стоит, смотрит на Лину
+          position: left
+        - who: Лина
+          expression: долгий взгляд, затем отвела глаза
+          pose: рядом
+          position: right
+      atmosphere: "вопрос задан, ответ не получен"
+      ui_mode: dialogue
 
   # ── СЦЕНА 21: Quiz — факт/мнение/хитрое тройки ────────────────────
   - scene_id: ep004_s21
