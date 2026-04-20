@@ -51,6 +51,9 @@
 episode_id: 4
 episode_title: "Детектив правды"
 lesson: "1B.3"
+status: frozen
+frozen_at: "2026-04-19"
+frozen_tag: day-01-frozen
 terms_introduced: ["детектив правды"]
 terms_used: ["факт", "мнение", "неправда", "хитрое утверждение", "отговорка", "инструменты проверки"]
 

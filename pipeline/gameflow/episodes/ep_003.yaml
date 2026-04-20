@@ -44,6 +44,9 @@
 episode_id: 3
 episode_title: "Хитрые утверждения"
 lesson: "1B.1"
+status: frozen
+frozen_at: "2026-04-19"
+frozen_tag: day-01-frozen
 terms_introduced: ["хитрое утверждение", "отговорка", "инструменты проверки"]
 terms_used: ["факт", "мнение", "неправда"]
 

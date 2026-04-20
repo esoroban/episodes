@@ -63,6 +63,9 @@
 episode_id: 2
 episode_title: "Неправда и её виды"
 lesson: "1A.2"
+status: frozen
+frozen_at: "2026-04-19"
+frozen_tag: day-01-frozen
 terms_introduced: ["неправда"]
 terms_used: ["факт", "мнение"]
 

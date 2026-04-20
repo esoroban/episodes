@@ -451,7 +451,6 @@ scenes:
     feedback_soft_fail: '"Мне всё равно" — это попытка понять чужие чувства? Или отказ?'
     mood: "безразличие — антоним сопереживания"
     next_default: ep011_s06
-    next_fail: ep011_s05
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -487,7 +486,6 @@ scenes:
     feedback_soft_fail: "Макс пытается понять чужие чувства — или говорит только о себе?"
     mood: "тормоз сработал"
     next_default: ep011_s07
-    next_fail: ep011_s06
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -520,7 +518,6 @@ scenes:
     feedback_soft_fail: '"Хватит ныть" — попытка понять? Или приказ замолчать?'
     mood: "обесценивание"
     next_default: ep011_s08
-    next_fail: ep011_s07
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -556,7 +553,6 @@ scenes:
     feedback_soft_fail: "Марко говорит о ЧУЖИХ чувствах? Или о своих?"
     mood: "антенна включена"
     next_default: ep011_s09
-    next_fail: ep011_s08
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -597,7 +593,6 @@ scenes:
       «Три фразы-помощника: "Правильно ли я понял, что...", "Ты имеешь в виду, что...", "То есть ты хочешь..."»
     mood: "обвинение + правило + активное слушание"
     next_default: ep011_s10
-    next_fail: ep011_s09
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -685,7 +680,6 @@ scenes:
     feedback_soft_fail: 'Человек замечает чужие чувства — или нет?'
     mood: "сопереживание + пересказ как ключ"
     next_default: ep011_s12
-    next_fail: ep011_s11
     visual_brief:
       background: "Зеркальный Город, переулок, крупный план"
       camera: close-up
@@ -724,7 +718,6 @@ scenes:
     feedback_soft_fail: '"Если не согласишься — обижусь" — забота о чужих чувствах? Или давление?'
     mood: "шантаж — не сопереживание"
     next_default: ep011_s13
-    next_fail: ep011_s12
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -797,7 +790,6 @@ scenes:
     feedback_soft_fail: "Марко повторил суть или просто кивнул?"
     mood: "зеркало работает"
     next_default: ep011_s15
-    next_fail: ep011_s14
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -830,7 +822,6 @@ scenes:
     feedback_soft_fail: 'Человек сказал "понял" — но повторил ли суть?'
     mood: "кивок — не пересказ"
     next_default: ep011_s16
-    next_fail: ep011_s15
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -865,7 +856,6 @@ scenes:
     feedback_soft_fail: "Марко повторил то, что услышал? Или сказал что-то своё?"
     mood: "зеркало точное"
     next_default: ep011_s17
-    next_fail: ep011_s16
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -903,7 +893,6 @@ scenes:
     feedback_soft_fail: '"Не переживай" — повторение сути? Или просто утешение?'
     mood: "утешение — не зеркало"
     next_default: ep011_s18
-    next_fail: ep011_s17
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up
@@ -951,7 +940,6 @@ scenes:
       Тишина. Долгая, тёплая. Не та тишина, когда нечего сказать. Та, когда всё уже сказано.
     mood: "фраза-помощник + прорыв"
     next_default: ep011_s19
-    next_fail: ep011_s18
     visual_brief:
       background: "Зеркальный Город, переулок, экран телефона"
       camera: close-up

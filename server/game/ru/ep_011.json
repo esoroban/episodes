@@ -625,7 +625,7 @@
       "nav": {
         "next": "ep011_s06",
         "next_success": null,
-        "next_fail": "ep011_s05",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -688,7 +688,7 @@
       "nav": {
         "next": "ep011_s07",
         "next_success": null,
-        "next_fail": "ep011_s06",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -751,7 +751,7 @@
       "nav": {
         "next": "ep011_s08",
         "next_success": null,
-        "next_fail": "ep011_s07",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -809,7 +809,7 @@
       "nav": {
         "next": "ep011_s09",
         "next_success": null,
-        "next_fail": "ep011_s08",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -872,7 +872,7 @@
       "nav": {
         "next": "ep011_s10",
         "next_success": null,
-        "next_fail": "ep011_s09",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1024,7 +1024,7 @@
       "nav": {
         "next": "ep011_s12",
         "next_success": null,
-        "next_fail": "ep011_s11",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1103,7 +1103,7 @@
       "nav": {
         "next": "ep011_s13",
         "next_success": null,
-        "next_fail": "ep011_s12",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1225,7 +1225,7 @@
       "nav": {
         "next": "ep011_s15",
         "next_success": null,
-        "next_fail": "ep011_s14",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1283,7 +1283,7 @@
       "nav": {
         "next": "ep011_s16",
         "next_success": null,
-        "next_fail": "ep011_s15",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1341,7 +1341,7 @@
       "nav": {
         "next": "ep011_s17",
         "next_success": null,
-        "next_fail": "ep011_s16",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1412,7 +1412,7 @@
       "nav": {
         "next": "ep011_s18",
         "next_success": null,
-        "next_fail": "ep011_s17",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1470,7 +1470,7 @@
       "nav": {
         "next": "ep011_s19",
         "next_success": null,
-        "next_fail": "ep011_s18",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [

@@ -548,7 +548,6 @@ scenes:
     feedback_soft_fail: '"Никогда" — это правда? Ни разу в жизни? Или преувеличение?'
     mood: "первый маркер — «никогда»"
     next_default: ep012_s07
-    next_fail: ep012_s06
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -583,7 +582,6 @@ scenes:
     feedback_soft_fail: "Есть слово-маркер? Или просто факт?"
     mood: "описание — факт без оценки"
     next_default: ep012_s08
-    next_fail: ep012_s07
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -616,7 +614,6 @@ scenes:
     feedback_soft_fail: '"Вечно" — правда? Каждый раз без исключения?'
     mood: "«вечно» — второй маркер"
     next_default: ep012_s09
-    next_fail: ep012_s08
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -649,7 +646,6 @@ scenes:
     feedback_soft_fail: 'Сравни: "вечно опаздываешь" и "сегодня пришёл позже". Где факт?'
     mood: "конкретика вместо обобщения"
     next_default: ep012_s10
-    next_fail: ep012_s09
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -685,7 +681,6 @@ scenes:
     feedback_soft_fail: "Откуда знаешь, что специально? Читаешь мысли?"
     mood: "«специально» — приписанное намерение"
     next_default: ep012_s11
-    next_fail: ep012_s10
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -718,7 +713,6 @@ scenes:
     feedback_soft_fail: 'Есть "вечно", "никогда", "специально"? Или только факт?'
     mood: "чистое наблюдение + правило"
     next_default: ep012_s12
-    next_fail: ep012_s11
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -910,7 +904,6 @@ scenes:
     feedback_soft_fail: "Сколько шагов? Наблюдение, чувство, предложение — что это?"
     mood: "три шага = формула"
     next_default: ep012_s15
-    next_fail: ep012_s14
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -946,7 +939,6 @@ scenes:
     feedback_soft_fail: "Повторяет чужие слова? Или говорит свои?"
     mood: "пересказ = слушание"
     next_default: ep012_s16
-    next_fail: ep012_s15
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -982,7 +974,6 @@ scenes:
     feedback_soft_fail: "Чьи чувства называет? Свои или чужие?"
     mood: "чужие чувства = сопереживание"
     next_default: ep012_s17
-    next_fail: ep012_s16
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -1018,7 +1009,6 @@ scenes:
     feedback_soft_fail: "Три шага: что вижу, что чувствую, что предлагаю. Все три есть?"
     mood: "три шага — формула"
     next_default: ep012_s18
-    next_fail: ep012_s17
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -1054,7 +1044,6 @@ scenes:
     feedback_soft_fail: "Переспрашивает, чтобы убедиться. Какой приём?"
     mood: "зеркало"
     next_default: ep012_s19
-    next_fail: ep012_s18
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -1092,7 +1081,6 @@ scenes:
     feedback_soft_fail: "Чьи чувства? Свои или чужие?"
     mood: "сопереживание к ушедшему"
     next_default: ep012_s20
-    next_fail: ep012_s19
     visual_brief:
       background: "Дом Леона, пустой стул"
       camera: medium
@@ -1129,7 +1117,6 @@ scenes:
     feedback_soft_fail: "Посчитай: увидел чувство, повторил суть, предложил решение. Сколько инструментов?"
     mood: "все три вместе"
     next_default: ep012_s21
-    next_fail: ep012_s20
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -1162,7 +1149,6 @@ scenes:
     feedback_soft_fail: 'Три шага есть? Наблюдение? Чувство? Предложение? Или просто — "расскажи"?'
     mood: "забота без формулы = сбор информации"
     next_default: ep012_s22
-    next_fail: ep012_s21
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up
@@ -1195,7 +1181,6 @@ scenes:
     feedback_soft_fail: "Три шага: вижу, чувствую, предлагаю. Все три есть?"
     mood: "формула как щит"
     next_default: ep012_s23
-    next_fail: ep012_s22
     visual_brief:
       background: "Дом Леона, экран телефона"
       camera: close-up

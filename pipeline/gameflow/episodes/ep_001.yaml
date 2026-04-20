@@ -57,6 +57,9 @@
 episode_id: 1
 episode_title: "Утро без сестры"
 lesson: "1A.1"
+status: frozen
+frozen_at: "2026-04-19"
+frozen_tag: day-01-frozen
 terms_introduced: ["факт", "мнение"]
 
 scenes:

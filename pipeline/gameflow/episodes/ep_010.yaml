@@ -261,7 +261,6 @@ scenes:
     feedback_soft_fail: "Он объяснил или просто заявил?"
     mood: "первый вопрос — давление без доказательств"
     next_default: ep010_s06
-    next_fail: ep010_s05
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -294,7 +293,6 @@ scenes:
     feedback_soft_fail: "Он принял на веру или предложил проверить?"
     mood: "проверка вместо веры"
     next_default: ep010_s07
-    next_fail: ep010_s06
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -327,7 +325,6 @@ scenes:
     feedback_soft_fail: "Она объяснила, почему можно? Или просто заявила?"
     mood: "крепость закрыта"
     next_default: ep010_s08
-    next_fail: ep010_s07
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -360,7 +357,6 @@ scenes:
     feedback_soft_fail: "Она закрыла тему или предложила узнать больше?"
     mood: "разведчик ищет то, чего не видно"
     next_default: ep010_s09
-    next_fail: ep010_s08
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -393,7 +389,6 @@ scenes:
     feedback_soft_fail: "Книжка всегда права? Или информация обновляется?"
     mood: "устаревшая информация как щит"
     next_default: ep010_s10
-    next_fail: ep010_s09
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -426,7 +421,6 @@ scenes:
     feedback_soft_fail: "Он боится нового или радуется ему?"
     mood: "готовность к новому"
     next_default: ep010_s11
-    next_fail: ep010_s10
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -459,7 +453,6 @@ scenes:
     feedback_soft_fail: "Он готов подумать или закрыл тему?"
     mood: "двойной щит"
     next_default: ep010_s12
-    next_fail: ep010_s11
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -492,7 +485,6 @@ scenes:
     feedback_soft_fail: "Он поверил ощущению или предложил подумать?"
     mood: "интуиция обманывает — разведчик разбирается"
     next_default: ep010_s13
-    next_fail: ep010_s12
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -525,7 +517,6 @@ scenes:
     feedback_soft_fail: "Он защищается или допускает свою ошибку?"
     mood: "«может быть» — слова разведчика"
     next_default: ep010_s14
-    next_fail: ep010_s13
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -568,7 +559,6 @@ scenes:
           text: "Начать с вопроса"
           next: ep010_s14b1
     next_default: ep010_s14a1
-    next_fail: ep010_s14
     visual_brief:
       background: "Зеркальный Город, ступени, Лина появляется наверху"
       camera: medium
@@ -973,7 +963,6 @@ scenes:
     feedback_soft_fail: "Он предложил обсудить или закрыл тему?"
     mood: "цель + роль — два слоя"
     next_default: ep010_s20
-    next_fail: ep010_s19
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1009,7 +998,6 @@ scenes:
     feedback_soft_fail: "Он закрыл тему или открыл новую?"
     mood: "исследование"
     next_default: ep010_s21
-    next_fail: ep010_s20
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1045,7 +1033,6 @@ scenes:
     feedback_soft_fail: "Он говорит о спорте или о человеке?"
     mood: "нападение на человека"
     next_default: ep010_s22
-    next_fail: ep010_s21
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1078,7 +1065,6 @@ scenes:
     feedback_soft_fail: "Он ищет решение или защищается?"
     mood: "защита вместо решения"
     next_default: ep010_s23
-    next_fail: ep010_s22
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1111,7 +1097,6 @@ scenes:
     feedback_soft_fail: "Он ищет виноватого или решение?"
     mood: "решение вместо обвинения"
     next_default: ep010_s24
-    next_fail: ep010_s23
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1144,7 +1129,6 @@ scenes:
     feedback_soft_fail: '"Царь зверей" — это аргумент или титул?'
     mood: "титул вместо аргумента"
     next_default: ep010_s25
-    next_fail: ep010_s24
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1177,7 +1161,6 @@ scenes:
     feedback_soft_fail: "Он торопится с выводом или собирает данные?"
     mood: "видит сложность — не упрощает"
     next_default: ep010_s26
-    next_fail: ep010_s25
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up
@@ -1213,7 +1196,6 @@ scenes:
     feedback_soft_fail: "Она говорит о мультике — или о людях?"
     mood: "обидеть — удар, не спор"
     next_default: ep010_s27
-    next_fail: ep010_s26
     visual_brief:
       background: "Зеркальный Город, ступени, экран телефона"
       camera: close-up

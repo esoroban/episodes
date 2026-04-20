@@ -813,7 +813,7 @@
       "nav": {
         "next": "ep012_s07",
         "next_success": null,
-        "next_fail": "ep012_s06",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -876,7 +876,7 @@
       "nav": {
         "next": "ep012_s08",
         "next_success": null,
-        "next_fail": "ep012_s07",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -939,7 +939,7 @@
       "nav": {
         "next": "ep012_s09",
         "next_success": null,
-        "next_fail": "ep012_s08",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -997,7 +997,7 @@
       "nav": {
         "next": "ep012_s10",
         "next_success": null,
-        "next_fail": "ep012_s09",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1055,7 +1055,7 @@
       "nav": {
         "next": "ep012_s11",
         "next_success": null,
-        "next_fail": "ep012_s10",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1118,7 +1118,7 @@
       "nav": {
         "next": "ep012_s12",
         "next_success": null,
-        "next_fail": "ep012_s11",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1458,7 +1458,7 @@
       "nav": {
         "next": "ep012_s15",
         "next_success": null,
-        "next_fail": "ep012_s14",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1521,7 +1521,7 @@
       "nav": {
         "next": "ep012_s16",
         "next_success": null,
-        "next_fail": "ep012_s15",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1584,7 +1584,7 @@
       "nav": {
         "next": "ep012_s17",
         "next_success": null,
-        "next_fail": "ep012_s16",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1647,7 +1647,7 @@
       "nav": {
         "next": "ep012_s18",
         "next_success": null,
-        "next_fail": "ep012_s17",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1710,7 +1710,7 @@
       "nav": {
         "next": "ep012_s19",
         "next_success": null,
-        "next_fail": "ep012_s18",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1773,7 +1773,7 @@
       "nav": {
         "next": "ep012_s20",
         "next_success": null,
-        "next_fail": "ep012_s19",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [
@@ -1844,7 +1844,7 @@
       "nav": {
         "next": "ep012_s21",
         "next_success": null,
-        "next_fail": "ep012_s20",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1907,7 +1907,7 @@
       "nav": {
         "next": "ep012_s22",
         "next_success": null,
-        "next_fail": "ep012_s21",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],
@@ -1965,7 +1965,7 @@
       "nav": {
         "next": "ep012_s23",
         "next_success": null,
-        "next_fail": "ep012_s22",
+        "next_fail": null,
         "merge_to": null
       },
       "text": [],

@@ -325,7 +325,6 @@ scenes:
     feedback_soft_fail: "Можно проверить? Посчитай часы в сутках."
     mood: "быстрая разминка"
     next_default: ep009_s06
-    next_fail: ep009_s05
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -361,7 +360,6 @@ scenes:
     feedback_soft_fail: 'Можно измерить "лучшесть"? Есть такой прибор?'
     mood: "разминка"
     next_default: ep009_s07
-    next_fail: ep009_s06
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -397,7 +395,6 @@ scenes:
     feedback_soft_fail: "Кто больше — Луна или Солнце? Можно посмотреть размеры."
     mood: "разминка"
     next_default: ep009_s08
-    next_fail: ep009_s07
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -430,7 +427,6 @@ scenes:
     feedback_soft_fail: "Убери удар — треснет? Нет. Значит удар — причина."
     mood: "переход к причинам"
     next_default: ep009_s09
-    next_fail: ep009_s08
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -469,7 +465,6 @@ scenes:
     feedback_soft_fail: "Папа управляет погодой? Облака ждали, пока он помоет?"
     mood: "разминка"
     next_default: ep009_s10
-    next_fail: ep009_s09
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -505,7 +500,6 @@ scenes:
     feedback_soft_fail: "Зонты заставляют людей покупать сапоги? Или что-то третье вызывает и то, и другое?"
     mood: "разминка закончена"
     next_default: ep009_s11
-    next_fail: ep009_s10
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -578,7 +572,6 @@ scenes:
     feedback_soft_fail: "Они слушали друг друга? Или каждый ждал своей очереди крикнуть?"
     mood: "знакомая ситуация"
     next_default: ep009_s13
-    next_fail: ep009_s12
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -611,7 +604,6 @@ scenes:
     feedback_soft_fail: "Оленка предложила найти хорошее. Это похоже на победу — или на попытку понять?"
     mood: "переключение цели — три цели введены"
     next_default: ep009_s14
-    next_fail: ep009_s13
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -654,7 +646,6 @@ scenes:
     feedback_soft_fail: "Он предложил проверить? Или закрыл тему сам?"
     mood: "и точка — конец разговора"
     next_default: ep009_s15
-    next_fail: ep009_s14
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -690,7 +681,6 @@ scenes:
     feedback_soft_fail: "Он уже решил, кто быстрее? Или предлагает проверить вместе?"
     mood: "разведчик — предлагает проверить"
     next_default: ep009_s16
-    next_fail: ep009_s15
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -726,7 +716,6 @@ scenes:
     feedback_soft_fail: "Он говорит о скорости велосипеда — или о человеке?"
     mood: "нападение — не спор"
     next_default: ep009_s17
-    next_fail: ep009_s16
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -913,7 +902,6 @@ scenes:
     feedback_soft_fail: "Она потребовала или объяснила?"
     mood: "аргумент — признак цели «понять»"
     next_default: ep009_s20
-    next_fail: ep009_s19
     visual_brief:
       background: "Зеркальный Город, улица, Марко и Лина сидят"
       camera: medium
@@ -954,7 +942,6 @@ scenes:
     feedback_soft_fail: "Он обвинил Лину? Или объяснил свою позицию?"
     mood: "спор без ссоры"
     next_default: ep009_s21
-    next_fail: ep009_s20
     visual_brief:
       background: "Зеркальный Город, улица, Марко и Лина сидят"
       camera: medium
@@ -999,7 +986,6 @@ scenes:
     feedback_soft_fail: "Он предложил проверить? Или просто заявил?"
     mood: "определи цель — быстро"
     next_default: ep009_s22
-    next_fail: ep009_s21
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -1035,7 +1021,6 @@ scenes:
     feedback_soft_fail: "Он уже решил? Или предлагает проверить?"
     mood: "проверка вместо заявления"
     next_default: ep009_s23
-    next_fail: ep009_s22
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -1071,7 +1056,6 @@ scenes:
     feedback_soft_fail: "Он говорит о скорости — или о человеке?"
     mood: "нападение на человека"
     next_default: ep009_s24
-    next_fail: ep009_s23
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up
@@ -1115,7 +1099,6 @@ scenes:
       Марко чувствует, как спичка в груди гаснет. Не потому что он победил. Не потому что сдался. А потому что услышал.
     mood: "давление авторитетом"
     next_default: ep009_s25
-    next_fail: ep009_s24
     visual_brief:
       background: "Зеркальный Город, улица, экран телефона"
       camera: close-up

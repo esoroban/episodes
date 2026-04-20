@@ -72,12 +72,22 @@ class ValidationResult:
         self.filename = filename
         self.errors = []    # hard failures
         self.warnings = []  # soft issues
+        self.is_draft = False  # set by validate_episode once status is known
 
     def error(self, msg: str):
-        self.errors.append(msg)
+        """Hard error. For drafts (non-frozen), demoted to a [DRAFT] warning."""
+        if self.is_draft:
+            self.warnings.append(f"[DRAFT] {msg}")
+        else:
+            self.errors.append(msg)
 
     def warn(self, msg: str):
         self.warnings.append(msg)
+
+    def hard_error(self, msg: str):
+        """Structural error that's hard-fail regardless of frozen/draft status
+        (YAML parse, duplicate keys, missing scenes — always fatal)."""
+        self.errors.append(msg)
 
     @property
     def ok(self):
@@ -117,23 +127,30 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
     result = ValidationResult(path.name)
 
     # ── Check 1: Duplicate keys ──────────────────────────────────
+    # These are structural errors — always hard-fail.
     try:
         data = strict_load(path)
     except DuplicateKeyError as e:
-        result.error(f"DUPLICATE KEY: {e}")
+        result.hard_error(f"DUPLICATE KEY: {e}")
         # Fall back to standard loader to continue other checks
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
     except yaml.YAMLError as e:
-        result.error(f"YAML PARSE ERROR: {e}")
+        result.hard_error(f"YAML PARSE ERROR: {e}")
         return result
 
     scenes = data.get("scenes", [])
     if not scenes:
-        result.error("No scenes found")
+        result.hard_error("No scenes found")
         return result
 
     ep_id = data.get("episode_id", "?")
+
+    # ── Frozen-aware: deep content checks are hard-errors only for
+    # frozen episodes. Drafts get warnings, so the author can still
+    # rebuild, deploy and read. See STATUS.md.
+    is_frozen = (data.get("status") == "frozen")
+    result.is_draft = not is_frozen
     scene_ids = set()
     local_set_flags = set()
     local_require_flags = set()
