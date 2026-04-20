@@ -27,7 +27,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
-HTML_DIR = ROOT / "server" / "game"
+HTML_DIR = ROOT / "server" / "game" / "ru"
 
 
 SPEAKER_DASH_RE = re.compile(r"^([А-ЯЁа-яё\w]+)\s*:\s*—\s*(.*)$", re.DOTALL)

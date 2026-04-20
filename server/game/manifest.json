@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-19T19:08:22Z",
+  "generated_at": "2026-04-20T05:16:14Z",
   "episodes": [
     {
       "id": "ep_001",
       "number": 1,
       "languages": {
         "ru": {
-          "html": "ep_001.html",
-          "data": "ep_001.json",
+          "html": "ru/ep_001.html",
+          "data": "ru/ep_001.json",
           "content_hash": "7211c189b700f96c"
         },
         "uk": {
@@ -29,8 +29,8 @@
       "number": 2,
       "languages": {
         "ru": {
-          "html": "ep_002.html",
-          "data": "ep_002.json",
+          "html": "ru/ep_002.html",
+          "data": "ru/ep_002.json",
           "content_hash": "4ad31f95445dc59d"
         },
         "uk": {
@@ -51,8 +51,8 @@
       "number": 3,
       "languages": {
         "ru": {
-          "html": "ep_003.html",
-          "data": "ep_003.json",
+          "html": "ru/ep_003.html",
+          "data": "ru/ep_003.json",
           "content_hash": "afe30fc7b9894444"
         },
         "uk": {
@@ -73,8 +73,8 @@
       "number": 4,
       "languages": {
         "ru": {
-          "html": "ep_004.html",
-          "data": "ep_004.json",
+          "html": "ru/ep_004.html",
+          "data": "ru/ep_004.json",
           "content_hash": "a4795331c6f9b16f"
         },
         "uk": {
@@ -95,8 +95,8 @@
       "number": 5,
       "languages": {
         "ru": {
-          "html": "ep_005.html",
-          "data": "ep_005.json",
+          "html": "ru/ep_005.html",
+          "data": "ru/ep_005.json",
           "content_hash": "69acf5840b6229a6"
         }
       },
@@ -111,8 +111,8 @@
       "number": 6,
       "languages": {
         "ru": {
-          "html": "ep_006.html",
-          "data": "ep_006.json",
+          "html": "ru/ep_006.html",
+          "data": "ru/ep_006.json",
           "content_hash": "84883cbbef957890"
         }
       },
@@ -127,8 +127,8 @@
       "number": 7,
       "languages": {
         "ru": {
-          "html": "ep_007.html",
-          "data": "ep_007.json",
+          "html": "ru/ep_007.html",
+          "data": "ru/ep_007.json",
           "content_hash": "4a3edd4e86b1a423"
         }
       },
@@ -143,8 +143,8 @@
       "number": 8,
       "languages": {
         "ru": {
-          "html": "ep_008.html",
-          "data": "ep_008.json",
+          "html": "ru/ep_008.html",
+          "data": "ru/ep_008.json",
           "content_hash": "ca3dab4984aebb42"
         }
       },
@@ -159,8 +159,8 @@
       "number": 9,
       "languages": {
         "ru": {
-          "html": "ep_009.html",
-          "data": "ep_009.json",
+          "html": "ru/ep_009.html",
+          "data": "ru/ep_009.json",
           "content_hash": "61ef4ddcccc7dbc7"
         }
       },
@@ -175,8 +175,8 @@
       "number": 10,
       "languages": {
         "ru": {
-          "html": "ep_010.html",
-          "data": "ep_010.json",
+          "html": "ru/ep_010.html",
+          "data": "ru/ep_010.json",
           "content_hash": "47de40467228ecf6"
         }
       },
@@ -191,8 +191,8 @@
       "number": 11,
       "languages": {
         "ru": {
-          "html": "ep_011.html",
-          "data": "ep_011.json",
+          "html": "ru/ep_011.html",
+          "data": "ru/ep_011.json",
           "content_hash": "f9d8c3c4f52986c7"
         }
       },
@@ -207,8 +207,8 @@
       "number": 12,
       "languages": {
         "ru": {
-          "html": "ep_012.html",
-          "data": "ep_012.json",
+          "html": "ru/ep_012.html",
+          "data": "ru/ep_012.json",
           "content_hash": "4a8007ac33f3e54a"
         }
       },

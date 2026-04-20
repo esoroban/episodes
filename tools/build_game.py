@@ -25,8 +25,9 @@ ROOT = Path(__file__).resolve().parent.parent
 GAMEFLOW_DIR = ROOT / "pipeline" / "gameflow" / "episodes"
 EPISODES_DIR = ROOT / "pipeline" / "source" / "episodes"
 UK_OVERLAY_DIR = ROOT / "pipeline" / "gameflow" / "episodes_uk"
-OUTPUT_DIR_RU = ROOT / "server" / "game"
-OUTPUT_DIR_UK = ROOT / "server" / "game" / "uk"
+GAME_ROOT = ROOT / "server" / "game"     # index.html + manifest.json live here
+OUTPUT_DIR_RU = GAME_ROOT / "ru"          # ep_*.html + ep_*.json (RU)
+OUTPUT_DIR_UK = GAME_ROOT / "uk"          # ep_*.html + ep_*.json (UK)
 # Current output dir — set by main() based on --lang.
 OUTPUT_DIR = OUTPUT_DIR_RU
 
@@ -393,8 +394,8 @@ def build_top_manifest() -> Path:
             entry["quiz_count"] = d.get("quiz_count", 0)
             entry["branch_count"] = d.get("branch_count", 0)
             entry["languages"]["ru"] = {
-                "html": f"ep_{eid:03d}.html",
-                "data": f"ep_{eid:03d}.json",
+                "html": f"ru/ep_{eid:03d}.html",
+                "data": f"ru/ep_{eid:03d}.json",
                 "content_hash": _content_hash(ru_json),
             }
         if uk_json.exists():
@@ -412,7 +413,7 @@ def build_top_manifest() -> Path:
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "episodes": episodes,
     }
-    path = OUTPUT_DIR_RU / "manifest.json"
+    path = GAME_ROOT / "manifest.json"
     path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2),
         encoding="utf-8",
@@ -2050,7 +2051,7 @@ def build_index(episode_files: list):
             "title": html.escape(data.get("episode_title", f"Эпизод {ep_id}")),
             "lesson": html.escape(data.get("lesson", "")),
             "scene_count": len(data.get("scenes", [])),
-            "href": f'ep_{ep_id:03d}.html',
+            "href": f'ru/ep_{ep_id:03d}.html',
         }
 
     day_sections = []
@@ -2163,7 +2164,8 @@ h1 {{ text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; }}
 </body>
 </html>"""
 
-    index_path = OUTPUT_DIR / "index.html"
+    index_path = GAME_ROOT / "index.html"
+    GAME_ROOT.mkdir(parents=True, exist_ok=True)
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(index_html)
     print(f"  \u2713 index.html")

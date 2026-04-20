@@ -28,7 +28,7 @@ import html as htmllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_RU = ROOT / "server" / "game"
+OUTPUT_RU = ROOT / "server" / "game" / "ru"
 OUTPUT_UK = ROOT / "server" / "game" / "uk"
 
 
