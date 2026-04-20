@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-20T05:26:26Z",
+  "generated_at": "2026-04-20T14:10:51Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -97,13 +97,13 @@
         "ru": {
           "html": "ru/ep_005.html",
           "data": "ru/ep_005.json",
-          "content_hash": "69acf5840b6229a6"
+          "content_hash": "c32f5b321dee8d42"
         }
       },
       "title_ru": "Если верно — верно всегда",
       "lesson": "2A.1",
-      "scene_count": 14,
-      "quiz_count": 25,
+      "scene_count": 21,
+      "quiz_count": 24,
       "branch_count": 0
     },
     {
@@ -113,12 +113,12 @@
         "ru": {
           "html": "ru/ep_006.html",
           "data": "ru/ep_006.json",
-          "content_hash": "84883cbbef957890"
+          "content_hash": "e0b9abb7a1c721da"
         }
       },
       "title_ru": "Светофор",
       "lesson": "2A.2",
-      "scene_count": 10,
+      "scene_count": 12,
       "quiz_count": 12,
       "branch_count": 0
     },
@@ -129,12 +129,12 @@
         "ru": {
           "html": "ru/ep_007.html",
           "data": "ru/ep_007.json",
-          "content_hash": "4a3edd4e86b1a423"
+          "content_hash": "4795ce1eacbe0606"
         }
       },
       "title_ru": "47",
       "lesson": "2B.1",
-      "scene_count": 10,
+      "scene_count": 13,
       "quiz_count": 13,
       "branch_count": 0
     },
@@ -145,12 +145,12 @@
         "ru": {
           "html": "ru/ep_008.html",
           "data": "ru/ep_008.json",
-          "content_hash": "ca3dab4984aebb42"
+          "content_hash": "d53e555cb30b181b"
         }
       },
       "title_ru": "Кукловод",
       "lesson": "2B.2",
-      "scene_count": 12,
+      "scene_count": 16,
       "quiz_count": 18,
       "branch_count": 0
     },
@@ -161,12 +161,12 @@
         "ru": {
           "html": "ru/ep_009.html",
           "data": "ru/ep_009.json",
-          "content_hash": "adc3822ac85ef3cb"
+          "content_hash": "307bca6c4a90bdf4"
         }
       },
       "title_ru": "Три цели спора",
       "lesson": "3A.1",
-      "scene_count": 33,
+      "scene_count": 39,
       "quiz_count": 18,
       "branch_count": 7
     },
@@ -193,14 +193,14 @@
         "ru": {
           "html": "ru/ep_011.html",
           "data": "ru/ep_011.json",
-          "content_hash": "996cafe5f9033651"
+          "content_hash": "5442da40cb46e245"
         }
       },
       "title_ru": "Первый, кто слышит",
       "lesson": "3B.1, 3B.2",
-      "scene_count": 24,
+      "scene_count": 31,
       "quiz_count": 12,
-      "branch_count": 5
+      "branch_count": 6
     },
     {
       "id": "ep_012",
@@ -209,14 +209,14 @@
         "ru": {
           "html": "ru/ep_012.html",
           "data": "ru/ep_012.json",
-          "content_hash": "3b1ca4aa503c8b09"
+          "content_hash": "713ded3e5af28c54"
         }
       },
       "title_ru": "Формула высказывания",
       "lesson": "3B.3",
-      "scene_count": 32,
+      "scene_count": 36,
       "quiz_count": 15,
-      "branch_count": 9
+      "branch_count": 10
     }
   ]
 }

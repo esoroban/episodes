@@ -25,7 +25,7 @@
     ],
     "previous_episode": 6
   },
-  "scene_count": 10,
+  "scene_count": 13,
   "quiz_count": 13,
   "branch_count": 0,
   "scenes": [
@@ -576,7 +576,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep007_s08",
+        "next": "ep007_s07_sofa",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -593,10 +593,6 @@
         {
           "who": "author",
           "line": "Марко хочет посмотреть. Очень хочет. Три секунды — и лицо Софии. Настоящее. Живое. Можно ещё раз."
-        },
-        {
-          "who": "sofa",
-          "line": "Каждое использование — минус один. Использовать?"
         }
       ],
       "quizzes": [],
@@ -619,6 +615,55 @@
         "focus_object": "руки Марко на Зеркале — желание vs цена",
         "atmosphere": "момент выбора — увидеть сестру или сохранить память о ней",
         "ui_mode": "reading"
+      },
+      "source_ref": "day_02.ep7.challenge"
+    },
+    {
+      "id": "ep007_s07_sofa",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "вопрос цены в чате",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep007_s08",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Каждое использование — минус один."
+        },
+        {
+          "who": "sofa",
+          "line": "Использовать?"
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона Марко",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "мучительное колебание",
+            "pose": "смотрит в экран"
+          }
+        ],
+        "focus_object": "пузырь Софы — «минус один»",
+        "atmosphere": "прямой вопрос в чате — разрешение на действие",
+        "ui_mode": "dialogue"
       },
       "source_ref": "day_02.ep7.challenge"
     },
@@ -731,7 +776,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep007_s10",
+        "next": "ep007_s10a_sofa",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -790,8 +835,57 @@
       "source_ref": "day_02.ep7.challenge"
     },
     {
+      "id": "ep007_s10a_sofa",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "диагноз в чате",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep007_s10",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Источник... не определён."
+        },
+        {
+          "who": "sofa",
+          "line": "Ты... не единственная причина."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона Марко",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "подозрение",
+            "pose": "смотрит в экран"
+          }
+        ],
+        "focus_object": "пузырь Софы — «не единственная причина»",
+        "atmosphere": "тревога вспыхивает в чате",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_02.ep7.cliffhanger"
+    },
+    {
       "id": "ep007_s10",
-      "kind": "cliffhanger",
+      "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, стена с числом",
       "time": "вне времени",
@@ -804,16 +898,12 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep008_s01",
+        "next": "ep007_s10_sofa",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
       },
       "text": [
-        {
-          "who": "sofa",
-          "line": "Источник... не определён. Ты... не единственная причина."
-        },
         {
           "who": "author",
           "line": "Число упало до 43 — САМО. Без Зеркала. Без Марко. Кто-то другой тоже стирает. Кто-то, кого Марко не видит. Кто-то, кто забирает воспоминания о Софии — по одному, по два, по три."
@@ -833,10 +923,6 @@
         {
           "who": "author",
           "line": "Заноза. Та же. Только теперь — не маленькая."
-        },
-        {
-          "who": "sofa",
-          "line": "Два вопроса-спасателя. «А что ЕЩЁ могло повлиять?» И — «А бывает одно без другого?» Марко... ответь на оба."
         }
       ],
       "quizzes": [],
@@ -866,6 +952,63 @@
         "focus_object": "Лина отворачивается — что она знает?",
         "atmosphere": "невидимый враг стирает память — и Лина молчит",
         "ui_mode": "reading"
+      },
+      "source_ref": "day_02.ep7.cliffhanger"
+    },
+    {
+      "id": "ep007_s10_sofa",
+      "kind": "cliffhanger",
+      "is_chat": true,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "два вопроса в чате",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep008_s01",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Два вопроса-спасателя."
+        },
+        {
+          "who": "sofa",
+          "line": "«А что ЕЩЁ могло повлиять?»"
+        },
+        {
+          "who": "sofa",
+          "line": "И — «А бывает одно без другого?»"
+        },
+        {
+          "who": "sofa",
+          "line": "Марко... ответь на оба."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона Марко",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "задумчивость, страх",
+            "pose": "смотрит в экран"
+          }
+        ],
+        "focus_object": "пузырь Софы — два вопроса",
+        "atmosphere": "чат подводит Марко к следующему эпизоду",
+        "ui_mode": "dialogue"
       },
       "source_ref": "day_02.ep7.cliffhanger"
     }

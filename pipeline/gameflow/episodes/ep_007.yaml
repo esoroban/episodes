@@ -338,11 +338,8 @@ scenes:
 
       Марко хочет посмотреть. Очень хочет. Три секунды — и лицо Софии.
       Настоящее. Живое. Можно ещё раз.
-    dialogue:
-      - who: Софа
-        line: "Каждое использование — минус один. Использовать?"
     mood: "цена желания"
-    next_default: ep007_s08
+    next_default: ep007_s07_sofa
     visual_brief:
       background: "Зеркальный Город, стена с числом 44, Зеркало в руках"
       camera: close-up
@@ -354,6 +351,32 @@ scenes:
       focus_object: "руки Марко на Зеркале — желание vs цена"
       atmosphere: "момент выбора — увидеть сестру или сохранить память о ней"
       ui_mode: reading
+
+  # ── СЦЕНА 7_sofa: Софа (CHAT) — «каждое использование — минус один» ─
+  - scene_id: ep007_s07_sofa
+    episode_id: 7
+    source_ref: day_02.ep7.challenge
+    scene_type: dialogue
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Каждое использование — минус один."
+      - who: Софа
+        line: "Использовать?"
+    mood: "вопрос цены в чате"
+    next_default: ep007_s08
+    visual_brief:
+      background: "Экран телефона Марко"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: мучительное колебание
+          pose: смотрит в экран
+      focus_object: "пузырь Софы — «минус один»"
+      atmosphere: "прямой вопрос в чате — разрешение на действие"
+      ui_mode: dialogue
 
   # ── СЦЕНА 8: Challenge quiz batch — 3 вопроса ───────────────────────
   - scene_id: ep007_s08
@@ -423,7 +446,7 @@ scenes:
       Марко не смотрел в Зеркало — просто поднял. И число упало?
       Или... число упало по другой причине?
     mood: "шок — проверка провалилась"
-    next_default: ep007_s10
+    next_default: ep007_s10a_sofa
     visual_brief:
       background: "Зеркальный Город, стена, число мигает: 44→43"
       camera: wide
@@ -441,24 +464,47 @@ scenes:
       atmosphere: "проверка показала неожиданный результат"
       ui_mode: reading
 
-  # ── СЦЕНА 10: Клиффхэнгер — число падает САМО ──────────────────────
+  # ── СЦЕНА 10a_sofa: Софа (CHAT) — «источник не определён» ──────────
+  - scene_id: ep007_s10a_sofa
+    episode_id: 7
+    source_ref: day_02.ep7.cliffhanger
+    scene_type: dialogue
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Источник... не определён."
+      - who: Софа
+        line: "Ты... не единственная причина."
+    mood: "диагноз в чате"
+    next_default: ep007_s10
+    visual_brief:
+      background: "Экран телефона Марко"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: подозрение
+          pose: смотрит в экран
+      focus_object: "пузырь Софы — «не единственная причина»"
+      atmosphere: "тревога вспыхивает в чате"
+      ui_mode: dialogue
+
+  # ── СЦЕНА 10: Клиффхэнгер — Лина молчит (драма) ─────────────────────
   - scene_id: ep007_s10
     episode_id: 7
     source_ref: day_02.ep7.cliffhanger
-    scene_type: cliffhanger
+    scene_type: narrative
     location: "Зеркальный Город, стена с числом"
     time: "вне времени"
     characters_present: [Марко, Лина]
+    author_text: >
+      Число упало до 43 — САМО. Без Зеркала. Без Марко. Кто-то другой
+      тоже стирает. Кто-то, кого Марко не видит. Кто-то, кто забирает
+      воспоминания о Софии — по одному, по два, по три.
+
+      Лина смотрит на число. Лицо — бледное. Руки — в карманах. Молчит.
     dialogue:
-      - who: Софа
-        line: "Источник... не определён. Ты... не единственная причина."
-      - who: автор
-        line: >
-          Число упало до 43 — САМО. Без Зеркала. Без Марко. Кто-то другой
-          тоже стирает. Кто-то, кого Марко не видит. Кто-то, кто забирает
-          воспоминания о Софии — по одному, по два, по три.
-      - who: автор
-        line: "Лина смотрит на число. Лицо — бледное. Руки — в карманах. Молчит."
       - who: Марко
         line: "Ты знала?"
       - who: автор
@@ -466,12 +512,8 @@ scenes:
       - who: автор
         line: >
           Заноза. Та же. Только теперь — не маленькая.
-      - who: Софа
-        line: >
-          Два вопроса-спасателя. «А что ЕЩЁ могло повлиять?» И —
-          «А бывает одно без другого?» Марко... ответь на оба.
     mood: "неизвестная угроза"
-    next_default: ep008_s01
+    next_default: ep007_s10_sofa
     visual_brief:
       background: "Зеркальный Город, стена с числом 43, Лина отворачивается"
       camera: wide
@@ -488,3 +530,33 @@ scenes:
       focus_object: "Лина отворачивается — что она знает?"
       atmosphere: "невидимый враг стирает память — и Лина молчит"
       ui_mode: reading
+
+  # ── СЦЕНА 10_sofa: Софа (CHAT) — два вопроса-спасателя ─────────────
+  - scene_id: ep007_s10_sofa
+    episode_id: 7
+    source_ref: day_02.ep7.cliffhanger
+    scene_type: cliffhanger
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Два вопроса-спасателя."
+      - who: Софа
+        line: "«А что ЕЩЁ могло повлиять?»"
+      - who: Софа
+        line: "И — «А бывает одно без другого?»"
+      - who: Софа
+        line: "Марко... ответь на оба."
+    mood: "два вопроса в чате"
+    next_default: ep008_s01
+    visual_brief:
+      background: "Экран телефона Марко"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: задумчивость, страх
+          pose: смотрит в экран
+      focus_object: "пузырь Софы — два вопроса"
+      atmosphere: "чат подводит Марко к следующему эпизоду"
+      ui_mode: dialogue
