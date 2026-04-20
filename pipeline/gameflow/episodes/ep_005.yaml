@@ -656,9 +656,19 @@ scenes:
           На секунду — только на секунду — улыбка гаснет.
       - who: Леон
         line: "Один раз. Но мне хватило."
-    author_text_after: "Телефон снова вибрирует."
-    mood: "проверка авторитета"
-    next_default: ep005_s10_sofa
+    author_text_after: >
+      Леон ждёт. Слова уже на кончике языка Марко — но какие?
+    interaction_type: choice
+    question: "Что говорит Марко?"
+    options:
+      - id: challenge
+        text: "«Один раз — это совпадение, а не проверка.»"
+        next: ep005_s10c_push
+      - id: silent
+        text: "Промолчать. Понаблюдать."
+        next: ep005_s10c_watch
+    mood: "первая проверка авторитета — открыть или закрыть рот?"
+    next_default: ep005_s10c_push
     visual_brief:
       background: "Подвал библиотеки, Леон за столом"
       camera: medium
@@ -674,7 +684,83 @@ scenes:
       props: [пустая чашка]
       focus_object: "мимолётная гаснущая улыбка Леона"
       atmosphere: "первый раз Марко задаёт неудобный вопрос"
+      ui_mode: choice
+
+  # ── ВЕТКА 10c_push: Марко бросает вызов (flavor_detour) ────────────
+  - scene_id: ep005_s10c_push
+    episode_id: 5
+    source_ref: day_02.ep5.drama
+    scene_type: dialogue
+    branch_type: flavor_detour
+    merge_to: ep005_s10_sofa
+    location: "Подвал библиотеки, Зеркальный Город"
+    time: "вне времени"
+    characters_present: [Марко, Леон]
+    dialogue:
+      - who: Марко
+        line: "Один раз — это совпадение, а не проверка."
+      - who: автор
+        line: >
+          Леон ставит чашку. Медленно. Улыбка на лице. Тень на стене —
+          ровная линия. Словно тень уже знает, что ответит Леон.
+      - who: Леон
+        line: "Ты быстро учишься, мальчик. Это... хорошо."
+      - who: автор
+        line: >
+          Но голос Леона — на полтона ниже. На долю секунды. Ровно настолько,
+          чтобы Марко это заметил, но не смог уверенно назвать.
+    mood: "первая трещина в тепле"
+    next_default: ep005_s10_sofa
+    visual_brief:
+      background: "Подвал библиотеки, Леон за столом"
+      camera: close-up
+      characters:
+        - who: Леон
+          expression: улыбка — но на полтона ниже
+          pose: ставит чашку, смотрит прямо
+          position: right
+        - who: Марко
+          expression: осторожная уверенность
+          pose: сидит напротив
+          position: left
+      props: [тень Леона на стене — ровная линия]
+      focus_object: "глаза Леона — на секунду другие"
+      atmosphere: "Марко впервые возражает — и Леон замечает"
       ui_mode: dialogue
+
+  # ── ВЕТКА 10c_watch: Марко молчит и наблюдает (flavor_detour) ──────
+  - scene_id: ep005_s10c_watch
+    episode_id: 5
+    source_ref: day_02.ep5.drama
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep005_s10_sofa
+    location: "Подвал библиотеки, Зеркальный Город"
+    time: "вне времени"
+    characters_present: [Марко, Леон]
+    author_text: >
+      Марко не говорит. Только смотрит. На руки Леона — они неподвижны.
+      На глаза Леона — они ждут. На тень Леона — она стоит прямо, не
+      копирует даже дыхания. Леон тоже молчит. И эта тишина — длиннее,
+      чем должна быть между стариком и мальчиком, которому обещали чай.
+    mood: "разведка без слов"
+    next_default: ep005_s10_sofa
+    visual_brief:
+      background: "Подвал библиотеки, Леон за столом, тишина"
+      camera: medium
+      characters:
+        - who: Марко
+          expression: сосредоточенное наблюдение
+          pose: сидит неподвижно, глаза бегают по деталям
+          position: left
+        - who: Леон
+          expression: выжидающее спокойствие
+          pose: сидит, руки на столе
+          position: right
+      props: [тень Леона неподвижна]
+      focus_object: "тень Леона — отдельно от него"
+      atmosphere: "молчание как инструмент проверки"
+      ui_mode: reading
 
   # ── СЦЕНА 10_sofa: Софа (CHAT) — «один раз — мало» ─────────────────
   - scene_id: ep005_s10_sofa

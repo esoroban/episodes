@@ -24,9 +24,9 @@
     ],
     "previous_episode": 4
   },
-  "scene_count": 21,
+  "scene_count": 23,
   "quiz_count": 24,
-  "branch_count": 0,
+  "branch_count": 2,
   "scenes": [
     {
       "id": "ep005_s01",
@@ -1130,12 +1130,12 @@
         "Марко",
         "Леон"
       ],
-      "mood": "проверка авторитета",
+      "mood": "первая проверка авторитета — открыть или закрыть рот?",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep005_s10_sofa",
+        "next": "ep005_s10c_push",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1167,11 +1167,25 @@
         },
         {
           "who": "author",
-          "line": "Телефон снова вибрирует."
+          "line": "Леон ждёт. Слова уже на кончике языка Марко — но какие?"
         }
       ],
       "quizzes": [],
-      "choice": null,
+      "choice": {
+        "question": "Что говорит Марко?",
+        "options": [
+          {
+            "id": "challenge",
+            "text": "«Один раз — это совпадение, а не проверка.»",
+            "next": "ep005_s10c_push"
+          },
+          {
+            "id": "silent",
+            "text": "Промолчать. Понаблюдать.",
+            "next": "ep005_s10c_watch"
+          }
+        ]
+      },
       "unlock": null,
       "visual_brief": {
         "background": "Подвал библиотеки, Леон за столом",
@@ -1195,7 +1209,129 @@
         ],
         "focus_object": "мимолётная гаснущая улыбка Леона",
         "atmosphere": "первый раз Марко задаёт неудобный вопрос",
+        "ui_mode": "choice"
+      },
+      "source_ref": "day_02.ep5.drama"
+    },
+    {
+      "id": "ep005_s10c_push",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Подвал библиотеки, Зеркальный Город",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Леон"
+      ],
+      "mood": "первая трещина в тепле",
+      "branch_type": "flavor_detour",
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep005_s10_sofa",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": "ep005_s10_sofa"
+      },
+      "text": [
+        {
+          "who": "marko",
+          "line": "Один раз — это совпадение, а не проверка."
+        },
+        {
+          "who": "author",
+          "line": "Леон ставит чашку. Медленно. Улыбка на лице. Тень на стене — ровная линия. Словно тень уже знает, что ответит Леон."
+        },
+        {
+          "who": "Леон",
+          "line": "Ты быстро учишься, мальчик. Это... хорошо."
+        },
+        {
+          "who": "author",
+          "line": "Но голос Леона — на полтона ниже. На долю секунды. Ровно настолько, чтобы Марко это заметил, но не смог уверенно назвать."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Подвал библиотеки, Леон за столом",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Леон",
+            "expression": "улыбка — но на полтона ниже",
+            "pose": "ставит чашку, смотрит прямо",
+            "position": "right"
+          },
+          {
+            "who": "Марко",
+            "expression": "осторожная уверенность",
+            "pose": "сидит напротив",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "тень Леона на стене — ровная линия"
+        ],
+        "focus_object": "глаза Леона — на секунду другие",
+        "atmosphere": "Марко впервые возражает — и Леон замечает",
         "ui_mode": "dialogue"
+      },
+      "source_ref": "day_02.ep5.drama"
+    },
+    {
+      "id": "ep005_s10c_watch",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Подвал библиотеки, Зеркальный Город",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Леон"
+      ],
+      "mood": "разведка без слов",
+      "branch_type": "flavor_detour",
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep005_s10_sofa",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": "ep005_s10_sofa"
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Марко не говорит. Только смотрит. На руки Леона — они неподвижны. На глаза Леона — они ждут. На тень Леона — она стоит прямо, не копирует даже дыхания. Леон тоже молчит. И эта тишина — длиннее, чем должна быть между стариком и мальчиком, которому обещали чай."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Подвал библиотеки, Леон за столом, тишина",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "сосредоточенное наблюдение",
+            "pose": "сидит неподвижно, глаза бегают по деталям",
+            "position": "left"
+          },
+          {
+            "who": "Леон",
+            "expression": "выжидающее спокойствие",
+            "pose": "сидит, руки на столе",
+            "position": "right"
+          }
+        ],
+        "props": [
+          "тень Леона неподвижна"
+        ],
+        "focus_object": "тень Леона — отдельно от него",
+        "atmosphere": "молчание как инструмент проверки",
+        "ui_mode": "reading"
       },
       "source_ref": "day_02.ep5.drama"
     },

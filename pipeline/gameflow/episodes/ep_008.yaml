@@ -556,7 +556,7 @@ scenes:
         feedback_success: "Причина! Убери завтрак — голод."
         feedback_soft_fail: "Позавтракай — будешь голодным? Нет. Значит..."
     mood: "скоростной раунд"
-    next_default: ep008_s10
+    next_default: ep008_s09_choice
     visual_brief:
       background: "Зеркальный Город, экран телефона"
       camera: close-up
@@ -566,6 +566,110 @@ scenes:
           pose: смотрит на телефон
       atmosphere: "быстрый темп — все три типа вперемешку"
       ui_mode: quiz
+
+  # ── СЦЕНА 9_choice: Как слушать Лину? (драма) ──────────────────────
+  - scene_id: ep008_s09_choice
+    episode_id: 8
+    source_ref: day_02.ep8.drama
+    scene_type: choice
+    location: "Зеркальный Город, улица у библиотеки"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Лина открывает рот — и закрывает. Слова — на кончике языка, но
+      не сходят. Марко помнит, как она сказала: «Мне... нужно кое-что
+      сказать.» Это было до тренировки Софы. До кукловода.
+    interaction_type: choice
+    question: "Что делает Марко?"
+    options:
+      - id: press
+        text: "«Рассказывай сейчас. Я слушаю.»"
+        next: ep008_s09c_press
+      - id: wait
+        text: "«Когда будешь готова — скажи. Я рядом.»"
+        next: ep008_s09c_wait
+    mood: "давление vs пространство"
+    next_default: ep008_s09c_press
+    visual_brief:
+      background: "Зеркальный Город, улица, Марко и Лина"
+      camera: medium
+      characters:
+        - who: Марко
+          expression: выбор тона
+          pose: смотрит на Лину
+          position: left
+        - who: Лина
+          expression: готовится, но колеблется
+          pose: открывает рот, закрывает
+          position: right
+      focus_object: "губы Лины — между словами и молчанием"
+      atmosphere: "детектив или друг — как подойти?"
+      ui_mode: choice
+
+  # ── ВЕТКА 9c_press: Марко давит (flavor_detour) ────────────────────
+  - scene_id: ep008_s09c_press
+    episode_id: 8
+    source_ref: day_02.ep8.drama
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep008_s10
+    location: "Зеркальный Город, улица у библиотеки"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Марко выпрямляется. Голос — ровный, прямой: «Рассказывай сейчас.
+      Я слушаю.» Лина моргает. Такого Марко раньше не было. Не грубого,
+      не резкого — требовательного. Она вдыхает.
+    mood: "детектив включился"
+    next_default: ep008_s10
+    visual_brief:
+      background: "Зеркальный Город, улица, двое лицом к лицу"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: собранность, прямой взгляд
+          pose: стоит, смотрит в глаза
+          position: left
+        - who: Лина
+          expression: удивление, вдыхает
+          pose: делает шаг назад
+          position: right
+      focus_object: "взгляд Марко — новый"
+      atmosphere: "пропуск отговорок"
+      ui_mode: reading
+
+  # ── ВЕТКА 9c_wait: Марко даёт пространство (flavor_detour) ─────────
+  - scene_id: ep008_s09c_wait
+    episode_id: 8
+    source_ref: day_02.ep8.drama
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep008_s10
+    location: "Зеркальный Город, улица у библиотеки"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Марко опускает плечи. Голос тише: «Когда будешь готова — скажи.
+      Я рядом.» Лина смотрит на него. Долго. Как будто впервые видит.
+      Потом — медленно — достаёт руки из карманов. На запястье — серая
+      нитка. Показывает сама.
+    mood: "пространство — и доверие"
+    next_default: ep008_s10
+    visual_brief:
+      background: "Зеркальный Город, улица, Лина раскрывает запястье"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: спокойствие, открытость
+          pose: опущенные плечи, руки свободны
+          position: left
+        - who: Лина
+          expression: решимость, но мягче
+          pose: достаёт руки из карманов
+          position: right
+      focus_object: "серая нитка на запястье Лины"
+      atmosphere: "пространство создало доверие"
+      ui_mode: reading
 
   # ── СЦЕНА 10: Лина признаётся — София рассказала ────────────────────
   - scene_id: ep008_s10

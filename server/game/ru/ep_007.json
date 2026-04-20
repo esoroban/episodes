@@ -25,9 +25,9 @@
     ],
     "previous_episode": 6
   },
-  "scene_count": 13,
+  "scene_count": 16,
   "quiz_count": 13,
-  "branch_count": 0,
+  "branch_count": 3,
   "scenes": [
     {
       "id": "ep007_s01",
@@ -633,7 +633,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep007_s08",
+        "next": "ep007_s07_choice",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -664,6 +664,178 @@
         "focus_object": "пузырь Софы — «минус один»",
         "atmosphere": "прямой вопрос в чате — разрешение на действие",
         "ui_mode": "dialogue"
+      },
+      "source_ref": "day_02.ep7.challenge"
+    },
+    {
+      "id": "ep007_s07_choice",
+      "kind": "choice",
+      "is_chat": false,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко",
+        "Лина"
+      ],
+      "mood": "цена желания",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep007_s07c_save",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Зеркало тёплое в ладони. Одно движение — и будет лицо Софии. Одно — и минус один человек, который её помнит."
+        }
+      ],
+      "quizzes": [],
+      "choice": {
+        "question": "Что делает Марко?",
+        "options": [
+          {
+            "id": "use",
+            "text": "Заглянуть в Зеркало ещё раз — три секунды лица",
+            "next": "ep007_s07c_use"
+          },
+          {
+            "id": "save",
+            "text": "Убрать Зеркало — сохранить память чужим",
+            "next": "ep007_s07c_save"
+          }
+        ]
+      },
+      "unlock": null,
+      "visual_brief": {
+        "background": "Зеркальный Город, стена с числом 44, Зеркало в ладонях Марко",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "мучительное колебание",
+            "pose": "держит Зеркало на раскрытой ладони",
+            "position": "center"
+          },
+          {
+            "who": "Лина",
+            "expression": "молча наблюдает",
+            "pose": "стоит рядом, не вмешивается",
+            "position": "right"
+          }
+        ],
+        "props": [
+          "Зеркало Повторений мерцает",
+          "число 44 на стене"
+        ],
+        "focus_object": "Зеркало на раскрытой ладони",
+        "atmosphere": "момент выбора — цена против желания",
+        "ui_mode": "choice"
+      },
+      "source_ref": "day_02.ep7.challenge"
+    },
+    {
+      "id": "ep007_s07c_use",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "желание победило — кто-то забыл",
+      "branch_type": "flavor_detour",
+      "set_flags": [
+        "used_mirror_this_ep"
+      ],
+      "require_flags": [],
+      "nav": {
+        "next": "ep007_s08",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": "ep007_s08"
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Марко поднимает Зеркало. В стекле — София. Три секунды. Живое лицо, живые глаза, живой поворот головы. Марко закрывает глаза, чтобы запомнить."
+        },
+        {
+          "who": "author",
+          "line": "Когда открывает — число на стене уже не 44. Стало 43. Кто-то забыл её прямо сейчас. Из-за него."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Зеркальный Город, стена с числом 43, Зеркало светится",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "вина, но и облегчение",
+            "pose": "опускает Зеркало"
+          }
+        ],
+        "props": [
+          "Зеркало светится",
+          "число 43 на стене"
+        ],
+        "focus_object": "число 44→43 за три секунды",
+        "atmosphere": "минус один — прямо сейчас",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_02.ep7.challenge"
+    },
+    {
+      "id": "ep007_s07c_save",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, стена с числом",
+      "time": "вне времени",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "желание проигрывает цене",
+      "branch_type": "flavor_detour",
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep007_s08",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": "ep007_s08"
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Марко сжимает Зеркало — и прячет в рюкзак. Ремешок — застегнуть. Клапан — вниз. Три секунды лица стоят меньше, чем один чужой человек. Так решил — пока. Число на стене: 44. Не двигается."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Зеркальный Город, стена с числом 44, Марко закрывает рюкзак",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "сжатые губы, тяжесть решения",
+            "pose": "застёгивает рюкзак"
+          }
+        ],
+        "props": [
+          "Зеркало в рюкзаке",
+          "число 44 на стене"
+        ],
+        "focus_object": "застёжка рюкзака",
+        "atmosphere": "инструмент убран — цена сохранена",
+        "ui_mode": "reading"
       },
       "source_ref": "day_02.ep7.challenge"
     },

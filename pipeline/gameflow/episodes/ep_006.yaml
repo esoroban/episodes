@@ -374,7 +374,7 @@ scenes:
       - who: Софа
         line: "Светофор — жёлтый. Что делаешь?"
     mood: "предупреждение в чате"
-    next_default: ep006_s08
+    next_default: ep006_s07_choice
     visual_brief:
       background: "Экран телефона Марко, пузыри чата"
       camera: close-up
@@ -385,6 +385,107 @@ scenes:
       focus_object: "пузыри Софы — жёлтый светофор"
       atmosphere: "Софа предупреждает в чате"
       ui_mode: dialogue
+
+  # ── СЦЕНА 7_choice: Пойти за Леоном или задать вопрос? (драма) ─────
+  - scene_id: ep006_s07_choice
+    episode_id: 6
+    source_ref: day_02.ep6.challenge
+    scene_type: choice
+    location: "Подвал библиотеки, Зеркальный Город"
+    time: "вне времени"
+    characters_present: [Марко, Леон]
+    author_text: >
+      Леон стоит у прохода. Ждёт. Глаза тёплые. Рука указывает во тьму
+      дальней комнаты. «Книга о тех, кого забрали» — слова ещё висят в
+      воздухе.
+    interaction_type: choice
+    question: "Что делает Марко?"
+    options:
+      - id: ask_first
+        text: "Сначала спросить: «А все, кому ты говорил „безопасно“, вернулись?»"
+        next: ep006_s07c_ask
+      - id: follow
+        text: "Пойти за Леоном молча — книга важнее"
+        next: ep006_s07c_follow
+    mood: "выбор — инструмент или порыв"
+    next_default: ep006_s07c_ask
+    visual_brief:
+      background: "Подвал библиотеки, Леон у тёмного прохода"
+      camera: medium
+      characters:
+        - who: Леон
+          expression: приглашающая улыбка
+          pose: стоит у прохода, рука зовёт
+          position: right
+        - who: Марко
+          expression: внутренняя борьба
+          pose: стоит, не двигается
+          position: left
+      props: [тёмный проход в дальнюю комнату, рюкзак с Зеркалом]
+      focus_object: "два шага Марко — вперёд или назад"
+      atmosphere: "жёлтый свет в голове Марко"
+      ui_mode: choice
+
+  # ── ВЕТКА 7c_ask: Марко переспрашивает (flavor_detour) ─────────────
+  - scene_id: ep006_s07c_ask
+    episode_id: 6
+    source_ref: day_02.ep6.challenge
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep006_s08
+    location: "Подвал библиотеки, Зеркальный Город"
+    time: "вне времени"
+    characters_present: [Марко, Леон]
+    author_text: >
+      Марко выпрямляется. Не идёт за Леоном. Вместо этого — открывает рот,
+      чтобы задать вопрос. Слова не простые: старый человек, улыбка,
+      чай. Но четвёртый вопрос детектива сильнее чая.
+    mood: "голос детектива включается"
+    next_default: ep006_s08
+    visual_brief:
+      background: "Подвал библиотеки, Марко не двигается"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: собранность, уверенность
+          pose: стоит прямо, набирает воздух
+          position: left
+      focus_object: "рот Марко — сейчас скажет"
+      atmosphere: "инструмент выигрывает у порыва"
+      ui_mode: reading
+
+  # ── ВЕТКА 7c_follow: Марко делает шаг за Леоном (flavor_detour) ────
+  - scene_id: ep006_s07c_follow
+    episode_id: 6
+    source_ref: day_02.ep6.challenge
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep006_s08
+    location: "Подвал библиотеки, Зеркальный Город"
+    time: "вне времени"
+    characters_present: [Марко, Леон]
+    author_text: >
+      Марко делает шаг. Второй. «Книга о Софии» — два слова тянут сильнее
+      жёлтого светофора. Но на третьем шаге — вибрация телефона в кармане.
+      Длинная. Софа напоминает: красный ещё не стал зелёным. Марко
+      останавливается. Разворачивается. Книга подождёт.
+    mood: "порыв — и тормоз"
+    next_default: ep006_s08
+    visual_brief:
+      background: "Подвал библиотеки, Марко на втором шаге, Леон впереди"
+      camera: medium
+      characters:
+        - who: Марко
+          expression: порыв → стоп
+          pose: остановился посреди шага
+          position: center
+        - who: Леон
+          expression: оглядывается
+          pose: впереди, ждёт
+          position: right
+      focus_object: "стопа Марко — между шагом и разворотом"
+      atmosphere: "порыв почти победил"
+      ui_mode: reading
 
   # ── СЦЕНА 8: Challenge quiz batch — 3 вопроса ───────────────────────
   - scene_id: ep006_s08

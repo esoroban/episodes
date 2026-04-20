@@ -370,7 +370,10 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
             has_branch = True
             break
     if not has_branch:
-        result.warn(
+        # Hard error: не демотируется до DRAFT warning. Каждый эпизод —
+        # даже драфт — должен иметь минимум одну развилку. Без ветки это
+        # не интерактив, а линейное чтение. Забывать нельзя.
+        result.hard_error(
             f"NO BRANCH: эпизод {ep_id} не содержит ни одной choice-точки "
             f"(branch_type / scene_type: choice / options.next). "
             f"Добавь хотя бы одну развилку — минимум 1 на эпизод."

@@ -366,7 +366,7 @@ scenes:
       - who: Софа
         line: "Использовать?"
     mood: "вопрос цены в чате"
-    next_default: ep007_s08
+    next_default: ep007_s07_choice
     visual_brief:
       background: "Экран телефона Марко"
       camera: close-up
@@ -377,6 +377,105 @@ scenes:
       focus_object: "пузырь Софы — «минус один»"
       atmosphere: "прямой вопрос в чате — разрешение на действие"
       ui_mode: dialogue
+
+  # ── СЦЕНА 7_choice: Использовать Зеркало? (драма) ──────────────────
+  - scene_id: ep007_s07_choice
+    episode_id: 7
+    source_ref: day_02.ep7.challenge
+    scene_type: choice
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко, Лина]
+    author_text: >
+      Зеркало тёплое в ладони. Одно движение — и будет лицо Софии.
+      Одно — и минус один человек, который её помнит.
+    interaction_type: choice
+    question: "Что делает Марко?"
+    options:
+      - id: use
+        text: "Заглянуть в Зеркало ещё раз — три секунды лица"
+        next: ep007_s07c_use
+      - id: save
+        text: "Убрать Зеркало — сохранить память чужим"
+        next: ep007_s07c_save
+    mood: "цена желания"
+    next_default: ep007_s07c_save
+    visual_brief:
+      background: "Зеркальный Город, стена с числом 44, Зеркало в ладонях Марко"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: мучительное колебание
+          pose: держит Зеркало на раскрытой ладони
+          position: center
+        - who: Лина
+          expression: молча наблюдает
+          pose: стоит рядом, не вмешивается
+          position: right
+      props: [Зеркало Повторений мерцает, число 44 на стене]
+      focus_object: "Зеркало на раскрытой ладони"
+      atmosphere: "момент выбора — цена против желания"
+      ui_mode: choice
+
+  # ── ВЕТКА 7c_use: Марко использует Зеркало (flavor_detour) ─────────
+  - scene_id: ep007_s07c_use
+    episode_id: 7
+    source_ref: day_02.ep7.challenge
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep007_s08
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко]
+    author_text: >
+      Марко поднимает Зеркало. В стекле — София. Три секунды. Живое лицо,
+      живые глаза, живой поворот головы. Марко закрывает глаза, чтобы
+      запомнить.
+
+      Когда открывает — число на стене уже не 44. Стало 43. Кто-то забыл
+      её прямо сейчас. Из-за него.
+    mood: "желание победило — кто-то забыл"
+    next_default: ep007_s08
+    set_flags: [used_mirror_this_ep]
+    visual_brief:
+      background: "Зеркальный Город, стена с числом 43, Зеркало светится"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: вина, но и облегчение
+          pose: опускает Зеркало
+      props: [Зеркало светится, число 43 на стене]
+      focus_object: "число 44→43 за три секунды"
+      atmosphere: "минус один — прямо сейчас"
+      ui_mode: reading
+
+  # ── ВЕТКА 7c_save: Марко убирает Зеркало (flavor_detour) ───────────
+  - scene_id: ep007_s07c_save
+    episode_id: 7
+    source_ref: day_02.ep7.challenge
+    scene_type: narrative
+    branch_type: flavor_detour
+    merge_to: ep007_s08
+    location: "Зеркальный Город, стена с числом"
+    time: "вне времени"
+    characters_present: [Марко]
+    author_text: >
+      Марко сжимает Зеркало — и прячет в рюкзак. Ремешок — застегнуть.
+      Клапан — вниз. Три секунды лица стоят меньше, чем один чужой
+      человек. Так решил — пока. Число на стене: 44. Не двигается.
+    mood: "желание проигрывает цене"
+    next_default: ep007_s08
+    visual_brief:
+      background: "Зеркальный Город, стена с числом 44, Марко закрывает рюкзак"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: сжатые губы, тяжесть решения
+          pose: застёгивает рюкзак
+      props: [Зеркало в рюкзаке, число 44 на стене]
+      focus_object: "застёжка рюкзака"
+      atmosphere: "инструмент убран — цена сохранена"
+      ui_mode: reading
 
   # ── СЦЕНА 8: Challenge quiz batch — 3 вопроса ───────────────────────
   - scene_id: ep007_s08
