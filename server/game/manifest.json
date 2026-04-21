@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-20T16:14:01Z",
+  "generated_at": "2026-04-21T09:56:41Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -97,12 +97,12 @@
         "ru": {
           "html": "ru/ep_005.html",
           "data": "ru/ep_005.json",
-          "content_hash": "825c7b2e14550cb1"
+          "content_hash": "a7162e6b9e6ea3e1"
         }
       },
       "title_ru": "Если верно — верно всегда",
       "lesson": "2A.1",
-      "scene_count": 23,
+      "scene_count": 24,
       "quiz_count": 24,
       "branch_count": 2
     },
@@ -145,12 +145,12 @@
         "ru": {
           "html": "ru/ep_008.html",
           "data": "ru/ep_008.json",
-          "content_hash": "5851883798796520"
+          "content_hash": "5937eecef30b2609"
         }
       },
       "title_ru": "Кукловод",
       "lesson": "2B.2",
-      "scene_count": 19,
+      "scene_count": 21,
       "quiz_count": 18,
       "branch_count": 3
     },
@@ -177,7 +177,7 @@
         "ru": {
           "html": "ru/ep_010.html",
           "data": "ru/ep_010.json",
-          "content_hash": "4de1692f51e5d99a"
+          "content_hash": "8d84455b58e7d3dc"
         }
       },
       "title_ru": "Разведчик",
@@ -209,12 +209,12 @@
         "ru": {
           "html": "ru/ep_012.html",
           "data": "ru/ep_012.json",
-          "content_hash": "c7f3c788bd6054e8"
+          "content_hash": "bb40627f73e04d5a"
         }
       },
       "title_ru": "Формула высказывания",
       "lesson": "3B.3",
-      "scene_count": 36,
+      "scene_count": 37,
       "quiz_count": 15,
       "branch_count": 10
     }
