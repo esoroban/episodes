@@ -444,17 +444,32 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                     )
                     break  # one error per scene is enough
 
-    # ── Check 16: next_fail must not self-loop to same scene ─────
+    # ── Check 16: self-loops on any next_* / merge_to ─────────────
     # Retry на неправильный ответ — ответственность рендера, не YAML-графа.
-    # Self-loop не работает: рендерер не re-инициализирует чат на той же сцене.
+    # Self-loop next_default ломает кнопку «Далее» (scene ссылается на себя).
+    # Self-loop next_fail не работает (рендерер не re-инициализирует чат).
+    # Self-loop merge_to бессмысленен.
     for scene in scenes:
         sid = scene.get("scene_id", "???")
-        nf = scene.get("next_fail")
-        if nf and nf == sid:
-            result.error(
-                f"SELF-LOOP NEXT_FAIL: {sid}.next_fail points to itself. "
-                f"Remove — quiz retry is handled by renderer inline in chat."
-            )
+        for key in ("next_default", "next_success", "next_fail", "merge_to"):
+            tgt = scene.get(key)
+            if tgt and tgt == sid:
+                result.hard_error(
+                    f"SELF-LOOP {key.upper()}: {sid}.{key} points to itself. "
+                    f"Remove or point to the actual next scene — кнопка «Далее» иначе не работает."
+                )
+        for opt in scene.get("options", []) or []:
+            if isinstance(opt, dict) and opt.get("next") == sid:
+                result.hard_error(
+                    f"SELF-LOOP option.next: {sid}.options.next points to itself."
+                )
+        for inter in scene.get("interactions", []) or []:
+            if isinstance(inter, dict):
+                for opt in inter.get("options", []) or []:
+                    if isinstance(opt, dict) and opt.get("next") == sid:
+                        result.hard_error(
+                            f"SELF-LOOP interaction.option.next: {sid}.interactions[].options.next points to itself."
+                        )
 
     # ── Check 17: Named plot entities before their reveal ────────
     # Именованные сущности сюжета (Зеркальный Город и др.) не должны появляться
