@@ -9,7 +9,7 @@
   ],
   "terms_used": [
     "факт",
-    "мнение"
+    "думка"
   ],
   "enter_requires": {
     "flags": [
@@ -2458,12 +2458,12 @@
           "options": [
             {
               "id": true,
-              "text": "Да — проверяемо",
+              "text": "Так — перевіряне",
               "correct": true
             },
             {
               "id": false,
-              "text": "Нет — мнение",
+              "text": "Ні — думка",
               "correct": false
             }
           ],

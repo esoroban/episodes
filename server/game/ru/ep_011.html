@@ -114,6 +114,12 @@ body {
 }
 .visual-brief.open { display: block; }
 .vb-label { color: var(--accent); font-weight: 600; }
+/* UK build: hide internal visual briefs + scene-meta (Russian working-lang
+   artifacts for artists, not end-user content). Keeps DOM structure identical
+   so JSON manifest and scripts stay unchanged. */
+body.lang-uk .visual-brief,
+body.lang-uk .vb-toggle,
+body.lang-uk .scene-meta { display: none !important; }
 .vb-toggle {
   font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
   font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
@@ -436,7 +442,7 @@ body.debug-off .voice-subtitle { display: none; }
 }
 </style>
 </head>
-<body>
+<body class="lang-ru">
 
 <div class="progress-bar" id="progress"></div>
 

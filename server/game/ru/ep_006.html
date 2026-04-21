@@ -114,6 +114,12 @@ body {
 }
 .visual-brief.open { display: block; }
 .vb-label { color: var(--accent); font-weight: 600; }
+/* UK build: hide internal visual briefs + scene-meta (Russian working-lang
+   artifacts for artists, not end-user content). Keeps DOM structure identical
+   so JSON manifest and scripts stay unchanged. */
+body.lang-uk .visual-brief,
+body.lang-uk .vb-toggle,
+body.lang-uk .scene-meta { display: none !important; }
 .vb-toggle {
   font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
   font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
@@ -436,7 +442,7 @@ body.debug-off .voice-subtitle { display: none; }
 }
 </style>
 </head>
-<body>
+<body class="lang-ru">
 
 <div class="progress-bar" id="progress"></div>
 
@@ -458,6 +464,7 @@ body.debug-off .voice-subtitle { display: none; }
 <p>Марко возвращается в подвал. Утро — если в Зеркальном Городе бывает утро. Небо всё то же фиолетовое.</p>
 <p>Леон на месте. Чай. Улыбка. Свитер. Как будто никуда не уходил.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Леон:</span> — Вернулся! Отлично. Чай?</p>
 <p class="dl-narrator"><em>Марко садится напротив. Берёт чашку. На этот раз — не пьёт. Ставит рядом. Смотрит на руки Леона. Десять пальцев. Обычные. Считает — десять. София написала «посчитай» — но пальцев десять. Что она имела в виду?</em></p></div><div class="author-text"><p>Марко поднимает Зеркало Повторений. Смотрит на Леона сквозь стекло. Сквозь Зеркало Леон выглядит иначе. Лицо — то же, но глаза — тусклые. И руки — руки странные. Пальцев не десять. Пальцев одиннадцать. Шестой палец на левой руке — маленький, как мизинец, прижат к ладони. Без Зеркала — не видно. С Зеркалом — очевидно.</p>
+<p>А на запястье — тонкая серая нить. Обмотана дважды. Аккуратно, ровно. Марко видит её мельком — и не задерживается на ней. Наверное, случайная нитка со свитера. Не важно.</p>
 <p>Марко быстро опускает Зеркало. Леон улыбается. Не заметил. Или заметил, но не подал виду.</p></div>
     </div>
   </section>
