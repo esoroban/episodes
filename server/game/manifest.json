@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T11:16:43Z",
+  "generated_at": "2026-04-21T12:05:51Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -97,7 +97,7 @@
         "ru": {
           "html": "ru/ep_005.html",
           "data": "ru/ep_005.json",
-          "content_hash": "604258b564d4f804"
+          "content_hash": "222d63318b9928d9"
         }
       },
       "title_ru": "Если верно — верно всегда",
