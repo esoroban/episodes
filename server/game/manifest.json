@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T14:20:55Z",
+  "generated_at": "2026-04-21T14:25:06Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -229,7 +229,7 @@
         "ru": {
           "html": "ru/ep_011.html",
           "data": "ru/ep_011.json",
-          "content_hash": "24d9c460892487cd"
+          "content_hash": "67bdc02480e9f0eb"
         },
         "uk": {
           "html": "uk/ep_011.html",
@@ -239,7 +239,7 @@
       },
       "title_ru": "Первый, кто слышит",
       "lesson": "3B.1, 3B.2",
-      "scene_count": 31,
+      "scene_count": 32,
       "quiz_count": 12,
       "branch_count": 6,
       "title_uk": "Перший, хто чує"
