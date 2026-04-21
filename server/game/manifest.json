@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T12:10:27Z",
+  "generated_at": "2026-04-21T12:14:47Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -161,12 +161,12 @@
         "ru": {
           "html": "ru/ep_009.html",
           "data": "ru/ep_009.json",
-          "content_hash": "a5835d3f0717722c"
+          "content_hash": "61d6597a7ab0d534"
         }
       },
       "title_ru": "Три цели спора",
       "lesson": "3A.1",
-      "scene_count": 39,
+      "scene_count": 42,
       "quiz_count": 18,
       "branch_count": 7
     },
