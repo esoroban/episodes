@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T09:56:41Z",
+  "generated_at": "2026-04-21T11:16:43Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -97,7 +97,7 @@
         "ru": {
           "html": "ru/ep_005.html",
           "data": "ru/ep_005.json",
-          "content_hash": "a7162e6b9e6ea3e1"
+          "content_hash": "604258b564d4f804"
         }
       },
       "title_ru": "Если верно — верно всегда",
@@ -113,7 +113,7 @@
         "ru": {
           "html": "ru/ep_006.html",
           "data": "ru/ep_006.json",
-          "content_hash": "6efee6fe7f2a6d0d"
+          "content_hash": "936560a4de0b74c4"
         }
       },
       "title_ru": "Светофор",
