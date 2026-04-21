@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T14:35:35Z",
+  "generated_at": "2026-04-21T15:30:51Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -207,7 +207,7 @@
         "ru": {
           "html": "ru/ep_010.html",
           "data": "ru/ep_010.json",
-          "content_hash": "3b540e040525a2ad"
+          "content_hash": "5c9e21dd2f44c907"
         },
         "uk": {
           "html": "uk/ep_010.html",
@@ -217,7 +217,7 @@
       },
       "title_ru": "Разведчик",
       "lesson": "3A.2",
-      "scene_count": 41,
+      "scene_count": 42,
       "quiz_count": 18,
       "branch_count": 10,
       "title_uk": "Розвідник"
@@ -229,7 +229,7 @@
         "ru": {
           "html": "ru/ep_011.html",
           "data": "ru/ep_011.json",
-          "content_hash": "67bdc02480e9f0eb"
+          "content_hash": "bd4585259731b2b3"
         },
         "uk": {
           "html": "uk/ep_011.html",
@@ -239,7 +239,7 @@
       },
       "title_ru": "Первый, кто слышит",
       "lesson": "3B.1, 3B.2",
-      "scene_count": 32,
+      "scene_count": 35,
       "quiz_count": 12,
       "branch_count": 6,
       "title_uk": "Перший, хто чує"
