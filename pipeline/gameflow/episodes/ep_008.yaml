@@ -39,6 +39,10 @@ lesson: "2B.2"
 terms_introduced: ["третья причина"]
 terms_used: ["причина", "следствие", "совпадение", "после — не значит вследствие", "закономерность", "повторяемость", "светофор повторений", "факт", "мнение", "детектив правды"]
 
+memories_state:
+  at_start: 43  # people who remember София at ep start
+  at_end: 42    # people who remember София at ep end
+
 enter_requires:
   flags: [sofa_activated, mirror_of_repetitions_found]
   previous_episode: 7

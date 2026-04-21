@@ -36,6 +36,10 @@ lesson: "2A.2"
 terms_introduced: ["светофор повторений"]
 terms_used: ["повторяемость", "закономерность", "совпадение", "факт", "мнение", "детектив правды"]
 
+memories_state:
+  at_start: 47  # people who remember София at ep start
+  at_end: 47    # people who remember София at ep end
+
 enter_requires:
   flags: [sofa_activated, mirror_of_repetitions_found]
   previous_episode: 5

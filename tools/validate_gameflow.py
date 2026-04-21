@@ -539,6 +539,35 @@ def cross_validate(results: dict, all_data: dict):
         for f in sorted(globally_unused):
             first_result.warn(f"GLOBAL UNUSED FLAG: '{f}' is set somewhere but never required anywhere")
 
+    # ── Check 20: memories_state continuity across episodes ────────
+    # Каждый эпизод (начиная с ep_006, когда число 47 впервые показано)
+    # объявляет memories_state.at_start и .at_end. Значение at_start
+    # должно совпадать с at_end предыдущего эпизода. Иначе — скачок числа.
+    ep_state = {}
+    for filename, data in all_data.items():
+        mm = re.search(r"ep_(\d+)", filename)
+        if not mm:
+            continue
+        ep_num = int(mm.group(1))
+        ms = data.get("memories_state")
+        if isinstance(ms, dict):
+            ep_state[ep_num] = (ms.get("at_start"), ms.get("at_end"))
+    for ep_num in sorted(ep_state):
+        at_start, at_end = ep_state[ep_num]
+        if at_start is None or at_end is None:
+            continue
+        if at_end > at_start:
+            first_result.hard_error(
+                f"MEMORIES STATE: ep_{ep_num:03d} at_end={at_end} > at_start={at_start}. "
+                f"Число «помнят Софию» может только уменьшаться — проверь сюжет."
+            )
+        prev = ep_state.get(ep_num - 1)
+        if prev and prev[1] is not None and at_start is not None and prev[1] != at_start:
+            first_result.hard_error(
+                f"MEMORIES STATE JUMP: ep_{ep_num:03d}.at_start={at_start} ≠ "
+                f"ep_{ep_num-1:03d}.at_end={prev[1]}. Число должно быть непрерывным."
+            )
+
     # ── Check 11: Character mention before first appearance ───────
     # If a named character is mentioned in text/dialogue/quiz BEFORE
     # they first appear in characters_present — fail.

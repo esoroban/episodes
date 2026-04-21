@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T12:05:51Z",
+  "generated_at": "2026-04-21T12:10:27Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -161,7 +161,7 @@
         "ru": {
           "html": "ru/ep_009.html",
           "data": "ru/ep_009.json",
-          "content_hash": "307bca6c4a90bdf4"
+          "content_hash": "a5835d3f0717722c"
         }
       },
       "title_ru": "Три цели спора",
@@ -177,7 +177,7 @@
         "ru": {
           "html": "ru/ep_010.html",
           "data": "ru/ep_010.json",
-          "content_hash": "8d84455b58e7d3dc"
+          "content_hash": "c936179776773b08"
         }
       },
       "title_ru": "Разведчик",
@@ -193,7 +193,7 @@
         "ru": {
           "html": "ru/ep_011.html",
           "data": "ru/ep_011.json",
-          "content_hash": "5442da40cb46e245"
+          "content_hash": "24d9c460892487cd"
         }
       },
       "title_ru": "Первый, кто слышит",
@@ -209,7 +209,7 @@
         "ru": {
           "html": "ru/ep_012.html",
           "data": "ru/ep_012.json",
-          "content_hash": "bb40627f73e04d5a"
+          "content_hash": "ee32d7bf9f0df6e5"
         }
       },
       "title_ru": "Формула высказывания",
