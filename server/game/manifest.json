@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T15:41:24Z",
+  "generated_at": "2026-04-21T15:58:05Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -251,7 +251,7 @@
         "ru": {
           "html": "ru/ep_012.html",
           "data": "ru/ep_012.json",
-          "content_hash": "69f63e8b19899a4c"
+          "content_hash": "757cde4b9381b928"
         },
         "uk": {
           "html": "uk/ep_012.html",
@@ -261,7 +261,7 @@
       },
       "title_ru": "Формула высказывания",
       "lesson": "3B.3",
-      "scene_count": 37,
+      "scene_count": 38,
       "quiz_count": 15,
       "branch_count": 10,
       "title_uk": "Формула висловлювання"
