@@ -33,6 +33,9 @@
 episode_id: 6
 episode_title: "Светофор"
 lesson: "2A.2"
+status: frozen
+frozen_at: "2026-04-21"
+frozen_tag: day-02-03-frozen
 terms_introduced: ["светофор повторений"]
 terms_used: ["повторяемость", "закономерность", "совпадение", "факт", "мнение", "детектив правды"]
 

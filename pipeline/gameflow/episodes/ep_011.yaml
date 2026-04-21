@@ -50,6 +50,9 @@
 episode_id: 11
 episode_title: "Первый, кто слышит"
 lesson: "3B.1, 3B.2"
+status: frozen
+frozen_at: "2026-04-21"
+frozen_tag: day-02-03-frozen
 terms_introduced: ["эмпатия (сопереживание)", "активное слушание"]
 terms_used: ["солдат", "разведчик", "три цели спора"]
 

@@ -63,6 +63,9 @@
 episode_id: 9
 episode_title: "Три цели спора"
 lesson: "3A.1"
+status: frozen
+frozen_at: "2026-04-21"
+frozen_tag: day-02-03-frozen
 terms_introduced: ["три цели спора"]
 terms_used: ["факт", "мнение", "неправда", "причина", "совпадение", "третья причина"]
 

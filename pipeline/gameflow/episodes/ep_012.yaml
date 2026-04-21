@@ -58,6 +58,9 @@
 episode_id: 12
 episode_title: "Формула высказывания"
 lesson: "3B.3"
+status: frozen
+frozen_at: "2026-04-21"
+frozen_tag: day-02-03-frozen
 terms_introduced: ["формула высказывания"]
 terms_used: ["эмпатия (сопереживание)", "активное слушание", "солдат", "разведчик", "три цели спора"]
 

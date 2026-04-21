@@ -1,7 +1,7 @@
 # CONTEXT STATE — current project state
 
 > Updated after each work session.
-> Last updated: 2026-04-19
+> Last updated: 2026-04-21
 
 ---
 
@@ -10,8 +10,11 @@
 
 - **Day 1 (ep_001–004, lessons 1A + 1B): FROZEN 2026-04-19.**
   Git tag: `day-01-frozen` @ commit `8888c05`.
+- **Days 2+3 (ep_005–012, lessons 2A/2B/3A/3B): FROZEN 2026-04-21.**
+  Git tag: `day-02-03-frozen`.
   Author read-through complete. RU content locked; do not edit without explicit request.
-- Days 2–13 gameflow: NOT STARTED
+- Day 4 (ep_013–016): IN PROGRESS — gameflow build
+- Days 5–13 gameflow: NOT STARTED
 - UK translation layer for Day 1: NOT STARTED (next step after tooling)
 - HTML renderer, validator, artifact audit: DONE
 

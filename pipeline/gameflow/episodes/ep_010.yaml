@@ -67,6 +67,9 @@
 episode_id: 10
 episode_title: "Разведчик"
 lesson: "3A.2"
+status: frozen
+frozen_at: "2026-04-21"
+frozen_tag: day-02-03-frozen
 terms_introduced: ["солдат", "разведчик"]
 terms_used: ["три цели спора", "факт", "мнение"]
 
