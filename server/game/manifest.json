@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-22T13:12:36Z",
+  "generated_at": "2026-04-22T13:13:55Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -321,7 +321,7 @@
         "ru": {
           "html": "ru/ep_016.html",
           "data": "ru/ep_016.json",
-          "content_hash": "a1254882090379e6"
+          "content_hash": "d0f6d4ba9193aee3"
         }
       },
       "title_ru": "Табуретка",
