@@ -439,21 +439,25 @@ body.debug-off .voice-subtitle { display: none; }
 <script id="v2-audio-done-tracker">
 (function () {
   var playingSet = new Set();
-  var sceneStates = new WeakMap();
+  // Timestamp момента, когда в последний раз ЧТО-ТО играло.
+  // Если сейчас ничего не играет и с того момента прошло >SILENCE_MS —
+  // считаем, что автор дочитал, и показываем кнопки выбора.
+  var lastActivityAt = Date.now();
+  var SILENCE_MS = 1500;
 
-  // Patch HTMLAudioElement.prototype.play: на первый play() на каждом
-  // аудио-элементе навешиваем трекинг. Работает для ЛЮБОГО способа
-  // создания: new Audio(), document.createElement("audio"), <audio>-тэгов.
+  // Patch HTMLAudioElement.prototype.play — на первый play() каждому
+  // аудио навешиваем трекинг. Работает для всех способов создания.
   var origPlay = HTMLAudioElement.prototype.play;
   HTMLAudioElement.prototype.play = function () {
     var a = this;
     if (!a.__v2Tracked) {
       a.__v2Tracked = true;
-      a.addEventListener("play",  function () { playingSet.add(a); });
+      a.addEventListener("play",  function () { playingSet.add(a); lastActivityAt = Date.now(); });
       a.addEventListener("pause", function () { playingSet.delete(a); });
       a.addEventListener("ended", function () { playingSet.delete(a); });
       a.addEventListener("error", function () { playingSet.delete(a); });
     }
+    lastActivityAt = Date.now();
     return origPlay.apply(a, arguments);
   };
 
@@ -466,39 +470,43 @@ body.debug-off .voice-subtitle { display: none; }
   function check() {
     var active = document.querySelector(".scene.active");
     if (!active) return;
+    // Text-mode: всегда показываем.
     if (!document.body.classList.contains("audio-mode")) {
       active.classList.add("audio-done");
       return;
     }
-    var st = sceneStates.get(active);
-    if (!st) { st = { enteredAt: Date.now(), hadAudio: false }; sceneStates.set(active, st); }
     if (anyPlaying()) {
-      st.hadAudio = true;
+      lastActivityAt = Date.now();
       active.classList.remove("audio-done");
       return;
     }
-    if (st.hadAudio) { active.classList.add("audio-done"); return; }
-    // Сцена без аудио → через 3 сек всё равно показать choice.
-    if (Date.now() - st.enteredAt > 3000) active.classList.add("audio-done");
+    // Тишина достаточно долго → показываем choice.
+    if (Date.now() - lastActivityAt > SILENCE_MS) {
+      active.classList.add("audio-done");
+    }
   }
 
-  function onSceneActivated(scene) {
-    sceneStates.set(scene, { enteredAt: Date.now(), hadAudio: false });
-    scene.classList.remove("audio-done");
+  // Трекаем смену сцены через polling (а не MutationObserver),
+  // чтобы не ловить собственные class-мутации и не зациклиться.
+  var lastActiveSid = null;
+  function checkScene() {
+    var active = document.querySelector(".scene.active");
+    if (!active) return;
+    var sid = active.dataset.sceneId || "";
+    if (sid !== lastActiveSid) {
+      lastActiveSid = sid;
+      // новая сцена → resetить "тишину", чтобы silence-таймер ждал заново
+      lastActivityAt = Date.now();
+      // убрать audio-done с бывшей активной (если где-то остался)
+      document.querySelectorAll("section.scene.audio-done").forEach(function (s) {
+        if (s !== active) s.classList.remove("audio-done");
+      });
+    }
+    check();
   }
 
   function init() {
-    document.querySelectorAll("section.scene").forEach(function (s) {
-      var wasActive = s.classList.contains("active");
-      if (wasActive) onSceneActivated(s);
-      s.__v2WasActive = wasActive;
-      new MutationObserver(function () {
-        var nowActive = s.classList.contains("active");
-        if (nowActive && !s.__v2WasActive) onSceneActivated(s);
-        s.__v2WasActive = nowActive;
-      }).observe(s, { attributes: true, attributeFilter: ["class"] });
-    });
-    setInterval(check, 300);
+    setInterval(checkScene, 300);
     // Debug-кнопка: скип текущей аудио-реплики.
     var skipBtn = document.getElementById("v2-dbg-skip");
     if (skipBtn) {
