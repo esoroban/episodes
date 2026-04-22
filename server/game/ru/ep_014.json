@@ -28,7 +28,7 @@
     ],
     "previous_episode": 13
   },
-  "scene_count": 26,
+  "scene_count": 25,
   "quiz_count": 15,
   "branch_count": 1,
   "scenes": [
@@ -1660,7 +1660,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep014_s18_sofa",
+        "next": "ep014_s19_end",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1720,51 +1720,6 @@
       "source_ref": "day_04.ep14.cliffhanger"
     },
     {
-      "id": "ep014_s18_sofa",
-      "kind": "dialogue",
-      "is_chat": true,
-      "location": "Зеркальный Город, Рекламная улица (у колонны)",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "первый вывод об антагонисте Голоса",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep014_s19_end",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [
-        {
-          "who": "sofa",
-          "line": "Рей... тоже стирается."
-        }
-      ],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона Марко, фоновая размытая сцена",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "тяжесть, сжатые губы",
-            "pose": "у колонны, смотрит на экран"
-          }
-        ],
-        "focus_object": "пузыри Софы — «Рей тоже стирается»",
-        "atmosphere": "Софа соединяет: Рей — не враг, Рей — такой же",
-        "ui_mode": "dialogue"
-      },
-      "source_ref": "day_04.ep14.cliffhanger"
-    },
-    {
       "id": "ep014_s19_end",
       "kind": "cliffhanger",
       "is_chat": false,
@@ -1790,11 +1745,11 @@
         },
         {
           "who": "author",
-          "line": "ГЛАЗ видит то, что слова прячут. А слова Рея прятали — страх."
+          "line": "ГЛАЗ видит то, что слова прячут. А слова Рея прятали — страх. Рей тоже стирается. Голос не щадит даже своих."
         },
         {
           "who": "author",
-          "line": "Экран телефона мигает. Восемь процентов. Голос не щадит даже своих — и заряда Леона хватит не на все уроки."
+          "line": "Экран телефона мигает. Восемь процентов. Заряда Леона хватит не на все уроки."
         },
         {
           "who": "author",

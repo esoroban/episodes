@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-22T12:17:41Z",
+  "generated_at": "2026-04-22T13:05:01Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -289,12 +289,12 @@
         "ru": {
           "html": "ru/ep_014.html",
           "data": "ru/ep_014.json",
-          "content_hash": "12001ca9ff55f280"
+          "content_hash": "6b2d09f1632edac7"
         }
       },
       "title_ru": "Рекламная улица",
       "lesson": "4A.2, 4A.3, 4A.4",
-      "scene_count": 26,
+      "scene_count": 25,
       "quiz_count": 15,
       "branch_count": 1
     },
