@@ -111,6 +111,8 @@ def merge_uk_overlay(ru_data: dict, uk_data: dict) -> None:
         ru_data["episode_title"] = uk_data["episode_title"]
     if "terms_introduced" in uk_data:
         ru_data["terms_introduced"] = uk_data["terms_introduced"]
+    if "terms_used" in uk_data:
+        ru_data["terms_used"] = uk_data["terms_used"]
 
     uk_scenes = {}
     for s in uk_data.get("scenes", []) or []:
@@ -533,8 +535,19 @@ def build_chat_messages(scene: dict) -> list:
         if not isinstance(d, dict):
             continue
         who = d.get("who", "")
-        line = str(d.get("line", "")).strip()
         w = who.lower()
+        # Chat-image: Софа шлёт фото в чат. См. gameflow_schema.md раздел Chat-image.
+        if d.get("image") or d.get("prompt"):
+            img_msg = {"t": "image", "s": "sofa"}
+            if d.get("image"):
+                img_msg["src"] = str(d["image"]).strip()
+            if d.get("prompt"):
+                img_msg["prompt"] = str(d["prompt"]).strip()
+            if d.get("caption"):
+                img_msg["caption"] = str(d["caption"]).strip()
+            msgs.append(img_msg)
+            continue
+        line = str(d.get("line", "")).strip()
         if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
             msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": line})
         elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
@@ -1143,6 +1156,12 @@ body {
 }
 .visual-brief.open { display: block; }
 .vb-label { color: var(--accent); font-weight: 600; }
+/* UK build: hide internal visual briefs + scene-meta (Russian working-lang
+   artifacts for artists, not end-user content). Keeps DOM structure identical
+   so JSON manifest and scripts stay unchanged. */
+body.lang-uk .visual-brief,
+body.lang-uk .vb-toggle,
+body.lang-uk .scene-meta { display: none !important; }
 .vb-toggle {
   font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
   font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
@@ -1337,6 +1356,28 @@ body {
   0%,60%,100% { transform: translateY(0); opacity: 0.35; }
   30% { transform: translateY(-4px); opacity: 1; }
 }
+/* Chat-image (Софа шлёт фото в чат) */
+.bubble.image-bubble { padding: 4px 4px 6px 4px; max-width: 260px; }
+.bubble.image-bubble .sender-name { padding: 2px 6px 4px; }
+.chat-image {
+  width: 100%; border-radius: 8px; overflow: hidden; background: #e8e8ec;
+  min-height: 140px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.chat-image img { display: block; width: 100%; height: auto; }
+.chat-image-fallback {
+  display: none;
+  padding: 10px 12px; font-size: 11px; color: #555; font-style: italic;
+  line-height: 1.35; text-align: left;
+}
+.chat-image.missing { background: #d8d8dc; }
+.chat-image.missing .chat-image-fallback { display: block; }
+.chat-image.missing img { display: none; }
+.chat-image-caption {
+  padding: 6px 8px 2px; font-size: 11px; color: #666; line-height: 1.3;
+}
+.bubble.image-bubble .msg-time { padding: 0 8px; }
+
 /* Voice messages */
 .voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
 .voice-play {
@@ -1658,6 +1699,27 @@ JS = r"""
       });
     }
 
+    /* Chat-image: Софа шлёт фото. Если src существует и грузится — реальное фото.
+       Иначе — placeholder с промптом (для image-пайплайна). Caption всегда под фото. */
+    function addImage(m){
+      var row=document.createElement('div');
+      row.className='msg-row incoming';
+      var promptText=(m.prompt||'').replace(/"/g,'&quot;');
+      var captionText=(m.caption||'').replace(/"/g,'&quot;');
+      var body;
+      if(m.src){
+        body='<div class="chat-image">' +
+             '<img src="images/'+m.src+'" alt="'+captionText+'" onerror="this.parentElement.classList.add(\'missing\')">' +
+             '<div class="chat-image-fallback">Описание фото: '+promptText+'</div>' +
+             '</div>';
+      } else {
+        body='<div class="chat-image missing"><div class="chat-image-fallback">Описание фото: '+promptText+'</div></div>';
+      }
+      var cap=m.caption?'<div class="chat-image-caption">'+captionText+'</div>':'';
+      row.innerHTML='<div class="bubble sofa image-bubble"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div>'+body+cap+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
     function addUnlock(m){
       return new Promise(function(resolve){
         var row=document.createElement('div');
@@ -1722,6 +1784,7 @@ JS = r"""
       }
       await showTyping();
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='image'){addImage(m);idx++;busy=false;setTimeout(processNext,CFG.interMsg);return;}
       if(m.t==='voice'){addVoice(m);}
       else{addText(m);}
       idx++;busy=false;setTimeout(processNext,CFG.interMsg);
@@ -1908,7 +1971,7 @@ def _render_debug_burger(current_ep_id: int, all_eps: list, dom_scenes: list) ->
     return html_block
 
 
-def render_episode_html(data: dict, all_eps: list = None) -> str:
+def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> str:
     """Render full episode HTML."""
     if all_eps is None:
         all_eps = []
@@ -1982,7 +2045,7 @@ def render_episode_html(data: dict, all_eps: list = None) -> str:
 {CSS}
 </style>
 </head>
-<body>
+<body class="lang-{lang}">
 
 <div class="progress-bar" id="progress"></div>
 
@@ -2025,7 +2088,7 @@ def build_episode(yaml_path: Path, all_eps: list = None, lang: str = "ru"):
     filename = f"ep_{int(ep_id):03d}.html"
     output_path = OUTPUT_DIR / filename
 
-    html_content = render_episode_html(data, all_eps=all_eps or [])
+    html_content = render_episode_html(data, all_eps=all_eps or [], lang=lang)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:

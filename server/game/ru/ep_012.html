@@ -314,6 +314,28 @@ body.lang-uk .scene-meta { display: none !important; }
   0%,60%,100% { transform: translateY(0); opacity: 0.35; }
   30% { transform: translateY(-4px); opacity: 1; }
 }
+/* Chat-image (Софа шлёт фото в чат) */
+.bubble.image-bubble { padding: 4px 4px 6px 4px; max-width: 260px; }
+.bubble.image-bubble .sender-name { padding: 2px 6px 4px; }
+.chat-image {
+  width: 100%; border-radius: 8px; overflow: hidden; background: #e8e8ec;
+  min-height: 140px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.chat-image img { display: block; width: 100%; height: auto; }
+.chat-image-fallback {
+  display: none;
+  padding: 10px 12px; font-size: 11px; color: #555; font-style: italic;
+  line-height: 1.35; text-align: left;
+}
+.chat-image.missing { background: #d8d8dc; }
+.chat-image.missing .chat-image-fallback { display: block; }
+.chat-image.missing img { display: none; }
+.chat-image-caption {
+  padding: 6px 8px 2px; font-size: 11px; color: #666; line-height: 1.3;
+}
+.bubble.image-bubble .msg-time { padding: 0 8px; }
+
 /* Voice messages */
 .voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
 .voice-play {
@@ -958,6 +980,27 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     }
 
+    /* Chat-image: Софа шлёт фото. Если src существует и грузится — реальное фото.
+       Иначе — placeholder с промптом (для image-пайплайна). Caption всегда под фото. */
+    function addImage(m){
+      var row=document.createElement('div');
+      row.className='msg-row incoming';
+      var promptText=(m.prompt||'').replace(/"/g,'&quot;');
+      var captionText=(m.caption||'').replace(/"/g,'&quot;');
+      var body;
+      if(m.src){
+        body='<div class="chat-image">' +
+             '<img src="images/'+m.src+'" alt="'+captionText+'" onerror="this.parentElement.classList.add(\'missing\')">' +
+             '<div class="chat-image-fallback">Описание фото: '+promptText+'</div>' +
+             '</div>';
+      } else {
+        body='<div class="chat-image missing"><div class="chat-image-fallback">Описание фото: '+promptText+'</div></div>';
+      }
+      var cap=m.caption?'<div class="chat-image-caption">'+captionText+'</div>':'';
+      row.innerHTML='<div class="bubble sofa image-bubble"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div>'+body+cap+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
     function addUnlock(m){
       return new Promise(function(resolve){
         var row=document.createElement('div');
@@ -1022,6 +1065,7 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       }
       await showTyping();
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='image'){addImage(m);idx++;busy=false;setTimeout(processNext,CFG.interMsg);return;}
       if(m.t==='voice'){addVoice(m);}
       else{addText(m);}
       idx++;busy=false;setTimeout(processNext,CFG.interMsg);
