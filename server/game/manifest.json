@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-21T17:58:17Z",
+  "generated_at": "2026-04-22T10:21:09Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -273,12 +273,12 @@
         "ru": {
           "html": "ru/ep_013.html",
           "data": "ru/ep_013.json",
-          "content_hash": "79ce18a591918fa7"
+          "content_hash": "ddef0c6015dd0019"
         }
       },
       "title_ru": "То, что слова прячут",
       "lesson": "4A.1",
-      "scene_count": 23,
+      "scene_count": 22,
       "quiz_count": 12,
       "branch_count": 1
     },
@@ -289,12 +289,12 @@
         "ru": {
           "html": "ru/ep_014.html",
           "data": "ru/ep_014.json",
-          "content_hash": "c38eefc30ad6556f"
+          "content_hash": "672a575171f81913"
         }
       },
       "title_ru": "Рекламная улица",
       "lesson": "4A.2, 4A.3, 4A.4",
-      "scene_count": 26,
+      "scene_count": 25,
       "quiz_count": 15,
       "branch_count": 1
     },
@@ -305,12 +305,12 @@
         "ru": {
           "html": "ru/ep_015.html",
           "data": "ru/ep_015.json",
-          "content_hash": "22c8258616c12ed8"
+          "content_hash": "eafb6f884b194abc"
         }
       },
       "title_ru": "Два плаката",
       "lesson": "4B.1",
-      "scene_count": 23,
+      "scene_count": 22,
       "quiz_count": 13,
       "branch_count": 1
     },
@@ -321,7 +321,7 @@
         "ru": {
           "html": "ru/ep_016.html",
           "data": "ru/ep_016.json",
-          "content_hash": "d8a8c8a765f9a757"
+          "content_hash": "b15e29534db64595"
         }
       },
       "title_ru": "Табуретка",
