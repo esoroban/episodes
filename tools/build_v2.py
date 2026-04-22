@@ -44,6 +44,17 @@ PROD_OVERRIDES = (
     # (position:fixed; bottom:16px; right:16px; max-width:280px; z-index:9999).
     # В проде она не нужна — скрываем.
     '.ipe-debug{display:none!important}'
+    # iOS Safari: position:fixed внутри .scene с animation+overflow:hidden
+    # кидает .story-choice в неправильный containing block → кнопки не видны
+    # в audio-mode. Уберём animation у .scene и форсируем story-choice
+    # в собственный composition layer + учтём safe-area (bottom bar Safari).
+    '.scene{animation:none!important}'
+    '.story-choice{'
+    'bottom:calc(80px + env(safe-area-inset-bottom,0px))!important;'
+    'z-index:100!important;'
+    'transform:translateZ(0);'
+    '-webkit-transform:translateZ(0);'
+    '}'
     '</style>\n'
 )
 
