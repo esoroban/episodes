@@ -12,8 +12,13 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/game', express.static(path.join(__dirname, 'game')));
 app.use('/v2', express.static(path.join(__dirname, 'v2')));
 
-// Главная — список эпизодов
+// Главное меню — 3 среза контента
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'master.html'));
+});
+
+// Книга (markdown, все 50 RU глав) — список
+app.get(['/book', '/book/'], (req, res) => {
   const files = fs.readdirSync(BOOK_DIR)
     .filter(f => f.endsWith('.md'))
     .sort();
@@ -28,7 +33,7 @@ app.get('/', (req, res) => {
 
   const html = fs.readFileSync(path.join(__dirname, 'views', 'index.html'), 'utf-8')
     .replace('{{EPISODES}}', episodes.map(ep =>
-      `<a href="/ep/${ep.slug}" class="episode-link">
+      `<a href="/book/${ep.slug}" class="episode-link">
         <span class="episode-num">${ep.slug.replace('ep_', '№')}</span>
         <span class="episode-title">${ep.title}</span>
       </a>`
@@ -37,8 +42,8 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-// Страница эпизода
-app.get('/ep/:slug', (req, res) => {
+// Книга — страница эпизода
+app.get('/book/:slug', (req, res) => {
   const slug = req.params.slug;
   const filePath = path.join(BOOK_DIR, slug + '.md');
 
@@ -59,12 +64,15 @@ app.get('/ep/:slug', (req, res) => {
 
   const html = template
     .replace('{{CONTENT}}', htmlContent)
-    .replace('{{PREV}}', prev ? `<a href="/ep/${prev}" class="nav-btn">← Предыдущий</a>` : '<span></span>')
-    .replace('{{NEXT}}', next ? `<a href="/ep/${next}" class="nav-btn">Следующий →</a>` : '<span></span>')
+    .replace('{{PREV}}', prev ? `<a href="/book/${prev}" class="nav-btn">← Предыдущий</a>` : '<span></span>')
+    .replace('{{NEXT}}', next ? `<a href="/book/${next}" class="nav-btn">Следующий →</a>` : '<span></span>')
     .replace('{{SLUG}}', slug);
 
   res.send(html);
 });
+
+// Старые ссылки: /ep/:slug → /book/:slug
+app.get('/ep/:slug', (req, res) => res.redirect(301, `/book/${req.params.slug}`));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n  Сервер запущен:\n`);

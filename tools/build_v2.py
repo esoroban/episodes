@@ -19,7 +19,6 @@ Usage:
 import argparse
 import pathlib
 import re
-import shutil
 import sys
 
 import yaml
@@ -86,11 +85,21 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
     }
 
 
+BACK_LINK = (
+    '<a href="/" style="display:inline-block;margin:0 auto 1rem;'
+    'max-width:720px;width:100%;color:#8a8a8a;font-size:0.85rem;'
+    'text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">'
+    '← Главное меню</a>\n'
+)
+
+
 def build_index(src: pathlib.Path) -> pathlib.Path:
     src_idx = src / "index.html"
     out_idx = OUT_DIR / "index.html"
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(src_idx, out_idx)
+    html = src_idx.read_text(encoding="utf-8")
+    html = html.replace("<body>", "<body>\n" + BACK_LINK, 1)
+    out_idx.write_text(html, encoding="utf-8")
     return out_idx
 
 
