@@ -441,7 +441,91 @@ body.debug-off .voice-subtitle { display: none; }
   .episode-header h1 { font-size: 1.3rem; }
 }
 </style>
-<style id="v2-prod-overrides">.ipe-debug{display:none!important}.scene{animation:none!important}</style>
+<style id="v2-prod-overrides">.ipe-debug{display:none!important}#v2-dbg-skip{position:fixed;bottom:16px;left:16px;z-index:220;background:rgba(0,0,0,0.55);color:#fff;border:1px solid rgba(255,255,255,0.22);border-radius:6px;padding:4px 10px;font-size:14px;line-height:1;font-family:-apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;opacity:0.5;display:none;}body.audio-mode #v2-dbg-skip{display:block}#v2-dbg-skip:hover{opacity:1}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}</style>
+<script id="v2-audio-done-tracker">
+(function () {
+  var playingSet = new Set();
+  var sceneStates = new WeakMap();
+
+  // Patch HTMLAudioElement.prototype.play: на первый play() на каждом
+  // аудио-элементе навешиваем трекинг. Работает для ЛЮБОГО способа
+  // создания: new Audio(), document.createElement("audio"), <audio>-тэгов.
+  var origPlay = HTMLAudioElement.prototype.play;
+  HTMLAudioElement.prototype.play = function () {
+    var a = this;
+    if (!a.__v2Tracked) {
+      a.__v2Tracked = true;
+      a.addEventListener("play",  function () { playingSet.add(a); });
+      a.addEventListener("pause", function () { playingSet.delete(a); });
+      a.addEventListener("ended", function () { playingSet.delete(a); });
+      a.addEventListener("error", function () { playingSet.delete(a); });
+    }
+    return origPlay.apply(a, arguments);
+  };
+
+  function anyPlaying() {
+    var r = false;
+    playingSet.forEach(function (a) { if (!a.paused && !a.ended) r = true; });
+    return r;
+  }
+
+  function check() {
+    var active = document.querySelector(".scene.active");
+    if (!active) return;
+    if (!document.body.classList.contains("audio-mode")) {
+      active.classList.add("audio-done");
+      return;
+    }
+    var st = sceneStates.get(active);
+    if (!st) { st = { enteredAt: Date.now(), hadAudio: false }; sceneStates.set(active, st); }
+    if (anyPlaying()) {
+      st.hadAudio = true;
+      active.classList.remove("audio-done");
+      return;
+    }
+    if (st.hadAudio) { active.classList.add("audio-done"); return; }
+    // Сцена без аудио → через 3 сек всё равно показать choice.
+    if (Date.now() - st.enteredAt > 3000) active.classList.add("audio-done");
+  }
+
+  function onSceneActivated(scene) {
+    sceneStates.set(scene, { enteredAt: Date.now(), hadAudio: false });
+    scene.classList.remove("audio-done");
+  }
+
+  function init() {
+    document.querySelectorAll("section.scene").forEach(function (s) {
+      var wasActive = s.classList.contains("active");
+      if (wasActive) onSceneActivated(s);
+      s.__v2WasActive = wasActive;
+      new MutationObserver(function () {
+        var nowActive = s.classList.contains("active");
+        if (nowActive && !s.__v2WasActive) onSceneActivated(s);
+        s.__v2WasActive = nowActive;
+      }).observe(s, { attributes: true, attributeFilter: ["class"] });
+    });
+    setInterval(check, 300);
+    // Debug-кнопка: скип текущей аудио-реплики.
+    var skipBtn = document.getElementById("v2-dbg-skip");
+    if (skipBtn) {
+      skipBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        playingSet.forEach(function (a) {
+          try { a.currentTime = (a.duration && isFinite(a.duration)) ? a.duration : 9999; } catch (_) {}
+          try { a.pause(); } catch (_) {}
+          try { a.dispatchEvent(new Event("ended")); } catch (_) {}
+        });
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
 </head>
 <body class="lang-uk">
 

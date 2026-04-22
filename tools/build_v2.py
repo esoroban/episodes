@@ -38,22 +38,123 @@ def load_public_url() -> str:
     return url
 
 
+BODY_DEBUG_BUTTON = (
+    '<button id="v2-dbg-skip" type="button" title="skip current audio (debug)" aria-label="Skip audio">⏭</button>\n'
+)
+
 PROD_OVERRIDES = (
     '<style id="v2-prod-overrides">'
-    # Debug-панель из image_prompts_experiment перекрывает #btnNext на мобилках
-    # (position:fixed; bottom:16px; right:16px; max-width:280px; z-index:9999).
-    # В проде она не нужна — скрываем.
+    # Debug-панель из image_prompts_experiment перекрывает #btnNext на мобилках.
     '.ipe-debug{display:none!important}'
-    # iOS Safari: у .scene стоит `animation: fadeIn` с transform:translateY().
-    # Даже по окончании анимации Safari на iOS оставляет element
-    # в качестве containing block для position:fixed-детей. В результате
-    # .story-choice (position:fixed; bottom:80px) привязывается к .scene
-    # (height~56px, overflow:hidden) → кнопки попадают за overflow и не видны.
-    # Решение: убрать анимацию на .scene. Остальные свойства (z-index,
-    # transform:translateZ) НЕ трогать — в audio-off режиме они ломают
-    # вёрстку субтитровой плашки с narratives.
+    # Debug skip-audio кнопка — маленькая, слева снизу, чтобы не мешала навигации.
+    # Видна только в audio-mode (в text-mode аудио не играет).
+    '#v2-dbg-skip{'
+    'position:fixed;bottom:16px;left:16px;z-index:220;'
+    'background:rgba(0,0,0,0.55);color:#fff;'
+    'border:1px solid rgba(255,255,255,0.22);border-radius:6px;'
+    'padding:4px 10px;font-size:14px;line-height:1;'
+    'font-family:-apple-system,BlinkMacSystemFont,sans-serif;'
+    'cursor:pointer;opacity:0.5;display:none;'
+    '}'
+    'body.audio-mode #v2-dbg-skip{display:block}'
+    '#v2-dbg-skip:hover{opacity:1}'
+    # iOS Safari: `animation: fadeIn` с transform:translateY() на .scene
+    # оставляет element в качестве containing block для position:fixed
+    # даже после анимации → .story-choice (fixed;bottom:80px) попадает за
+    # overflow:hidden. Убираем анимацию.
     '.scene{animation:none!important}'
+    # UX: в audio-mode кнопки выбора бранча должны появляться ТОЛЬКО после
+    # того, как автор дочитал текст. Класс `.audio-done` ставится JS-ом
+    # (см. <script id="v2-audio-done-tracker"> ниже) когда Audio-очередь
+    # для активной сцены опустела. В text-mode класс ставится сразу.
+    'body.audio-mode section.scene:not(.audio-done) .story-choice{'
+    'display:none!important'
+    '}'
     '</style>\n'
+    '<script id="v2-audio-done-tracker">\n'
+    '(function () {\n'
+    '  var playingSet = new Set();\n'
+    '  var sceneStates = new WeakMap();\n'
+    '\n'
+    '  // Patch HTMLAudioElement.prototype.play: на первый play() на каждом\n'
+    '  // аудио-элементе навешиваем трекинг. Работает для ЛЮБОГО способа\n'
+    '  // создания: new Audio(), document.createElement("audio"), <audio>-тэгов.\n'
+    '  var origPlay = HTMLAudioElement.prototype.play;\n'
+    '  HTMLAudioElement.prototype.play = function () {\n'
+    '    var a = this;\n'
+    '    if (!a.__v2Tracked) {\n'
+    '      a.__v2Tracked = true;\n'
+    '      a.addEventListener("play",  function () { playingSet.add(a); });\n'
+    '      a.addEventListener("pause", function () { playingSet.delete(a); });\n'
+    '      a.addEventListener("ended", function () { playingSet.delete(a); });\n'
+    '      a.addEventListener("error", function () { playingSet.delete(a); });\n'
+    '    }\n'
+    '    return origPlay.apply(a, arguments);\n'
+    '  };\n'
+    '\n'
+    '  function anyPlaying() {\n'
+    '    var r = false;\n'
+    '    playingSet.forEach(function (a) { if (!a.paused && !a.ended) r = true; });\n'
+    '    return r;\n'
+    '  }\n'
+    '\n'
+    '  function check() {\n'
+    '    var active = document.querySelector(".scene.active");\n'
+    '    if (!active) return;\n'
+    '    if (!document.body.classList.contains("audio-mode")) {\n'
+    '      active.classList.add("audio-done");\n'
+    '      return;\n'
+    '    }\n'
+    '    var st = sceneStates.get(active);\n'
+    '    if (!st) { st = { enteredAt: Date.now(), hadAudio: false }; sceneStates.set(active, st); }\n'
+    '    if (anyPlaying()) {\n'
+    '      st.hadAudio = true;\n'
+    '      active.classList.remove("audio-done");\n'
+    '      return;\n'
+    '    }\n'
+    '    if (st.hadAudio) { active.classList.add("audio-done"); return; }\n'
+    '    // Сцена без аудио → через 3 сек всё равно показать choice.\n'
+    '    if (Date.now() - st.enteredAt > 3000) active.classList.add("audio-done");\n'
+    '  }\n'
+    '\n'
+    '  function onSceneActivated(scene) {\n'
+    '    sceneStates.set(scene, { enteredAt: Date.now(), hadAudio: false });\n'
+    '    scene.classList.remove("audio-done");\n'
+    '  }\n'
+    '\n'
+    '  function init() {\n'
+    '    document.querySelectorAll("section.scene").forEach(function (s) {\n'
+    '      var wasActive = s.classList.contains("active");\n'
+    '      if (wasActive) onSceneActivated(s);\n'
+    '      s.__v2WasActive = wasActive;\n'
+    '      new MutationObserver(function () {\n'
+    '        var nowActive = s.classList.contains("active");\n'
+    '        if (nowActive && !s.__v2WasActive) onSceneActivated(s);\n'
+    '        s.__v2WasActive = nowActive;\n'
+    '      }).observe(s, { attributes: true, attributeFilter: ["class"] });\n'
+    '    });\n'
+    '    setInterval(check, 300);\n'
+    '    // Debug-кнопка: скип текущей аудио-реплики.\n'
+    '    var skipBtn = document.getElementById("v2-dbg-skip");\n'
+    '    if (skipBtn) {\n'
+    '      skipBtn.addEventListener("click", function (e) {\n'
+    '        e.stopPropagation();\n'
+    '        playingSet.forEach(function (a) {\n'
+    '          try { a.currentTime = (a.duration && isFinite(a.duration)) ? a.duration : 9999; } catch (_) {}\n'
+    '          try { a.pause(); } catch (_) {}\n'
+    '          try { a.dispatchEvent(new Event("ended")); } catch (_) {}\n'
+    '        });\n'
+    '      });\n'
+    '    }\n'
+    '  }\n'
+    '\n'
+    '  if (document.readyState === "loading") {\n'
+    '    document.addEventListener("DOMContentLoaded", init);\n'
+    '  } else {\n'
+    '    init();\n'
+    '  }\n'
+    '})();\n'
+    '</script>\n'
 )
 
 
@@ -80,8 +181,10 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
 
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
-    # Скрыть debug-панель на проде (перекрывает #btnNext на мобилках).
+    # Инжекция prod-overrides (CSS + audio-done tracker) в <head>
+    # и debug-skip-кнопки сразу после <body>.
     html = html.replace("</head>", PROD_OVERRIDES + "</head>", 1)
+    html = html.replace("<body>", "<body>\n" + BODY_DEBUG_BUTTON, 1)
     return html, n_audio, n_images
 
 
