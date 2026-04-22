@@ -38,6 +38,16 @@ def load_public_url() -> str:
     return url
 
 
+PROD_OVERRIDES = (
+    '<style id="v2-prod-overrides">'
+    # Debug-панель из image_prompts_experiment перекрывает #btnNext на мобилках
+    # (position:fixed; bottom:16px; right:16px; max-width:280px; z-index:9999).
+    # В проде она не нужна — скрываем.
+    '.ipe-debug{display:none!important}'
+    '</style>\n'
+)
+
+
 def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
     """Return (rewritten_html, n_audio, n_images) counts of rewrites done."""
     base = f"{public_url}/ep_{nnn}"
@@ -61,6 +71,8 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
 
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
+    # Скрыть debug-панель на проде (перекрывает #btnNext на мобилках).
+    html = html.replace("</head>", PROD_OVERRIDES + "</head>", 1)
     return html, n_audio, n_images
 
 
