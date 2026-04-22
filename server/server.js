@@ -10,6 +10,7 @@ const BOOK_DIR = path.join(__dirname, 'book');
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/game', express.static(path.join(__dirname, 'game')));
+app.use('/v2', express.static(path.join(__dirname, 'v2')));
 
 // Главная — список эпизодов
 app.get('/', (req, res) => {

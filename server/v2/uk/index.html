@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сила Слова — combined</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0d0d12;
+  --card: #16161e;
+  --border: #2a2a35;
+  --text: #e8e6e3;
+  --muted: #8a8a8a;
+  --accent: #c7b8e8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 2.5rem 1rem;
+  background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+h1 {
+  margin: 0 auto 0.4rem; max-width: 720px;
+  font-size: 1.55rem; font-weight: 600;
+}
+.sub {
+  margin: 0 auto 2rem; max-width: 720px;
+  color: var(--muted); font-size: 0.88rem;
+}
+.grid {
+  margin: 0 auto; max-width: 720px;
+  display: grid; gap: 0.65rem;
+}
+.ep {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 1rem 1.2rem;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  text-decoration: none; color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+}
+.ep.ready:hover { border-color: var(--accent); background: #1c1c28; }
+.ep.not-ready { opacity: 0.45; cursor: not-allowed; }
+.ep-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem; color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.ep-title { font-size: 1rem; flex: 1 1 auto; }
+.ep-meta {
+  color: var(--muted); font-size: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.ep-status {
+  font-size: 0.68rem; padding: 0.22rem 0.5rem; border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.05em;
+}
+.ep.ready .ep-status { background: rgba(199,184,232,0.18); color: var(--accent); }
+.ep.not-ready .ep-status { background: rgba(255,255,255,0.05); color: var(--muted); }
+footer {
+  margin: 3rem auto 0; max-width: 720px;
+  color: #555; font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+<h1>Сила Слова — combined</h1>
+<p class="sub">Склейка voice + image: текст по дефолту, аудио по тоглу справа сверху, иллюстрации всегда видны.</p>
+<div class="grid">
+<a class="ep ready" href="ep_001/ep_001.html"><span class="ep-id">EP 001</span><span class="ep-title">Ранок без сестри</span><span class="ep-meta">14 илл · 134 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_002/ep_002.html"><span class="ep-id">EP 002</span><span class="ep-title">Неправда та її види</span><span class="ep-meta">14 илл · 142 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_003/ep_003.html"><span class="ep-id">EP 003</span><span class="ep-title">Хитрі твердження</span><span class="ep-meta">17 илл · 134 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_004/ep_004.html"><span class="ep-id">EP 004</span><span class="ep-title">Детектив правди</span><span class="ep-meta">13 илл · 149 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_005/ep_005.html"><span class="ep-id">EP 005</span><span class="ep-title">Якщо вірно — вірно завжди</span><span class="ep-meta">12 илл · 138 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_006/ep_006.html"><span class="ep-id">EP 006</span><span class="ep-title">Світлофор</span><span class="ep-meta">8 илл · 76 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_007/ep_007.html"><span class="ep-id">EP 007</span><span class="ep-title">47</span><span class="ep-meta">8 илл · 84 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_008/ep_008.html"><span class="ep-id">EP 008</span><span class="ep-title">Ляльковод</span><span class="ep-meta">11 илл · 132 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_009/ep_009.html"><span class="ep-id">EP 009</span><span class="ep-title">Три цілі суперечки</span><span class="ep-meta">17 илл · 142 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_010/ep_010.html"><span class="ep-id">EP 010</span><span class="ep-title">Розвідник</span><span class="ep-meta">19 илл · 156 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_011/ep_011.html"><span class="ep-id">EP 011</span><span class="ep-title">Перший, хто чує</span><span class="ep-meta">19 илл · 124 audio</span><span class="ep-status">READY</span></a>
+<a class="ep ready" href="ep_012/ep_012.html"><span class="ep-id">EP 012</span><span class="ep-title">Формула висловлювання</span><span class="ep-meta">17 илл · 135 audio</span><span class="ep-status">READY</span></a>
+</div>
+<footer>12/12 episodes ready</footer>
+</body>
+</html>
