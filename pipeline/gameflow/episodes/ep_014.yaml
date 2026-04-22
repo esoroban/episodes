@@ -507,7 +507,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Девочка в толпе: улыбка широкая, глаза сияют. Какая эмоция?"
     options:
@@ -545,7 +545,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Старик у стены: брови сдвинуты, губы сжаты в линию. Какая эмоция?"
     options:
@@ -583,7 +583,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Мальчик рядом с Марко: уголки рта опущены, глаза тусклые. Какая эмоция?"
     options:
@@ -621,7 +621,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Группа подростков: смеются, хлопают, толкают друг друга. Какая эмоция?"
     options:
@@ -659,7 +659,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Мужчина в капюшоне: кулаки сжаты, лицо красное. Какая эмоция?"
     options:
@@ -697,7 +697,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Девочка в заднем ряду: голова опущена, плечи подняты, как будто хочет стать меньше. Какая эмоция?"
     options:
@@ -784,7 +784,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Рей: «Отлично!» — звонко, с подъёмом, глаза горят. Какое настроение?"
     options:
@@ -822,7 +822,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Рей тихо, мальчику, который задал вопрос: «Отлично...» — медленно, с лёгкой усмешкой, глаза прищурены. Какое настроение?"
     options:
@@ -860,7 +860,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Рей за сценой, себе под нос: «ОТЛИЧНО.» — сквозь зубы, голос низкий, пауза после слова. Какое настроение?"
     options:
@@ -898,7 +898,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Рей отвечает на жалобу: «Ну ладно.» — мягко, с теплом. Какое настроение?"
     options:
@@ -936,7 +936,7 @@ scenes:
     scene_type: quiz
     location: "Зеркальный Город, Рекламная улица (в толпе)"
     time: "день"
-    characters_present: [Марко]
+    characters_present: [Марко, Софа]
     interaction_type: vote
     question: "Рей, когда ему напоминают о правилах: «Ну ладно...» — с выдохом, закатывает глаза. Какое настроение?"
     options:
