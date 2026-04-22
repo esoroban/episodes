@@ -44,17 +44,15 @@ PROD_OVERRIDES = (
     # (position:fixed; bottom:16px; right:16px; max-width:280px; z-index:9999).
     # В проде она не нужна — скрываем.
     '.ipe-debug{display:none!important}'
-    # iOS Safari: position:fixed внутри .scene с animation+overflow:hidden
-    # кидает .story-choice в неправильный containing block → кнопки не видны
-    # в audio-mode. Уберём animation у .scene и форсируем story-choice
-    # в собственный composition layer + учтём safe-area (bottom bar Safari).
+    # iOS Safari: у .scene стоит `animation: fadeIn` с transform:translateY().
+    # Даже по окончании анимации Safari на iOS оставляет element
+    # в качестве containing block для position:fixed-детей. В результате
+    # .story-choice (position:fixed; bottom:80px) привязывается к .scene
+    # (height~56px, overflow:hidden) → кнопки попадают за overflow и не видны.
+    # Решение: убрать анимацию на .scene. Остальные свойства (z-index,
+    # transform:translateZ) НЕ трогать — в audio-off режиме они ломают
+    # вёрстку субтитровой плашки с narratives.
     '.scene{animation:none!important}'
-    '.story-choice{'
-    'bottom:calc(80px + env(safe-area-inset-bottom,0px))!important;'
-    'z-index:100!important;'
-    'transform:translateZ(0);'
-    '-webkit-transform:translateZ(0);'
-    '}'
     '</style>\n'
 )
 
