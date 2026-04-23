@@ -73,20 +73,18 @@ PROD_OVERRIDES = (
     'body.audio-mode section.scene:not(.audio-done) .story-choice{'
     'display:none!important'
     '}'
-    # Belt-and-suspenders: на iOS Safari на сцене 3 были зафиксированы
-    # невидимые (но кликабельные) .choice-option — значит что-то в
-    # cascade делает opacity:0 или прозрачный color. Форсируем видимость.
-    '.story-choice,.story-choice .choice-question,.story-choice .choice-option{'
-    'opacity:1!important;visibility:visible!important'
-    '}'
-    '.story-choice .choice-option{'
-    'background:#c7b8e8!important;color:#15131c!important;'
-    'border:1px solid rgba(0,0,0,0.2)!important;'
-    'font-weight:600!important'
-    '}'
-    '.story-choice .choice-question{'
-    'color:#fff!important;'
-    'background:rgba(0,0,0,0.75)!important'
+    # --- Фикс невидимых choice-кнопок на iOS Safari ---
+    # Гипотеза: .story-choice (position:fixed) внутри активной .scene,
+    # у которой overflow:hidden, на iOS хит-тестится по viewport, но
+    # ПАЙНТ клиппится ancestor layer-ом. Даёт ровно симптом: DOM есть,
+    # tap работает, на экране ничего. Лечим overflow на активной сцене.
+    'body.audio-mode section.scene.active{overflow:visible!important}'
+    # Дополнительно: у .nav-bar базовое правило ставит backdrop-filter:
+    # blur(12px). На iOS это — классический триггер странного
+    # compositing-поведения соседних fixed-слоёв. Сбрасываем.
+    '.nav-bar{'
+    '-webkit-backdrop-filter:none!important;'
+    'backdrop-filter:none!important'
     '}'
     '</style>\n'
     '<script id="v2-audio-done-tracker">\n'
