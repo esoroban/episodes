@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-23T06:27:07Z",
+  "generated_at": "2026-04-23T08:59:29Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -361,12 +361,12 @@
         "ru": {
           "html": "ru/ep_017.html",
           "data": "ru/ep_017.json",
-          "content_hash": "04474dab654230c1"
+          "content_hash": "e154cb5a295d1a54"
         }
       },
       "title_ru": "Семь звеньев",
       "lesson": "5A.1",
-      "scene_count": 30,
+      "scene_count": 29,
       "quiz_count": 14,
       "branch_count": 1
     },
@@ -377,7 +377,7 @@
         "ru": {
           "html": "ru/ep_018.html",
           "data": "ru/ep_018.json",
-          "content_hash": "721e2b351b2fc567"
+          "content_hash": "b313145d1263eade"
         }
       },
       "title_ru": "Дерево связей",
@@ -393,7 +393,7 @@
         "ru": {
           "html": "ru/ep_019.html",
           "data": "ru/ep_019.json",
-          "content_hash": "572b980947573a28"
+          "content_hash": "1002b453be860e8b"
         }
       },
       "title_ru": "О чём мы вообще спорим?",
@@ -409,12 +409,12 @@
         "ru": {
           "html": "ru/ep_020.html",
           "data": "ru/ep_020.json",
-          "content_hash": "160af0177325a516"
+          "content_hash": "f1ce2dd0bad58850"
         }
       },
       "title_ru": "Мам, я бы тоже выбрала его",
       "lesson": "5B.3",
-      "scene_count": 25,
+      "scene_count": 26,
       "quiz_count": 14,
       "branch_count": 1
     }
