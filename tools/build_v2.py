@@ -198,16 +198,23 @@ PROD_OVERRIDES = (
 )
 
 
-def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
-    """Return (rewritten_html, n_audio, n_images) counts of rewrites done."""
+def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, int]:
+    """Return (rewritten_html, n_audio, n_images, n_chat_images) counts."""
     base = f"{public_url}/ep_{nnn}"
 
-    # Match "audio/<filename>" or "images/<filename>" in double quotes
+    # Match "audio/<filename>" or "images/<filename>" in double quotes.
     audio_pat = re.compile(r'"audio/([^"]+)"')
     image_pat = re.compile(r'"images/([^"]+)"')
+    # chat_images в source'е лежат в `data-chat-messages`-атрибуте,
+    # который HTML-encoded: внутри него JSON-кавычки записаны как &quot;,
+    # а путь — `../chat_images/FILE` (относительный из-за JS-префикса
+    # `images/`, см. ниже). Переписываем на абсолютный CDN URL и дальше
+    # патчим JS, чтобы он не префиксил абсолютные URL.
+    chat_img_pat = re.compile(r'&quot;\.\./chat_images/([^&]+)&quot;')
 
     n_audio = 0
     n_images = 0
+    n_chat = 0
 
     def sub_audio(m: re.Match) -> str:
         nonlocal n_audio
@@ -219,8 +226,25 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
         n_images += 1
         return f'"{base}/images/{m.group(1)}"'
 
+    def sub_chat_img(m: re.Match) -> str:
+        nonlocal n_chat
+        n_chat += 1
+        return f'&quot;{base}/chat_images/{m.group(1)}&quot;'
+
+    # ПЕРВЫМ: патч JS-рендера addImage. В source-коде строка:
+    #   '<img src="images/'+m.src+'"
+    # То есть внутри src="..." сидит JS-конкатенация. Если сперва прогнать
+    # image_pat regex, он захватит `"images/'+m.src+'"` как одну пару и
+    # впишет CDN — строка развалится. Поэтому патчим JS РАНЬШЕ image/chat.
+    # После патча m.src (абсолютный CDN для chat_images) летит в src без
+    # префикса, обычные имена файлов префиксятся `images/`.
+    old_js = '\'<img src="images/\'+m.src+\'"'
+    new_js = '\'<img src="\'+(/:\\/\\//.test(m.src)?m.src:"images/"+m.src)+\'"'
+    html = html.replace(old_js, new_js)
+
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
+    html = chat_img_pat.sub(sub_chat_img, html)
     # Сократить `pause_after_ms` между репликами в 4 раза (150→38, 400→100,
     # 800→200). Источник ставит 150/400/800 мс — для живой аудио-драмы это
     # много, особенно при ×2 playbackRate в debug-режиме. Делим на 4.
@@ -233,7 +257,7 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
     # и debug-skip-кнопки сразу после <body>.
     html = html.replace("</head>", PROD_OVERRIDES + "</head>", 1)
     html = html.replace("<body>", "<body>\n" + BODY_DEBUG_BUTTON, 1)
-    return html, n_audio, n_images
+    return html, n_audio, n_images, n_chat
 
 
 def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
@@ -242,7 +266,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         return {"nnn": nnn, "skipped": True, "reason": f"missing {src_html}"}
 
     html = src_html.read_text(encoding="utf-8")
-    rewritten, n_audio, n_images = rewrite_html(html, public_url, nnn)
+    rewritten, n_audio, n_images, n_chat = rewrite_html(html, public_url, nnn)
 
     out_html = OUT_DIR / f"ep_{nnn}" / f"ep_{nnn}.html"
     out_html.parent.mkdir(parents=True, exist_ok=True)
@@ -253,6 +277,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         "skipped": False,
         "audio": n_audio,
         "images": n_images,
+        "chat_images": n_chat,
         "out": out_html,
     }
 
@@ -280,7 +305,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "episodes",
         nargs="*",
-        help="Episode numbers (e.g. 1 2 5). Default — all 1..12",
+        help="Episode numbers (e.g. 1 2 5). Default — all 1..16",
     )
     p.add_argument("--src", default=str(DEFAULT_SRC))
     return p.parse_args()
@@ -301,7 +326,7 @@ def main() -> int:
     if args.episodes:
         nums = [int(x) for x in args.episodes]
     else:
-        nums = list(range(1, 13))
+        nums = list(range(1, 17))
     nnns = [f"{n:03d}" for n in nums]
 
     idx_out = build_index(src)
@@ -309,6 +334,7 @@ def main() -> int:
 
     total_audio = 0
     total_images = 0
+    total_chat = 0
     built = 0
     skipped = []
     for nnn in nnns:
@@ -320,12 +346,15 @@ def main() -> int:
         built += 1
         total_audio += r["audio"]
         total_images += r["images"]
+        total_chat += r["chat_images"]
         print(f"ep_{nnn}     → {r['out'].relative_to(REPO)}  "
-              f"(audio: {r['audio']}, images: {r['images']})")
+              f"(audio: {r['audio']}, images: {r['images']}, "
+              f"chat_images: {r['chat_images']})")
 
     print()
     print(f"built {built}/{len(nnns)} episodes")
-    print(f"rewrites — audio: {total_audio}, images: {total_images}")
+    print(f"rewrites — audio: {total_audio}, images: {total_images}, "
+          f"chat_images: {total_chat}")
     if skipped:
         print(f"skipped {len(skipped)}:")
         for nnn, reason in skipped:
