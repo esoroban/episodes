@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-23T10:18:07Z",
+  "generated_at": "2026-04-23T10:28:55Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -377,7 +377,7 @@
         "ru": {
           "html": "ru/ep_018.html",
           "data": "ru/ep_018.json",
-          "content_hash": "b313145d1263eade"
+          "content_hash": "7fbc3991fac5ee31"
         }
       },
       "title_ru": "Дерево связей",
