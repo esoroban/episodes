@@ -221,6 +221,14 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int]:
 
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
+    # Сократить `pause_after_ms` между репликами в 4 раза (150→38, 400→100,
+    # 800→200). Источник ставит 150/400/800 мс — для живой аудио-драмы это
+    # много, особенно при ×2 playbackRate в debug-режиме. Делим на 4.
+    pause_pat = re.compile(r'"pause_after_ms"\s*:\s*(\d+)')
+    html = pause_pat.sub(
+        lambda m: f'"pause_after_ms": {round(int(m.group(1)) / 4)}',
+        html,
+    )
     # Инжекция prod-overrides (CSS + audio-done tracker) в <head>
     # и debug-skip-кнопки сразу после <body>.
     html = html.replace("</head>", PROD_OVERRIDES + "</head>", 1)
