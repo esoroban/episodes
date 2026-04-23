@@ -314,6 +314,28 @@ body.lang-uk .scene-meta { display: none !important; }
   0%,60%,100% { transform: translateY(0); opacity: 0.35; }
   30% { transform: translateY(-4px); opacity: 1; }
 }
+/* Chat-image (Софа шлёт фото в чат) */
+.bubble.image-bubble { padding: 4px 4px 6px 4px; max-width: 260px; }
+.bubble.image-bubble .sender-name { padding: 2px 6px 4px; }
+.chat-image {
+  width: 100%; border-radius: 8px; overflow: hidden; background: #e8e8ec;
+  min-height: 140px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.chat-image img { display: block; width: 100%; height: auto; }
+.chat-image-fallback {
+  display: none;
+  padding: 10px 12px; font-size: 11px; color: #555; font-style: italic;
+  line-height: 1.35; text-align: left;
+}
+.chat-image.missing { background: #d8d8dc; }
+.chat-image.missing .chat-image-fallback { display: block; }
+.chat-image.missing img { display: none; }
+.chat-image-caption {
+  padding: 6px 8px 2px; font-size: 11px; color: #666; line-height: 1.3;
+}
+.bubble.image-bubble .msg-time { padding: 0 8px; }
+
 /* Voice messages */
 .voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
 .voice-play {
@@ -456,7 +478,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep012_s01" data-index="0" data-next="ep012_s01_sofa">
     <div class="scene-header">
-      <span class="scene-counter">1 / 21</span>
+      <span class="scene-counter">1 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">тривога, обладнання</div></details>
     </div>
     <div class="scene-content">
@@ -471,7 +493,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s01_sofa" data-index="1" data-next="ep012_s01b">
     <div class="scene-header">
-      <span class="scene-counter">2 / 21</span>
+      <span class="scene-counter">2 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">розпізнавання в чаті</div></details>
     </div>
     <div class="scene-content">
@@ -481,11 +503,15 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s01b" data-index="2" data-next="ep012_s01a1">
     <div class="scene-header">
-      <span class="scene-counter">3 / 21</span>
+      <span class="scene-counter">3 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">тривога, невідповідність слів і тіла</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона: тесная комната, книги, карта на столе<br><span class="vb-label">Атмосфера:</span> слова говорят одно, тело — другое<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> рассогласование слов и тела Леона<br><span class="vb-label">Марко:</span> настороженность, наблюдает тело, стоит, смотрит на Леона<br><span class="vb-label">Леон:</span> тяжесть, уходит в воспоминание, сидит за столом<br><span class="vb-label">Предметы:</span> книги, карта на столе</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Леон:</span> — Колишнє обладнання. Послухай, хлопче. Система не завжди була такою. Був чоловік — вчитель. Найкращий у місті. Він...</p></div><div class="author-text"><p>Леон кліпає. Ліве око — карє, тепле. Праве — карє.</p>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона: тесная комната, книги, карта на столе<br><span class="vb-label">Атмосфера:</span> слова говорят одно, тело — другое<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> рассогласование слов и тела Леона<br><span class="vb-label">Марко:</span> настороженность, наблюдает тело, стоит, смотрит на Леона<br><span class="vb-label">Леон:</span> тяжесть, уходит в воспоминание, сидит за столом<br><span class="vb-label">Предметы:</span> книги, карта на столе</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Леон:</span> — Колишнє обладнання. Система стежить за словами. Тому — швидко.</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Послухай, хлопче. Одна річ. Найважливіша.</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — У цьому Місті є людина, яку ти зустрінеш сьогодні. Можливо, вже зустрічав. Тепла. Турботлива. З м&#x27;яким голосом.</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Не довіряй їй. Не розповідай нічого. Навіть якщо буде страшно, навіть якщо обійме.</p>
+<p class="dl-char"><span class="dl-who">Леон:</span> — Я не можу сказати ім&#x27;я — мене стирає якраз за це. Але ти дізнаєшся. За відчуттям «мені стало правильно, мені стало тепло». Це — гачок. Іди від тепла, Марку.</p></div><div class="author-text"><p>Леон кліпає. Ліве око — карє, тепле. Праве — карє.</p>
 <p>«Він вважав, що діти не мають...»</p>
 <p>Але тіло кричить навпаки. Марко дивиться — як навчив Макс: не на слова, а на плечі, на руки, на погляд.</p></div>
     <div class="story-choice">
@@ -499,7 +525,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s01a1" data-index="3" data-next="ep012_s01a2">
     <div class="scene-header">
-      <span class="scene-counter">4 / 21</span>
+      <span class="scene-counter">4 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">візуальний доказ стирання</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -509,7 +535,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s01a2" data-index="4" data-next="ep012_s02" data-merge-to="ep012_s02">
     <div class="scene-header">
-      <span class="scene-counter">5 / 21</span>
+      <span class="scene-counter">5 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">список — Леон наступний</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -519,7 +545,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s01b1" data-index="5" data-next="ep012_s01b2">
     <div class="scene-header">
-      <span class="scene-counter">6 / 21</span>
+      <span class="scene-counter">6 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">визнання приреченого</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -530,7 +556,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s01b2" data-index="6" data-next="ep012_s02" data-merge-to="ep012_s02">
     <div class="scene-header">
-      <span class="scene-counter">7 / 21</span>
+      <span class="scene-counter">7 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">стирання зсередини</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -540,7 +566,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s02" data-index="7" data-next="ep012_s03">
     <div class="scene-header">
-      <span class="scene-counter">8 / 21</span>
+      <span class="scene-counter">8 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Леон</div><div class="scene-mood">шок — союзник стертий посеред фрази</div></details>
     </div>
     <div class="scene-content">
@@ -558,7 +584,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep012_s03" data-index="8" data-next="ep012_s04">
     <div class="scene-header">
-      <span class="scene-counter">9 / 21</span>
+      <span class="scene-counter">9 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">порожнеча після стирання</div></details>
     </div>
     <div class="scene-content">
@@ -569,7 +595,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s04" data-index="9" data-next="ep012_s04d1">
     <div class="scene-header">
-      <span class="scene-counter">10 / 21</span>
+      <span class="scene-counter">10 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">тепло після шоку — але тепло чи ні?</div></details>
     </div>
     <div class="scene-content">
@@ -589,7 +615,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s04d1" data-index="10" data-next="ep012_s04d2">
     <div class="scene-header">
-      <span class="scene-counter">11 / 21</span>
+      <span class="scene-counter">11 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">запитання сховане в турботу</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -600,7 +626,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s04d2" data-index="11" data-next="ep012_s05" data-merge-to="ep012_s05">
     <div class="scene-header">
-      <span class="scene-counter">12 / 21</span>
+      <span class="scene-counter">12 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Вера</div><div class="scene-mood">інформація пішла — безкоштовно</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -615,7 +641,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep012_s05" data-index="12" data-next="ep012_s05_sofa">
     <div class="scene-header">
-      <span class="scene-counter">13 / 21</span>
+      <span class="scene-counter">13 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">урок із болю — формула замість крику</div></details>
     </div>
     <div class="scene-content">
@@ -631,7 +657,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s05_sofa" data-index="13" data-blocking="true" data-next="ep012_s12">
     <div class="scene-header">
-      <span class="scene-counter">14 / 21</span>
+      <span class="scene-counter">14 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">формула в чаті</div></details>
     </div>
     <div class="scene-content">
@@ -641,7 +667,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep012_s12" data-index="14" data-next="ep012_s12_sofa">
     <div class="scene-header">
-      <span class="scene-counter">15 / 21</span>
+      <span class="scene-counter">15 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">вина</div></details>
     </div>
     <div class="scene-content">
@@ -651,7 +677,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep012_s12_sofa" data-index="15" data-next="ep012_s12_choice">
     <div class="scene-header">
-      <span class="scene-counter">16 / 21</span>
+      <span class="scene-counter">16 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">правило в чаті</div></details>
     </div>
     <div class="scene-content">
@@ -661,7 +687,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-choice" data-scene-id="ep012_s12_choice" data-index="16" data-next="ep012_s12d1">
     <div class="scene-header">
-      <span class="scene-counter">17 / 21</span>
+      <span class="scene-counter">17 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">вибір дії</div></details>
     </div>
     <div class="scene-content">
@@ -677,7 +703,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s12d1" data-index="17" data-next="ep012_s12d2">
     <div class="scene-header">
-      <span class="scene-counter">18 / 21</span>
+      <span class="scene-counter">18 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">тихі улюбці</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -687,7 +713,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep012_s12d2" data-index="18" data-next="ep012_s12d3">
     <div class="scene-header">
-      <span class="scene-counter">19 / 21</span>
+      <span class="scene-counter">19 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">фізична улюбка — підбори Віри</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -697,7 +723,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue scene-branch-card" data-scene-id="ep012_s12d3" data-index="19" data-next="ep012_s13" data-merge-to="ep012_s13">
     <div class="scene-header">
-      <span class="scene-counter">20 / 21</span>
+      <span class="scene-counter">20 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">хронологія улюбок</div><div class="scene-branch">🌿 Бонусная сцена</div><div class="scene-flags-inner">🏁 found_vera_traces</div></details>
     </div>
     <div class="scene-content">
@@ -705,13 +731,28 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep012_s13" data-index="20" data-blocking="true" data-next="ep013_s01" data-next-ep="ep_013.html">
+  <section class="scene scene-dialogue" data-scene-id="ep012_s13" data-index="20" data-blocking="true" data-next="ep012_s23_end">
     <div class="scene-header">
-      <span class="scene-counter">21 / 21</span>
+      <span class="scene-counter">21 / 22</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">мобілізація — всі три інструменти</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, экран телефона<br><span class="vb-label">Атмосфера:</span> собрать всё вместе<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три инструмента разведчика<br><span class="vb-label">Марко:</span> решимость, смотрит на экран<br><span class="vb-label">Предметы:</span> {&#x27;экран с тремя инструментами&#x27;: &#x27;тормоз&#x27;}, зеркало, карта</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Три інструменти. Який із них використано? Співпереживання, активне слухання чи формула висловлювання?&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко говорить Максу: «Я бачу, що тобі важко. Мені теж буває так. Давай поговоримо?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Скільки кроків? Спостереження, почуття, пропозиція — що це?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження — почуття — пропозиція. Усі три кроки! Формула.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Ліні: «Тобто ти хочеш, щоб ми використовували артефакти тільки в крайньому разі?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Повторює чужі слова? Чи говорить свої?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;\&quot;Тобто ти хочеш...\&quot; — переказ! Дзеркало. Активне слухання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Тобі, мабуть, прикро, коли кажуть «будь сильним»?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Чиї почуття називає? Свої чи чужі?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Заглянув у чужу душу. Гальмо. Співпереживання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я помітила, що ти взяв мій гумку. Мені неприємно. Давай будемо питати?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Три кроки: що бачу, що відчуваю, що пропоную. Усі три є?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження, почуття, пропозиція — три кроки! Формула.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Чи правильно я зрозумів, що тобі не подобається, коли я жартую про твій рюкзак?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Перепитує, щоб переконатись. Який прийом?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;\&quot;Чи правильно я зрозумів...\&quot; — переказ! Дзеркало. Активне слухання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко дивиться на порожній стілець Леона.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко: «Я бачу, що це було важливо — те, що він хотів сказати.» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Чиї почуття? Свої чи чужі?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Побачив, що важливо, і сказав. Співпереживання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Я бачу, що ти засмучений. Тобто ти хочеш знайти брата? Давай подумаємо, як.» Які інструменти?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Всі три&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Порахуй: побачив почуття, повторив суть, запропонував рішення. Скільки інструментів?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Всі три! Співпереживання — побачив почуття. Переказ — повторив суть. Формула — спостереження + почуття + пропозиція.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Віра обійняла Марка і сказала: «Бідолашний хлопчику. Розкажи мені все.» Чи використала Віра формулу висловлювання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, формула&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Ні, не формула&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Три кроки є? Спостереження? Почуття? Пропозиція? Чи просто — «розкажи»?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Віра НЕ описала спостереження, НЕ запропонувала рішення. Вона попросила — і отримала. Турбота без формули.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко міг би сказати Вірі: «Я бачу, що Леон стертий. Мені страшно. Давайте розберемось разом.» Це формула?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, формула&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ні, не формула&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Три кроки: бачу, відчуваю, пропоную. Всі три є?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження, почуття, пропозиція. Формула б захистила — Марко контролював би, що розповідати.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Марку. Ти приходив до Леона чотири рази. Щоразу Голос дізнавався. Леон стертий. І ти щойно розповів Вірі — все. Запитання... кому потрапить інформація цього разу?&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Число: 39.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко дивиться на свої руки. На них ще тепло від обіймів Віри.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;«Я мав мовчати?»&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Софа мовчить. Екран мигтить. Мигтить. Гасне.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко стоїть у домі Леона. Стілець охолов. Чай — холодний. На стіні — число 39. Вранці було 40. Мінус один — за кілька годин.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Три інструменти розвідника. Гальмо — відчуй. Дзеркало — повтори. Карта — скажи про себе. Марко знає всі три. Але проти обіймів Віри жоден із них не спрацював.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Бо найнебезпечніший солдат — той, який виглядає як друг.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Число 39. Софа не відповідає. Леона більше немає.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Хто наступний?&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, экран телефона<br><span class="vb-label">Атмосфера:</span> собрать всё вместе<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три инструмента разведчика<br><span class="vb-label">Марко:</span> решимость, смотрит на экран<br><span class="vb-label">Предметы:</span> {&#x27;экран с тремя инструментами&#x27;: &#x27;тормоз&#x27;}, зеркало, карта</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Три інструменти. Який із них використано? Співпереживання, активне слухання чи формула висловлювання?&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко говорить Максу: «Я бачу, що тобі важко. Мені теж буває так. Давай поговоримо?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Скільки кроків? Спостереження, почуття, пропозиція — що це?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження — почуття — пропозиція. Усі три кроки! Формула.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Ліні: «Тобто ти хочеш, щоб ми використовували артефакти тільки в крайньому разі?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Повторює чужі слова? Чи говорить свої?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;\&quot;Тобто ти хочеш...\&quot; — переказ! Дзеркало. Активне слухання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Тобі, мабуть, прикро, коли кажуть «будь сильним»?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Чиї почуття називає? Свої чи чужі?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Заглянув у чужу душу. Гальмо. Співпереживання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я помітила, що ти взяв мій гумку. Мені неприємно. Давай будемо питати?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Три кроки: що бачу, що відчуваю, що пропоную. Усі три є?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження, почуття, пропозиція — три кроки! Формула.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Чи правильно я зрозумів, що тобі не подобається, коли я жартую про твій рюкзак?» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Перепитує, щоб переконатись. Який прийом?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;\&quot;Чи правильно я зрозумів...\&quot; — переказ! Дзеркало. Активне слухання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко дивиться на порожній стілець Леона.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко: «Я бачу, що це було важливо — те, що він хотів сказати.» Який інструмент?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Формула висловлювання&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Чиї почуття? Свої чи чужі?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Побачив, що важливо, і сказав. Співпереживання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко — Максу: «Я бачу, що ти засмучений. Тобто ти хочеш знайти брата? Давай подумаємо, як.» Які інструменти?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Співпереживання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Активне слухання&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Всі три&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Порахуй: побачив почуття, повторив суть, запропонував рішення. Скільки інструментів?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Всі три! Співпереживання — побачив почуття. Переказ — повторив суть. Формула — спостереження + почуття + пропозиція.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Віра обійняла Марка і сказала: «Бідолашний хлопчику. Розкажи мені все.» Чи використала Віра формулу висловлювання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, формула&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Ні, не формула&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Три кроки є? Спостереження? Почуття? Пропозиція? Чи просто — «розкажи»?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Віра НЕ описала спостереження, НЕ запропонувала рішення. Вона попросила — і отримала. Турбота без формули.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Марко міг би сказати Вірі: «Я бачу, що Леон стертий. Мені страшно. Розберімося разом.» Це формула?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, формула&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ні, не формула&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Три кроки: бачу, відчуваю, пропоную. Всі три є?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Спостереження, почуття, пропозиція. Формула б захистила — Марко контролював би, що розповідати.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Марко. Ти приходив до Леона чотири рази. Щоразу Голос дізнавався.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Леон стертий. І ти щойно розповів Вірі — все.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Питання... кому потрапить інформація цього разу?&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Число: 39.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко дивиться на свої руки. На них ще тепло від обіймів Віри.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;«Я мав мовчати?»&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Софа мовчить. Екран мигтить. Мигтить. Гасне.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Марко стоїть у домі Леона. Стілець охолов. Чай — холодний. На стіні — число 39. Вранці було 40. Мінус один — за кілька годин.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Три інструменти розвідника. Гальмо — відчуй. Дзеркало — повтори. Карта — скажи про себе. Марко знає всі три. Але проти обіймів Віри жоден із них не спрацював.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Бо найнебезпечніший солдат — той, який виглядає як друг.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Число 39. Софа не відповідає. Леона більше немає.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Хто наступний?&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep012_s23_end" data-index="21" data-next="ep013_s01" data-next-ep="ep_013.html">
+    <div class="scene-header">
+      <span class="scene-counter">22 / 22</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, дом Леона · вне времени</div><div class="scene-chars">Марко</div><div class="scene-mood">тиша замість відповіді — перший крок у нову самотність</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Дом Леона, тёмная комната, пустой стул, чашка с холодным чаем, число 39 на стене<br><span class="vb-label">Атмосфера:</span> тишина страшнее слов — самый опасный солдат выглядит как друг<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Марко один среди пустоты — и вопрос «кто следующий?»<br><span class="vb-label">Марко:</span> отчаяние и взрослая решимость одновременно, стоит один посреди комнаты, телефон в опущенной руке<br><span class="vb-label">Предметы:</span> погасший экран, пустой стул Леона, остывший чай, число 39 на стене</div><div class="author-text"><p>Марко стоїть у домі Леона. Один. Стілець охолов. Чай — холодний. На стіні — число 39. Уранці було 40. Мінус один — за кілька годин.</p>
+<p>Марко дивиться на свої руки. На них ще тепло від обіймів Віри. Чуже тепло, яке хочеться змити — і не можна, бо воно всередині. І питання піднімається в голові само: чи повинен був мовчати? Слова вже сказані. Віра пішла. Леона немає. Задача розв&#x27;язується в один бік — і цей бік не на користь Марка.</p>
+<p>Три інструменти розвідника. Гальмо — відчуй. Дзеркало — повтори. Карта — скажи про себе. Марко знає всі три. Але проти обіймів Віри жоден з них не спрацював. Бо Віра не нападала. Не сперечалася. Не тиснула. Вона просто запитала з теплою турботою — і Марко віддав усе сам.</p>
+<p>Найнебезпечніший солдат — той, що виглядає як друг.</p>
+<p>Число 39. Софа не відповідає — уперше за весь цей час немає відповіді. Леона більше немає. Стілець порожній.</p>
+<p>У голові Марка залишається тільки одне слово. Не «як?» Не «чому?» А — «хто?». Хто наступний після Леона?</p></div>
     </div>
   </section>
 
@@ -734,13 +775,13 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Эпизод</h3>
     <ol>
-      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="dbg-current">12. Формула высказывания</a></li>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="dbg-current">12. Формула высказывания</a></li><li><a href="ep_013.html" class="">13. То, что слова прячут</a></li><li><a href="ep_014.html" class="">14. Рекламная улица</a></li><li><a href="ep_015.html" class="">15. Два плаката</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li>
     </ol>
   </section>
   <section class="dbg-section">
     <h3>Сцены этого эпизода</h3>
     <ol class="dbg-scenes">
-      <li><button class="dbg-jump" data-jump="ep012_s01">ep012_s01 — narrative · тривога, обладнання</button></li><li><button class="dbg-jump" data-jump="ep012_s01_sofa">ep012_s01_sofa — dialogue · розпізнавання в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s01b">ep012_s01b — dialogue · тривога, невідповідність слів і тіла</button></li><li><button class="dbg-jump" data-jump="ep012_s01a1">ep012_s01a1 — flavor_detour · візуальний доказ стирання</button></li><li><button class="dbg-jump" data-jump="ep012_s01a2">ep012_s01a2 — flavor_detour · список — Леон наступний</button></li><li><button class="dbg-jump" data-jump="ep012_s01b1">ep012_s01b1 — flavor_detour · визнання приреченого</button></li><li><button class="dbg-jump" data-jump="ep012_s01b2">ep012_s01b2 — flavor_detour · стирання зсередини</button></li><li><button class="dbg-jump" data-jump="ep012_s02">ep012_s02 — dialogue · шок — союзник стертий посеред фрази</button></li><li><button class="dbg-jump" data-jump="ep012_s03">ep012_s03 — narrative · порожнеча після стирання</button></li><li><button class="dbg-jump" data-jump="ep012_s04">ep012_s04 — dialogue · тепло після шоку — але тепло чи ні?</button></li><li><button class="dbg-jump" data-jump="ep012_s04d1">ep012_s04d1 — flavor_detour · запитання сховане в турботу</button></li><li><button class="dbg-jump" data-jump="ep012_s04d2">ep012_s04d2 — flavor_detour · інформація пішла — безкоштовно</button></li><li><button class="dbg-jump" data-jump="ep012_s05">ep012_s05 — narrative · урок із болю — формула замість крику</button></li><li><button class="dbg-jump" data-jump="ep012_s05_sofa">ep012_s05_sofa — чат ×7 · формула в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s12">ep012_s12 — narrative · вина</button></li><li><button class="dbg-jump" data-jump="ep012_s12_sofa">ep012_s12_sofa — dialogue · правило в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s12_choice">ep012_s12_choice — choice · вибір дії</button></li><li><button class="dbg-jump" data-jump="ep012_s12d1">ep012_s12d1 — flavor_detour · тихі улюбці</button></li><li><button class="dbg-jump" data-jump="ep012_s12d2">ep012_s12d2 — flavor_detour · фізична улюбка — підбори Віри</button></li><li><button class="dbg-jump" data-jump="ep012_s12d3">ep012_s12d3 — flavor_detour · хронологія улюбок</button></li><li><button class="dbg-jump" data-jump="ep012_s13">ep012_s13 — чат ×11 · мобілізація — всі три інструменти</button></li>
+      <li><button class="dbg-jump" data-jump="ep012_s01">ep012_s01 — narrative · тривога, обладнання</button></li><li><button class="dbg-jump" data-jump="ep012_s01_sofa">ep012_s01_sofa — dialogue · розпізнавання в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s01b">ep012_s01b — dialogue · тривога, невідповідність слів і тіла</button></li><li><button class="dbg-jump" data-jump="ep012_s01a1">ep012_s01a1 — flavor_detour · візуальний доказ стирання</button></li><li><button class="dbg-jump" data-jump="ep012_s01a2">ep012_s01a2 — flavor_detour · список — Леон наступний</button></li><li><button class="dbg-jump" data-jump="ep012_s01b1">ep012_s01b1 — flavor_detour · визнання приреченого</button></li><li><button class="dbg-jump" data-jump="ep012_s01b2">ep012_s01b2 — flavor_detour · стирання зсередини</button></li><li><button class="dbg-jump" data-jump="ep012_s02">ep012_s02 — dialogue · шок — союзник стертий посеред фрази</button></li><li><button class="dbg-jump" data-jump="ep012_s03">ep012_s03 — narrative · порожнеча після стирання</button></li><li><button class="dbg-jump" data-jump="ep012_s04">ep012_s04 — dialogue · тепло після шоку — але тепло чи ні?</button></li><li><button class="dbg-jump" data-jump="ep012_s04d1">ep012_s04d1 — flavor_detour · запитання сховане в турботу</button></li><li><button class="dbg-jump" data-jump="ep012_s04d2">ep012_s04d2 — flavor_detour · інформація пішла — безкоштовно</button></li><li><button class="dbg-jump" data-jump="ep012_s05">ep012_s05 — narrative · урок із болю — формула замість крику</button></li><li><button class="dbg-jump" data-jump="ep012_s05_sofa">ep012_s05_sofa — чат ×7 · формула в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s12">ep012_s12 — narrative · вина</button></li><li><button class="dbg-jump" data-jump="ep012_s12_sofa">ep012_s12_sofa — dialogue · правило в чаті</button></li><li><button class="dbg-jump" data-jump="ep012_s12_choice">ep012_s12_choice — choice · вибір дії</button></li><li><button class="dbg-jump" data-jump="ep012_s12d1">ep012_s12d1 — flavor_detour · тихі улюбці</button></li><li><button class="dbg-jump" data-jump="ep012_s12d2">ep012_s12d2 — flavor_detour · фізична улюбка — підбори Віри</button></li><li><button class="dbg-jump" data-jump="ep012_s12d3">ep012_s12d3 — flavor_detour · хронологія улюбок</button></li><li><button class="dbg-jump" data-jump="ep012_s13">ep012_s13 — чат ×11 · мобілізація — всі три інструменти</button></li><li><button class="dbg-jump" data-jump="ep012_s23_end">ep012_s23_end — cliffhanger · тиша замість відповіді — перший кр</button></li>
     </ol>
   </section>
 </nav>
@@ -940,6 +981,27 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     }
 
+    /* Chat-image: Софа шлёт фото. Если src существует и грузится — реальное фото.
+       Иначе — placeholder с промптом (для image-пайплайна). Caption всегда под фото. */
+    function addImage(m){
+      var row=document.createElement('div');
+      row.className='msg-row incoming';
+      var promptText=(m.prompt||'').replace(/"/g,'&quot;');
+      var captionText=(m.caption||'').replace(/"/g,'&quot;');
+      var body;
+      if(m.src){
+        body='<div class="chat-image">' +
+             '<img src="images/'+m.src+'" alt="'+captionText+'" onerror="this.parentElement.classList.add(\'missing\')">' +
+             '<div class="chat-image-fallback">Описание фото: '+promptText+'</div>' +
+             '</div>';
+      } else {
+        body='<div class="chat-image missing"><div class="chat-image-fallback">Описание фото: '+promptText+'</div></div>';
+      }
+      var cap=m.caption?'<div class="chat-image-caption">'+captionText+'</div>':'';
+      row.innerHTML='<div class="bubble sofa image-bubble"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div>'+body+cap+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
     function addUnlock(m){
       return new Promise(function(resolve){
         var row=document.createElement('div');
@@ -1004,6 +1066,7 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       }
       await showTyping();
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='image'){addImage(m);idx++;busy=false;setTimeout(processNext,CFG.interMsg);return;}
       if(m.t==='voice'){addVoice(m);}
       else{addText(m);}
       idx++;busy=false;setTimeout(processNext,CFG.interMsg);

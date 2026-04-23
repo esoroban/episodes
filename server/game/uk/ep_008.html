@@ -314,6 +314,28 @@ body.lang-uk .scene-meta { display: none !important; }
   0%,60%,100% { transform: translateY(0); opacity: 0.35; }
   30% { transform: translateY(-4px); opacity: 1; }
 }
+/* Chat-image (Софа шлёт фото в чат) */
+.bubble.image-bubble { padding: 4px 4px 6px 4px; max-width: 260px; }
+.bubble.image-bubble .sender-name { padding: 2px 6px 4px; }
+.chat-image {
+  width: 100%; border-radius: 8px; overflow: hidden; background: #e8e8ec;
+  min-height: 140px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.chat-image img { display: block; width: 100%; height: auto; }
+.chat-image-fallback {
+  display: none;
+  padding: 10px 12px; font-size: 11px; color: #555; font-style: italic;
+  line-height: 1.35; text-align: left;
+}
+.chat-image.missing { background: #d8d8dc; }
+.chat-image.missing .chat-image-fallback { display: block; }
+.chat-image.missing img { display: none; }
+.chat-image-caption {
+  padding: 6px 8px 2px; font-size: 11px; color: #666; line-height: 1.3;
+}
+.bubble.image-bubble .msg-time { padding: 0 8px; }
+
 /* Voice messages */
 .voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
 .voice-play {
@@ -583,7 +605,7 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, улица у библиотеки · вне времени</div><div class="scene-chars">Марко, Лина</div><div class="scene-mood">тиск vs простір</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Зеркальный Город, улица, Марко и Лина<br><span class="vb-label">Атмосфера:</span> детектив или друг — как подойти?<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> губы Лины — между словами и молчанием<br><span class="vb-label">Марко:</span> выбор тона, смотрит на Лину<br><span class="vb-label">Лина:</span> готовится, но колеблется, открывает рот, закрывает</div><div class="author-text"><p>Ліна відкриває рот — і закриває. Слова — на кінчику язика, але не зходять. Марко пам&#x27;ятає, як вона сказала: «Мені... потрібно щось сказати.» Це було до тренування Софи. До ляльководця.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Зеркальный Город, улица, Марко и Лина<br><span class="vb-label">Атмосфера:</span> детектив или друг — как подойти?<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> губы Лины — между словами и молчанием<br><span class="vb-label">Марко:</span> выбор тона, смотрит на Лину<br><span class="vb-label">Лина:</span> готовится, но колеблется, открывает рот, закрывает</div><div class="author-text"><p>Ліна відкриває рот — і закриває. Слова — на кінчику язика, але не сходять. Марко пам&#x27;ятає, як вона сказала: «Мені... потрібно щось сказати.» Це було до тренування Софи. До ляльководця.</p></div>
     <div class="story-choice">
       <p class="choice-question">Що робить Марко?</p>
       <div class="choice-options">
@@ -679,7 +701,7 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep008_s12_sofa" data-index="17" data-next="ep009_s01" data-next-ep="ep_009.html">
     <div class="scene-header">
       <span class="scene-counter">18 / 18</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, улица у библиотеки · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">обрив у чаті — наступнаціль</div></details>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, улица у библиотеки · вне времени</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">обрив у чаті — наступна ціль</div></details>
     </div>
     <div class="scene-content">
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона гаснет, на заднем плане число 42<br><span class="vb-label">Атмосфера:</span> третий вопрос задан — эпизод закрыт<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> последние пузыри Софы, экран гаснет<br><span class="vb-label">Марко:</span> тяжёлая решимость, смотрит в экран</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Марко... два питання-рятівники.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«А що ЩЕ могло вплинути?» — ти відповів.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«А буває одне без іншого?» — ти відповів.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Третє питання... моє. «Хто за ширмою?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Знайди ляльководця — обріжеш усі мотузочки разом.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;Автор&quot;, &quot;x&quot;: &quot;Екран гасне. Число на стіні: 42. І тиша.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
@@ -705,13 +727,13 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Эпизод</h3>
     <ol>
-      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="dbg-current">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="dbg-current">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li><li><a href="ep_013.html" class="">13. То, что слова прячут</a></li><li><a href="ep_014.html" class="">14. Рекламная улица</a></li><li><a href="ep_015.html" class="">15. Два плаката</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li>
     </ol>
   </section>
   <section class="dbg-section">
     <h3>Сцены этого эпизода</h3>
     <ol class="dbg-scenes">
-      <li><button class="dbg-jump" data-jump="ep008_s01">ep008_s01 — narrative · невідома загроза</button></li><li><button class="dbg-jump" data-jump="ep008_s02">ep008_s02 — dialogue · картинка більша, ніж здавалося</button></li><li><button class="dbg-jump" data-jump="ep008_s03a_sofa">ep008_s03a_sofa — dialogue · питання без відповіді</button></li><li><button class="dbg-jump" data-jump="ep008_s03">ep008_s03 — narrative · ляльковод розкривається</button></li><li><button class="dbg-jump" data-jump="ep008_s03b_sofa">ep008_s03b_sofa — чат ×3 · термін закріплено</button></li><li><button class="dbg-jump" data-jump="ep008_s06">ep008_s06 — narrative · пропаганда — і втручання</button></li><li><button class="dbg-jump" data-jump="ep008_s06_sofa">ep008_s06_sofa — чат ×2 · чат перериває розмову</button></li><li><button class="dbg-jump" data-jump="ep008_s08">ep008_s08 — dialogue · усвідомлення масштабу</button></li><li><button class="dbg-jump" data-jump="ep008_s09">ep008_s09 — quiz · швидкий раунд</button></li><li><button class="dbg-jump" data-jump="ep008_s09_choice">ep008_s09_choice — choice · тиск vs простір</button></li><li><button class="dbg-jump" data-jump="ep008_s09c_press">ep008_s09c_press — flavor_detour · детектив увімкнувся</button></li><li><button class="dbg-jump" data-jump="ep008_s09c_wait">ep008_s09c_wait — flavor_detour · простір — і довіра</button></li><li><button class="dbg-jump" data-jump="ep008_s10">ep008_s10 — dialogue · визнання</button></li><li><button class="dbg-jump" data-jump="ep008_s11">ep008_s11 — quiz · квізи в чаті</button></li><li><button class="dbg-jump" data-jump="ep008_s11b">ep008_s11b — dialogue · безвихідь → пошук рішення</button></li><li><button class="dbg-jump" data-jump="ep008_s11c_sofa">ep008_s11c_sofa — dialogue · підказка в чаті</button></li><li><button class="dbg-jump" data-jump="ep008_s12">ep008_s12 — narrative · обрив — самотність</button></li><li><button class="dbg-jump" data-jump="ep008_s12_sofa">ep008_s12_sofa — cliffhanger · обрив у чаті — наступнаціль</button></li>
+      <li><button class="dbg-jump" data-jump="ep008_s01">ep008_s01 — narrative · невідома загроза</button></li><li><button class="dbg-jump" data-jump="ep008_s02">ep008_s02 — dialogue · картинка більша, ніж здавалося</button></li><li><button class="dbg-jump" data-jump="ep008_s03a_sofa">ep008_s03a_sofa — dialogue · питання без відповіді</button></li><li><button class="dbg-jump" data-jump="ep008_s03">ep008_s03 — narrative · ляльковод розкривається</button></li><li><button class="dbg-jump" data-jump="ep008_s03b_sofa">ep008_s03b_sofa — чат ×3 · термін закріплено</button></li><li><button class="dbg-jump" data-jump="ep008_s06">ep008_s06 — narrative · пропаганда — і втручання</button></li><li><button class="dbg-jump" data-jump="ep008_s06_sofa">ep008_s06_sofa — чат ×2 · чат перериває розмову</button></li><li><button class="dbg-jump" data-jump="ep008_s08">ep008_s08 — dialogue · усвідомлення масштабу</button></li><li><button class="dbg-jump" data-jump="ep008_s09">ep008_s09 — quiz · швидкий раунд</button></li><li><button class="dbg-jump" data-jump="ep008_s09_choice">ep008_s09_choice — choice · тиск vs простір</button></li><li><button class="dbg-jump" data-jump="ep008_s09c_press">ep008_s09c_press — flavor_detour · детектив увімкнувся</button></li><li><button class="dbg-jump" data-jump="ep008_s09c_wait">ep008_s09c_wait — flavor_detour · простір — і довіра</button></li><li><button class="dbg-jump" data-jump="ep008_s10">ep008_s10 — dialogue · визнання</button></li><li><button class="dbg-jump" data-jump="ep008_s11">ep008_s11 — quiz · квізи в чаті</button></li><li><button class="dbg-jump" data-jump="ep008_s11b">ep008_s11b — dialogue · безвихідь → пошук рішення</button></li><li><button class="dbg-jump" data-jump="ep008_s11c_sofa">ep008_s11c_sofa — dialogue · підказка в чаті</button></li><li><button class="dbg-jump" data-jump="ep008_s12">ep008_s12 — narrative · обрив — самотність</button></li><li><button class="dbg-jump" data-jump="ep008_s12_sofa">ep008_s12_sofa — cliffhanger · обрив у чаті — наступна ціль</button></li>
     </ol>
   </section>
 </nav>
@@ -911,6 +933,27 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     }
 
+    /* Chat-image: Софа шлёт фото. Если src существует и грузится — реальное фото.
+       Иначе — placeholder с промптом (для image-пайплайна). Caption всегда под фото. */
+    function addImage(m){
+      var row=document.createElement('div');
+      row.className='msg-row incoming';
+      var promptText=(m.prompt||'').replace(/"/g,'&quot;');
+      var captionText=(m.caption||'').replace(/"/g,'&quot;');
+      var body;
+      if(m.src){
+        body='<div class="chat-image">' +
+             '<img src="images/'+m.src+'" alt="'+captionText+'" onerror="this.parentElement.classList.add(\'missing\')">' +
+             '<div class="chat-image-fallback">Описание фото: '+promptText+'</div>' +
+             '</div>';
+      } else {
+        body='<div class="chat-image missing"><div class="chat-image-fallback">Описание фото: '+promptText+'</div></div>';
+      }
+      var cap=m.caption?'<div class="chat-image-caption">'+captionText+'</div>':'';
+      row.innerHTML='<div class="bubble sofa image-bubble"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div>'+body+cap+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
     function addUnlock(m){
       return new Promise(function(resolve){
         var row=document.createElement('div');
@@ -975,6 +1018,7 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       }
       await showTyping();
       if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='image'){addImage(m);idx++;busy=false;setTimeout(processNext,CFG.interMsg);return;}
       if(m.t==='voice'){addVoice(m);}
       else{addText(m);}
       idx++;busy=false;setTimeout(processNext,CFG.interMsg);
