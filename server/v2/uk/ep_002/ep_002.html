@@ -435,7 +435,7 @@ body.debug-off .voice-subtitle { display: none; }
   .episode-header h1 { font-size: 1.3rem; }
 }
 </style>
-<style id="v2-prod-overrides">.ipe-debug{display:none!important}#v2-dbg-skip{position:fixed;bottom:16px;left:16px;z-index:220;background:rgba(0,0,0,0.55);color:#fff;border:1px solid rgba(255,255,255,0.22);border-radius:6px;padding:4px 10px;font-size:14px;line-height:1;font-family:-apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;opacity:0.5;display:none;}body.audio-mode #v2-dbg-skip{display:block}#v2-dbg-skip:hover{opacity:1}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}</style>
+<style id="v2-prod-overrides">.ipe-debug{display:none!important}#v2-dbg-skip,#v2-dbg-rate{position:fixed;bottom:16px;z-index:220;background:rgba(0,0,0,0.55);color:#fff;border:1px solid rgba(255,255,255,0.22);border-radius:6px;padding:4px 10px;font-size:14px;line-height:1;min-width:34px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;opacity:0.5;display:none;text-align:center;}#v2-dbg-rate{left:16px}#v2-dbg-skip{left:60px}body.audio-mode #v2-dbg-rate,body.audio-mode #v2-dbg-skip{display:block}#v2-dbg-rate:hover,#v2-dbg-skip:hover{opacity:1}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}</style>
 <script id="v2-audio-done-tracker">
 (function () {
   var playingSet = new Set();
@@ -443,7 +443,8 @@ body.debug-off .voice-subtitle { display: none; }
   // Если сейчас ничего не играет и с того момента прошло >SILENCE_MS —
   // считаем, что автор дочитал, и показываем кнопки выбора.
   var lastActivityAt = Date.now();
-  var SILENCE_MS = 1500;
+  var SILENCE_MS = 300;
+  var currentRate = 1;  // debug playback rate (1x / 2x / 4x)
 
   // Patch HTMLAudioElement.prototype.play — на первый play() каждому
   // аудио навешиваем трекинг. Работает для всех способов создания.
@@ -458,6 +459,8 @@ body.debug-off .voice-subtitle { display: none; }
       a.addEventListener("error", function () { playingSet.delete(a); });
     }
     lastActivityAt = Date.now();
+    // Применяем текущий debug rate (если не 1×)
+    try { a.playbackRate = currentRate; } catch (_) {}
     return origPlay.apply(a, arguments);
   };
 
@@ -519,6 +522,19 @@ body.debug-off .voice-subtitle { display: none; }
         });
       });
     }
+    // Debug-кнопка: playback rate (1× / 2× / 4×), циклически.
+    var rateBtn = document.getElementById("v2-dbg-rate");
+    if (rateBtn) {
+      rateBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        currentRate = currentRate >= 4 ? 1 : currentRate * 2;
+        rateBtn.textContent = currentRate + "×";
+        // Применить к уже играющим
+        playingSet.forEach(function (a) {
+          try { a.playbackRate = currentRate; } catch (_) {}
+        });
+      });
+    }
   }
 
   if (document.readyState === "loading") {
@@ -530,6 +546,7 @@ body.debug-off .voice-subtitle { display: none; }
 </script>
 </head>
 <body>
+<button id="v2-dbg-rate" type="button" title="playback rate (debug)" aria-label="Playback rate">1×</button>
 <button id="v2-dbg-skip" type="button" title="skip current audio (debug)" aria-label="Skip audio">⏭</button>
 
 

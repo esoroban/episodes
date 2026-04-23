@@ -39,6 +39,7 @@ def load_public_url() -> str:
 
 
 BODY_DEBUG_BUTTON = (
+    '<button id="v2-dbg-rate" type="button" title="playback rate (debug)" aria-label="Playback rate">1×</button>\n'
     '<button id="v2-dbg-skip" type="button" title="skip current audio (debug)" aria-label="Skip audio">⏭</button>\n'
 )
 
@@ -46,18 +47,20 @@ PROD_OVERRIDES = (
     '<style id="v2-prod-overrides">'
     # Debug-панель из image_prompts_experiment перекрывает #btnNext на мобилках.
     '.ipe-debug{display:none!important}'
-    # Debug skip-audio кнопка — маленькая, слева снизу, чтобы не мешала навигации.
-    # Видна только в audio-mode (в text-mode аудио не играет).
-    '#v2-dbg-skip{'
-    'position:fixed;bottom:16px;left:16px;z-index:220;'
+    # Debug-кнопки: rate (цикл 1×→2×→4×) + skip current audio.
+    # Маленькие, слева снизу, чтобы не мешали навигации. Видны в audio-mode.
+    '#v2-dbg-skip,#v2-dbg-rate{'
+    'position:fixed;bottom:16px;z-index:220;'
     'background:rgba(0,0,0,0.55);color:#fff;'
     'border:1px solid rgba(255,255,255,0.22);border-radius:6px;'
-    'padding:4px 10px;font-size:14px;line-height:1;'
+    'padding:4px 10px;font-size:14px;line-height:1;min-width:34px;'
     'font-family:-apple-system,BlinkMacSystemFont,sans-serif;'
-    'cursor:pointer;opacity:0.5;display:none;'
+    'cursor:pointer;opacity:0.5;display:none;text-align:center;'
     '}'
-    'body.audio-mode #v2-dbg-skip{display:block}'
-    '#v2-dbg-skip:hover{opacity:1}'
+    '#v2-dbg-rate{left:16px}'
+    '#v2-dbg-skip{left:60px}'
+    'body.audio-mode #v2-dbg-rate,body.audio-mode #v2-dbg-skip{display:block}'
+    '#v2-dbg-rate:hover,#v2-dbg-skip:hover{opacity:1}'
     # iOS Safari: `animation: fadeIn` с transform:translateY() на .scene
     # оставляет element в качестве containing block для position:fixed
     # даже после анимации → .story-choice (fixed;bottom:80px) попадает за
@@ -78,7 +81,8 @@ PROD_OVERRIDES = (
     '  // Если сейчас ничего не играет и с того момента прошло >SILENCE_MS —\n'
     '  // считаем, что автор дочитал, и показываем кнопки выбора.\n'
     '  var lastActivityAt = Date.now();\n'
-    '  var SILENCE_MS = 1500;\n'
+    '  var SILENCE_MS = 300;\n'
+    '  var currentRate = 1;  // debug playback rate (1x / 2x / 4x)\n'
     '\n'
     '  // Patch HTMLAudioElement.prototype.play — на первый play() каждому\n'
     '  // аудио навешиваем трекинг. Работает для всех способов создания.\n'
@@ -93,6 +97,8 @@ PROD_OVERRIDES = (
     '      a.addEventListener("error", function () { playingSet.delete(a); });\n'
     '    }\n'
     '    lastActivityAt = Date.now();\n'
+    '    // Применяем текущий debug rate (если не 1×)\n'
+    '    try { a.playbackRate = currentRate; } catch (_) {}\n'
     '    return origPlay.apply(a, arguments);\n'
     '  };\n'
     '\n'
@@ -151,6 +157,19 @@ PROD_OVERRIDES = (
     '          try { a.currentTime = (a.duration && isFinite(a.duration)) ? a.duration : 9999; } catch (_) {}\n'
     '          try { a.pause(); } catch (_) {}\n'
     '          try { a.dispatchEvent(new Event("ended")); } catch (_) {}\n'
+    '        });\n'
+    '      });\n'
+    '    }\n'
+    '    // Debug-кнопка: playback rate (1× / 2× / 4×), циклически.\n'
+    '    var rateBtn = document.getElementById("v2-dbg-rate");\n'
+    '    if (rateBtn) {\n'
+    '      rateBtn.addEventListener("click", function (e) {\n'
+    '        e.stopPropagation();\n'
+    '        currentRate = currentRate >= 4 ? 1 : currentRate * 2;\n'
+    '        rateBtn.textContent = currentRate + "×";\n'
+    '        // Применить к уже играющим\n'
+    '        playingSet.forEach(function (a) {\n'
+    '          try { a.playbackRate = currentRate; } catch (_) {}\n'
     '        });\n'
     '      });\n'
     '    }\n'
