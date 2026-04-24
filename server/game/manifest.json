@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-24T08:58:12Z",
+  "generated_at": "2026-04-24T09:00:42Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -449,7 +449,7 @@
         "ru": {
           "html": "ru/ep_021.html",
           "data": "ru/ep_021.json",
-          "content_hash": "adfa6dc6bbc2e472"
+          "content_hash": "78f10482da58e3b1"
         }
       },
       "title_ru": "Поворотник",
