@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-24T11:17:01Z",
+  "generated_at": "2026-04-24T11:23:16Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -465,7 +465,7 @@
         "ru": {
           "html": "ru/ep_022.html",
           "data": "ru/ep_022.json",
-          "content_hash": "e61f997ec8e98fb0"
+          "content_hash": "17981ce2c312fa01"
         }
       },
       "title_ru": "Что сказал — что сделал",
