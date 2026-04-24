@@ -435,7 +435,7 @@ body.debug-off .voice-subtitle { display: none; }
   .episode-header h1 { font-size: 1.3rem; }
 }
 </style>
-<style id="v2-prod-overrides">.ipe-debug{display:none!important}#v2-dbg-skip,#v2-dbg-rate{position:fixed;bottom:16px;z-index:220;background:rgba(0,0,0,0.55);color:#fff;border:1px solid rgba(255,255,255,0.22);border-radius:6px;padding:4px 10px;font-size:14px;line-height:1;min-width:34px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;opacity:0.5;display:none;text-align:center;}#v2-dbg-rate{left:16px}#v2-dbg-skip{left:60px}body.audio-mode #v2-dbg-rate,body.audio-mode #v2-dbg-skip{display:block}#v2-dbg-rate:hover,#v2-dbg-skip:hover{opacity:1}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
+<style id="v2-prod-overrides">.ipe-debug{display:none!important}.audio-controls,.episode-nav{display:none!important}#v2-audio-controls{position:fixed;top:10px;right:12px;z-index:220;display:flex;gap:6px;align-items:center}#v2-audio-controls button{background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 10px;line-height:1;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;font-weight:600;min-width:36px;text-align:center}#v2-audio-controls button:hover{background:rgba(0,0,0,0.85)}#v2-scene-badge{position:fixed;top:10px;left:12px;z-index:220;background:rgba(0,0,0,0.7);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:0.02em;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,0.22);pointer-events:none}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .author-text,body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .dialogue-block{display:none!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
 <script id="v2-audio-done-tracker">
 (function () {
   var playingSet = new Set();
@@ -444,7 +444,7 @@ body.debug-off .voice-subtitle { display: none; }
   // считаем, что автор дочитал, и показываем кнопки выбора.
   var lastActivityAt = Date.now();
   var SILENCE_MS = 300;
-  var currentRate = 1;  // debug playback rate (1x / 2x / 4x)
+  var currentRate = 1;  // playback rate (1x / 2x)
 
   // Patch HTMLAudioElement.prototype.play — на первый play() каждому
   // аудио навешиваем трекинг. Работает для всех способов создания.
@@ -459,7 +459,6 @@ body.debug-off .voice-subtitle { display: none; }
       a.addEventListener("error", function () { playingSet.delete(a); });
     }
     lastActivityAt = Date.now();
-    // Применяем текущий debug rate (если не 1×)
     try { a.playbackRate = currentRate; } catch (_) {}
     return origPlay.apply(a, arguments);
   };
@@ -470,10 +469,9 @@ body.debug-off .voice-subtitle { display: none; }
     return r;
   }
 
-  function check() {
+  function audioDoneCheck() {
     var active = document.querySelector(".scene.active");
     if (!active) return;
-    // Text-mode: всегда показываем.
     if (!document.body.classList.contains("audio-mode")) {
       active.classList.add("audio-done");
       return;
@@ -483,14 +481,39 @@ body.debug-off .voice-subtitle { display: none; }
       active.classList.remove("audio-done");
       return;
     }
-    // Тишина достаточно долго → показываем choice.
     if (Date.now() - lastActivityAt > SILENCE_MS) {
       active.classList.add("audio-done");
     }
   }
 
-  // Трекаем смену сцены через polling (а не MutationObserver),
-  // чтобы не ловить собственные class-мутации и не зациклиться.
+  function updateBadge(sid) {
+    var badge = document.getElementById("v2-scene-badge");
+    if (badge) badge.textContent = sid || "—";
+  }
+
+  // Text-mode choice-gate: пока юзер не нажал «Дальше» на сцене
+  // с .story-choice, апстрим-логика делает btnNext.disabled=true.
+  // Форс-разблокируем, чтобы юзер мог раскрыть choice нажатием.
+  function handleTextModeChoiceGate(active) {
+    if (document.body.classList.contains("audio-mode")) return;
+    if (!active.querySelector(".story-choice")) return;
+    if (active.classList.contains("v2-choice-revealed")) return;
+    if (active.querySelector(".choice-option.chosen")) return;
+    var btn = document.getElementById("btnNext");
+    if (btn && btn.disabled) btn.disabled = false;
+  }
+
+  function updateV2PlayLabel() {
+    var btn = document.getElementById("v2-play");
+    if (!btn) return;
+    var inAudio = document.body.classList.contains("audio-mode");
+    var pauseBtn = document.getElementById("audio-pause");
+    var playing = inAudio && pauseBtn &&
+                  pauseBtn.classList.contains("visible") &&
+                  pauseBtn.textContent === "⏸";
+    btn.textContent = playing ? "⏸" : "▶";
+  }
+
   var lastActiveSid = null;
   function checkScene() {
     var active = document.querySelector(".scene.active");
@@ -498,43 +521,157 @@ body.debug-off .voice-subtitle { display: none; }
     var sid = active.dataset.sceneId || "";
     if (sid !== lastActiveSid) {
       lastActiveSid = sid;
-      // новая сцена → resetить "тишину", чтобы silence-таймер ждал заново
       lastActivityAt = Date.now();
-      // убрать audio-done с бывшей активной (если где-то остался)
       document.querySelectorAll("section.scene.audio-done").forEach(function (s) {
         if (s !== active) s.classList.remove("audio-done");
       });
+      document.querySelectorAll("section.scene.v2-choice-revealed").forEach(function (s) {
+        if (s !== active) s.classList.remove("v2-choice-revealed");
+      });
+      updateBadge(sid);
     }
-    check();
+    audioDoneCheck();
+    handleTextModeChoiceGate(active);
+    updateV2PlayLabel();
   }
 
   function init() {
-    setInterval(checkScene, 300);
-    // Debug-кнопка: скип текущей аудио-реплики.
-    var skipBtn = document.getElementById("v2-dbg-skip");
-    if (skipBtn) {
-      skipBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        playingSet.forEach(function (a) {
-          try { a.currentTime = (a.duration && isFinite(a.duration)) ? a.duration : 9999; } catch (_) {}
-          try { a.pause(); } catch (_) {}
-          try { a.dispatchEvent(new Event("ended")); } catch (_) {}
-        });
-      });
-    }
-    // Debug-кнопка: playback rate (1× / 2× / 4×), циклически.
-    var rateBtn = document.getElementById("v2-dbg-rate");
+    setInterval(checkScene, 250);
+
+    // Rate toggle (1× ↔ 2×)
+    var rateBtn = document.getElementById("v2-rate");
     if (rateBtn) {
       rateBtn.addEventListener("click", function (e) {
         e.stopPropagation();
-        currentRate = currentRate === 1 ? 2 : 1;  // toggle 1× ↔ 2×
+        currentRate = currentRate === 1 ? 2 : 1;
         rateBtn.textContent = currentRate + "×";
-        // Применить к уже играющим
         playingSet.forEach(function (a) {
           try { a.playbackRate = currentRate; } catch (_) {}
         });
       });
     }
+
+    // Play / Pause. Если audio-mode выключен — клик включает его
+    // (source-кнопка #text-toggle делает всю работу: переключает
+    // body.audio-mode и стартует очередь). Если включён — прокси к
+    // #audio-pause (pause/resume текущего трека).
+    var playBtn = document.getElementById("v2-play");
+    if (playBtn) {
+      playBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var inAudio = document.body.classList.contains("audio-mode");
+        if (!inAudio) {
+          var toggle = document.getElementById("text-toggle");
+          if (toggle) toggle.click();
+        } else {
+          var pauseBtn = document.getElementById("audio-pause");
+          if (pauseBtn) pauseBtn.click();
+        }
+      });
+    }
+
+    // Язык: /uk/ ↔ /ru/ в том же пути.
+    var langBtn = document.getElementById("v2-lang");
+    if (langBtn) {
+      langBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var p = location.pathname;
+        var next = null;
+        if (p.indexOf("/uk/") !== -1) next = p.replace("/uk/", "/ru/");
+        else if (p.indexOf("/ru/") !== -1) next = p.replace("/ru/", "/uk/");
+        if (next && next !== p) {
+          location.href = next + location.search + location.hash;
+        }
+      });
+    }
+
+    // Copy: собрать текстовое содержимое активной сцены и положить
+    // в буфер обмена. Берём: scene_id, автор-текст, dialogue-реплики,
+    // chat-пузыри (если has-phone), choice-вопрос + варианты.
+    var copyBtn = document.getElementById("v2-copy");
+    if (copyBtn) {
+      var origLabel = copyBtn.textContent;
+      copyBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var active = document.querySelector("section.scene.active");
+        if (!active) return;
+        var lines = [];
+        var sid = active.dataset.sceneId || "";
+        if (sid) lines.push("[" + sid + "]");
+        active.querySelectorAll(".scene-content .author-text p").forEach(function (p) {
+          var t = (p.textContent || "").trim();
+          if (t) lines.push(t);
+        });
+        active.querySelectorAll(".scene-content .dialogue-block").forEach(function (d) {
+          var who = d.querySelector(".dl-who");
+          d.querySelectorAll("p").forEach(function (p) {
+            var t = (p.textContent || "").trim();
+            if (!t) return;
+            var prefix = who && who.textContent ? who.textContent.trim() + ": " : "";
+            lines.push(prefix + t);
+          });
+        });
+        var phone = active.querySelector(".phone[data-chat-messages]");
+        if (phone) {
+          try {
+            var msgs = JSON.parse(phone.dataset.chatMessages);
+            msgs.forEach(function (m) {
+              if (!m) return;
+              var txt = (m.x || "").trim();
+              if (!txt) return;
+              var who = m.name || m.s || "";
+              lines.push((who ? who + ": " : "") + txt);
+            });
+          } catch (_) {}
+        }
+        var choiceQ = active.querySelector(".story-choice .choice-question");
+        if (choiceQ && (choiceQ.textContent || "").trim()) {
+          lines.push("");
+          lines.push(choiceQ.textContent.trim());
+          active.querySelectorAll(".story-choice .choice-option").forEach(function (b, i) {
+            var t = (b.textContent || "").trim();
+            if (t) lines.push((i + 1) + ") " + t);
+          });
+        }
+        var text = lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+        var done = function (ok) {
+          copyBtn.textContent = ok ? "✓ Скопировано" : "⚠ Ошибка";
+          setTimeout(function () { copyBtn.textContent = origLabel; }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { done(true); },
+                                                     function () { done(false); });
+        } else {
+          try {
+            var ta = document.createElement("textarea");
+            ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+            document.body.appendChild(ta); ta.select();
+            var ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            done(ok);
+          } catch (_) { done(false); }
+        }
+      });
+    }
+
+    // Text-mode choice-gate: перехват клика на #btnNext ДО основного
+    // handler'а. Регистрируем на document в capture-фазе —
+    // document-handler отрабатывает раньше target-handler'ов, и
+    // stopImmediatePropagation блокирует основной (который
+    // вызывает goForward и уводит сцену).
+    document.addEventListener("click", function (e) {
+      var t = e.target;
+      if (!t || t.id !== "btnNext") return;
+      if (document.body.classList.contains("audio-mode")) return;
+      var active = document.querySelector("section.scene.active");
+      if (!active) return;
+      if (!active.querySelector(".story-choice")) return;
+      if (active.classList.contains("v2-choice-revealed")) return;
+      if (active.querySelector(".choice-option.chosen")) return;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      active.classList.add("v2-choice-revealed");
+    }, true);
   }
 
   if (document.readyState === "loading") {
@@ -546,8 +683,8 @@ body.debug-off .voice-subtitle { display: none; }
 </script>
 </head>
 <body>
-<button id="v2-dbg-rate" type="button" title="playback rate (debug)" aria-label="Playback rate">1×</button>
-<button id="v2-dbg-skip" type="button" title="skip current audio (debug)" aria-label="Skip audio">⏭</button>
+<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-copy" type="button" title="Скопировать содержимое сцены" aria-label="Копировать">📋 Копировать</button></div>
+<div id="v2-scene-badge">—</div>
 
 
 <div class="progress-bar" id="progress"></div>
