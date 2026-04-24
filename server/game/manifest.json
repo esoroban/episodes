@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-23T10:34:33Z",
+  "generated_at": "2026-04-24T05:13:00Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -14,7 +14,7 @@
         "uk": {
           "html": "uk/ep_001.html",
           "data": "uk/ep_001.json",
-          "content_hash": "6fa44112f6d7defc"
+          "content_hash": "2dba23010dd4be41"
         }
       },
       "title_ru": "Утро без сестры",
@@ -36,7 +36,7 @@
         "uk": {
           "html": "uk/ep_002.html",
           "data": "uk/ep_002.json",
-          "content_hash": "64afac8862ebcaa3"
+          "content_hash": "99d99cc5b8c9245c"
         }
       },
       "title_ru": "Неправда и её виды",
@@ -58,7 +58,7 @@
         "uk": {
           "html": "uk/ep_003.html",
           "data": "uk/ep_003.json",
-          "content_hash": "65c2a63f76991473"
+          "content_hash": "9135e9ec12f7e213"
         }
       },
       "title_ru": "Хитрые утверждения",
@@ -80,7 +80,7 @@
         "uk": {
           "html": "uk/ep_004.html",
           "data": "uk/ep_004.json",
-          "content_hash": "7561bc1095c29293"
+          "content_hash": "8f33676289b973e0"
         }
       },
       "title_ru": "Детектив правды",
@@ -102,7 +102,7 @@
         "uk": {
           "html": "uk/ep_005.html",
           "data": "uk/ep_005.json",
-          "content_hash": "7c82515cc25da678"
+          "content_hash": "06cf8d4adf3d7353"
         }
       },
       "title_ru": "Если верно — верно всегда",
@@ -124,7 +124,7 @@
         "uk": {
           "html": "uk/ep_006.html",
           "data": "uk/ep_006.json",
-          "content_hash": "128f2dc763607db8"
+          "content_hash": "55787c19dbc40359"
         }
       },
       "title_ru": "Светофор",
@@ -146,7 +146,7 @@
         "uk": {
           "html": "uk/ep_007.html",
           "data": "uk/ep_007.json",
-          "content_hash": "579313114590539c"
+          "content_hash": "ab93c409c9ef0845"
         }
       },
       "title_ru": "47",
@@ -168,7 +168,7 @@
         "uk": {
           "html": "uk/ep_008.html",
           "data": "uk/ep_008.json",
-          "content_hash": "2512a3f88e7e3df7"
+          "content_hash": "ec959ff835b1969b"
         }
       },
       "title_ru": "Кукловод",
@@ -190,7 +190,7 @@
         "uk": {
           "html": "uk/ep_009.html",
           "data": "uk/ep_009.json",
-          "content_hash": "b1dc3d32a08578f4"
+          "content_hash": "2ee4da317c80b828"
         }
       },
       "title_ru": "Три цели спора",
@@ -212,7 +212,7 @@
         "uk": {
           "html": "uk/ep_010.html",
           "data": "uk/ep_010.json",
-          "content_hash": "0549232f7aeccdac"
+          "content_hash": "64a040fcd06f5f08"
         }
       },
       "title_ru": "Разведчик",
@@ -234,7 +234,7 @@
         "uk": {
           "html": "uk/ep_011.html",
           "data": "uk/ep_011.json",
-          "content_hash": "d5d91237f6b69265"
+          "content_hash": "a7272b52ceeb9618"
         }
       },
       "title_ru": "Первый, кто слышит",
@@ -256,7 +256,7 @@
         "uk": {
           "html": "uk/ep_012.html",
           "data": "uk/ep_012.json",
-          "content_hash": "c8757691d57a68da"
+          "content_hash": "a83f0a10c741eb56"
         }
       },
       "title_ru": "Формула высказывания",
@@ -278,7 +278,7 @@
         "uk": {
           "html": "uk/ep_013.html",
           "data": "uk/ep_013.json",
-          "content_hash": "d5a7eaa18583a16f"
+          "content_hash": "cccf1f18b9708a04"
         }
       },
       "title_ru": "То, что слова прячут",
@@ -300,7 +300,7 @@
         "uk": {
           "html": "uk/ep_014.html",
           "data": "uk/ep_014.json",
-          "content_hash": "61c3c63b3c68cdca"
+          "content_hash": "597f0ac126c53f5b"
         }
       },
       "title_ru": "Рекламная улица",
@@ -322,7 +322,7 @@
         "uk": {
           "html": "uk/ep_015.html",
           "data": "uk/ep_015.json",
-          "content_hash": "acb05bf40bc7f287"
+          "content_hash": "4ce1cc56eeb67e6b"
         }
       },
       "title_ru": "Два плаката",
@@ -344,7 +344,7 @@
         "uk": {
           "html": "uk/ep_016.html",
           "data": "uk/ep_016.json",
-          "content_hash": "7d1bbb3b0ddae9b2"
+          "content_hash": "2b5a150e6a500b63"
         }
       },
       "title_ru": "Табуретка",
@@ -362,13 +362,19 @@
           "html": "ru/ep_017.html",
           "data": "ru/ep_017.json",
           "content_hash": "a9e2523b5f75d5d4"
+        },
+        "uk": {
+          "html": "uk/ep_017.html",
+          "data": "uk/ep_017.json",
+          "content_hash": "9f5ae8c863271090"
         }
       },
       "title_ru": "Семь звеньев",
       "lesson": "5A.1",
       "scene_count": 29,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Сім ланок"
     },
     {
       "id": "ep_018",
@@ -378,13 +384,19 @@
           "html": "ru/ep_018.html",
           "data": "ru/ep_018.json",
           "content_hash": "7fbc3991fac5ee31"
+        },
+        "uk": {
+          "html": "uk/ep_018.html",
+          "data": "uk/ep_018.json",
+          "content_hash": "e36bd1ff32d76555"
         }
       },
       "title_ru": "Дерево связей",
       "lesson": "5A.5",
       "scene_count": 28,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Дерево зв'язків"
     },
     {
       "id": "ep_019",
@@ -394,13 +406,19 @@
           "html": "ru/ep_019.html",
           "data": "ru/ep_019.json",
           "content_hash": "7d542bb1c282f689"
+        },
+        "uk": {
+          "html": "uk/ep_019.html",
+          "data": "uk/ep_019.json",
+          "content_hash": "ac9ade99f50dc5e0"
         }
       },
       "title_ru": "О чём мы вообще спорим?",
       "lesson": "5B.1",
       "scene_count": 29,
       "quiz_count": 13,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Про що ми взагалі сперечаємось?"
     },
     {
       "id": "ep_020",
@@ -410,12 +428,82 @@
           "html": "ru/ep_020.html",
           "data": "ru/ep_020.json",
           "content_hash": "a4533974a3a61027"
+        },
+        "uk": {
+          "html": "uk/ep_020.html",
+          "data": "uk/ep_020.json",
+          "content_hash": "ebeac47540e37f8a"
         }
       },
       "title_ru": "Мам, я бы тоже выбрала его",
       "lesson": "5B.3",
       "scene_count": 26,
       "quiz_count": 14,
+      "branch_count": 1,
+      "title_uk": "Мам, я б теж обрала його"
+    },
+    {
+      "id": "ep_021",
+      "number": 21,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_021.html",
+          "data": "ru/ep_021.json",
+          "content_hash": "130eef6efedd0695"
+        }
+      },
+      "title_ru": "Поворотник",
+      "lesson": "6A.1",
+      "scene_count": 25,
+      "quiz_count": 12,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_022",
+      "number": 22,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_022.html",
+          "data": "ru/ep_022.json",
+          "content_hash": "e52f58221b720d59"
+        }
+      },
+      "title_ru": "Что сказал — что сделал",
+      "lesson": "6A.3",
+      "scene_count": 23,
+      "quiz_count": 14,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_023",
+      "number": 23,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_023.html",
+          "data": "ru/ep_023.json",
+          "content_hash": "2ec7031474d6bb9f"
+        }
+      },
+      "title_ru": "Все, каждый, никто",
+      "lesson": "6B.1",
+      "scene_count": 24,
+      "quiz_count": 14,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_024",
+      "number": 24,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_024.html",
+          "data": "ru/ep_024.json",
+          "content_hash": "7da5773b5dbe7bbb"
+        }
+      },
+      "title_ru": "Скажи моё имя",
+      "lesson": "6B.2",
+      "scene_count": 26,
+      "quiz_count": 15,
       "branch_count": 1
     }
   ]
