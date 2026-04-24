@@ -34,7 +34,7 @@ OUTPUT_UK = ROOT / "server" / "game" / "uk"
 
 # ── Normalization ─────────────────────────────────────────────────
 
-SPEAKER_DASH_RE = re.compile(r"^([А-ЯЁа-яё\w]+)\s*:\s*—\s*(.*)$", re.DOTALL)
+SPEAKER_DASH_RE = re.compile(r"^([А-ЯЁа-яё\w]+(?:\s+\d+)?)\s*:\s*—\s*(.*)$", re.DOTALL)
 SOFA_QUOTED_RE = re.compile(r"^\U0001f4f1?\s*Софа\s*:\s*«(.*)»\s*$", re.DOTALL)
 HEADER_TRASH = {
     "1A.1", "1A.2", "1B.1", "1B.2", "1B.3",

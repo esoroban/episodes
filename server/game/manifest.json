@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-24T09:21:48Z",
+  "generated_at": "2026-04-24T11:11:22Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -449,7 +449,7 @@
         "ru": {
           "html": "ru/ep_021.html",
           "data": "ru/ep_021.json",
-          "content_hash": "faaf84356bd3bb3e"
+          "content_hash": "0946b3460023a165"
         }
       },
       "title_ru": "Поворотник",
@@ -465,12 +465,12 @@
         "ru": {
           "html": "ru/ep_022.html",
           "data": "ru/ep_022.json",
-          "content_hash": "4f1db00b3eb1a644"
+          "content_hash": "46110bffd6cd6e4d"
         }
       },
       "title_ru": "Что сказал — что сделал",
       "lesson": "6A.3",
-      "scene_count": 23,
+      "scene_count": 22,
       "quiz_count": 14,
       "branch_count": 1
     },
@@ -481,7 +481,7 @@
         "ru": {
           "html": "ru/ep_023.html",
           "data": "ru/ep_023.json",
-          "content_hash": "0a7bdca9aa3ae964"
+          "content_hash": "305ae30cd3ac5745"
         }
       },
       "title_ru": "Все, каждый, никто",
@@ -497,7 +497,7 @@
         "ru": {
           "html": "ru/ep_024.html",
           "data": "ru/ep_024.json",
-          "content_hash": "41c8175131768c5a"
+          "content_hash": "16202609ffb7ebf2"
         }
       },
       "title_ru": "Скажи моё имя",
