@@ -1,0 +1,1696 @@
+{
+  "schema_version": 1,
+  "episode_id": 28,
+  "lang": "ru",
+  "title": "Отец Веры",
+  "lesson": "7B.2",
+  "terms_introduced": [
+    "нападение на человека",
+    "три вида нападения",
+    "защита от нападения (три шага)"
+  ],
+  "terms_used": [
+    "обоснование",
+    "факт",
+    "противоречие",
+    "контр-ход"
+  ],
+  "enter_requires": {
+    "flags": [
+      "sofa_activated"
+    ],
+    "previous_episode": 27
+  },
+  "scene_count": 25,
+  "quiz_count": 14,
+  "branch_count": 1,
+  "scenes": [
+    {
+      "id": "ep028_s01",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем"
+      ],
+      "mood": "вопрос Сема — и Город отвечает тишиной",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s02",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Марко показывает файл Сему. «Папа сказал.» «Папа сказал.» «Папа сказал.» Двадцать лет одного и того же."
+        },
+        {
+          "who": "Сем",
+          "line": "Если папа Веры — тот, кто управляет Городом… значит, Вера тоже пленница?"
+        },
+        {
+          "who": "author",
+          "line": "Тишина. Динамики на стенах молчат. Зеркала — тёмные."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Центральная площадь Зеркального Города. Высокие зеркальные стены, тусклый вечерний свет, ни одного движения",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "тихая собранность",
+            "pose": "стоит с телефоном в руке",
+            "position": "right"
+          },
+          {
+            "who": "Сем",
+            "expression": "серьёзный детский вопрос",
+            "pose": "рядом, держит Марко за рукав",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "зеркальные стены",
+          "тусклый фонарь",
+          "телефон с раскрытой страницей"
+        ],
+        "focus_object": "вопрос Сема, после которого Город затих",
+        "atmosphere": "тишина перед атакой",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.drama"
+    },
+    {
+      "id": "ep028_s02",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Голос"
+      ],
+      "mood": "Голос целится в сомнение",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s03",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Потом — Голос. Не из динамиков. Не из зеркал. Прямо в голове Марко. Тёплый. Отцовский. Как колыбельная."
+        },
+        {
+          "who": "Голос",
+          "line": "Ты маленький. Ты ничего не понимаешь. Сначала вырасти — потом спорь."
+        },
+        {
+          "who": "author",
+          "line": "Марко вздрагивает. Слова попадают туда, где живёт сомнение. «Маленький.» Слово — как палец, который давит на синяк."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Центральная площадь, Марко в центре, вокруг — лёгкая дымка, зеркальные стены отражают только его",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "вздрогнул, лицо напряглось",
+            "pose": "стоит неподвижно, рука с телефоном опустилась",
+            "position": "center"
+          }
+        ],
+        "props": [
+          "зеркальные стены",
+          "отражения Марко в нескольких зеркалах сразу"
+        ],
+        "focus_object": "лицо Марко, в которое попадает слово «маленький»",
+        "atmosphere": "удар изнутри",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.drama"
+    },
+    {
+      "id": "ep028_s03",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Голос"
+      ],
+      "mood": "удар по ребёнку — вместо ответа",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s04",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "Голос",
+          "line": "А ты вообще потерялся. Тебе бы домой, а не играть в детектива."
+        },
+        {
+          "who": "author",
+          "line": "Сем сжимается. Глаза — мокрые."
+        },
+        {
+          "who": "author",
+          "line": "Голос не ответил на вопрос Сема. Не сказал — да, Вера пленница, или нет. Не привёл фактов. Не использовал логику. Не дал обоснования."
+        },
+        {
+          "who": "author",
+          "line": "Вместо этого — ударил по ЧЕЛОВЕКУ."
+        }
+      ],
+      "quizzes": [],
+      "choice": {
+        "question": "Что делает Марко?",
+        "options": [
+          {
+            "id": "name_attack",
+            "text": "Назвать приём вслух: «это нападение, не ответ»",
+            "next": "ep028_s04"
+          },
+          {
+            "id": "defend_self",
+            "text": "Защититься в лоб: «я не маленький!»",
+            "next": "ep028_s03b"
+          }
+        ]
+      },
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь, Сем сжимается, Марко рядом, зеркала вокруг",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "усилие — не оправдываться",
+            "pose": "рука на плече Сема",
+            "position": "right"
+          },
+          {
+            "who": "Сем",
+            "expression": "мокрые глаза, сжимается",
+            "pose": "опустил голову, сжимает лямку рюкзака",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "зеркала по бокам",
+          "отражения Сема и Марко в них"
+        ],
+        "focus_object": "Сем сжимается — Марко выбирает ответ",
+        "atmosphere": "соблазн оправдаться",
+        "ui_mode": "choice"
+      },
+      "source_ref": "day_07.ep28.drama"
+    },
+    {
+      "id": "ep028_s03b",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Голос"
+      ],
+      "mood": "оправдание — не ответ",
+      "branch_type": "flavor_detour",
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s04",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": "ep028_s04"
+      },
+      "text": [
+        {
+          "who": "marko",
+          "line": "Я не маленький!"
+        },
+        {
+          "who": "Голос",
+          "line": "Тогда докажи. Сначала — вырасти."
+        },
+        {
+          "who": "author",
+          "line": "Марко закусил губу. Оправдание — не ответ. Оправдание принимает чужие правила игры: будто его «маленькость» имеет отношение к файлу Веры."
+        },
+        {
+          "who": "author",
+          "line": "Не имеет."
+        },
+        {
+          "who": "author",
+          "line": "Марко выдыхает. Возвращается к делу."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь, Марко лицом к зеркалам, Сем рядом",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "ловля собственной ловушки",
+            "pose": "закусил губу, потом выдох",
+            "position": "right"
+          },
+          {
+            "who": "Сем",
+            "expression": "тихая поддержка",
+            "pose": "рядом",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "зеркала с отражениями"
+        ],
+        "focus_object": "Марко, поймавший себя на оправдании",
+        "atmosphere": "взрослеть = не оправдываться",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.drama"
+    },
+    {
+      "id": "ep028_s04",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Софа называет приём — и приём становится виден",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s05",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Нападение. Не на аргумент. На человека."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "точка опоры — узнал приём",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "пузырь Софы — короткая фраза-диагноз",
+        "atmosphere": "приём назван — стал виден",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.drama"
+    },
+    {
+      "id": "ep028_s05",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "три приёма врага — три шага защиты",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s06",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "НАПАДЕНИЕ НА ЧЕЛОВЕКА. Когда нет хорошего обоснования — человек переключается на собеседника. Не на то, ЧТО ты говоришь. На то, КТО ты."
+        },
+        {
+          "who": "author",
+          "line": "Три вида."
+        },
+        {
+          "who": "author",
+          "line": "ОСКОРБЛЕНИЕ — ярлык вместо ответа. «Ты ленивый.» «Зубрилка.» «Зануда.» Ярлык — не аргумент. Ярлык — признание, что аргументов нет."
+        },
+        {
+          "who": "author",
+          "line": "ОБСТОЯТЕЛЬСТВА — дисквалификация. «Тебе девять лет — ты не понимаешь.» «Ты из другого района.» «Ты троечник.» Как будто возраст, место или оценки отменяют правоту."
+        },
+        {
+          "who": "author",
+          "line": "«САМ ТАКОЙ» — перевод стрелок. «А ты сам вчера…» «На себя посмотри.» Вместо ответа — атака в ответ."
+        },
+        {
+          "who": "author",
+          "line": "Ключевой принцип: правильность идеи не зависит от того, КТО её говорит. Если маленький ребёнок скажет «огонь горячий» — это правда. Возраст не отменяет факт."
+        },
+        {
+          "who": "author",
+          "line": "Защита — три шага: 1) НАЗОВИ приём. «Это нападение на меня, не на мой аргумент.» 2) ВЕРНИСЬ к теме. «Давай вернёмся к вопросу.» 3) СПРОСИ: «Что не так с моим аргументом?»"
+        },
+        {
+          "who": "author",
+          "line": "Если бьют по ТЕБЕ, а не по твоим СЛОВАМ — значит, твои слова сильные."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь в расфокусе. В центре — три простые пиктограммы атаки в ряд: ярлык-наклейка, измерительная лента-дисквалификация, стрелка-разворот; ниже — три ладони-щит в ряд",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "усваивает три инструмента",
+            "pose": "стоит, рука на плече Сема",
+            "position": "right"
+          }
+        ],
+        "props": [
+          "три пиктограммы атаки (ярлык / лента-дисквалификация / стрелка-разворот)",
+          "три пиктограммы защиты (щит-1 / щит-2 / щит-3 в ряд)"
+        ],
+        "focus_object": "три атаки и три защиты — наглядно",
+        "atmosphere": "карта инструментов собрана",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s06",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Голос — мастер этого приёма",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s07",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Учимся узнавать вид. Три варианта: оскорбление, обстоятельства, «сам такой»."
+        }
+      ],
+      "quizzes": [
+        {
+          "question": "Голос Марко: «Ты маленький. Сначала вырасти — потом спорь.» Какой вид нападения?",
+          "options": [
+            {
+              "id": "circumstance",
+              "text": "Обстоятельства",
+              "correct": true
+            },
+            {
+              "id": "insult",
+              "text": "Оскорбление",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "«Сам такой»",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Дисквалификация по возрасту. «Маленький» — не аргумент о Вере.",
+          "feedback_success": "Дисквалификация по возрасту — это обстоятельства.",
+          "feedback_soft_fail": "«Маленький» — это не оценка слов («оскорбление») и не «сам такой». Это «у тебя такие обстоятельства, что ты не можешь говорить». Это обстоятельства."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма измерительной ленты с отметкой «возраст»",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "чёткая классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "лента-дисквалификация",
+        "atmosphere": "дисквалификация по возрасту",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s07",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Сем тоже под обстоятельствами",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s08",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Голос Сему: «Ты потерялся. Тебе бы домой.» Какой вид?",
+          "options": [
+            {
+              "id": "circumstance",
+              "text": "Обстоятельства",
+              "correct": true
+            },
+            {
+              "id": "insult",
+              "text": "Оскорбление",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "«Сам такой»",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Дисквалификация по ситуации. «Потерялся» — не аргумент против вопроса Сема.",
+          "feedback_success": "«Потерялся» — это про ситуацию Сема, а не про его вопрос. Обстоятельства.",
+          "feedback_soft_fail": "Голос не отвечает на вопрос. Он переключается на «у тебя такая ситуация — ты не можешь спрашивать». Это обстоятельства."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма стрелки «не отсюда»",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "уверенная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "стрелка-«не отсюда»",
+        "atmosphere": "дисквалификация по «потерянности»",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s08",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "ярлык, который чуть не стёр Макса",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s09",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Агент Максу: «Макс — трус.» Какой вид?",
+          "options": [
+            {
+              "id": "insult",
+              "text": "Оскорбление",
+              "correct": true
+            },
+            {
+              "id": "circumstance",
+              "text": "Обстоятельства",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "«Сам такой»",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Ярлык вместо ответа. «Трус» — не аргумент.",
+          "feedback_success": "Ярлык вместо аргумента — это оскорбление.",
+          "feedback_soft_fail": "«Трус» — это наклеенное слово. Не возраст, не «сам такой». Это ярлык. Оскорбление."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма ярлыка-наклейки",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "горькое узнавание",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "ярлык-наклейка",
+        "atmosphere": "слово-наклейка, которое работает быстро",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s09",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "разворот вместо ответа",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s10_sofa",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "«А ты сам вчера не сделал домашку!» — на вопрос «зачем ты врёшь?» Какой вид?",
+          "options": [
+            {
+              "id": "same",
+              "text": "«Сам такой»",
+              "correct": true
+            },
+            {
+              "id": "insult",
+              "text": "Оскорбление",
+              "correct": false
+            },
+            {
+              "id": "circumstance",
+              "text": "Обстоятельства",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Перевод стрелок. Вместо ответа — атака в ответ.",
+          "feedback_success": "Не ответил — атаковал в ответ. Это «сам такой».",
+          "feedback_soft_fail": "«А ты сам…» — классический разворот. Это не ярлык и не «у тебя такие обстоятельства». Это «сам такой»."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма стрелки-разворота",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "уверенная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "стрелка-разворот",
+        "atmosphere": "перевод стрелок — наглядно",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s10_sofa",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "правило закреплено — двадцать восьмое",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s11",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Правило двадцать восьмое."
+        },
+        {
+          "who": "sofa",
+          "line": "Нападение на человека — не ответ на аргумент. Три вида: оскорбление, обстоятельства, «сам такой»."
+        },
+        {
+          "who": "sofa",
+          "line": "Защита: назови приём, вернись к теме, спроси «что не так с моим аргументом?»"
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы с правилом",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "получает инструмент",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "пузырь с правилом № 28",
+        "atmosphere": "защита собрана",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.sofa_block"
+    },
+    {
+      "id": "ep028_s11",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Софа"
+      ],
+      "mood": "перед большим сводом — спокойный вдох",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s12",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Финальная практика за весь день. Всё, что Марко и Сем изучили."
+        },
+        {
+          "who": "sofa",
+          "line": "Большая тренировка. Противоречия + обоснования + нападения. Всё вместе."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь, Марко и Сем стоят, телефон в руке Марко, зеркальные стены вокруг",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "собранная готовность",
+            "pose": "с телефоном, рядом Сем",
+            "position": "right"
+          },
+          {
+            "who": "Сем",
+            "expression": "серьёзный школьник",
+            "pose": "рядом, рюкзак на плече",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "зеркальные стены с отражениями",
+          "телефон в руке"
+        ],
+        "focus_object": "оба готовы к большой тренировке",
+        "atmosphere": "перед финальным разделом",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s12",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "повторение: «всегда / никогда» = ловушка",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s13",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Часть 1 — противоречия."
+        }
+      ],
+      "quizzes": [
+        {
+          "question": "Катя обещает: «Я никогда не опаздываю!» — опаздывает три раза за неделю. Противоречие?",
+          "options": [
+            {
+              "id": true,
+              "text": "Да, противоречие",
+              "correct": true
+            },
+            {
+              "id": false,
+              "text": "Нет, противоречия нет",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Слова vs действия. «Никогда» + три опоздания — слово рассыпается на одном «нет».",
+          "feedback_success": "«Никогда» + три опоздания — слово сломалось.",
+          "feedback_soft_fail": "«Никогда» означает «без исключений». Три исключения — слово уже не работает. Это противоречие."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, иконка часов и три крестика",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "спокойный анализ",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "часы и три крестика",
+        "atmosphere": "повторение пройденного",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s13",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "лозунг и реальность не совпали",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s14",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Тренер: «В моей команде все равны!» — но одного игрока всегда ставит первым. Противоречие?",
+          "options": [
+            {
+              "id": true,
+              "text": "Да, противоречие",
+              "correct": true
+            },
+            {
+              "id": false,
+              "text": "Нет, противоречия нет",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Все равны — но один особенный. Двойной стандарт.",
+          "feedback_success": "«Все равны» + «один особенный» — двойной стандарт.",
+          "feedback_soft_fail": "Если все равны — никого нельзя ставить «всегда первым». Слова и действия не сошлись. Противоречие."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, иконка ряда фигур и одна фигура впереди",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "точный анализ",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "ряд фигур и одна впереди",
+        "atmosphere": "лозунг сам себе мешает",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s14",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "ловушка размытых слов",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s15",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Вася: «Я за здоровое питание!» — ест бургер в субботу. Противоречие?",
+          "options": [
+            {
+              "id": "ambiguous",
+              "text": "Неоднозначно — зависит от смысла «за здоровое»",
+              "correct": true
+            },
+            {
+              "id": true,
+              "text": "Да, противоречие",
+              "correct": false
+            },
+            {
+              "id": false,
+              "text": "Нет, противоречия нет",
+              "correct": false
+            }
+          ],
+          "correct_logic": "«За здоровое питание» ≠ «никогда ни одного бургера». Хитрый случай: формально не противоречие, нужно уточнить смысл слов.",
+          "feedback_success": "«За здоровое» — не «никогда сладкое». Формально не противоречие. Хитрый случай.",
+          "feedback_soft_fail": "Подвох. «За здоровое питание» оставляет место для исключений. Формально это не противоречие. Нужно уточнить смысл слов."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, иконка бургера и зелёного салата на одной тарелке",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "внимательное различение",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "бургер и салат рядом",
+        "atmosphere": "не каждое разногласие — противоречие",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s15",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "переименование не отменяет действие",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s16",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Максим: «Списывать нехорошо!» — и сам заглядывает в тетрадь соседа. Противоречие?",
+          "options": [
+            {
+              "id": true,
+              "text": "Да, противоречие",
+              "correct": true
+            },
+            {
+              "id": false,
+              "text": "Нет, противоречия нет",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Осуждает — и сам списывает. «Просто проверяю» — переименованное действие. Слова vs действия.",
+          "feedback_success": "Осуждает — и делает то же самое. «Просто проверяю» — переименование.",
+          "feedback_soft_fail": "Слово другое («заглядывает», «проверяю»), а действие то же — списать. Слова и действия не совпали. Противоречие."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, иконка тетради и подглядывающего глаза",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "ловит переименование",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "тетрадь и глаз",
+        "atmosphere": "одно и то же действие — два слова",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s16",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "обоснование — узнаваемое после практики",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s17",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Часть 2 — обоснование или нападение."
+        }
+      ],
+      "quizzes": [
+        {
+          "question": "«Нужно спать 9 часов — так говорят врачи.» Обоснование или нападение?",
+          "options": [
+            {
+              "id": "source",
+              "text": "Обоснование — надёжный источник",
+              "correct": true
+            },
+            {
+              "id": "fact",
+              "text": "Обоснование — факт",
+              "correct": false
+            },
+            {
+              "id": "insult",
+              "text": "Нападение — оскорбление",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "Нападение — «сам такой»",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Врачи — эксперты в здоровье. Это надёжный источник.",
+          "feedback_success": "Врачи — эксперты по теме. Источник.",
+          "feedback_soft_fail": "Главное здесь — кто говорит: эксперт в теме здоровья. Это обоснование, тип «надёжный источник»."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, иконка фигурки в халате и часов на 9",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "спокойная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "врач и часы",
+        "atmosphere": "источник в теме",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s17",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "разворот вместо ответа — теперь видно",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s18",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "«А ты сам вчера не сделал домашку!» — на вопрос о пользе домашних заданий. Обоснование или нападение?",
+          "options": [
+            {
+              "id": "same",
+              "text": "Нападение — «сам такой»",
+              "correct": true
+            },
+            {
+              "id": "source",
+              "text": "Обоснование — надёжный источник",
+              "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Обоснование — факт",
+              "correct": false
+            },
+            {
+              "id": "insult",
+              "text": "Нападение — оскорбление",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Перевод стрелок вместо ответа. Вопрос про пользу домашки — атака про «вчера» не отвечает.",
+          "feedback_success": "Не ответил на вопрос про пользу — атаковал в ответ. «Сам такой».",
+          "feedback_soft_fail": "Вопрос был про пользу домашки. Ответ — про «тебя вчера». Это разворот. Нападение «сам такой»."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма стрелки-разворота",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "точная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "стрелка-разворот",
+        "atmosphere": "разворот — теперь узнаётся быстро",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s18",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Голос пользуется этим — теперь видно",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s19",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "«Тебе десять лет, ты не можешь рассуждать о собаках!» Обоснование или нападение?",
+          "options": [
+            {
+              "id": "circumstance",
+              "text": "Нападение — обстоятельства",
+              "correct": true
+            },
+            {
+              "id": "insult",
+              "text": "Нападение — оскорбление",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "Нападение — «сам такой»",
+              "correct": false
+            },
+            {
+              "id": "source",
+              "text": "Обоснование — надёжный источник",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Возраст не отменяет знание о собаках. Дисквалификация по возрасту = обстоятельства.",
+          "feedback_success": "Возраст ≠ знание. Это дисквалификация по возрасту — обстоятельства.",
+          "feedback_soft_fail": "«Тебе 10 лет» не отменяет знание про собак. Это дисквалификация по возрасту. Обстоятельства."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма ленты-«возраст»",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "уверенная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "лента-«возраст»",
+        "atmosphere": "обстоятельства — теперь видно",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s19",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "хороший пример обоснования — цепочка",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s20",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "«Книги полезнее видео, потому что при чтении мозг сам строит картинку — это развивает воображение.» Обоснование или нападение?",
+          "options": [
+            {
+              "id": "logic",
+              "text": "Обоснование — логика",
+              "correct": true
+            },
+            {
+              "id": "source",
+              "text": "Обоснование — надёжный источник",
+              "correct": false
+            },
+            {
+              "id": "insult",
+              "text": "Нападение — оскорбление",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "Нападение — «сам такой»",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Цепочка: чтение → мозг строит → воображение. Одно следует из другого.",
+          "feedback_success": "Чтение → мозг строит → воображение. Цепочка причин — логика.",
+          "feedback_soft_fail": "Здесь цепочка «чтение → мозг строит → воображение». Это причина-следствие. Логика."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма цепочки книга → мозг → картинка",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "уверенная классификация",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "цепочка из трёх звеньев",
+        "atmosphere": "логика — узнаётся по цепочке",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s20",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "ярлык вместо разговора",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s21",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "«Школьная форма нужна? Ты просто зануда!» Обоснование или нападение?",
+          "options": [
+            {
+              "id": "insult",
+              "text": "Нападение — оскорбление",
+              "correct": true
+            },
+            {
+              "id": "circumstance",
+              "text": "Нападение — обстоятельства",
+              "correct": false
+            },
+            {
+              "id": "same",
+              "text": "Нападение — «сам такой»",
+              "correct": false
+            },
+            {
+              "id": "logic",
+              "text": "Обоснование — логика",
+              "correct": false
+            }
+          ],
+          "correct_logic": "«Зануда» — ярлык вместо аргумента.",
+          "feedback_success": "«Зануда» — это ярлык, не аргумент. Оскорбление.",
+          "feedback_soft_fail": "Где аргумент про форму? Нет — только ярлык. Это оскорбление."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, пиктограмма ярлыка-наклейки",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "спокойное узнавание",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "ярлык-наклейка",
+        "atmosphere": "оскорбление — теперь видно сразу",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s21",
+      "kind": "quiz",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Марко применяет — на самом Голосе",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s22",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [],
+      "quizzes": [
+        {
+          "question": "Марко — Голосу: «Вы говорите «ты маленький». Это нападение на меня, не на мой аргумент. Что не так с моим ВОПРОСОМ?» Это защита?",
+          "options": [
+            {
+              "id": true,
+              "text": "Да — три шага",
+              "correct": true
+            },
+            {
+              "id": false,
+              "text": "Нет, это контратака",
+              "correct": false
+            }
+          ],
+          "correct_logic": "Назвал приём, вернулся к теме, спросил «что не так с аргументом». Все три шага.",
+          "feedback_success": "Все три шага: назвать → вернуть → спросить. Защита.",
+          "feedback_soft_fail": "Проверь по шагам: 1) «это нападение, не на мой аргумент» — назвал. 2) «вопрос…» — вернул к теме. 3) «что не так с моим вопросом» — спросил. Все три."
+        }
+      ],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Экран телефона, пузырь Софы, три щита-пиктограммы в ряд с числами 1-2-3",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "применил инструмент",
+            "pose": "смотрит в экран",
+            "position": "center"
+          }
+        ],
+        "focus_object": "три щита-пиктограммы",
+        "atmosphere": "защита собрана и применена",
+        "ui_mode": "quiz"
+      },
+      "source_ref": "day_07.ep28.challenge"
+    },
+    {
+      "id": "ep028_s22",
+      "kind": "dialogue",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Голос"
+      ],
+      "mood": "маска тепла снята — открыт хозяин дома",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s23_sofa",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Голос молчит. Секунду. Две. Три."
+        },
+        {
+          "who": "author",
+          "line": "Потом — другим тоном. Не тёплым. Не отцовским. Холодным. Деловым. Как директор школы."
+        },
+        {
+          "who": "Голос",
+          "line": "Вера — моя дочь."
+        },
+        {
+          "who": "Голос",
+          "line": "Я СОЗДАЛ Город для неё. Двадцать лет назад. Всё, что ты видишь — мой дом. И ты — гость. Незваный."
+        },
+        {
+          "who": "marko",
+          "line": "Вы — отец Веры."
+        },
+        {
+          "who": "Голос",
+          "line": "Я — отец Веры. Я — создатель Города. Я — тот, кто стирает. И я — тот, кто решает, кому здесь быть."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь, зеркальные стены, отражения сходятся в одну фигуру вдалеке — невидимый хозяин",
+        "camera": "wide",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "холодная ясность",
+            "pose": "стоит твёрдо, рука на плече Сема",
+            "position": "right"
+          },
+          {
+            "who": "Сем",
+            "expression": "серьёзный, не отступает",
+            "pose": "рядом с Марко",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "зеркальные стены с отражениями",
+          "лёгкая дымка вокруг"
+        ],
+        "focus_object": "Марко и Сем перед хозяином Города",
+        "atmosphere": "большое признание — спокойным голосом",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.cliffhanger"
+    },
+    {
+      "id": "ep028_s23_sofa",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "София знала всё с самого начала",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep028_s24_end",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Файл разблокирован. Запись Софии."
+        },
+        {
+          "who": "marko",
+          "line": "К чему?"
+        },
+        {
+          "who": "sofa",
+          "line": "Информация заблокирована."
+        },
+        {
+          "who": "sofa",
+          "line": "Ты ещё не готов."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": {
+        "button_text": "Включить аудио Софии",
+        "reveals": {
+          "type": "voice_message",
+          "who": "София",
+          "line": "Голос — отец Веры. Я узнала это первой. Вера не знает, что я знаю. Марко, если ты читаешь — ты готов. Ты прошёл достаточно уроков. Теперь — самое сложное.",
+          "duration": 12
+        }
+      },
+      "visual_brief": {
+        "background": "Экран телефона, голубое свечение, карточка voice-message",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "сжатое слушание сестры",
+            "pose": "держит телефон двумя руками",
+            "position": "center"
+          }
+        ],
+        "focus_object": "карточка voice-message — голос Софии",
+        "atmosphere": "сестра вернулась — на минуту",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_07.ep28.cliffhanger"
+    },
+    {
+      "id": "ep028_s24_end",
+      "kind": "cliffhanger",
+      "is_chat": false,
+      "location": "Зеркальный Город, центральная площадь",
+      "time": "вечер",
+      "chars": [
+        "Марко",
+        "Сем"
+      ],
+      "mood": "конец Дня 7 — оба знают",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep029_s01",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Сем сжимает руку Марко."
+        },
+        {
+          "who": "author",
+          "line": "Число на стене: 24."
+        },
+        {
+          "who": "author",
+          "line": "Голос — отец Веры. Город — его дом. Вера — его дочь. Двадцать лет она верила «папа говорит». Двадцать лет — на одном обосновании: авторитет отца."
+        },
+        {
+          "who": "author",
+          "line": "София знала. Знала — и готовила Марко. Каждый урок. Каждый инструмент. Каждый тест."
+        },
+        {
+          "who": "author",
+          "line": "Теперь Марко знает тоже. И Голос знает, что Марко знает."
+        },
+        {
+          "who": "author",
+          "line": "Что дальше?"
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Площадь, число 24 углём на зеркальной стене крупно, Марко и Сем у стены",
+        "camera": "wide",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "спокойная готовность",
+            "pose": "стоит у стены, рука Сема в его руке",
+            "position": "center"
+          },
+          {
+            "who": "Сем",
+            "expression": "серьёзная поддержка",
+            "pose": "держит руку Марко",
+            "position": "left"
+          }
+        ],
+        "props": [
+          "число 24 на стене",
+          "зеркальные отражения",
+          "тусклый вечерний свет"
+        ],
+        "focus_object": "число 24 над двумя фигурами",
+        "atmosphere": "конец Акта II — обе стороны теперь знают",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_07.ep28.cliffhanger"
+    }
+  ]
+}

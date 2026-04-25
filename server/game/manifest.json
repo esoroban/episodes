@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-24T11:23:16Z",
+  "generated_at": "2026-04-25T17:50:36Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -432,7 +432,7 @@
         "uk": {
           "html": "uk/ep_020.html",
           "data": "uk/ep_020.json",
-          "content_hash": "ebeac47540e37f8a"
+          "content_hash": "c247223ad9499f72"
         }
       },
       "title_ru": "Мам, я бы тоже выбрала его",
@@ -450,13 +450,19 @@
           "html": "ru/ep_021.html",
           "data": "ru/ep_021.json",
           "content_hash": "0946b3460023a165"
+        },
+        "uk": {
+          "html": "uk/ep_021.html",
+          "data": "uk/ep_021.json",
+          "content_hash": "a00a60f6b9bba0b8"
         }
       },
       "title_ru": "Поворотник",
       "lesson": "6A.1",
       "scene_count": 25,
       "quiz_count": 12,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Поворотник"
     },
     {
       "id": "ep_022",
@@ -466,13 +472,19 @@
           "html": "ru/ep_022.html",
           "data": "ru/ep_022.json",
           "content_hash": "17981ce2c312fa01"
+        },
+        "uk": {
+          "html": "uk/ep_022.html",
+          "data": "uk/ep_022.json",
+          "content_hash": "4c0ccf132a4b66ac"
         }
       },
       "title_ru": "Что сказал — что сделал",
       "lesson": "6A.3",
       "scene_count": 22,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Що сказав — що зробив"
     },
     {
       "id": "ep_023",
@@ -482,13 +494,19 @@
           "html": "ru/ep_023.html",
           "data": "ru/ep_023.json",
           "content_hash": "0a722726205d54db"
+        },
+        "uk": {
+          "html": "uk/ep_023.html",
+          "data": "uk/ep_023.json",
+          "content_hash": "14e3e7724a029ae4"
         }
       },
       "title_ru": "Все, каждый, никто",
       "lesson": "6B.1",
       "scene_count": 24,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Усі, кожен, ніхто"
     },
     {
       "id": "ep_024",
@@ -498,12 +516,82 @@
           "html": "ru/ep_024.html",
           "data": "ru/ep_024.json",
           "content_hash": "16202609ffb7ebf2"
+        },
+        "uk": {
+          "html": "uk/ep_024.html",
+          "data": "uk/ep_024.json",
+          "content_hash": "7794499f618671de"
         }
       },
       "title_ru": "Скажи моё имя",
       "lesson": "6B.2",
       "scene_count": 26,
       "quiz_count": 15,
+      "branch_count": 1,
+      "title_uk": "Скажи моє ім'я"
+    },
+    {
+      "id": "ep_025",
+      "number": 25,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_025.html",
+          "data": "ru/ep_025.json",
+          "content_hash": "043fa3209f39575a"
+        }
+      },
+      "title_ru": "Шоколад на щеке",
+      "lesson": "7A.1",
+      "scene_count": 24,
+      "quiz_count": 14,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_026",
+      "number": 26,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_026.html",
+          "data": "ru/ep_026.json",
+          "content_hash": "1384bf593f1d3d94"
+        }
+      },
+      "title_ru": "Раньше ты говорил...",
+      "lesson": "7A.2",
+      "scene_count": 22,
+      "quiz_count": 12,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_027",
+      "number": 27,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_027.html",
+          "data": "ru/ep_027.json",
+          "content_hash": "285907275796e62c"
+        }
+      },
+      "title_ru": "Папа сказал",
+      "lesson": "7B.1",
+      "scene_count": 23,
+      "quiz_count": 12,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_028",
+      "number": 28,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_028.html",
+          "data": "ru/ep_028.json",
+          "content_hash": "c3cc0750c1a42830"
+        }
+      },
+      "title_ru": "Отец Веры",
+      "lesson": "7B.2",
+      "scene_count": 25,
+      "quiz_count": 14,
       "branch_count": 1
     }
   ]
