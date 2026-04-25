@@ -321,9 +321,6 @@ scenes:
     location: "Зеркальный Город, центральная площадь"
     time: "вечер"
     characters_present: [Марко, Софа]
-    dialogue:
-      - who: Софа
-        line: "Учимся узнавать вид. Три варианта: оскорбление, обстоятельства, «сам такой»."
     interaction_type: vote
     question: "Голос Марко: «Ты маленький. Сначала вырасти — потом спорь.» Какой вид нападения?"
     options:
@@ -493,14 +490,14 @@ scenes:
       atmosphere: "защита собрана"
       ui_mode: dialogue
 
-  # ── СЦЕНА 11: Драма — финальная практика ─────────────────────────────
+  # ── СЦЕНА 11: Подводка к финальной практике (chat) ───────────────────
   - scene_id: ep028_s11
     episode_id: 28
     source_ref: day_07.ep28.challenge
     scene_type: dialogue
     location: "Зеркальный Город, центральная площадь"
     time: "вечер"
-    characters_present: [Марко, Сем, Софа]
+    characters_present: [Марко, Софа]
     author_text: >
       Финальная практика за весь день. Всё, что Марко и Сем изучили.
     dialogue:
@@ -509,19 +506,14 @@ scenes:
     mood: "перед большим сводом — спокойный вдох"
     next_default: ep028_s12
     visual_brief:
-      background: "Площадь, Марко и Сем стоят, телефон в руке Марко, зеркальные стены вокруг"
-      camera: medium
+      background: "Экран телефона, пузырь Софы, voice-over автора между сообщениями"
+      camera: close-up
       characters:
         - who: Марко
           expression: собранная готовность
-          pose: с телефоном, рядом Сем
-          position: right
-        - who: Сем
-          expression: серьёзный школьник
-          pose: рядом, рюкзак на плече
-          position: left
-      props: [зеркальные стены с отражениями, телефон в руке]
-      focus_object: "оба готовы к большой тренировке"
+          pose: держит телефон
+          position: center
+      focus_object: "пузырь Софы перед финальным разделом"
       atmosphere: "перед финальным разделом"
       ui_mode: dialogue
 
