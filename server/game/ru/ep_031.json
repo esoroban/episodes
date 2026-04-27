@@ -20,7 +20,7 @@
     ],
     "previous_episode": 30
   },
-  "scene_count": 30,
+  "scene_count": 29,
   "quiz_count": 13,
   "branch_count": 1,
   "scenes": [
@@ -1696,12 +1696,12 @@
         "Сем",
         "мама"
       ],
-      "mood": "мама уходит — Марко не догоняет",
+      "mood": "мама ушла добровольно — хуже стирания",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep031_s25_sofa",
+        "next": "ep031_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1718,6 +1718,18 @@
         {
           "who": "author",
           "line": "Марко бьёт по зеркалу. Стекло гудит. Мама не оборачивается."
+        },
+        {
+          "who": "author",
+          "line": "Мама не стёрта. Она ушла. Сама. Как София."
+        },
+        {
+          "who": "author",
+          "line": "Число на стене: 24. Не изменилось. Не упало. Мама помнит. Мама выбрала."
+        },
+        {
+          "who": "author",
+          "line": "Это… хуже стирания."
         }
       ],
       "quizzes": [],
@@ -1753,60 +1765,6 @@
         "focus_object": "мама уходит — Марко не догоняет",
         "atmosphere": "добровольный уход",
         "ui_mode": "reading"
-      },
-      "source_ref": "day_08.ep31.cliffhanger"
-    },
-    {
-      "id": "ep031_s25_sofa",
-      "kind": "dialogue",
-      "is_chat": true,
-      "location": "Зеркальный Город, зеркальный коридор",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "Софа называет — хуже стирания",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep031_s26",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [
-        {
-          "who": "sofa",
-          "line": "Мама не стёрта. Она ушла. Сама. Как София."
-        },
-        {
-          "who": "marko",
-          "line": "Что?"
-        },
-        {
-          "who": "sofa",
-          "line": "Число не изменилось. Мама помнит. Мама выбрала. Это… хуже стирания."
-        }
-      ],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "лоб у телефона, не верит",
-            "pose": "смотрит в экран",
-            "position": "center"
-          }
-        ],
-        "focus_object": "пузырь Софы — диагноз",
-        "atmosphere": "выбор тяжелее стирания",
-        "ui_mode": "dialogue"
       },
       "source_ref": "day_08.ep31.cliffhanger"
     },

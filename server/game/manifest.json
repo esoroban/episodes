@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T17:33:01Z",
+  "generated_at": "2026-04-27T17:46:25Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -625,12 +625,12 @@
         "ru": {
           "html": "ru/ep_029.html",
           "data": "ru/ep_029.json",
-          "content_hash": "37adbc73f81b26dd"
+          "content_hash": "727b9d199628618c"
         }
       },
       "title_ru": "Соломенное чучело",
       "lesson": "8A.1",
-      "scene_count": 26,
+      "scene_count": 25,
       "quiz_count": 14,
       "branch_count": 1
     },
@@ -657,12 +657,12 @@
         "ru": {
           "html": "ru/ep_031.html",
           "data": "ru/ep_031.json",
-          "content_hash": "c4d82d7c815a6800"
+          "content_hash": "fd315b44598b0eee"
         }
       },
       "title_ru": "Четыре кнопки страха",
       "lesson": "8B.1",
-      "scene_count": 30,
+      "scene_count": 29,
       "quiz_count": 13,
       "branch_count": 1
     },
