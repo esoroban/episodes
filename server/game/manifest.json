@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T13:52:49Z",
+  "generated_at": "2026-04-27T14:16:30Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -553,12 +553,12 @@
         "ru": {
           "html": "ru/ep_026.html",
           "data": "ru/ep_026.json",
-          "content_hash": "c3db02eecaea0c13"
+          "content_hash": "3463124ee0e12f87"
         }
       },
       "title_ru": "Раньше ты говорил...",
       "lesson": "7A.2",
-      "scene_count": 22,
+      "scene_count": 23,
       "quiz_count": 12,
       "branch_count": 1
     },
@@ -569,7 +569,7 @@
         "ru": {
           "html": "ru/ep_027.html",
           "data": "ru/ep_027.json",
-          "content_hash": "ff52117e65afd2d1"
+          "content_hash": "6e131969b667622f"
         }
       },
       "title_ru": "Папа сказал",
@@ -585,7 +585,7 @@
         "ru": {
           "html": "ru/ep_028.html",
           "data": "ru/ep_028.json",
-          "content_hash": "8190331041c95c9a"
+          "content_hash": "676a9001a17b7a49"
         }
       },
       "title_ru": "Отец Веры",
