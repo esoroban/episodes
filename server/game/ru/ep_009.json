@@ -440,11 +440,6 @@
           "question": "«В сутках 24 часа.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": false
@@ -453,6 +448,11 @@
               "id": "falsehood",
               "text": "Неправда",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Посчитай — ровно 24. Проверяемо и верно.",
@@ -503,6 +503,11 @@
           "question": "«Собаки — лучшие домашние животные.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "falsehood",
+              "text": "Неправда",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -511,11 +516,6 @@
               "id": "opinion",
               "text": "Мнение",
               "correct": true
-            },
-            {
-              "id": "falsehood",
-              "text": "Неправда",
-              "correct": false
             }
           ],
           "correct_logic": "«Лучшие» — нет прибора для измерения «лучшести». Это оценка.",
@@ -566,13 +566,13 @@
           "question": "«Луна больше Солнца.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
+              "id": "opinion",
+              "text": "Мнение",
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Мнение",
+              "id": "fact",
+              "text": "Факт",
               "correct": false
             },
             {
@@ -634,14 +634,14 @@
           "question": "«Уронил телефон на пол — экран треснул.» Причина или совпадение?",
           "options": [
             {
-              "id": "cause",
-              "text": "Причина",
-              "correct": true
-            },
-            {
               "id": "coincidence",
               "text": "Совпадение",
               "correct": false
+            },
+            {
+              "id": "cause",
+              "text": "Причина",
+              "correct": true
             }
           ],
           "correct_logic": "Удар разбил экран — не урони, не треснет. Причина и следствие.",
@@ -760,11 +760,6 @@
           "question": "«Когда растут продажи зонтов — растут продажи резиновых сапог.» Причина, совпадение или третья причина?",
           "options": [
             {
-              "id": "cause",
-              "text": "Причина",
-              "correct": false
-            },
-            {
               "id": "coincidence",
               "text": "Совпадение",
               "correct": false
@@ -773,6 +768,11 @@
               "id": "third",
               "text": "Третья причина",
               "correct": true
+            },
+            {
+              "id": "cause",
+              "text": "Причина",
+              "correct": false
             }
           ],
           "correct_logic": "Дождь вызывает и то, и другое. Третья причина.",
@@ -1013,14 +1013,14 @@
           "question": "Чего хотели Маша и Микола В НАЧАЛЕ спора?",
           "options": [
             {
-              "id": "understand",
-              "text": "Понять друг друга",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Победить друг друга",
               "correct": true
+            },
+            {
+              "id": "understand",
+              "text": "Понять друг друга",
+              "correct": false
             }
           ],
           "correct_logic": "Каждый хотел доказать, что его рисунок лучше. Цель — победить.",
@@ -1173,14 +1173,14 @@
           "question": "А в конце — чего они хотели?",
           "options": [
             {
-              "id": "understand",
-              "text": "Понять друг друга",
-              "correct": true
-            },
-            {
               "id": "win",
               "text": "Победить друг друга",
               "correct": false
+            },
+            {
+              "id": "understand",
+              "text": "Понять друг друга",
+              "correct": true
             }
           ],
           "correct_logic": "Оленка предложила найти хорошее в чужом рисунке. Они посмотрели иначе. Цель сменилась: понять.",
@@ -1234,6 +1234,11 @@
           "question": "«Мой велосипед быстрее, и точка! Не спорь!» Какая цель?",
           "options": [
             {
+              "id": "hurt",
+              "text": "Обидеть",
+              "correct": false
+            },
+            {
               "id": "win",
               "text": "Победить",
               "correct": true
@@ -1241,11 +1246,6 @@
             {
               "id": "understand",
               "text": "Понять",
-              "correct": false
-            },
-            {
-              "id": "hurt",
-              "text": "Обидеть",
               "correct": false
             }
           ],
@@ -1297,8 +1297,8 @@
           "question": "«А давай измерим! Прокатимся до забора и обратно, засечём время.» Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
+              "id": "hurt",
+              "text": "Обидеть",
               "correct": false
             },
             {
@@ -1307,8 +1307,8 @@
               "correct": true
             },
             {
-              "id": "hurt",
-              "text": "Обидеть",
+              "id": "win",
+              "text": "Победить",
               "correct": false
             }
           ],
@@ -1784,14 +1784,14 @@
           "question": "Лина привела аргумент. Это цель «победить» или «понять»?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": true
+            },
+            {
+              "id": "win",
+              "text": "Победить",
+              "correct": false
             }
           ],
           "correct_logic": "Она объяснила ПОЧЕМУ, а не просто потребовала. Цель — понять.",
@@ -1978,11 +1978,6 @@
           "question": "«Я быстрее, потому что я всегда первый на физкультуре! И не спорь!» Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": true
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": false
@@ -1991,6 +1986,11 @@
               "id": "hurt",
               "text": "Обидеть",
               "correct": false
+            },
+            {
+              "id": "win",
+              "text": "Победить",
+              "correct": true
             }
           ],
           "correct_logic": "Не предлагает проверить — объявляет себя чемпионом. Цель — победить.",
@@ -2041,14 +2041,14 @@
           "question": "«А давай пробежим на перемене до дерева и обратно — и узнаем!» Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": true
+            },
+            {
+              "id": "win",
+              "text": "Победить",
+              "correct": false
             },
             {
               "id": "hurt",
@@ -2104,9 +2104,9 @@
           "question": "«Ты бегаешь как черепаха, на тебя смешно смотреть!» Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": false
+              "id": "hurt",
+              "text": "Обидеть",
+              "correct": true
             },
             {
               "id": "understand",
@@ -2114,9 +2114,9 @@
               "correct": false
             },
             {
-              "id": "hurt",
-              "text": "Обидеть",
-              "correct": true
+              "id": "win",
+              "text": "Победить",
+              "correct": false
             }
           ],
           "correct_logic": "Ему всё равно, кто быстрее — хочет задеть. Цель — обидеть.",
@@ -2167,11 +2167,6 @@
           "question": "«Моя книга получила премию — значит, она лучше, и всё!» Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": true
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": false
@@ -2180,6 +2175,11 @@
               "id": "hurt",
               "text": "Обидеть",
               "correct": false
+            },
+            {
+              "id": "win",
+              "text": "Победить",
+              "correct": true
             }
           ],
           "correct_logic": "Давит авторитетом премии, не обсуждает. Цель — победить.",
@@ -2356,14 +2356,14 @@
               "correct": false
             },
             {
-              "id": "understand",
-              "text": "Понять",
-              "correct": true
-            },
-            {
               "id": "hurt",
               "text": "Обидеть",
               "correct": false
+            },
+            {
+              "id": "understand",
+              "text": "Понять",
+              "correct": true
             }
           ],
           "correct_logic": "Хочет узнать больше, открыта к чужому мнению. Цель — понять.",

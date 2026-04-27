@@ -416,14 +416,14 @@
           "question": "«Я сам видел, как дерево упало на дорогу.» Своими глазами или услышал?",
           "options": [
             {
-              "id": "seen",
-              "text": "Своими глазами",
-              "correct": true
-            },
-            {
               "id": "heard",
               "text": "Услышал от других",
               "correct": false
+            },
+            {
+              "id": "seen",
+              "text": "Своими глазами",
+              "correct": true
             }
           ],
           "correct_logic": "Очевидец. Самый надёжный тип источника.",
@@ -476,14 +476,14 @@
           "question": "«Мне сказали, что в столовой каша.» Источник — цепочка из трёх человек. Надёжно?",
           "options": [
             {
-              "id": "trust",
-              "text": "Надёжно",
-              "correct": false
-            },
-            {
               "id": "check",
               "text": "Нужно проверить",
               "correct": true
+            },
+            {
+              "id": "trust",
+              "text": "Надёжно",
+              "correct": false
             }
           ],
           "correct_logic": "Три звена — три возможности для ошибки. Лучше сходить и посмотреть.",
@@ -596,14 +596,14 @@
           "question": "На неизвестном сайте — статья «Школу закрывают!» Без автора. Без даты. Надёжно?",
           "options": [
             {
-              "id": "trust",
-              "text": "Надёжно",
-              "correct": false
-            },
-            {
               "id": "untrust",
               "text": "Ненадёжно",
               "correct": true
+            },
+            {
+              "id": "trust",
+              "text": "Надёжно",
+              "correct": false
             }
           ],
           "correct_logic": "Четвёртая полка: неизвестный сайт. Нет автора, нет даты, нет источника.",
@@ -656,14 +656,14 @@
           "question": "Врач-педиатр говорит: «Детям нужно спать 9 часов.» Блогер говорит: «5 часов хватит!» Кому верить?",
           "options": [
             {
-              "id": "doctor",
-              "text": "Врачу",
-              "correct": true
-            },
-            {
               "id": "blogger",
               "text": "Блогеру",
               "correct": false
+            },
+            {
+              "id": "doctor",
+              "text": "Врачу",
+              "correct": true
             }
           ],
           "correct_logic": "Эксперт в своей теме. Блогер — не врач. Мнение одного человека — не факт.",
@@ -832,14 +832,14 @@
           "question": "Учитель написал в школьном чате: «Завтра контрольная.» Ученик Маша — подруге: «Да, учитель сказал!» Независимые или зависимые?",
           "options": [
             {
-              "id": "indep",
-              "text": "Независимые",
-              "correct": false
-            },
-            {
               "id": "dep",
               "text": "Зависимые",
               "correct": true
+            },
+            {
+              "id": "indep",
+              "text": "Независимые",
+              "correct": false
             }
           ],
           "correct_logic": "Маша повторяет за учителем. Один источник — учитель. Маша — эхо.",
@@ -1026,9 +1026,9 @@
           "question": "Спор о школьной столовой. «Меню нужно менять!» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Ствол",
-              "correct": true
+              "id": "leaf",
+              "text": "Листок",
+              "correct": false
             },
             {
               "id": "branch",
@@ -1036,9 +1036,9 @@
               "correct": false
             },
             {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": false
+              "id": "trunk",
+              "text": "Ствол",
+              "correct": true
             }
           ],
           "correct_logic": "Центральная идея — главный вопрос спора.",
@@ -1096,14 +1096,14 @@
               "correct": false
             },
             {
-              "id": "branch",
-              "text": "Ветка",
-              "correct": true
-            },
-            {
               "id": "leaf",
               "text": "Листок",
               "correct": false
+            },
+            {
+              "id": "branch",
+              "text": "Ветка",
+              "correct": true
             }
           ],
           "correct_logic": "Довод — объясняет ПОЧЕМУ надо менять. Аргумент.",
@@ -1156,9 +1156,9 @@
           "question": "«Петя выбросил гречку в понедельник.» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Ствол",
-              "correct": false
+              "id": "leaf",
+              "text": "Листок",
+              "correct": true
             },
             {
               "id": "branch",
@@ -1166,9 +1166,9 @@
               "correct": false
             },
             {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": true
+              "id": "trunk",
+              "text": "Ствол",
+              "correct": false
             }
           ],
           "correct_logic": "Один случай — один пример. Деталь, не доказательство.",
@@ -1226,13 +1226,13 @@
               "correct": true
             },
             {
-              "id": "branch",
-              "text": "Ветка",
+              "id": "leaf",
+              "text": "Листок",
               "correct": false
             },
             {
-              "id": "leaf",
-              "text": "Листок",
+              "id": "branch",
+              "text": "Ветка",
               "correct": false
             }
           ],
@@ -1286,6 +1286,11 @@
           "question": "«За 10 минут не успеваешь даже до буфета дойти.» — ствол, ветка или листок?",
           "options": [
             {
+              "id": "leaf",
+              "text": "Листок",
+              "correct": false
+            },
+            {
               "id": "trunk",
               "text": "Ствол",
               "correct": false
@@ -1294,11 +1299,6 @@
               "id": "branch",
               "text": "Ветка",
               "correct": true
-            },
-            {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": false
             }
           ],
           "correct_logic": "Довод — объясняет ПОЧЕМУ 20 минут нужно.",
@@ -1351,9 +1351,9 @@
           "question": "«Оленка опоздала на урок, потому что стояла в очереди.» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Ствол",
-              "correct": false
+              "id": "leaf",
+              "text": "Листок",
+              "correct": true
             },
             {
               "id": "branch",
@@ -1361,9 +1361,9 @@
               "correct": false
             },
             {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": true
+              "id": "trunk",
+              "text": "Ствол",
+              "correct": false
             }
           ],
           "correct_logic": "Конкретный случай. Одна фотография — не вся картина.",
@@ -1416,11 +1416,6 @@
           "question": "Спор о хомяке. «Хомяк в классе — хорошая идея?» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Ствол",
-              "correct": true
-            },
-            {
               "id": "branch",
               "text": "Ветка",
               "correct": false
@@ -1429,6 +1424,11 @@
               "id": "leaf",
               "text": "Листок",
               "correct": false
+            },
+            {
+              "id": "trunk",
+              "text": "Ствол",
+              "correct": true
             }
           ],
           "correct_logic": "Центральная идея — главный вопрос спора.",

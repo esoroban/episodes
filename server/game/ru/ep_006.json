@@ -250,6 +250,11 @@
           "question": "Марко один раз увидел лишний палец Леона через Зеркало. Какой цвет светофора?",
           "options": [
             {
+              "id": "green",
+              "text": "Зелёный",
+              "correct": false
+            },
+            {
               "id": "red",
               "text": "Красный — СТОП, не делай вывод",
               "correct": true
@@ -257,11 +262,6 @@
             {
               "id": "yellow",
               "text": "Жёлтый",
-              "correct": false
-            },
-            {
-              "id": "green",
-              "text": "Зелёный",
               "correct": false
             }
           ],
@@ -301,14 +301,14 @@
               "correct": false
             },
             {
-              "id": "yellow",
-              "text": "Жёлтый — интересно, но проверяй",
-              "correct": true
-            },
-            {
               "id": "green",
               "text": "Зелёный",
               "correct": false
+            },
+            {
+              "id": "yellow",
+              "text": "Жёлтый — интересно, но проверяй",
+              "correct": true
             }
           ],
           "correct_logic": "Два раза — жёлтый! Интересно, но проверяй дальше.",
@@ -355,6 +355,11 @@
           "question": "Марко пришёл к Леону — отражение в Зеркале не улыбалось. Три раза. Какой цвет?",
           "options": [
             {
+              "id": "green",
+              "text": "Зелёный",
+              "correct": false
+            },
+            {
               "id": "red",
               "text": "Красный",
               "correct": false
@@ -363,11 +368,6 @@
               "id": "yellow",
               "text": "Жёлтый — проверяй дальше",
               "correct": true
-            },
-            {
-              "id": "green",
-              "text": "Зелёный",
-              "correct": false
             }
           ],
           "correct_logic": "Три раза — жёлтый! Проверяй дальше.",
@@ -508,11 +508,6 @@
           "question": "Марко один раз увидел лишний палец и хочет сделать вывод. Какой цвет светофора?",
           "options": [
             {
-              "id": "red",
-              "text": "Красный — одного раза мало",
-              "correct": true
-            },
-            {
               "id": "yellow",
               "text": "Жёлтый",
               "correct": false
@@ -521,6 +516,11 @@
               "id": "green",
               "text": "Зелёный",
               "correct": false
+            },
+            {
+              "id": "red",
+              "text": "Красный — одного раза мало",
+              "correct": true
             }
           ],
           "correct_logic": "Один раз — красный! СТОП, не делай вывод.",
@@ -867,14 +867,14 @@
           "question": "Леон говорит «я покажу книгу». Это можно проверить?",
           "options": [
             {
-              "id": true,
-              "text": "Да — можно пойти и увидеть",
-              "correct": true
-            },
-            {
               "id": false,
               "text": "Нет",
               "correct": false
+            },
+            {
+              "id": true,
+              "text": "Да — можно пойти и увидеть",
+              "correct": true
             }
           ],
           "correct_logic": "Можно пойти и увидеть.",
@@ -903,14 +903,14 @@
           "question": "Что бы сделал детектив правды?",
           "options": [
             {
-              "id": "go",
-              "text": "Пошёл бы сразу",
-              "correct": false
-            },
-            {
               "id": "ask",
               "text": "Задал бы вопрос: а что случилось с тем, кто не вернулся?",
               "correct": true
+            },
+            {
+              "id": "go",
+              "text": "Пошёл бы сразу",
+              "correct": false
             }
           ],
           "correct_logic": "Детектив задал бы вопрос.",

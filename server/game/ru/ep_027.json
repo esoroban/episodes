@@ -453,9 +453,9 @@
           "question": "«Лёд скользкий, потому что при нагревании поверхности тонкий слой воды уменьшает трение.» Какой тип обоснования?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
             },
             {
               "id": "logic",
@@ -463,9 +463,9 @@
               "correct": false
             },
             {
-              "id": "source",
-              "text": "Надёжный источник",
-              "correct": false
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Проверяемые данные. Физика. Можно проверить экспериментом.",
@@ -523,13 +523,13 @@
               "correct": true
             },
             {
-              "id": "logic",
-              "text": "Логика",
+              "id": "source",
+              "text": "Надёжный источник",
               "correct": false
             },
             {
-              "id": "source",
-              "text": "Надёжный источник",
+              "id": "logic",
+              "text": "Логика",
               "correct": false
             }
           ],
@@ -587,9 +587,9 @@
           "question": "«Человеку нужно пить воду, потому что тело на 60% состоит из воды и теряет её каждый день.» Какой тип?",
           "options": [
             {
-              "id": "logic",
-              "text": "Логика",
-              "correct": true
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
             },
             {
               "id": "fact",
@@ -597,9 +597,9 @@
               "correct": false
             },
             {
-              "id": "source",
-              "text": "Надёжный источник",
-              "correct": false
+              "id": "logic",
+              "text": "Логика",
+              "correct": true
             }
           ],
           "correct_logic": "Одно следует из другого: состоит из воды → теряет → нужно пить. Цепочка причин.",
@@ -652,6 +652,11 @@
           "question": "«Телефон разрядился, потому что я играл три часа и не ставил на зарядку.» Какой тип?",
           "options": [
             {
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
+            },
+            {
               "id": "logic",
               "text": "Логика",
               "correct": true
@@ -659,11 +664,6 @@
             {
               "id": "fact",
               "text": "Факт",
-              "correct": false
-            },
-            {
-              "id": "source",
-              "text": "Надёжный источник",
               "correct": false
             }
           ],
@@ -841,6 +841,11 @@
           "question": "«Человек моргает 15-20 раз в минуту — это можно измерить секундомером и пересчитать.» Какой тип обоснования?",
           "options": [
             {
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": true
@@ -848,11 +853,6 @@
             {
               "id": "logic",
               "text": "Логика",
-              "correct": false
-            },
-            {
-              "id": "source",
-              "text": "Надёжный источник",
               "correct": false
             }
           ],
@@ -911,11 +911,6 @@
           "question": "«Перед спортом нужна разминка, потому что без неё мышцы не готовы к нагрузке и можно получить травму.» Какой тип?",
           "options": [
             {
-              "id": "logic",
-              "text": "Логика",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -924,6 +919,11 @@
               "id": "source",
               "text": "Надёжный источник",
               "correct": false
+            },
+            {
+              "id": "logic",
+              "text": "Логика",
+              "correct": true
             }
           ],
           "correct_logic": "Без разминки → мышцы не готовы → травма. Цепочка причин.",
@@ -1041,6 +1041,11 @@
           "question": "«Планеты вращаются вокруг Солнца — это подтверждено тысячами наблюдений за сотни лет.» Какой тип?",
           "options": [
             {
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": true
@@ -1048,11 +1053,6 @@
             {
               "id": "logic",
               "text": "Логика",
-              "correct": false
-            },
-            {
-              "id": "source",
-              "text": "Надёжный источник",
               "correct": false
             }
           ],
@@ -1171,14 +1171,14 @@
           "question": "«Долго сидеть без движения вредно — так говорит школьная медсестра.» Какой тип?",
           "options": [
             {
-              "id": "source",
-              "text": "Надёжный источник",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
+            },
+            {
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": true
             },
             {
               "id": "logic",
@@ -1236,13 +1236,13 @@
           "question": "«Папа говорит, что Город — дом.» Обоснование?",
           "options": [
             {
-              "id": "source_unreliable",
-              "text": "Источник, но ненадёжный",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
+              "correct": false
+            },
+            {
+              "id": "source",
+              "text": "Надёжный источник",
               "correct": false
             },
             {
@@ -1251,9 +1251,9 @@
               "correct": false
             },
             {
-              "id": "source",
-              "text": "Надёжный источник",
-              "correct": false
+              "id": "source_unreliable",
+              "text": "Источник, но ненадёжный",
+              "correct": true
             }
           ],
           "correct_logic": "Папа — не эксперт в строительстве городов. Нет фактов, нет логики. Только авторитет родителя — этого мало.",
@@ -1311,9 +1311,9 @@
           "question": "«Папа говорит, что стирание — защита.» Обоснование?",
           "options": [
             {
-              "id": "source_no_support",
-              "text": "Источник без подкрепления",
-              "correct": true
+              "id": "source",
+              "text": "Надёжный источник",
+              "correct": false
             },
             {
               "id": "fact",
@@ -1326,9 +1326,9 @@
               "correct": false
             },
             {
-              "id": "source",
-              "text": "Надёжный источник",
-              "correct": false
+              "id": "source_no_support",
+              "text": "Источник без подкрепления",
+              "correct": true
             }
           ],
           "correct_logic": "Аналогия с прививкой — не доказательство. Где факты? Где логика? Только «папа говорит».",

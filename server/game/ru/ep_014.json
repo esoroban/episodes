@@ -381,14 +381,14 @@
           "question": "Рей на сцене: смотрит в глаза толпе, руки раскинуты, улыбается. Открытая или закрытая поза?",
           "options": [
             {
-              "id": "open",
-              "text": "Открытая",
-              "correct": true
-            },
-            {
               "id": "closed",
               "text": "Закрытая",
               "correct": false
+            },
+            {
+              "id": "open",
+              "text": "Открытая",
+              "correct": true
             }
           ],
           "correct_logic": "Руки свободны, тело повёрнуто к людям — дверь нараспашку. Но это сцена — Рей играет роль.",
@@ -511,14 +511,14 @@
           "question": "Девочка в первом ряду: повернулась к Рею, кивает, руки на коленях. Открытая или закрытая?",
           "options": [
             {
-              "id": "open",
-              "text": "Открытая",
-              "correct": true
-            },
-            {
               "id": "closed",
               "text": "Закрытая",
               "correct": false
+            },
+            {
+              "id": "open",
+              "text": "Открытая",
+              "correct": true
             }
           ],
           "correct_logic": "Повёрнута + кивает + руки свободны = дверь открыта.",
@@ -893,13 +893,13 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
+              "id": "sadness",
+              "text": "Грусть",
               "correct": false
             },
             {
-              "id": "sadness",
-              "text": "Грусть",
+              "id": "joy",
+              "text": "Радость",
               "correct": false
             },
             {
@@ -964,14 +964,14 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
-              "correct": false
-            },
-            {
               "id": "sadness",
               "text": "Грусть",
               "correct": true
+            },
+            {
+              "id": "joy",
+              "text": "Радость",
+              "correct": false
             },
             {
               "id": "anger",
@@ -1034,14 +1034,14 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
-              "correct": true
-            },
-            {
               "id": "sadness",
               "text": "Грусть",
               "correct": false
+            },
+            {
+              "id": "joy",
+              "text": "Радость",
+              "correct": true
             },
             {
               "id": "anger",
@@ -1105,13 +1105,13 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
+              "id": "sadness",
+              "text": "Грусть",
               "correct": false
             },
             {
-              "id": "sadness",
-              "text": "Грусть",
+              "id": "joy",
+              "text": "Радость",
               "correct": false
             },
             {
@@ -1175,14 +1175,14 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
-              "correct": false
-            },
-            {
               "id": "sadness",
               "text": "Грусть",
               "correct": true
+            },
+            {
+              "id": "joy",
+              "text": "Радость",
+              "correct": false
             },
             {
               "id": "anger",
@@ -1326,14 +1326,14 @@
           "question": "Рей говорит «Отлично!» — какое настроение?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
-              "correct": true
-            },
-            {
               "id": "sarcasm",
               "text": "Сарказм",
               "correct": false
+            },
+            {
+              "id": "joy",
+              "text": "Радость",
+              "correct": true
             },
             {
               "id": "anger",
@@ -1464,6 +1464,11 @@
           "question": "Рей за сценой, себе под нос: «ОТЛИЧНО.» Какое настроение?",
           "options": [
             {
+              "id": "anger",
+              "text": "Злость",
+              "correct": true
+            },
+            {
               "id": "joy",
               "text": "Радость",
               "correct": false
@@ -1472,11 +1477,6 @@
               "id": "sarcasm",
               "text": "Сарказм",
               "correct": false
-            },
-            {
-              "id": "anger",
-              "text": "Злость",
-              "correct": true
             }
           ],
           "correct_logic": "Сквозь зубы + низкий голос + пауза = подавленная ярость.",
@@ -1538,13 +1538,13 @@
               "correct": true
             },
             {
-              "id": "irritation",
-              "text": "Раздражение",
+              "id": "anger",
+              "text": "Злость",
               "correct": false
             },
             {
-              "id": "anger",
-              "text": "Злость",
+              "id": "irritation",
+              "text": "Раздражение",
               "correct": false
             }
           ],
@@ -1602,11 +1602,6 @@
           "question": "Рей, когда ему напоминают о правилах: «Ну ладно...» Какое настроение?",
           "options": [
             {
-              "id": "agreement",
-              "text": "Согласие",
-              "correct": false
-            },
-            {
               "id": "irritation",
               "text": "Раздражение",
               "correct": true
@@ -1614,6 +1609,11 @@
             {
               "id": "joy",
               "text": "Радость",
+              "correct": false
+            },
+            {
+              "id": "agreement",
+              "text": "Согласие",
               "correct": false
             }
           ],

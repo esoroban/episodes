@@ -16,6 +16,7 @@ import re
 import sys
 import json
 import hashlib
+import random
 import yaml
 import html
 from datetime import datetime, timezone
@@ -196,32 +197,80 @@ def _speaker_key(who: str) -> str:
     return w  # keep as-is for named characters (Лина, Вера, мама, ...)
 
 
-def _dialogue_to_text(items: list) -> list:
+# Display names for UK build. Maps both canonical lowercase keys (from
+# _speaker_key) and raw RU YAML names to the Ukrainian display form shown
+# to the player in JSON (text[].who, chars[], unlock.reveals.who) and HTML.
+_UK_WHO_DISPLAY = {
+    "author": "Автор", "автор": "автор", "Автор": "Автор",
+    "sofa": "Софа", "софа": "софа", "Софа": "Софа",
+    "marko": "Марко", "марко": "марко", "Марко": "Марко",
+    "София": "Софія", "София Андреева": "Софія Андреєва",
+    "Лина": "Ліна",
+    "Макс": "Макс", "макс": "макс",
+    "Рей": "Рей", "рей": "рей",
+    "Леон": "Леон", "леон": "леон",
+    "Вера": "Віра", "Вера Андреевна": "Віра Андріївна",
+    "Сем": "Сем", "сем": "сем",
+    "Голос": "Голос", "голос": "голос",
+    "Подпольщица": "Підпільниця", "Подпольщик": "Підпільник",
+    "горожане подполья": "мешканці підпілля",
+    "толпа": "натовп",
+    "Мама": "Мама", "мама": "мама",
+    "Папа": "Тато", "папа": "тато",
+    "Витя": "Вітя", "Маша": "Маша", "Микола": "Микола",
+    "Данила": "Данила", "Олена": "Олена", "Дмитрик": "Дмитрик",
+}
+
+
+def _localize_who(who, lang: str = "ru"):
+    """Return UK display name for `who` when lang=='uk'; else pass through."""
+    if lang != "uk" or not who:
+        return who
+    return _UK_WHO_DISPLAY.get(who, who)
+
+
+def _dialogue_to_text(items: list, lang: str = "ru") -> list:
     """Convert dialogue[] YAML entries to manifest text[] format."""
     out = []
     for d in items or []:
         if not isinstance(d, dict):
             continue
-        who = _speaker_key(d.get("who", ""))
+        who = _localize_who(_speaker_key(d.get("who", "")), lang)
         line = str(d.get("line", "")).strip()
         if line:
             out.append({"who": who, "line": line})
     return out
 
 
+def _shuffle_quiz_opts(question: str, raw_opts: list) -> list:
+    """Return raw quiz options shuffled deterministically.
+
+    Seed is derived from the question text plus the original option ids,
+    so identical option pools produce identical orders, while different
+    pools (or question wording) get independent shuffles. Same input →
+    same order across rebuilds, but the correct answer is no longer
+    always first just because the YAML listed it first.
+    """
+    opts = [o for o in (raw_opts or []) if isinstance(o, dict)]
+    fingerprint = question + "\n" + "\n".join(str(o.get("id", "")) for o in opts)
+    seed = int(hashlib.sha1(fingerprint.encode("utf-8")).hexdigest()[:12], 16)
+    shuffled = list(opts)
+    random.Random(seed).shuffle(shuffled)
+    return shuffled
+
+
 def _quiz_block(src: dict) -> dict:
     """Convert a scene (or interaction) with options[] into a quiz manifest block."""
+    question = str(src.get("question", "")).strip()
     opts = []
-    for o in src.get("options", []) or []:
-        if not isinstance(o, dict):
-            continue
+    for o in _shuffle_quiz_opts(question, src.get("options", []) or []):
         opts.append({
             "id": o.get("id", ""),
             "text": str(o.get("text", "")).strip(),
             "correct": bool(o.get("correct", False)),
         })
     return {
-        "question": str(src.get("question", "")).strip(),
+        "question": question,
         "options": opts,
         "correct_logic": str(src.get("correct_logic", "")).strip(),
         "feedback_success": str(src.get("feedback_success", "")).strip(),
@@ -243,20 +292,21 @@ def _choice_block(src: dict) -> dict:
     return {"question": str(src.get("question", "")).strip(), "options": opts}
 
 
-def _scene_to_manifest(scene: dict) -> dict:
+def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
     """Convert one YAML scene into the manifest JSON schema."""
     sid = scene.get("scene_id", "")
     chars = scene.get("characters_present", []) or []
     is_chat = is_sofa_chat_scene(scene)
 
     # Linear text[] — preserves order: author_text → dialogue → author_text_after → dialogue_after
+    author_display = _localize_who("author", lang)
     text_blocks = []
     for p in _paragraphs(scene.get("author_text", "")):
-        text_blocks.append({"who": "author", "line": p})
-    text_blocks.extend(_dialogue_to_text(scene.get("dialogue", [])))
+        text_blocks.append({"who": author_display, "line": p})
+    text_blocks.extend(_dialogue_to_text(scene.get("dialogue", []), lang))
     for p in _paragraphs(scene.get("author_text_after", "")):
-        text_blocks.append({"who": "author", "line": p})
-    text_blocks.extend(_dialogue_to_text(scene.get("dialogue_after", [])))
+        text_blocks.append({"who": author_display, "line": p})
+    text_blocks.extend(_dialogue_to_text(scene.get("dialogue_after", []), lang))
 
     # Quizzes: either top-level (scene.options with .correct) or interactions[] list.
     quizzes = []
@@ -298,7 +348,7 @@ def _scene_to_manifest(scene: dict) -> dict:
             "button_text": str(ub.get("text", "")).strip(),
             "reveals": {
                 "type": reveals.get("type", ""),
-                "who": reveals.get("who", ""),
+                "who": _localize_who(reveals.get("who", ""), lang),
                 "line": str(reveals.get("line", "")).strip(),
                 "duration": reveals.get("duration", ""),
             },
@@ -310,7 +360,7 @@ def _scene_to_manifest(scene: dict) -> dict:
         "is_chat": is_chat,
         "location": scene.get("location", "") or "",
         "time": scene.get("time", "") or "",
-        "chars": list(chars),
+        "chars": [_localize_who(c, lang) for c in chars],
         "mood": scene.get("mood", "") or "",
         "branch_type": scene.get("branch_type") or None,
         "set_flags": list(scene.get("set_flags", []) or []),
@@ -332,7 +382,7 @@ def _scene_to_manifest(scene: dict) -> dict:
 
 def _episode_to_manifest(data: dict, lang: str) -> dict:
     """Full per-episode manifest JSON structure."""
-    scenes_json = [_scene_to_manifest(s) for s in data.get("scenes", []) or []]
+    scenes_json = [_scene_to_manifest(s, lang) for s in data.get("scenes", []) or []]
     return {
         "schema_version": MANIFEST_SCHEMA_VERSION,
         "episode_id": data.get("episode_id"),
@@ -460,7 +510,7 @@ def render_visual_brief(vb: dict) -> str:
     return '<div class="visual-brief">' + "<br>".join(parts) + "</div>"
 
 
-def render_dialogue(dialogue_list: list) -> str:
+def render_dialogue(dialogue_list: list, lang: str = "ru") -> str:
     """Render dialogue lines."""
     if not dialogue_list:
         return ""
@@ -468,14 +518,16 @@ def render_dialogue(dialogue_list: list) -> str:
     for d in dialogue_list:
         if not isinstance(d, dict):
             continue
-        who = esc(d.get("who", ""))
+        raw_who = d.get("who", "")
+        who_display = esc(_localize_who(raw_who, lang))
         line_text = esc(d.get("line", ""))
-        if who.lower() in ("автор", "author"):
+        rl = raw_who.lower()
+        if rl in ("автор", "author"):
             lines.append(f'<p class="dl-narrator"><em>{line_text}</em></p>')
-        elif who.lower() in ("софа", "sofa"):
-            lines.append(f'<p class="dl-sofa"><span class="dl-who">\U0001f4f1 {who}:</span> <em>\u00ab{line_text}\u00bb</em></p>')
+        elif rl in ("софа", "sofa"):
+            lines.append(f'<p class="dl-sofa"><span class="dl-who">\U0001f4f1 {who_display}:</span> <em>\u00ab{line_text}\u00bb</em></p>')
         else:
-            lines.append(f'<p class="dl-char"><span class="dl-who">{who}:</span> \u2014 {line_text}</p>')
+            lines.append(f'<p class="dl-char"><span class="dl-who">{who_display}:</span> \u2014 {line_text}</p>')
     return "\n".join(lines)
 
 
@@ -513,7 +565,7 @@ def is_sofa_chat_scene(scene: dict) -> bool:
     return False
 
 
-def build_chat_messages(scene: dict) -> list:
+def build_chat_messages(scene: dict, lang: str = "ru") -> list:
     """Build list of chat message dicts for one scene.
 
     Chat bubble rules (WHO speaks in chat vs voice-over):
@@ -523,13 +575,14 @@ def build_chat_messages(scene: dict) -> list:
         остальные     — остаётся на своей позиции, не в плашке
     """
     msgs = []
+    author_display = _localize_who("author", lang) or "\u0410\u0432\u0442\u043e\u0440"
 
     at = scene.get("author_text", "")
     if at:
         for p in str(at).strip().split("\n"):
             p = p.strip()
             if p:
-                msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": p})
+                msgs.append({"t": "voiceover", "s": "author", "name": author_display, "x": p})
 
     for d in scene.get("dialogue", []):
         if not isinstance(d, dict):
@@ -549,18 +602,19 @@ def build_chat_messages(scene: dict) -> list:
             continue
         line = str(d.get("line", "")).strip()
         if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
-            msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": line})
+            msgs.append({"t": "voiceover", "s": "author", "name": author_display, "x": line})
         elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
             msgs.append({"t": "text", "s": "sofa", "x": line})
         elif w in ("\u043c\u0430\u0440\u043a\u043e", "marko"):
             msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
         else:
-            msgs.append({"t": "voiceover", "s": w, "name": who, "x": line})
+            msgs.append({"t": "voiceover", "s": w, "name": _localize_who(who, lang), "x": line})
 
     quiz_opts = [o for o in scene.get("options", []) if "correct" in o]
     if quiz_opts:
         q = scene.get("question", "")
-        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in quiz_opts]
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))}
+                for o in _shuffle_quiz_opts(q, quiz_opts)]
         fb_fail = str(scene.get("feedback_soft_fail", "")).strip()
         quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
         if fb_fail:
@@ -587,7 +641,8 @@ def build_chat_messages(scene: dict) -> list:
         if not opts_in:
             continue
         q = inter.get("question", "")
-        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in opts_in]
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))}
+                for o in _shuffle_quiz_opts(q, opts_in)]
         fb_fail = str(inter.get("feedback_soft_fail", "")).strip()
         quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
         if fb_fail:
@@ -601,7 +656,8 @@ def build_chat_messages(scene: dict) -> list:
     fu_opts = [o for o in (followup.get("options", []) or []) if "correct" in o]
     if fu_opts:
         q = followup.get("question", "")
-        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))} for o in fu_opts]
+        opts = [{"x": o.get("text", ""), "c": bool(o.get("correct"))}
+                for o in _shuffle_quiz_opts(q, fu_opts)]
         fb_fail = str(followup.get("feedback_soft_fail", "")).strip()
         quiz_msg = {"t": "quiz", "s": "sofa", "q": q, "o": opts}
         if fb_fail:
@@ -618,20 +674,20 @@ def build_chat_messages(scene: dict) -> list:
         line = str(d.get("line", "")).strip()
         w = who.lower()
         if w in ("\u0430\u0432\u0442\u043e\u0440", "author"):
-            msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": line})
+            msgs.append({"t": "voiceover", "s": "author", "name": author_display, "x": line})
         elif w in ("\u0441\u043e\u0444\u0430", "sofa"):
             msgs.append({"t": "text", "s": "sofa", "x": line})
         elif w in ("\u043c\u0430\u0440\u043a\u043e", "marko"):
             msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
         else:
-            msgs.append({"t": "voiceover", "s": w, "name": who, "x": line})
+            msgs.append({"t": "voiceover", "s": w, "name": _localize_who(who, lang), "x": line})
 
     at_after = scene.get("author_text_after", "")
     if at_after:
         for p in str(at_after).strip().split("\n"):
             p = p.strip()
             if p:
-                msgs.append({"t": "voiceover", "s": "author", "name": "\u0410\u0432\u0442\u043e\u0440", "x": p})
+                msgs.append({"t": "voiceover", "s": "author", "name": author_display, "x": p})
 
     return msgs
 
@@ -722,7 +778,7 @@ def _phone_html(msg_attr: str) -> str:
     )
 
 
-def render_scene_chain(chain: list, index: int, total: int) -> str:
+def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") -> str:
     """Render a merged phone chain (multiple Sofa scenes) as one scene section."""
     import json as _json
 
@@ -739,7 +795,7 @@ def render_scene_chain(chain: list, index: int, total: int) -> str:
     # Collect all messages from all scenes in chain
     all_msgs = []
     for s in chain:
-        all_msgs.extend(build_chat_messages(s))
+        all_msgs.extend(build_chat_messages(s, lang))
 
     # Blocking if any scene has quiz or unlock
     has_blocking = any(
@@ -807,11 +863,11 @@ def render_scene_chain(chain: list, index: int, total: int) -> str:
   </section>"""
 
 
-def render_chat(scene: dict) -> str:
+def render_chat(scene: dict, lang: str = "ru") -> str:
     """Render scene as iPhone Telegram chat with cracked screen."""
     import json as _json
 
-    msgs = build_chat_messages(scene)
+    msgs = build_chat_messages(scene, lang)
     msg_attr = html.escape(_json.dumps(msgs, ensure_ascii=False), quote=True)
     return _phone_html(msg_attr)
 
@@ -879,7 +935,7 @@ def render_choice(scene: dict) -> str:
     </div>"""
 
 
-def render_scene(scene: dict, index: int, total: int) -> str:
+def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
     """Render a single scene as a game card."""
     sid = scene.get("scene_id", f"scene_{index}")
     stype = scene.get("scene_type", "narrative")
@@ -937,17 +993,17 @@ def render_scene(scene: dict, index: int, total: int) -> str:
         # are emitted as voice-over cards INSIDE the chat by build_chat_messages.
         # No external <div class="author-text"> allowed — that was a duplicate
         # that appeared once gated_response scenes started rendering standalone.
-        content_parts.append(render_chat(scene))
+        content_parts.append(render_chat(scene, lang))
     else:
         if author_text:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')
         if dialogue:
-            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue)}</div>')
+            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue, lang)}</div>')
         if author_text_after:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
         dialogue_after = scene.get("dialogue_after", [])
         if dialogue_after:
-            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue_after)}</div>')
+            content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue_after, lang)}</div>')
 
         # Standard options (quiz or choice) — only in non-chat mode
         if scene.get("options") and any("correct" in o for o in scene.get("options", [])):
@@ -2023,9 +2079,9 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
     for i, unit in enumerate(units):
         idx = i + scene_offset
         if unit["type"] == "chain":
-            scenes_html_parts.append(render_scene_chain(unit["scenes"], idx, total))
+            scenes_html_parts.append(render_scene_chain(unit["scenes"], idx, total, lang))
         else:
-            scenes_html_parts.append(render_scene(unit["scene"], idx, total))
+            scenes_html_parts.append(render_scene(unit["scene"], idx, total, lang))
     scenes_html = "\n".join(scenes_html_parts)
 
     dom_scenes = _dom_scene_list(units)

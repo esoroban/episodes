@@ -1045,14 +1045,14 @@
           "question": "«Я заметил, что ты не ответил.» Описание или обвинение?",
           "options": [
             {
-              "id": "description",
-              "text": "Описание",
-              "correct": true
-            },
-            {
               "id": "accusation",
               "text": "Обвинение",
               "correct": false
+            },
+            {
+              "id": "description",
+              "text": "Описание",
+              "correct": true
             }
           ],
           "correct_logic": "Конкретный факт без оценки. «Я заметил» — наблюдение, не атака.",
@@ -1103,14 +1103,14 @@
           "question": "«Ты вечно опаздываешь!» Описание или обвинение?",
           "options": [
             {
-              "id": "description",
-              "text": "Описание",
-              "correct": false
-            },
-            {
               "id": "accusation",
               "text": "Обвинение",
               "correct": true
+            },
+            {
+              "id": "description",
+              "text": "Описание",
+              "correct": false
             }
           ],
           "correct_logic": "«Вечно» — маркер обвинения. Не факт, а нападение.",
@@ -1282,14 +1282,14 @@
           "question": "«Я заметила, что ты взял мою ручку без спроса.» Описание или обвинение?",
           "options": [
             {
-              "id": "description",
-              "text": "Описание",
-              "correct": true
-            },
-            {
               "id": "accusation",
               "text": "Обвинение",
               "correct": false
+            },
+            {
+              "id": "description",
+              "text": "Описание",
+              "correct": true
             }
           ],
           "correct_logic": "Конкретное наблюдение. Без маркеров, без обобщений.",
@@ -1716,14 +1716,14 @@
               "correct": false
             },
             {
-              "id": "listening",
-              "text": "Активное слушание",
-              "correct": false
-            },
-            {
               "id": "formula",
               "text": "Формула высказывания",
               "correct": true
+            },
+            {
+              "id": "listening",
+              "text": "Активное слушание",
+              "correct": false
             }
           ],
           "correct_logic": "Наблюдение + чувство + предложение — все три шага. Формула.",
@@ -1779,14 +1779,14 @@
               "correct": false
             },
             {
-              "id": "listening",
-              "text": "Активное слушание",
-              "correct": true
-            },
-            {
               "id": "formula",
               "text": "Формула высказывания",
               "correct": false
+            },
+            {
+              "id": "listening",
+              "text": "Активное слушание",
+              "correct": true
             }
           ],
           "correct_logic": "Пересказ чужих слов. «То есть ты хочешь...» — проверка понимания. Зеркало.",
@@ -1842,13 +1842,13 @@
               "correct": true
             },
             {
-              "id": "listening",
-              "text": "Активное слушание",
+              "id": "formula",
+              "text": "Формула высказывания",
               "correct": false
             },
             {
-              "id": "formula",
-              "text": "Формула высказывания",
+              "id": "listening",
+              "text": "Активное слушание",
               "correct": false
             }
           ],
@@ -1900,6 +1900,11 @@
           "question": "«Я заметила, что ты взял мой ластик. Мне неприятно. Давай будем спрашивать?» Какой инструмент?",
           "options": [
             {
+              "id": "formula",
+              "text": "Формула высказывания",
+              "correct": true
+            },
+            {
               "id": "empathy",
               "text": "Сопереживание",
               "correct": false
@@ -1908,11 +1913,6 @@
               "id": "listening",
               "text": "Активное слушание",
               "correct": false
-            },
-            {
-              "id": "formula",
-              "text": "Формула высказывания",
-              "correct": true
             }
           ],
           "correct_logic": "Наблюдение, чувство, предложение — три шага. Формула.",
@@ -1963,6 +1963,11 @@
           "question": "«Правильно ли я понял, что тебе не нравится, когда я шучу про твой рюкзак?» Какой инструмент?",
           "options": [
             {
+              "id": "formula",
+              "text": "Формула высказывания",
+              "correct": false
+            },
+            {
               "id": "empathy",
               "text": "Сопереживание",
               "correct": false
@@ -1971,11 +1976,6 @@
               "id": "listening",
               "text": "Активное слушание",
               "correct": true
-            },
-            {
-              "id": "formula",
-              "text": "Формула высказывания",
-              "correct": false
             }
           ],
           "correct_logic": "Пересказал и переспросил. Зеркало. Активное слушание.",
@@ -2031,9 +2031,9 @@
           "question": "Марко: «Я вижу, что это было важно — то, что он хотел сказать.» Какой инструмент?",
           "options": [
             {
-              "id": "empathy",
-              "text": "Сопереживание",
-              "correct": true
+              "id": "formula",
+              "text": "Формула высказывания",
+              "correct": false
             },
             {
               "id": "listening",
@@ -2041,9 +2041,9 @@
               "correct": false
             },
             {
-              "id": "formula",
-              "text": "Формула высказывания",
-              "correct": false
+              "id": "empathy",
+              "text": "Сопереживание",
+              "correct": true
             }
           ],
           "correct_logic": "Увидел, что важно, и сказал. Чистое сопереживание.",
@@ -2218,14 +2218,14 @@
           "question": "Марко мог бы сказать Вере: «Я вижу, что Леон стёрт. Мне страшно. Давайте разберёмся вместе.» Это формула?",
           "options": [
             {
-              "id": true,
-              "text": "Да, формула",
-              "correct": true
-            },
-            {
               "id": false,
               "text": "Нет, не формула",
               "correct": false
+            },
+            {
+              "id": true,
+              "text": "Да, формула",
+              "correct": true
             }
           ],
           "correct_logic": "Наблюдение, чувство, предложение. Формула бы защитила Марко — он контролировал бы, ЧТО рассказывать.",
