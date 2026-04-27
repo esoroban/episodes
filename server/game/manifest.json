@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T12:36:56Z",
+  "generated_at": "2026-04-27T12:47:33Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -537,7 +537,7 @@
         "ru": {
           "html": "ru/ep_025.html",
           "data": "ru/ep_025.json",
-          "content_hash": "8a9b26d7e44ad87d"
+          "content_hash": "94b15735dc7a166c"
         }
       },
       "title_ru": "Шоколад на щеке",
