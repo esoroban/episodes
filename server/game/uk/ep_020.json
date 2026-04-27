@@ -416,14 +416,14 @@
           "question": "«Я сам бачив, як дерево впало на дорогу.» Власними очима чи почув?",
           "options": [
             {
-              "id": "seen",
-              "text": "Власними очима",
-              "correct": true
-            },
-            {
               "id": "heard",
               "text": "Почув від інших",
               "correct": false
+            },
+            {
+              "id": "seen",
+              "text": "Власними очима",
+              "correct": true
             }
           ],
           "correct_logic": "Очевидець. Найнадійніший тип джерела.",
@@ -476,14 +476,14 @@
           "question": "«Мені сказали, що в їдальні каша.» Джерело — ланцюжок із трьох людей. Надійно?",
           "options": [
             {
-              "id": "check",
-              "text": "Треба перевірити",
-              "correct": true
-            },
-            {
               "id": "trust",
               "text": "Надійно",
               "correct": false
+            },
+            {
+              "id": "check",
+              "text": "Треба перевірити",
+              "correct": true
             }
           ],
           "correct_logic": "Три ланки — три можливості для помилки. Краще сходити й подивитися.",
@@ -1026,14 +1026,14 @@
           "question": "Суперечка про шкільну їдальню. «Меню треба змінювати!» — стовбур, гілка чи листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Стовбур",
-              "correct": true
-            },
-            {
               "id": "branch",
               "text": "Гілка",
               "correct": false
+            },
+            {
+              "id": "trunk",
+              "text": "Стовбур",
+              "correct": true
             },
             {
               "id": "leaf",
@@ -1091,13 +1091,13 @@
           "question": "«Каша не насичує, діти голодні до третього уроку.» — стовбур, гілка чи листок?",
           "options": [
             {
-              "id": "leaf",
-              "text": "Листок",
+              "id": "trunk",
+              "text": "Стовбур",
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Стовбур",
+              "id": "leaf",
+              "text": "Листок",
               "correct": false
             },
             {
@@ -1161,13 +1161,13 @@
               "correct": true
             },
             {
-              "id": "branch",
-              "text": "Гілка",
+              "id": "trunk",
+              "text": "Стовбур",
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Стовбур",
+              "id": "branch",
+              "text": "Гілка",
               "correct": false
             }
           ],
@@ -1221,14 +1221,14 @@
           "question": "Суперечка про перерву. «Перерва має бути 20 хвилин!» — стовбур, гілка чи листок?",
           "options": [
             {
-              "id": "trunk",
-              "text": "Стовбур",
-              "correct": true
-            },
-            {
               "id": "branch",
               "text": "Гілка",
               "correct": false
+            },
+            {
+              "id": "trunk",
+              "text": "Стовбур",
+              "correct": true
             },
             {
               "id": "leaf",
@@ -1291,13 +1291,13 @@
               "correct": true
             },
             {
-              "id": "leaf",
-              "text": "Листок",
+              "id": "trunk",
+              "text": "Стовбур",
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Стовбур",
+              "id": "leaf",
+              "text": "Листок",
               "correct": false
             }
           ],
@@ -1421,14 +1421,14 @@
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Стовбур",
-              "correct": true
-            },
-            {
               "id": "leaf",
               "text": "Листок",
               "correct": false
+            },
+            {
+              "id": "trunk",
+              "text": "Стовбур",
+              "correct": true
             }
           ],
           "correct_logic": "Центральна ідея — головне питання суперечки.",

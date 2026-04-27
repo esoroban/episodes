@@ -250,11 +250,6 @@
           "question": "Марко один раз увидел лишний палец Леона через Зеркало. Какой цвет светофора?",
           "options": [
             {
-              "id": "green",
-              "text": "Зелёный",
-              "correct": false
-            },
-            {
               "id": "red",
               "text": "Красный — СТОП, не делай вывод",
               "correct": true
@@ -262,6 +257,11 @@
             {
               "id": "yellow",
               "text": "Жёлтый",
+              "correct": false
+            },
+            {
+              "id": "green",
+              "text": "Зелёный",
               "correct": false
             }
           ],
@@ -278,14 +278,14 @@
               "correct": false
             },
             {
-              "id": "yellow",
-              "text": "Жёлтый",
-              "correct": false
-            },
-            {
               "id": "green",
               "text": "Зелёный — закономерность",
               "correct": true
+            },
+            {
+              "id": "yellow",
+              "text": "Жёлтый",
+              "correct": false
             }
           ],
           "correct_logic": "Пять раз одинаково — зелёный! Закономерность.",
@@ -301,14 +301,14 @@
               "correct": false
             },
             {
-              "id": "green",
-              "text": "Зелёный",
-              "correct": false
-            },
-            {
               "id": "yellow",
               "text": "Жёлтый — интересно, но проверяй",
               "correct": true
+            },
+            {
+              "id": "green",
+              "text": "Зелёный",
+              "correct": false
             }
           ],
           "correct_logic": "Два раза — жёлтый! Интересно, но проверяй дальше.",
@@ -319,14 +319,14 @@
           "question": "Марко поднял Зеркало — и один раз увидел, что отражение Леона не двигается. Совпадение или закономерность?",
           "options": [
             {
-              "id": "pattern",
-              "text": "Закономерность",
-              "correct": false
-            },
-            {
               "id": "coincidence",
               "text": "Совпадение — один раз, красный",
               "correct": true
+            },
+            {
+              "id": "pattern",
+              "text": "Закономерность",
+              "correct": false
             }
           ],
           "correct_logic": "Один раз — красный! Совпадение.",
@@ -337,14 +337,14 @@
           "question": "Отражение Леона в Зеркале снова не машет, когда машет сам Леон. Пять раз из пяти. Совпадение или закономерность?",
           "options": [
             {
-              "id": "pattern",
-              "text": "Закономерность — стабильный результат",
-              "correct": true
-            },
-            {
               "id": "coincidence",
               "text": "Совпадение",
               "correct": false
+            },
+            {
+              "id": "pattern",
+              "text": "Закономерность — стабильный результат",
+              "correct": true
             }
           ],
           "correct_logic": "Стабильный результат! Пять из пяти — закономерность.",
@@ -355,9 +355,9 @@
           "question": "Марко пришёл к Леону — отражение в Зеркале не улыбалось. Три раза. Какой цвет?",
           "options": [
             {
-              "id": "green",
-              "text": "Зелёный",
-              "correct": false
+              "id": "yellow",
+              "text": "Жёлтый — проверяй дальше",
+              "correct": true
             },
             {
               "id": "red",
@@ -365,9 +365,9 @@
               "correct": false
             },
             {
-              "id": "yellow",
-              "text": "Жёлтый — проверяй дальше",
-              "correct": true
+              "id": "green",
+              "text": "Зелёный",
+              "correct": false
             }
           ],
           "correct_logic": "Три раза — жёлтый! Проверяй дальше.",
@@ -445,14 +445,14 @@
           "question": "Марко проверял дверь в парке три раза. Условия одинаковые?",
           "options": [
             {
-              "id": true,
-              "text": "Да — то же место, та же рука",
-              "correct": true
-            },
-            {
               "id": false,
               "text": "Нет",
               "correct": false
+            },
+            {
+              "id": true,
+              "text": "Да — то же место, та же рука",
+              "correct": true
             }
           ],
           "correct_logic": "То же место, та же рука.",
@@ -867,14 +867,14 @@
           "question": "Леон говорит «я покажу книгу». Это можно проверить?",
           "options": [
             {
-              "id": false,
-              "text": "Нет",
-              "correct": false
-            },
-            {
               "id": true,
               "text": "Да — можно пойти и увидеть",
               "correct": true
+            },
+            {
+              "id": false,
+              "text": "Нет",
+              "correct": false
             }
           ],
           "correct_logic": "Можно пойти и увидеть.",

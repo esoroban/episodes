@@ -365,56 +365,90 @@ PROD_OVERRIDES = (
 )
 
 
-def shuffle_quiz_options(html: str) -> tuple[str, int]:
-    """Reorder Telegram-chat quiz options inside `data-chat-messages` attributes.
+def shuffle_quiz_options(html: str, ep_id: str) -> tuple[str, int]:
+    """Reorder Telegram-chat quiz options inside `data-chat-messages` attributes
+    so that correct answers are uniformly distributed across positions over the
+    whole episode. Same algorithm as build_game.balance_episode_quizzes().
 
-    The combined_output source HTML embeds chat messages as JSON in HTML-encoded
-    attributes. Quizzes (`{"t":"quiz", "q":..., "o":[{"x":..., "c":...}, ...]}`)
-    almost always have the correct option first because the YAML pipeline lists
-    it first. This function reshuffles the `o` array deterministically so that
-    the same quiz always ends up with the same order across rebuilds, but the
-    correct answer no longer always sits on the first button.
+    Two-phase:
+      1. Walk the entire HTML, collect every quiz option list across all
+         data-chat-messages attributes, in document order.
+      2. Group by len(options); for each group build round-robin target
+         positions, shuffle with seed = sha1(ep_id + n_opts). Move the correct
+         option in each quiz to its target position. Keep other options in
+         their original relative order.
 
-    Seed = sha1(question + option texts). Same algorithm as build_game.py, so
-    UK v2 stays consistent with RU/UK v1.
+    Result: for an episode with 12 binary quizzes, exactly 6 have correct
+    on top and 6 on bottom — no streaks, but order between specific quizzes
+    stays stable across rebuilds (deterministic per-(episode, n_opts) seed).
 
-    Returns (rewritten_html, n_quizzes_shuffled).
+    Returns (rewritten_html, n_quizzes_balanced).
     """
     pattern = re.compile(r'data-chat-messages="([^"]*)"')
-    n_quizzes = 0
 
-    def replace(m: re.Match) -> str:
-        nonlocal n_quizzes
+    blocks = []
+    for m in pattern.finditer(html):
         encoded = m.group(1)
         decoded = html_mod.unescape(encoded)
         try:
             messages = json.loads(decoded)
         except json.JSONDecodeError:
-            return m.group(0)
+            blocks.append((m.start(), m.end(), None))
+            continue
         if not isinstance(messages, list):
-            return m.group(0)
+            blocks.append((m.start(), m.end(), None))
+            continue
+        blocks.append((m.start(), m.end(), messages))
 
+    quiz_refs = []
+    for _, _, messages in blocks:
+        if messages is None:
+            continue
         for msg in messages:
-            if not isinstance(msg, dict):
-                continue
-            if msg.get("t") != "quiz":
+            if not isinstance(msg, dict) or msg.get("t") != "quiz":
                 continue
             opts = msg.get("o")
             if not isinstance(opts, list) or len(opts) < 2:
                 continue
-            question = str(msg.get("q", ""))
-            fingerprint = question + "\n" + "\n".join(
-                str(o.get("x", "")) for o in opts if isinstance(o, dict)
+            quiz_refs.append(opts)
+
+    from collections import defaultdict
+    by_n = defaultdict(list)
+    for opts in quiz_refs:
+        by_n[len(opts)].append(opts)
+
+    n_quizzes = 0
+    for n_opts, group in by_n.items():
+        if n_opts < 2:
+            continue
+        k = len(group)
+        targets = [j % n_opts for j in range(k)]
+        seed = int(hashlib.sha1(f"{ep_id}::{n_opts}".encode("utf-8")).hexdigest()[:12], 16)
+        random.Random(seed).shuffle(targets)
+        for opts, target in zip(group, targets):
+            correct_idx = next(
+                (i for i, o in enumerate(opts) if isinstance(o, dict) and o.get("c")),
+                None,
             )
-            seed = int(hashlib.sha1(fingerprint.encode("utf-8")).hexdigest()[:12], 16)
-            random.Random(seed).shuffle(opts)
+            if correct_idx is None:
+                continue
+            correct_obj = opts.pop(correct_idx)
+            opts.insert(target, correct_obj)
             n_quizzes += 1
 
-        new_decoded = json.dumps(messages, ensure_ascii=False)
-        new_encoded = html_mod.escape(new_decoded, quote=True)
-        return f'data-chat-messages="{new_encoded}"'
-
-    return pattern.sub(replace, html), n_quizzes
+    rewritten_parts = []
+    cursor = 0
+    for start, end, messages in blocks:
+        rewritten_parts.append(html[cursor:start])
+        if messages is None:
+            rewritten_parts.append(html[start:end])
+        else:
+            new_decoded = json.dumps(messages, ensure_ascii=False)
+            new_encoded = html_mod.escape(new_decoded, quote=True)
+            rewritten_parts.append(f'data-chat-messages="{new_encoded}"')
+        cursor = end
+    rewritten_parts.append(html[cursor:])
+    return "".join(rewritten_parts), n_quizzes
 
 
 def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, int]:
@@ -492,7 +526,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         return {"nnn": nnn, "skipped": True, "reason": f"missing {src_html}"}
 
     html = src_html.read_text(encoding="utf-8")
-    html, n_shuffled = shuffle_quiz_options(html)
+    html, n_shuffled = shuffle_quiz_options(html, ep_id=str(int(nnn)))
     rewritten, n_audio, n_images, n_chat = rewrite_html(html, public_url, nnn)
 
     out_html = OUT_DIR / f"ep_{nnn}" / f"ep_{nnn}.html"

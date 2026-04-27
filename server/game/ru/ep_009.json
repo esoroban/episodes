@@ -440,6 +440,11 @@
           "question": "«В сутках 24 часа.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
+            },
+            {
               "id": "opinion",
               "text": "Мнение",
               "correct": false
@@ -448,11 +453,6 @@
               "id": "falsehood",
               "text": "Неправда",
               "correct": false
-            },
-            {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
             }
           ],
           "correct_logic": "Посчитай — ровно 24. Проверяемо и верно.",
@@ -503,9 +503,9 @@
           "question": "«Собаки — лучшие домашние животные.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "falsehood",
-              "text": "Неправда",
-              "correct": false
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": true
             },
             {
               "id": "fact",
@@ -513,9 +513,9 @@
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": true
+              "id": "falsehood",
+              "text": "Неправда",
+              "correct": false
             }
           ],
           "correct_logic": "«Лучшие» — нет прибора для измерения «лучшести». Это оценка.",
@@ -566,13 +566,13 @@
           "question": "«Луна больше Солнца.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
+              "id": "fact",
+              "text": "Факт",
               "correct": false
             },
             {
-              "id": "fact",
-              "text": "Факт",
+              "id": "opinion",
+              "text": "Мнение",
               "correct": false
             },
             {
@@ -692,14 +692,14 @@
           "question": "«Папа помыл машину — пошёл дождь.» Причина, совпадение или третья причина?",
           "options": [
             {
-              "id": "cause",
-              "text": "Причина",
-              "correct": false
-            },
-            {
               "id": "coincidence",
               "text": "Совпадение",
               "correct": true
+            },
+            {
+              "id": "cause",
+              "text": "Причина",
+              "correct": false
             },
             {
               "id": "third",
@@ -760,8 +760,8 @@
           "question": "«Когда растут продажи зонтов — растут продажи резиновых сапог.» Причина, совпадение или третья причина?",
           "options": [
             {
-              "id": "coincidence",
-              "text": "Совпадение",
+              "id": "cause",
+              "text": "Причина",
               "correct": false
             },
             {
@@ -770,8 +770,8 @@
               "correct": true
             },
             {
-              "id": "cause",
-              "text": "Причина",
+              "id": "coincidence",
+              "text": "Совпадение",
               "correct": false
             }
           ],
@@ -1234,11 +1234,6 @@
           "question": "«Мой велосипед быстрее, и точка! Не спорь!» Какая цель?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Обидеть",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Победить",
               "correct": true
@@ -1246,6 +1241,11 @@
             {
               "id": "understand",
               "text": "Понять",
+              "correct": false
+            },
+            {
+              "id": "hurt",
+              "text": "Обидеть",
               "correct": false
             }
           ],
@@ -1297,11 +1297,6 @@
           "question": "«А давай измерим! Прокатимся до забора и обратно, засечём время.» Какая цель?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Обидеть",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": true
@@ -1309,6 +1304,11 @@
             {
               "id": "win",
               "text": "Победить",
+              "correct": false
+            },
+            {
+              "id": "hurt",
+              "text": "Обидеть",
               "correct": false
             }
           ],
@@ -1914,14 +1914,14 @@
           "question": "Марко привёл аргумент. Какая цель?",
           "options": [
             {
-              "id": "win",
-              "text": "Победить",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": true
+            },
+            {
+              "id": "win",
+              "text": "Победить",
+              "correct": false
             }
           ],
           "correct_logic": "Объяснил свою причину, не напал на Лину. Цель — понять.",
@@ -1983,14 +1983,14 @@
               "correct": false
             },
             {
-              "id": "hurt",
-              "text": "Обидеть",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Победить",
               "correct": true
+            },
+            {
+              "id": "hurt",
+              "text": "Обидеть",
+              "correct": false
             }
           ],
           "correct_logic": "Не предлагает проверить — объявляет себя чемпионом. Цель — победить.",
@@ -2041,11 +2041,6 @@
           "question": "«А давай пробежим на перемене до дерева и обратно — и узнаем!» Какая цель?",
           "options": [
             {
-              "id": "understand",
-              "text": "Понять",
-              "correct": true
-            },
-            {
               "id": "win",
               "text": "Победить",
               "correct": false
@@ -2054,6 +2049,11 @@
               "id": "hurt",
               "text": "Обидеть",
               "correct": false
+            },
+            {
+              "id": "understand",
+              "text": "Понять",
+              "correct": true
             }
           ],
           "correct_logic": "Предлагает проверить, готов к любому результату. Цель — понять.",
@@ -2104,6 +2104,11 @@
           "question": "«Ты бегаешь как черепаха, на тебя смешно смотреть!» Какая цель?",
           "options": [
             {
+              "id": "win",
+              "text": "Победить",
+              "correct": false
+            },
+            {
               "id": "hurt",
               "text": "Обидеть",
               "correct": true
@@ -2111,11 +2116,6 @@
             {
               "id": "understand",
               "text": "Понять",
-              "correct": false
-            },
-            {
-              "id": "win",
-              "text": "Победить",
               "correct": false
             }
           ],
@@ -2356,14 +2356,14 @@
               "correct": false
             },
             {
-              "id": "hurt",
-              "text": "Обидеть",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Понять",
               "correct": true
+            },
+            {
+              "id": "hurt",
+              "text": "Обидеть",
+              "correct": false
             }
           ],
           "correct_logic": "Хочет узнать больше, открыта к чужому мнению. Цель — понять.",

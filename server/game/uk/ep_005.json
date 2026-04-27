@@ -190,13 +190,13 @@
               "correct": true
             },
             {
-              "id": "falsehood",
-              "text": "Неправда",
+              "id": "fact",
+              "text": "Факт",
               "correct": false
             },
             {
-              "id": "fact",
-              "text": "Факт",
+              "id": "falsehood",
+              "text": "Неправда",
               "correct": false
             }
           ],
@@ -208,6 +208,11 @@
           "question": "Плакат: «Ніхто не бажає вам зла.» Факт, думка, неправда — чи щось інше?",
           "options": [
             {
+              "id": "unverified",
+              "text": "Перевірюване — але ми ще не перевіряли",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт — вже підтверджено",
               "correct": false
@@ -216,11 +221,6 @@
               "id": "opinion",
               "text": "Думка — це смак або оцінка",
               "correct": false
-            },
-            {
-              "id": "unverified",
-              "text": "Перевірюване — але ми ще не перевіряли",
-              "correct": true
             },
             {
               "id": "falsehood",
@@ -236,6 +236,11 @@
           "question": "Плакат: «Запитання — ознака слабкості.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
+            },
+            {
               "id": "opinion",
               "text": "Думка",
               "correct": true
@@ -243,11 +248,6 @@
             {
               "id": "falsehood",
               "text": "Неправда",
-              "correct": false
-            },
-            {
-              "id": "fact",
-              "text": "Факт",
               "correct": false
             }
           ],
@@ -304,6 +304,11 @@
           "question": "«Цей плакат висить на висоті двох метрів.» Перевірюване, думка чи хитре твердження?",
           "options": [
             {
+              "id": "checkable",
+              "text": "Перевірюване",
+              "correct": true
+            },
+            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
@@ -312,11 +317,6 @@
               "id": "tricky",
               "text": "Хитре твердження",
               "correct": false
-            },
-            {
-              "id": "checkable",
-              "text": "Перевірюване",
-              "correct": true
             }
           ],
           "correct_logic": "Інструмент — рулетка, дасть число.",
@@ -327,9 +327,9 @@
           "question": "«Дзеркальне Місто — найзатишніше місце.» Перевірюване, думка чи хитре твердження?",
           "options": [
             {
-              "id": "tricky",
-              "text": "Хитре твердження",
-              "correct": false
+              "id": "opinion",
+              "text": "Думка",
+              "correct": true
             },
             {
               "id": "checkable",
@@ -337,9 +337,9 @@
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": true
+              "id": "tricky",
+              "text": "Хитре твердження",
+              "correct": false
             }
           ],
           "correct_logic": "Немає «затишкоміра».",
@@ -355,14 +355,14 @@
               "correct": false
             },
             {
-              "id": "tricky",
-              "text": "Хитре твердження",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "tricky",
+              "text": "Хитре твердження",
+              "correct": true
             }
           ],
           "correct_logic": "Виправдання — «тільки якщо не думати» — блокує будь-яку перевірку.",
@@ -373,11 +373,6 @@
           "question": "«Гучномовець повторив повідомлення три рази.» Перевірюване, думка чи хитре твердження?",
           "options": [
             {
-              "id": "tricky",
-              "text": "Хитре твердження",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
@@ -386,6 +381,11 @@
               "id": "checkable",
               "text": "Перевірюване",
               "correct": true
+            },
+            {
+              "id": "tricky",
+              "text": "Хитре твердження",
+              "correct": false
             }
           ],
           "correct_logic": "Інструмент — лічба. Можна порахувати повтори.",
@@ -396,8 +396,8 @@
           "question": "«Голос у гучномовці заспокоює краще за всі голоси у світі.» Перевірюване, думка чи хитре твердження?",
           "options": [
             {
-              "id": "tricky",
-              "text": "Хитре твердження",
+              "id": "checkable",
+              "text": "Перевірюване",
               "correct": false
             },
             {
@@ -406,8 +406,8 @@
               "correct": true
             },
             {
-              "id": "checkable",
-              "text": "Перевірюване",
+              "id": "tricky",
+              "text": "Хитре твердження",
               "correct": false
             }
           ],
@@ -419,13 +419,13 @@
           "question": "«Голос говорить правду, але тільки якщо йому не ставити запитань.» Перевірюване, думка чи хитре твердження?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Думка",
+              "id": "checkable",
+              "text": "Перевірюване",
               "correct": false
             },
             {
-              "id": "checkable",
-              "text": "Перевірюване",
+              "id": "opinion",
+              "text": "Думка",
               "correct": false
             },
             {
@@ -1054,14 +1054,14 @@
           "question": "Відображення Леона у Дзеркалі не усміхалось у трьох випадках. Чи означає це, що ЗАВЖДИ буде так?",
           "options": [
             {
-              "id": false,
-              "text": "Ні — 3 рази ≠ «завжди», потрібні ще спостереження",
-              "correct": true
-            },
-            {
               "id": true,
               "text": "Так — раз 3 рази, значить завжди",
               "correct": false
+            },
+            {
+              "id": false,
+              "text": "Ні — 3 рази ≠ «завжди», потрібні ще спостереження",
+              "correct": true
             }
           ],
           "correct_logic": "«Завжди» вимагає перевірки в РІЗНИХ умовах. 3 рази поспіль — сильний сигнал, але не «завжди».",
@@ -1072,13 +1072,13 @@
           "question": "Марко один раз відчув залізо в чаї Леона. Як назвати?",
           "options": [
             {
-              "id": "hypothesis",
-              "text": "Сильна гіпотеза",
+              "id": "pattern",
+              "text": "Закономірність",
               "correct": false
             },
             {
-              "id": "pattern",
-              "text": "Закономірність",
+              "id": "hypothesis",
+              "text": "Сильна гіпотеза",
               "correct": false
             },
             {
@@ -1100,13 +1100,13 @@
               "correct": true
             },
             {
-              "id": "hypothesis",
-              "text": "Сильна гіпотеза",
+              "id": "pattern",
+              "text": "Закономірність",
               "correct": false
             },
             {
-              "id": "pattern",
-              "text": "Закономірність",
+              "id": "hypothesis",
+              "text": "Сильна гіпотеза",
               "correct": false
             }
           ],
@@ -1141,11 +1141,6 @@
           "question": "«Леон один раз говорив м'яко — і все було добре. Отже, якщо м'яко — ЗАВЖДИ безпечно.» Як назвати?",
           "options": [
             {
-              "id": "hypothesis",
-              "text": "Сильна гіпотеза",
-              "correct": false
-            },
-            {
               "id": "pattern",
               "text": "Закономірність",
               "correct": false
@@ -1154,6 +1149,11 @@
               "id": "coincidence",
               "text": "Збіг — одного разу мало для «завжди»",
               "correct": true
+            },
+            {
+              "id": "hypothesis",
+              "text": "Сильна гіпотеза",
+              "correct": false
             }
           ],
           "correct_logic": "Один раз спостерігав — недостатньо для висновку «завжди». Навіть не гіпотеза — збіг.",
@@ -1164,6 +1164,11 @@
           "question": "«Леон один раз допоміг — отже, йому можна вірити завжди.» Як назвати?",
           "options": [
             {
+              "id": "coincidence",
+              "text": "Збіг — одного разу мало",
+              "correct": true
+            },
+            {
               "id": "pattern",
               "text": "Закономірність",
               "correct": false
@@ -1172,11 +1177,6 @@
               "id": "hypothesis",
               "text": "Сильна гіпотеза",
               "correct": false
-            },
-            {
-              "id": "coincidence",
-              "text": "Збіг — одного разу мало",
-              "correct": true
             }
           ],
           "correct_logic": "Один раз допоміг — недостатньо навіть для гіпотези. Тим більше для «завжди».",
@@ -1498,14 +1498,14 @@
           "question": "Марко відчинив двері в парку один раз — вони відчинились. Достатньо, щоб сказати «завжди відчиняються»?",
           "options": [
             {
-              "id": true,
-              "text": "Так",
-              "correct": false
-            },
-            {
               "id": false,
               "text": "Ні — одного разу недостатньо",
               "correct": true
+            },
+            {
+              "id": true,
+              "text": "Так",
+              "correct": false
             }
           ],
           "correct_logic": "Один раз — недостатньо для висновку.",
@@ -1516,14 +1516,14 @@
           "question": "Софа дала правильну відповідь 2 рази з 5. Чи можна їй повністю довіряти?",
           "options": [
             {
-              "id": true,
-              "text": "Так",
-              "correct": false
-            },
-            {
               "id": false,
               "text": "Ні — результат нестабільний",
               "correct": true
+            },
+            {
+              "id": true,
+              "text": "Так",
+              "correct": false
             }
           ],
           "correct_logic": "Результат нестабільний — потрібно перевіряти далі.",
@@ -1635,11 +1635,6 @@
           "question": "Леон сказав «безпечно» трьом людям. Двоє повернулись, один — ні. Це закономірність чи збіг?",
           "options": [
             {
-              "id": "neither",
-              "text": "Ні те, ні інше — нестабільний результат",
-              "correct": true
-            },
-            {
               "id": "pattern",
               "text": "Закономірність",
               "correct": false
@@ -1648,6 +1643,11 @@
               "id": "coincidence",
               "text": "Збіг",
               "correct": false
+            },
+            {
+              "id": "neither",
+              "text": "Ні те, ні інше — нестабільний результат",
+              "correct": true
             }
           ],
           "correct_logic": "Результат нестабільний — двоє з трьох, а не троє з трьох.",
@@ -1796,14 +1796,14 @@
           "question": "Щоранку сонце сходить. Закономірність чи збіг?",
           "options": [
             {
-              "id": "pattern",
-              "text": "Закономірність",
-              "correct": true
-            },
-            {
               "id": "coincidence",
               "text": "Збіг",
               "correct": false
+            },
+            {
+              "id": "pattern",
+              "text": "Закономірність",
+              "correct": true
             }
           ],
           "correct_logic": "Повторюється щодня, за будь-яких умов.",

@@ -520,14 +520,14 @@
           "question": "София говорила: шоколадное лучше. Марко считает, что клубничное. Кто прав?",
           "options": [
             {
-              "id": "sofia",
-              "text": "София",
-              "correct": false
-            },
-            {
               "id": "nobody",
               "text": "Никто — у каждого своё",
               "correct": true
+            },
+            {
+              "id": "sofia",
+              "text": "София",
+              "correct": false
             },
             {
               "id": "marko",
@@ -702,14 +702,14 @@
           "question": "«В классе 25 учеников.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Можно пересчитать. Число — всегда проверяемо.",
@@ -760,14 +760,14 @@
           "question": "«Математика — скучный предмет.» Факт или мнение?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": true
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
             }
           ],
           "correct_logic": "Нет «скучномера» — кому-то скучно, кому-то интересно.",
@@ -818,14 +818,14 @@
           "question": "«Киев — столица Украины.» Факт или мнение?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Можно проверить в любом атласе или официальном документе — карта, учебник.",
@@ -1364,14 +1364,14 @@
           "question": "«На стене висели четыре рамки.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Посчитай — четыре. Число проверяемо.",
@@ -1422,14 +1422,14 @@
           "question": "«У телефона Софы треснут экран.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Посмотри — трещина или есть, или нет. Проверяемо глазами.",
@@ -1480,14 +1480,14 @@
           "question": "«Рамки на стене пустые.» Факт или мнение?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Подойди и посмотри — пустые или нет. Проверяемо.",
@@ -1596,14 +1596,14 @@
           "question": "«У Марко в комнате две кровати.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Посчитай — две. Число проверяемо.",
@@ -1654,14 +1654,14 @@
           "question": "«Мама говорит тихо.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Можно услышать — тихо или нет. Громкость измерима.",

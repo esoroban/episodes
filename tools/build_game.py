@@ -243,20 +243,69 @@ def _dialogue_to_text(items: list, lang: str = "ru") -> list:
 
 
 def _shuffle_quiz_opts(question: str, raw_opts: list) -> list:
-    """Return raw quiz options shuffled deterministically.
+    """Pass-through filter. Real ordering is set up-front by
+    balance_episode_quizzes() at the start of build_episode, so that the
+    HTML and JSON paths see identical option order. This wrapper is kept
+    for code clarity at call sites."""
+    return [o for o in (raw_opts or []) if isinstance(o, dict)]
 
-    Seed is derived from the question text plus the original option ids,
-    so identical option pools produce identical orders, while different
-    pools (or question wording) get independent shuffles. Same input →
-    same order across rebuilds, but the correct answer is no longer
-    always first just because the YAML listed it first.
-    """
-    opts = [o for o in (raw_opts or []) if isinstance(o, dict)]
-    fingerprint = question + "\n" + "\n".join(str(o.get("id", "")) for o in opts)
-    seed = int(hashlib.sha1(fingerprint.encode("utf-8")).hexdigest()[:12], 16)
-    shuffled = list(opts)
-    random.Random(seed).shuffle(shuffled)
-    return shuffled
+
+def balance_episode_quizzes(data: dict) -> None:
+    """Reorder quiz options across the whole episode so that correct answers
+    are uniformly distributed over positions. Mutates data['scenes'] in place.
+
+    Strategy:
+      1. Collect every quiz option list in scene order (top-level + interactions
+         + followup) where at least one option has `correct: true`.
+      2. Group by len(options) — binary quizzes balance separately from 3-option
+         and 4-option quizzes.
+      3. Build target positions list = round-robin [0, 1, ..., n-1] of length
+         len(group), shuffled with a per-(episode, n) seed.
+      4. For each quiz in the group, move the correct option to its target
+         position, keeping other options in their original relative order.
+
+    Result: for an episode with 12 binary quizzes, exactly 6 will have the
+    correct answer at top and 6 at bottom; for 6 ternary quizzes, exactly
+    2 at each position. Order across rebuilds stays identical (deterministic
+    seed). The player can no longer tap the first button blind."""
+    ep_id = str(data.get("episode_id", ""))
+    quiz_opts_lists = []
+
+    for scene in data.get("scenes", []) or []:
+        opts = scene.get("options", []) or []
+        if any(isinstance(o, dict) and "correct" in o for o in opts):
+            quiz_opts_lists.append(opts)
+        for inter in scene.get("interactions", []) or []:
+            iopts = inter.get("options", []) or []
+            if any(isinstance(o, dict) and "correct" in o for o in iopts):
+                quiz_opts_lists.append(iopts)
+        fu = scene.get("followup_interaction", {}) or {}
+        fopts = fu.get("options", []) or []
+        if any(isinstance(o, dict) and "correct" in o for o in fopts):
+            quiz_opts_lists.append(fopts)
+
+    from collections import defaultdict
+    by_n = defaultdict(list)
+    for opts in quiz_opts_lists:
+        by_n[len(opts)].append(opts)
+
+    for n_opts, group in by_n.items():
+        if n_opts < 2:
+            continue
+        k = len(group)
+        targets = [j % n_opts for j in range(k)]
+        seed = int(hashlib.sha1(f"{ep_id}::{n_opts}".encode("utf-8")).hexdigest()[:12], 16)
+        random.Random(seed).shuffle(targets)
+        for opts, target in zip(group, targets):
+            correct_idx = next(
+                (i for i, o in enumerate(opts)
+                 if isinstance(o, dict) and o.get("correct")),
+                None,
+            )
+            if correct_idx is None:
+                continue
+            correct_obj = opts.pop(correct_idx)
+            opts.insert(target, correct_obj)
 
 
 def _quiz_block(src: dict) -> dict:
@@ -2140,6 +2189,7 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
 def build_episode(yaml_path: Path, all_eps: list = None, lang: str = "ru"):
     """Build HTML + JSON manifest for a single episode (optionally with UK overlay)."""
     data = load_episode_lang(yaml_path, lang)
+    balance_episode_quizzes(data)
     ep_id = data.get("episode_id", 0)
     filename = f"ep_{int(ep_id):03d}.html"
     output_path = OUTPUT_DIR / filename

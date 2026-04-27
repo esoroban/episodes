@@ -520,9 +520,9 @@
           "question": "Софія казала: шоколадне краще. Марко вважає, що полуничне. Хто має рацію?",
           "options": [
             {
-              "id": "marko",
-              "text": "Марко",
-              "correct": false
+              "id": "nobody",
+              "text": "Ніхто — у кожного своє",
+              "correct": true
             },
             {
               "id": "sofia",
@@ -530,9 +530,9 @@
               "correct": false
             },
             {
-              "id": "nobody",
-              "text": "Ніхто — у кожного своє",
-              "correct": true
+              "id": "marko",
+              "text": "Марко",
+              "correct": false
             }
           ],
           "correct_logic": "«Смачніше» — це відчуття. Немає приладу «смаковимір». У кожного своя думка про смак — і це нормально.",
@@ -760,14 +760,14 @@
           "question": "«Математика — нудний предмет.» Факт чи думка?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": true
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
             }
           ],
           "correct_logic": "Немає «нудномеру» — комусь нудно, комусь цікаво.",
@@ -818,14 +818,14 @@
           "question": "«Київ — столиця України.» Факт чи думка?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Можна перевірити в будь-якому атласі чи офіційному документі — мапа, підручник.",
@@ -1306,14 +1306,14 @@
           "question": "«Голос Софії теплий.» Факт чи думка?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": true
             }
           ],
           "correct_logic": "«Теплий» — це відчуття Марка. Немає «тепломеру» для голосів.",
@@ -1596,14 +1596,14 @@
           "question": "«У Марка в кімнаті два ліжка.» Факт чи думка?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": false
             }
           ],
           "correct_logic": "Порахуй — два. Число перевірюване.",
@@ -1654,14 +1654,14 @@
           "question": "«Мама говорить тихо.» Факт чи думка?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": false
             }
           ],
           "correct_logic": "Можна почути — тихо чи ні. Гучність вимірна.",
@@ -1712,14 +1712,14 @@
           "question": "«Щоденник лежав поруч із телефоном.» Факт чи думка?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Можна побачити розташування. Перевірюване.",
@@ -1770,14 +1770,14 @@
           "question": "«Фотографії Софії зникли.» Факт чи думка?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             }
           ],
           "correct_logic": "Подивись на стіну вдома. Порожні рамки. Перевірюване.",

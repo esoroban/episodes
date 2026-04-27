@@ -283,13 +283,13 @@
           "question": "«Марко хочет, чтобы его пожалели.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
+              "id": "fact",
+              "text": "Факт",
               "correct": false
             },
             {
-              "id": "fact",
-              "text": "Факт",
+              "id": "lie",
+              "text": "Неправда",
               "correct": false
             },
             {
@@ -450,14 +450,14 @@
           "question": "«Все говорят, что Марко выдумал сестру.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
+            },
+            {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
             },
             {
               "id": "opinion",
@@ -513,6 +513,11 @@
           "question": "«Ни один человек в школе не помнит Софию.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -521,11 +526,6 @@
               "id": "opinion",
               "text": "Мнение",
               "correct": false
-            },
-            {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
             }
           ],
           "correct_logic": "Лина помнит — одного исключения достаточно.",
@@ -814,14 +814,14 @@
           "question": "«Марко выдумал сестру, чтобы не делать домашку.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
-            },
-            {
               "id": "lie",
               "text": "Неправда",
               "correct": true
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
             },
             {
               "id": "opinion",
@@ -937,13 +937,13 @@
           "question": "Одноклассник на перемене: «Я видел Софию вчера в парке!» (не видел, хотел привлечь внимание). Шутка, сказка или фейк?",
           "options": [
             {
-              "id": "fake",
-              "text": "Фейк",
+              "id": "tale",
+              "text": "Сказка",
               "correct": false
             },
             {
-              "id": "tale",
-              "text": "Сказка",
+              "id": "fake",
+              "text": "Фейк",
               "correct": false
             },
             {
@@ -1114,14 +1114,14 @@
               "correct": false
             },
             {
-              "id": "tale",
-              "text": "Сказка",
-              "correct": true
-            },
-            {
               "id": "fake",
               "text": "Фейк",
               "correct": false
+            },
+            {
+              "id": "tale",
+              "text": "Сказка",
+              "correct": true
             }
           ],
           "correct_logic": "Все понимают, что не взаправду.",
@@ -1300,11 +1300,6 @@
           "question": "В чате: «Мама Марко водила его к психологу.» Шутка, сказка или фейк?",
           "options": [
             {
-              "id": "tale",
-              "text": "Сказка",
-              "correct": false
-            },
-            {
               "id": "joke",
               "text": "Шутка",
               "correct": false
@@ -1313,6 +1308,11 @@
               "id": "fake",
               "text": "Фейк",
               "correct": true
+            },
+            {
+              "id": "tale",
+              "text": "Сказка",
+              "correct": false
             }
           ],
           "correct_logic": "Специально придумано, чтобы поверили; цель — навредить.",
@@ -1363,8 +1363,8 @@
           "question": "«Я только что видел Софию у спортзала!» Шутка, сказка или фейк?",
           "options": [
             {
-              "id": "fake",
-              "text": "Фейк",
+              "id": "tale",
+              "text": "Сказка",
               "correct": false
             },
             {
@@ -1373,8 +1373,8 @@
               "correct": true
             },
             {
-              "id": "tale",
-              "text": "Сказка",
+              "id": "fake",
+              "text": "Фейк",
               "correct": false
             }
           ],
@@ -1478,6 +1478,11 @@
           "question": "«Мой папа самый сильный в мире.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1486,11 +1491,6 @@
               "id": "opinion",
               "text": "Мнение",
               "correct": false
-            },
-            {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
             }
           ],
           "correct_logic": "Силу можно измерить — силомер, штанга, чемпионаты. «Самый сильный В МИРЕ» — у этого звания есть владелец (олимпийский чемпион по тяжёлой атлетике). Папа, к сожалению, не он. Проверяемо — и не подтвердится.",
@@ -1541,11 +1541,6 @@
           "question": "«Моя мама самая красивая.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1554,6 +1549,11 @@
               "id": "lie",
               "text": "Неправда",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": true
             }
           ],
           "correct_logic": "«Красивая» — это ощущение. Прибора нет. И в отличие от силы — нет олимпиады красоты, нет чемпиона мира по красоте. Проверить нечем. Значит, мнение.",
@@ -1604,6 +1604,11 @@
           "question": "«В школьном чате уже одиннадцать лайков на сообщение про Марко.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": true
@@ -1611,11 +1616,6 @@
             {
               "id": "lie",
               "text": "Неправда",
-              "correct": false
-            },
-            {
-              "id": "opinion",
-              "text": "Мнение",
               "correct": false
             }
           ],
@@ -1667,14 +1667,14 @@
           "question": "«София — лучшая сестра в мире.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": true
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
             },
             {
               "id": "lie",
@@ -1730,6 +1730,11 @@
           "question": "«В школьном дневнике Софии 47 страниц.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": true
@@ -1737,11 +1742,6 @@
             {
               "id": "lie",
               "text": "Неправда",
-              "correct": false
-            },
-            {
-              "id": "opinion",
-              "text": "Мнение",
               "correct": false
             }
           ],
@@ -1798,14 +1798,14 @@
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": true
-            },
-            {
               "id": "lie",
               "text": "Неправда",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": true
             }
           ],
           "correct_logic": "«Больше всех» — субъективная оценка.",
@@ -1856,6 +1856,11 @@
           "question": "«Все в школе уже видели сообщение про Марко.» Факт, мнение или неправда?",
           "options": [
             {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1864,11 +1869,6 @@
               "id": "opinion",
               "text": "Мнение",
               "correct": false
-            },
-            {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
             }
           ],
           "correct_logic": "Проверяемо: спроси каждого. Найдётся тот, кто не видел.",
@@ -1982,9 +1982,9 @@
           "question": "«Школьный чат опаснее обычного шёпота в коридоре.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": true
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
             },
             {
               "id": "lie",
@@ -1992,9 +1992,9 @@
               "correct": false
             },
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": true
             }
           ],
           "correct_logic": "Нет «опасномера» — субъективная оценка.",
@@ -2054,11 +2054,6 @@
           "question": "«Дневник Софии — настоящий.» Факт, мнение или неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": false
@@ -2067,6 +2062,11 @@
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": false
             }
           ],
           "correct_logic": "Почерк можно сравнить, дневник можно потрогать.",
@@ -2411,11 +2411,6 @@
           "question": "Вера дважды просит дневник. Она хочет помочь — или получить доступ к улике?",
           "options": [
             {
-              "id": "evidence",
-              "text": "Хочет получить доступ к улике",
-              "correct": false
-            },
-            {
               "id": "open",
               "text": "Мы пока не знаем",
               "correct": true
@@ -2423,6 +2418,11 @@
             {
               "id": "help",
               "text": "Хочет помочь",
+              "correct": false
+            },
+            {
+              "id": "evidence",
+              "text": "Хочет получить доступ к улике",
               "correct": false
             }
           ],
@@ -2439,14 +2439,14 @@
               "correct": false
             },
             {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": false
-            },
-            {
               "id": "opinion",
               "text": "Мнение",
               "correct": true
+            },
+            {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": false
             }
           ],
           "correct_logic": "«Очень мягко» — субъективная оценка.",
@@ -2457,14 +2457,14 @@
           "question": "Лина сказала: «Они слушают.» Это проверяемое утверждение?",
           "options": [
             {
-              "id": true,
-              "text": "Да — проверяемо",
-              "correct": true
-            },
-            {
               "id": false,
               "text": "Нет — мнение",
               "correct": false
+            },
+            {
+              "id": true,
+              "text": "Да — проверяемо",
+              "correct": true
             }
           ],
           "correct_logic": "Можно проверить: кто слушает? как? Но мы пока НЕ проверяли — результат неизвестен.",

@@ -450,6 +450,11 @@
           "question": "«Всі кажуть, що Марко вигадав сестру.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
+            },
+            {
               "id": "lie",
               "text": "Неправда",
               "correct": true
@@ -457,11 +462,6 @@
             {
               "id": "opinion",
               "text": "Думка",
-              "correct": false
-            },
-            {
-              "id": "fact",
-              "text": "Факт",
               "correct": false
             }
           ],
@@ -513,6 +513,11 @@
           "question": "«Жодна людина в школі не пам'ятає Софію.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -521,11 +526,6 @@
               "id": "opinion",
               "text": "Думка",
               "correct": false
-            },
-            {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
             }
           ],
           "correct_logic": "Ліна пам'ятає — одного винятку досить.",
@@ -819,13 +819,13 @@
               "correct": true
             },
             {
-              "id": "opinion",
-              "text": "Думка",
+              "id": "fact",
+              "text": "Факт",
               "correct": false
             },
             {
-              "id": "fact",
-              "text": "Факт",
+              "id": "opinion",
+              "text": "Думка",
               "correct": false
             }
           ],
@@ -937,13 +937,13 @@
           "question": "Однокласник на перерві: «Я бачив Софію вчора в парку!» (не бачив, хотів привернути увагу). Жарт, казка чи фейк?",
           "options": [
             {
-              "id": "fake",
-              "text": "Фейк",
+              "id": "tale",
+              "text": "Казка",
               "correct": false
             },
             {
-              "id": "tale",
-              "text": "Казка",
+              "id": "fake",
+              "text": "Фейк",
               "correct": false
             },
             {
@@ -1114,14 +1114,14 @@
               "correct": false
             },
             {
-              "id": "tale",
-              "text": "Казка",
-              "correct": true
-            },
-            {
               "id": "fake",
               "text": "Фейк",
               "correct": false
+            },
+            {
+              "id": "tale",
+              "text": "Казка",
+              "correct": true
             }
           ],
           "correct_logic": "Усі розуміють, що не насправді.",
@@ -1172,14 +1172,14 @@
           "question": "«У Віри в учительській під столом живе невидимий лев.» Жарт, казка чи фейк?",
           "options": [
             {
-              "id": "joke",
-              "text": "Жарт",
-              "correct": false
-            },
-            {
               "id": "tale",
               "text": "Казка",
               "correct": true
+            },
+            {
+              "id": "joke",
+              "text": "Жарт",
+              "correct": false
             },
             {
               "id": "fake",
@@ -1300,11 +1300,6 @@
           "question": "У чаті: «Мама Марка водила його до психолога.» Жарт, казка чи фейк?",
           "options": [
             {
-              "id": "tale",
-              "text": "Казка",
-              "correct": false
-            },
-            {
               "id": "joke",
               "text": "Жарт",
               "correct": false
@@ -1313,6 +1308,11 @@
               "id": "fake",
               "text": "Фейк",
               "correct": true
+            },
+            {
+              "id": "tale",
+              "text": "Казка",
+              "correct": false
             }
           ],
           "correct_logic": "Спеціально вигадано, щоб повірили; мета — нашкодити.",
@@ -1363,11 +1363,6 @@
           "question": "«Я щойно бачив Софію біля спортзалу!» Жарт, казка чи фейк?",
           "options": [
             {
-              "id": "fake",
-              "text": "Фейк",
-              "correct": false
-            },
-            {
               "id": "tale",
               "text": "Казка",
               "correct": false
@@ -1376,6 +1371,11 @@
               "id": "joke",
               "text": "Жарт",
               "correct": true
+            },
+            {
+              "id": "fake",
+              "text": "Фейк",
+              "correct": false
             }
           ],
           "correct_logic": "Швидше за все знає, що неправда.",
@@ -1478,6 +1478,11 @@
           "question": "«Мій тато найсильніший у світі.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1486,11 +1491,6 @@
               "id": "opinion",
               "text": "Думка",
               "correct": false
-            },
-            {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
             }
           ],
           "correct_logic": "Силу можна виміряти — силомір, штанга, чемпіонати. «Найсильніший У СВІТІ» — у цього звання є власник (олімпійський чемпіон із важкої атлетики). Тато, на жаль, не він. Перевірюване — і не підтвердиться.",
@@ -1604,14 +1604,14 @@
           "question": "«У шкільному чаті вже одинадцять лайків на повідомленні про Марка.» Факт, думка чи неправда?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             },
             {
               "id": "lie",
@@ -1730,8 +1730,8 @@
           "question": "«У щоденнику Софії 47 сторінок.» Факт, думка чи неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
+              "id": "opinion",
+              "text": "Думка",
               "correct": false
             },
             {
@@ -1740,8 +1740,8 @@
               "correct": true
             },
             {
-              "id": "opinion",
-              "text": "Думка",
+              "id": "lie",
+              "text": "Неправда",
               "correct": false
             }
           ],
@@ -1793,11 +1793,6 @@
           "question": "«Віра Андріївна переживає за Марка найбільше.» Факт, думка чи неправда?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1806,6 +1801,11 @@
               "id": "lie",
               "text": "Неправда",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": true
             }
           ],
           "correct_logic": "«Найбільше» — суб'єктивна оцінка.",
@@ -1919,11 +1919,6 @@
           "question": "«На Землі 8 континентів.» Факт, думка чи неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -1932,6 +1927,11 @@
               "id": "opinion",
               "text": "Думка",
               "correct": false
+            },
+            {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": true
             }
           ],
           "correct_logic": "Перевірюване — мапа. Не вісім.",
@@ -1987,14 +1987,14 @@
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": true
-            },
-            {
               "id": "lie",
               "text": "Неправда",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": true
             }
           ],
           "correct_logic": "Немає «небезпечноміру» — суб'єктивна оцінка.",
@@ -2054,6 +2054,11 @@
           "question": "«Щоденник Софії — справжній.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": false
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": true
@@ -2061,11 +2066,6 @@
             {
               "id": "lie",
               "text": "Неправда",
-              "correct": false
-            },
-            {
-              "id": "opinion",
-              "text": "Думка",
               "correct": false
             }
           ],
@@ -2411,14 +2411,14 @@
           "question": "Віра двічі просить щоденник. Вона хоче допомогти — чи отримати доступ до доказу?",
           "options": [
             {
-              "id": "help",
-              "text": "Хоче допомогти",
-              "correct": false
-            },
-            {
               "id": "open",
               "text": "Ми поки не знаємо",
               "correct": true
+            },
+            {
+              "id": "help",
+              "text": "Хоче допомогти",
+              "correct": false
             },
             {
               "id": "evidence",
@@ -2434,11 +2434,6 @@
           "question": "«Віра Андріївна говорить дуже м'яко.» Факт, думка чи неправда?",
           "options": [
             {
-              "id": "lie",
-              "text": "Неправда",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -2447,6 +2442,11 @@
               "id": "opinion",
               "text": "Думка",
               "correct": true
+            },
+            {
+              "id": "lie",
+              "text": "Неправда",
+              "correct": false
             }
           ],
           "correct_logic": "«Дуже м'яко» — суб'єктивна оцінка.",
@@ -2457,14 +2457,14 @@
           "question": "Ліна сказала: «Вони слухають.» Це перевірюване твердження?",
           "options": [
             {
-              "id": true,
-              "text": "Так — перевірюване",
-              "correct": true
-            },
-            {
               "id": false,
               "text": "Ні — думка",
               "correct": false
+            },
+            {
+              "id": true,
+              "text": "Так — перевірюване",
+              "correct": true
             }
           ],
           "correct_logic": "Можна перевірити: хто слухає? як? Але ми поки НЕ перевіряли — результат невідомий.",

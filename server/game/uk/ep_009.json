@@ -449,13 +449,13 @@
               "correct": true
             },
             {
-              "id": "falsehood",
-              "text": "Неправда",
+              "id": "opinion",
+              "text": "Думка",
               "correct": false
             },
             {
-              "id": "opinion",
-              "text": "Думка",
+              "id": "falsehood",
+              "text": "Неправда",
               "correct": false
             }
           ],
@@ -507,6 +507,11 @@
           "question": "«Собаки — найкращі домашні тварини.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "opinion",
+              "text": "Думка",
+              "correct": true
+            },
+            {
               "id": "fact",
               "text": "Факт",
               "correct": false
@@ -515,11 +520,6 @@
               "id": "falsehood",
               "text": "Неправда",
               "correct": false
-            },
-            {
-              "id": "opinion",
-              "text": "Думка",
-              "correct": true
             }
           ],
           "correct_logic": "«Найкращі» — немає приладу для вимірювання «найкращості». Це оцінка.",
@@ -570,6 +570,11 @@
           "question": "«Місяць більший за Сонце.» Факт, думка чи неправда?",
           "options": [
             {
+              "id": "fact",
+              "text": "Факт",
+              "correct": false
+            },
+            {
               "id": "opinion",
               "text": "Думка",
               "correct": false
@@ -578,11 +583,6 @@
               "id": "falsehood",
               "text": "Неправда",
               "correct": true
-            },
-            {
-              "id": "fact",
-              "text": "Факт",
-              "correct": false
             }
           ],
           "correct_logic": "Астрономи виміряли — Сонце в 400 разів більше. Перевірюване і хибне.",
@@ -764,14 +764,14 @@
           "question": "«Коли зростають продажі парасольок — зростають продажі гумових чобіт.» Причина, збіг чи третя причина?",
           "options": [
             {
-              "id": "third",
-              "text": "Третя причина",
-              "correct": true
-            },
-            {
               "id": "cause",
               "text": "Причина",
               "correct": false
+            },
+            {
+              "id": "third",
+              "text": "Третя причина",
+              "correct": true
             },
             {
               "id": "coincidence",
@@ -1017,14 +1017,14 @@
           "question": "Чого хотіли Маша і Микола НА ПОЧАТКУ суперечки?",
           "options": [
             {
-              "id": "understand",
-              "text": "Зрозуміти одне одного",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Перемогти одне одного",
               "correct": true
+            },
+            {
+              "id": "understand",
+              "text": "Зрозуміти одне одного",
+              "correct": false
             }
           ],
           "correct_logic": "Кожен хотів довести, що його малюнок кращий. Мета — перемогти.",
@@ -1226,11 +1226,6 @@
           "question": "«Мій велосипед швидший, і крапка! Не сперечайся!» Яка мета?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Образити",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Перемогти",
               "correct": true
@@ -1238,6 +1233,11 @@
             {
               "id": "understand",
               "text": "Зрозуміти",
+              "correct": false
+            },
+            {
+              "id": "hurt",
+              "text": "Образити",
               "correct": false
             }
           ],
@@ -1294,13 +1294,13 @@
               "correct": true
             },
             {
-              "id": "hurt",
-              "text": "Образити",
+              "id": "win",
+              "text": "Перемогти",
               "correct": false
             },
             {
-              "id": "win",
-              "text": "Перемогти",
+              "id": "hurt",
+              "text": "Образити",
               "correct": false
             }
           ],
@@ -1357,6 +1357,11 @@
           "question": "«У тебе некрасивий старий велосипед, на такому тільки бабусі їздять.» Яка мета?",
           "options": [
             {
+              "id": "win",
+              "text": "Перемогти",
+              "correct": false
+            },
+            {
               "id": "understand",
               "text": "Зрозуміти",
               "correct": false
@@ -1365,11 +1370,6 @@
               "id": "hurt",
               "text": "Образити",
               "correct": true
-            },
-            {
-              "id": "win",
-              "text": "Перемогти",
-              "correct": false
             }
           ],
           "correct_logic": "Йому байдуже, який швидший — він просто нападає. Мета — образити.",
@@ -1906,14 +1906,14 @@
           "question": "Марко навів аргумент. Яка мета?",
           "options": [
             {
-              "id": "win",
-              "text": "Перемогти",
-              "correct": false
-            },
-            {
               "id": "understand",
               "text": "Зрозуміти",
               "correct": true
+            },
+            {
+              "id": "win",
+              "text": "Перемогти",
+              "correct": false
             }
           ],
           "correct_logic": "Пояснив свою причину, не нападав на Ліну. Мета — зрозуміти.",
@@ -1975,14 +1975,14 @@
               "correct": false
             },
             {
-              "id": "hurt",
-              "text": "Образити",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Перемогти",
               "correct": true
+            },
+            {
+              "id": "hurt",
+              "text": "Образити",
+              "correct": false
             }
           ],
           "correct_logic": "Не пропонує перевірити — оголошує себе чемпіоном. Мета — перемогти.",
@@ -2038,14 +2038,14 @@
               "correct": false
             },
             {
-              "id": "understand",
-              "text": "Зрозуміти",
-              "correct": true
-            },
-            {
               "id": "hurt",
               "text": "Образити",
               "correct": false
+            },
+            {
+              "id": "understand",
+              "text": "Зрозуміти",
+              "correct": true
             }
           ],
           "correct_logic": "Пропонує перевірити, готовий до будь-якого результату. Мета — зрозуміти.",
@@ -2096,14 +2096,14 @@
           "question": "«Ти бігаєш як черепаха, на тебе смішно дивитися!» Яка мета?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Образити",
-              "correct": true
-            },
-            {
               "id": "win",
               "text": "Перемогти",
               "correct": false
+            },
+            {
+              "id": "hurt",
+              "text": "Образити",
+              "correct": true
             },
             {
               "id": "understand",
@@ -2176,13 +2176,13 @@
           "question": "«Моя книга отримала премію — значить, вона краща, і все!» Яка мета?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Образити",
+              "id": "understand",
+              "text": "Зрозуміти",
               "correct": false
             },
             {
-              "id": "understand",
-              "text": "Зрозуміти",
+              "id": "hurt",
+              "text": "Образити",
               "correct": false
             },
             {
@@ -2364,11 +2364,6 @@
           "question": "«А розкажи, про що твоя? Може, мені теж сподобається!» Яка мета?",
           "options": [
             {
-              "id": "hurt",
-              "text": "Образити",
-              "correct": false
-            },
-            {
               "id": "win",
               "text": "Перемогти",
               "correct": false
@@ -2377,6 +2372,11 @@
               "id": "understand",
               "text": "Зрозуміти",
               "correct": true
+            },
+            {
+              "id": "hurt",
+              "text": "Образити",
+              "correct": false
             }
           ],
           "correct_logic": "Хоче дізнатися більше, відкрита до чужої думки. Мета — зрозуміти.",

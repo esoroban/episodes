@@ -381,14 +381,14 @@
           "question": "Рей на сцене: смотрит в глаза толпе, руки раскинуты, улыбается. Открытая или закрытая поза?",
           "options": [
             {
-              "id": "closed",
-              "text": "Закрытая",
-              "correct": false
-            },
-            {
               "id": "open",
               "text": "Открытая",
               "correct": true
+            },
+            {
+              "id": "closed",
+              "text": "Закрытая",
+              "correct": false
             }
           ],
           "correct_logic": "Руки свободны, тело повёрнуто к людям — дверь нараспашку. Но это сцена — Рей играет роль.",
@@ -446,14 +446,14 @@
           "question": "В толпе мальчик: руки скрещены на груди, глаза смотрят в пол. Открытая или закрытая?",
           "options": [
             {
-              "id": "open",
-              "text": "Открытая",
-              "correct": false
-            },
-            {
               "id": "closed",
               "text": "Закрытая",
               "correct": true
+            },
+            {
+              "id": "open",
+              "text": "Открытая",
+              "correct": false
             }
           ],
           "correct_logic": "Руки-стена + взгляд в пол = дверь на замке. Мальчик не верит Рею.",
@@ -823,14 +823,14 @@
           "question": "Какая эмоция у неё на лице?",
           "options": [
             {
-              "id": "joy",
-              "text": "Радость",
-              "correct": true
-            },
-            {
               "id": "sadness",
               "text": "Грусть",
               "correct": false
+            },
+            {
+              "id": "joy",
+              "text": "Радость",
+              "correct": true
             },
             {
               "id": "anger",
@@ -893,13 +893,13 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "sadness",
-              "text": "Грусть",
+              "id": "joy",
+              "text": "Радость",
               "correct": false
             },
             {
-              "id": "joy",
-              "text": "Радость",
+              "id": "sadness",
+              "text": "Грусть",
               "correct": false
             },
             {
@@ -1105,9 +1105,9 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "sadness",
-              "text": "Грусть",
-              "correct": false
+              "id": "anger",
+              "text": "Злость",
+              "correct": true
             },
             {
               "id": "joy",
@@ -1115,9 +1115,9 @@
               "correct": false
             },
             {
-              "id": "anger",
-              "text": "Злость",
-              "correct": true
+              "id": "sadness",
+              "text": "Грусть",
+              "correct": false
             }
           ],
           "correct_logic": "Кулаки + красное лицо = злость. Он готов действовать.",
@@ -1175,14 +1175,14 @@
           "question": "Какая эмоция?",
           "options": [
             {
-              "id": "sadness",
-              "text": "Грусть",
-              "correct": true
-            },
-            {
               "id": "joy",
               "text": "Радость",
               "correct": false
+            },
+            {
+              "id": "sadness",
+              "text": "Грусть",
+              "correct": true
             },
             {
               "id": "anger",
@@ -1400,14 +1400,14 @@
               "correct": false
             },
             {
-              "id": "sarcasm",
-              "text": "Сарказм",
-              "correct": true
-            },
-            {
               "id": "agreement",
               "text": "Согласие",
               "correct": false
+            },
+            {
+              "id": "sarcasm",
+              "text": "Сарказм",
+              "correct": true
             }
           ],
           "correct_logic": "Медленный темп + усмешка + прищур = говорит одно, имеет в виду противоположное. Оружие солдата.",
@@ -1464,11 +1464,6 @@
           "question": "Рей за сценой, себе под нос: «ОТЛИЧНО.» Какое настроение?",
           "options": [
             {
-              "id": "anger",
-              "text": "Злость",
-              "correct": true
-            },
-            {
               "id": "joy",
               "text": "Радость",
               "correct": false
@@ -1477,6 +1472,11 @@
               "id": "sarcasm",
               "text": "Сарказм",
               "correct": false
+            },
+            {
+              "id": "anger",
+              "text": "Злость",
+              "correct": true
             }
           ],
           "correct_logic": "Сквозь зубы + низкий голос + пауза = подавленная ярость.",
@@ -1538,13 +1538,13 @@
               "correct": true
             },
             {
-              "id": "anger",
-              "text": "Злость",
+              "id": "irritation",
+              "text": "Раздражение",
               "correct": false
             },
             {
-              "id": "irritation",
-              "text": "Раздражение",
+              "id": "anger",
+              "text": "Злость",
               "correct": false
             }
           ],
@@ -1607,13 +1607,13 @@
               "correct": true
             },
             {
-              "id": "joy",
-              "text": "Радость",
+              "id": "agreement",
+              "text": "Согласие",
               "correct": false
             },
             {
-              "id": "agreement",
-              "text": "Согласие",
+              "id": "joy",
+              "text": "Радость",
               "correct": false
             }
           ],

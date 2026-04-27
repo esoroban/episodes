@@ -476,14 +476,14 @@
           "question": "«Мне сказали, что в столовой каша.» Источник — цепочка из трёх человек. Надёжно?",
           "options": [
             {
-              "id": "check",
-              "text": "Нужно проверить",
-              "correct": true
-            },
-            {
               "id": "trust",
               "text": "Надёжно",
               "correct": false
+            },
+            {
+              "id": "check",
+              "text": "Нужно проверить",
+              "correct": true
             }
           ],
           "correct_logic": "Три звена — три возможности для ошибки. Лучше сходить и посмотреть.",
@@ -536,14 +536,14 @@
           "question": "ИИ написал статью о динозаврах. Цифры убедительные. Можно доверять?",
           "options": [
             {
-              "id": "trust",
-              "text": "Можно доверять",
-              "correct": false
-            },
-            {
               "id": "check",
               "text": "Стоит проверить",
               "correct": true
+            },
+            {
+              "id": "trust",
+              "text": "Можно доверять",
+              "correct": false
             }
           ],
           "correct_logic": "ИИ — как умный друг, который иногда уверенно несёт чушь. Нужна перепроверка.",
@@ -656,14 +656,14 @@
           "question": "Врач-педиатр говорит: «Детям нужно спать 9 часов.» Блогер говорит: «5 часов хватит!» Кому верить?",
           "options": [
             {
-              "id": "blogger",
-              "text": "Блогеру",
-              "correct": false
-            },
-            {
               "id": "doctor",
               "text": "Врачу",
               "correct": true
+            },
+            {
+              "id": "blogger",
+              "text": "Блогеру",
+              "correct": false
             }
           ],
           "correct_logic": "Эксперт в своей теме. Блогер — не врач. Мнение одного человека — не факт.",
@@ -892,14 +892,14 @@
           "question": "Марко слышит от подполья: «Вера передаёт информацию.» Записка Софии подтверждает: «Одна из учителей — связная.» Независимые или зависимые?",
           "options": [
             {
-              "id": "indep",
-              "text": "Независимые",
-              "correct": true
-            },
-            {
               "id": "dep",
               "text": "Зависимые",
               "correct": false
+            },
+            {
+              "id": "indep",
+              "text": "Независимые",
+              "correct": true
             }
           ],
           "correct_logic": "Подполье наблюдало своими глазами. София записала отдельно. Два ручейка с разных сторон.",
@@ -1026,11 +1026,6 @@
           "question": "Спор о школьной столовой. «Меню нужно менять!» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": false
-            },
-            {
               "id": "branch",
               "text": "Ветка",
               "correct": false
@@ -1039,6 +1034,11 @@
               "id": "trunk",
               "text": "Ствол",
               "correct": true
+            },
+            {
+              "id": "leaf",
+              "text": "Листок",
+              "correct": false
             }
           ],
           "correct_logic": "Центральная идея — главный вопрос спора.",
@@ -1161,13 +1161,13 @@
               "correct": true
             },
             {
-              "id": "branch",
-              "text": "Ветка",
+              "id": "trunk",
+              "text": "Ствол",
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Ствол",
+              "id": "branch",
+              "text": "Ветка",
               "correct": false
             }
           ],
@@ -1221,6 +1221,11 @@
           "question": "Спор о перемене. «Перемена должна быть 20 минут!» — ствол, ветка или листок?",
           "options": [
             {
+              "id": "branch",
+              "text": "Ветка",
+              "correct": false
+            },
+            {
               "id": "trunk",
               "text": "Ствол",
               "correct": true
@@ -1228,11 +1233,6 @@
             {
               "id": "leaf",
               "text": "Листок",
-              "correct": false
-            },
-            {
-              "id": "branch",
-              "text": "Ветка",
               "correct": false
             }
           ],
@@ -1286,9 +1286,9 @@
           "question": "«За 10 минут не успеваешь даже до буфета дойти.» — ствол, ветка или листок?",
           "options": [
             {
-              "id": "leaf",
-              "text": "Листок",
-              "correct": false
+              "id": "branch",
+              "text": "Ветка",
+              "correct": true
             },
             {
               "id": "trunk",
@@ -1296,9 +1296,9 @@
               "correct": false
             },
             {
-              "id": "branch",
-              "text": "Ветка",
-              "correct": true
+              "id": "leaf",
+              "text": "Листок",
+              "correct": false
             }
           ],
           "correct_logic": "Довод — объясняет ПОЧЕМУ 20 минут нужно.",
@@ -1356,13 +1356,13 @@
               "correct": true
             },
             {
-              "id": "branch",
-              "text": "Ветка",
+              "id": "trunk",
+              "text": "Ствол",
               "correct": false
             },
             {
-              "id": "trunk",
-              "text": "Ствол",
+              "id": "branch",
+              "text": "Ветка",
               "correct": false
             }
           ],
