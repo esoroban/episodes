@@ -21,8 +21,8 @@
     ],
     "previous_episode": 27
   },
-  "scene_count": 25,
-  "quiz_count": 14,
+  "scene_count": 21,
+  "quiz_count": 10,
   "branch_count": 1,
   "scenes": [
     {
@@ -407,7 +407,7 @@
       "choice": null,
       "unlock": null,
       "visual_brief": {
-        "background": "Площадь в расфокусе. В центре — три простые пиктограммы атаки в ряд: ярлык-наклейка, измерительная лента-дисквалификация, стрелка-разворот; ниже — три ладони-щит в ряд",
+        "background": "Площадь в расфокусе. По центру — два горизонтальных ряда пиктограмм. Верхний ряд — три атаки: 1) ярлык-наклейка с большим «✗» (оскорбление), 2) измерительная лента с маленькой фигуркой ребёнка на одном делении (обстоятельства), 3) U-стрелка, развернувшаяся обратно (сам такой). Нижний ряд — три щита, на каждом цифры «1», «2», «3».",
         "camera": "medium",
         "characters": [
           {
@@ -418,11 +418,11 @@
           }
         ],
         "props": [
-          "три пиктограммы атаки (ярлык / лента-дисквалификация / стрелка-разворот)",
-          "три пиктограммы защиты (щит-1 / щит-2 / щит-3 в ряд)"
+          "три пиктограммы атаки в верхнем ряду (ярлык-«✗» / лента+фигурка / U-стрелка)",
+          "три щита с цифрами 1-2-3 в нижнем ряду"
         ],
-        "focus_object": "три атаки и три защиты — наглядно",
-        "atmosphere": "карта инструментов собрана",
+        "focus_object": "две группы по три пиктограммы — атаки сверху, защиты снизу",
+        "atmosphere": "карта инструментов собрана — без слов, только символы и цифры",
         "ui_mode": "reading"
       },
       "source_ref": "day_07.ep28.sofa_block"
@@ -806,7 +806,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep028_s13",
+        "next": "ep028_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -857,131 +857,6 @@
       "source_ref": "day_07.ep28.challenge"
     },
     {
-      "id": "ep028_s13",
-      "kind": "quiz",
-      "is_chat": true,
-      "location": "Зеркальный Город, центральная площадь",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "лозунг и реальность не совпали",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep028_s14",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [
-        {
-          "question": "Тренер: «В моей команде все равны!» — но одного игрока всегда ставит первым. Противоречие?",
-          "options": [
-            {
-              "id": true,
-              "text": "Да, противоречие",
-              "correct": true
-            },
-            {
-              "id": false,
-              "text": "Нет, противоречия нет",
-              "correct": false
-            }
-          ],
-          "correct_logic": "Все равны — но один особенный. Двойной стандарт.",
-          "feedback_success": "«Все равны» + «один особенный» — двойной стандарт.",
-          "feedback_soft_fail": "Если все равны — никого нельзя ставить «всегда первым». Слова и действия не сошлись. Противоречие."
-        }
-      ],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, иконка ряда фигур и одна фигура впереди",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "точный анализ",
-            "pose": "смотрит в экран",
-            "position": "center"
-          }
-        ],
-        "focus_object": "ряд фигур и одна впереди",
-        "atmosphere": "лозунг сам себе мешает",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_07.ep28.challenge"
-    },
-    {
-      "id": "ep028_s14",
-      "kind": "quiz",
-      "is_chat": true,
-      "location": "Зеркальный Город, центральная площадь",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "ловушка размытых слов",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep028_s15",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [
-        {
-          "question": "Вася: «Я за здоровое питание!» — ест бургер в субботу. Противоречие?",
-          "options": [
-            {
-              "id": "ambiguous",
-              "text": "Неоднозначно — зависит от смысла «за здоровое»",
-              "correct": true
-            },
-            {
-              "id": true,
-              "text": "Да, противоречие",
-              "correct": false
-            },
-            {
-              "id": false,
-              "text": "Нет, противоречия нет",
-              "correct": false
-            }
-          ],
-          "correct_logic": "«За здоровое питание» ≠ «никогда ни одного бургера». Хитрый случай: формально не противоречие, нужно уточнить смысл слов.",
-          "feedback_success": "«За здоровое» — не «никогда сладкое». Формально не противоречие. Хитрый случай.",
-          "feedback_soft_fail": "Подвох. «За здоровое питание» оставляет место для исключений. Формально это не противоречие. Нужно уточнить смысл слов."
-        }
-      ],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, иконка бургера и зелёного салата на одной тарелке",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "внимательное различение",
-            "pose": "смотрит в экран",
-            "position": "center"
-          }
-        ],
-        "focus_object": "бургер и салат рядом",
-        "atmosphere": "не каждое разногласие — противоречие",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_07.ep28.challenge"
-    },
-    {
       "id": "ep028_s15",
       "kind": "quiz",
       "is_chat": true,
@@ -996,7 +871,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep028_s16",
+        "next": "ep028_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1042,81 +917,6 @@
       "source_ref": "day_07.ep28.challenge"
     },
     {
-      "id": "ep028_s16",
-      "kind": "quiz",
-      "is_chat": true,
-      "location": "Зеркальный Город, центральная площадь",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "обоснование — узнаваемое после практики",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep028_s17",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [
-        {
-          "who": "sofa",
-          "line": "Часть 2 — обоснование или нападение."
-        }
-      ],
-      "quizzes": [
-        {
-          "question": "«Нужно спать 9 часов — так говорят врачи.» Обоснование или нападение?",
-          "options": [
-            {
-              "id": "source",
-              "text": "Обоснование — надёжный источник",
-              "correct": true
-            },
-            {
-              "id": "fact",
-              "text": "Обоснование — факт",
-              "correct": false
-            },
-            {
-              "id": "insult",
-              "text": "Нападение — оскорбление",
-              "correct": false
-            },
-            {
-              "id": "same",
-              "text": "Нападение — «сам такой»",
-              "correct": false
-            }
-          ],
-          "correct_logic": "Врачи — эксперты в здоровье. Это надёжный источник.",
-          "feedback_success": "Врачи — эксперты по теме. Источник.",
-          "feedback_soft_fail": "Главное здесь — кто говорит: эксперт в теме здоровья. Это обоснование, тип «надёжный источник»."
-        }
-      ],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, иконка фигурки в халате и часов на 9",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "спокойная классификация",
-            "pose": "смотрит в экран",
-            "position": "center"
-          }
-        ],
-        "focus_object": "врач и часы",
-        "atmosphere": "источник в теме",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_07.ep28.challenge"
-    },
-    {
       "id": "ep028_s17",
       "kind": "quiz",
       "is_chat": true,
@@ -1136,7 +936,12 @@
         "next_fail": null,
         "merge_to": null
       },
-      "text": [],
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Часть 2 — обоснование или нападение."
+        }
+      ],
       "quizzes": [
         {
           "question": "«А ты сам вчера не сделал домашку!» — на вопрос о пользе домашних заданий. Обоснование или нападение?",
@@ -1209,7 +1014,7 @@
       "text": [],
       "quizzes": [
         {
-          "question": "«Тебе десять лет, ты не можешь рассуждать о собаках!» Обоснование или нападение?",
+          "question": "«Тебе восемь лет, ты не можешь рассуждать о собаках!» Обоснование или нападение?",
           "options": [
             {
               "id": "circumstance",
@@ -1234,7 +1039,7 @@
           ],
           "correct_logic": "Возраст не отменяет знание о собаках. Дисквалификация по возрасту = обстоятельства.",
           "feedback_success": "Возраст ≠ знание. Это дисквалификация по возрасту — обстоятельства.",
-          "feedback_soft_fail": "«Тебе 10 лет» не отменяет знание про собак. Это дисквалификация по возрасту. Обстоятельства."
+          "feedback_soft_fail": "«Тебе 8 лет» не отменяет знание про собак. Это дисквалификация по возрасту. Обстоятельства."
         }
       ],
       "choice": null,
@@ -1271,7 +1076,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep028_s20",
+        "next": "ep028_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1322,76 +1127,6 @@
         ],
         "focus_object": "цепочка из трёх звеньев",
         "atmosphere": "логика — узнаётся по цепочке",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_07.ep28.challenge"
-    },
-    {
-      "id": "ep028_s20",
-      "kind": "quiz",
-      "is_chat": true,
-      "location": "Зеркальный Город, центральная площадь",
-      "time": "вечер",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "ярлык вместо разговора",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep028_s21",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [
-        {
-          "question": "«Школьная форма нужна? Ты просто зануда!» Обоснование или нападение?",
-          "options": [
-            {
-              "id": "insult",
-              "text": "Нападение — оскорбление",
-              "correct": true
-            },
-            {
-              "id": "circumstance",
-              "text": "Нападение — обстоятельства",
-              "correct": false
-            },
-            {
-              "id": "same",
-              "text": "Нападение — «сам такой»",
-              "correct": false
-            },
-            {
-              "id": "logic",
-              "text": "Обоснование — логика",
-              "correct": false
-            }
-          ],
-          "correct_logic": "«Зануда» — ярлык вместо аргумента.",
-          "feedback_success": "«Зануда» — это ярлык, не аргумент. Оскорбление.",
-          "feedback_soft_fail": "Где аргумент про форму? Нет — только ярлык. Это оскорбление."
-        }
-      ],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, пиктограмма ярлыка-наклейки",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "спокойное узнавание",
-            "pose": "смотрит в экран",
-            "position": "center"
-          }
-        ],
-        "focus_object": "ярлык-наклейка",
-        "atmosphere": "оскорбление — теперь видно сразу",
         "ui_mode": "quiz"
       },
       "source_ref": "day_07.ep28.challenge"
@@ -1583,7 +1318,7 @@
         }
       },
       "visual_brief": {
-        "background": "Экран телефона, голубое свечение, карточка voice-message",
+        "background": "Экран телефона, голубое свечение. По центру — карточка voice-message: круглая кнопка с треугольником play, под ней — горизонтальный waveform (полоски разной высоты). В углу — цифра «12» (= 12 секунд).",
         "camera": "close-up",
         "characters": [
           {
@@ -1593,8 +1328,13 @@
             "position": "center"
           }
         ],
-        "focus_object": "карточка voice-message — голос Софии",
-        "atmosphere": "сестра вернулась — на минуту",
+        "props": [
+          "круглая кнопка play (треугольник)",
+          "waveform — полоски разной высоты",
+          "цифра «12» в углу"
+        ],
+        "focus_object": "карточка voice-message — кнопка play, waveform, цифра 12",
+        "atmosphere": "сестра вернулась — на минуту, без слов",
         "ui_mode": "dialogue"
       },
       "source_ref": "day_07.ep28.cliffhanger"

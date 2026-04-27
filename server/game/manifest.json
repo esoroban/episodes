@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-25T17:57:11Z",
+  "generated_at": "2026-04-27T12:17:09Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -537,7 +537,7 @@
         "ru": {
           "html": "ru/ep_025.html",
           "data": "ru/ep_025.json",
-          "content_hash": "231bc9b8ea64b105"
+          "content_hash": "58aa1960ff6a8b94"
         }
       },
       "title_ru": "Шоколад на щеке",
@@ -553,7 +553,7 @@
         "ru": {
           "html": "ru/ep_026.html",
           "data": "ru/ep_026.json",
-          "content_hash": "94ef9ea2b7c8718f"
+          "content_hash": "9a3efffd133c43a0"
         }
       },
       "title_ru": "Раньше ты говорил...",
@@ -569,7 +569,7 @@
         "ru": {
           "html": "ru/ep_027.html",
           "data": "ru/ep_027.json",
-          "content_hash": "d859c067eccc5774"
+          "content_hash": "a5b25cc5b24f7399"
         }
       },
       "title_ru": "Папа сказал",
@@ -585,13 +585,13 @@
         "ru": {
           "html": "ru/ep_028.html",
           "data": "ru/ep_028.json",
-          "content_hash": "56c7ccfe09a751ed"
+          "content_hash": "9c0632500f4d61c0"
         }
       },
       "title_ru": "Отец Веры",
       "lesson": "7B.2",
-      "scene_count": 25,
-      "quiz_count": 14,
+      "scene_count": 21,
+      "quiz_count": 10,
       "branch_count": 1
     }
   ]
