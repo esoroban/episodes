@@ -17,7 +17,11 @@ Usage:
   python3 tools/build_v2.py --src /other/path   # alternate source
 """
 import argparse
+import hashlib
+import html as html_mod
+import json
 import pathlib
+import random
 import re
 import sys
 
@@ -361,6 +365,58 @@ PROD_OVERRIDES = (
 )
 
 
+def shuffle_quiz_options(html: str) -> tuple[str, int]:
+    """Reorder Telegram-chat quiz options inside `data-chat-messages` attributes.
+
+    The combined_output source HTML embeds chat messages as JSON in HTML-encoded
+    attributes. Quizzes (`{"t":"quiz", "q":..., "o":[{"x":..., "c":...}, ...]}`)
+    almost always have the correct option first because the YAML pipeline lists
+    it first. This function reshuffles the `o` array deterministically so that
+    the same quiz always ends up with the same order across rebuilds, but the
+    correct answer no longer always sits on the first button.
+
+    Seed = sha1(question + option texts). Same algorithm as build_game.py, so
+    UK v2 stays consistent with RU/UK v1.
+
+    Returns (rewritten_html, n_quizzes_shuffled).
+    """
+    pattern = re.compile(r'data-chat-messages="([^"]*)"')
+    n_quizzes = 0
+
+    def replace(m: re.Match) -> str:
+        nonlocal n_quizzes
+        encoded = m.group(1)
+        decoded = html_mod.unescape(encoded)
+        try:
+            messages = json.loads(decoded)
+        except json.JSONDecodeError:
+            return m.group(0)
+        if not isinstance(messages, list):
+            return m.group(0)
+
+        for msg in messages:
+            if not isinstance(msg, dict):
+                continue
+            if msg.get("t") != "quiz":
+                continue
+            opts = msg.get("o")
+            if not isinstance(opts, list) or len(opts) < 2:
+                continue
+            question = str(msg.get("q", ""))
+            fingerprint = question + "\n" + "\n".join(
+                str(o.get("x", "")) for o in opts if isinstance(o, dict)
+            )
+            seed = int(hashlib.sha1(fingerprint.encode("utf-8")).hexdigest()[:12], 16)
+            random.Random(seed).shuffle(opts)
+            n_quizzes += 1
+
+        new_decoded = json.dumps(messages, ensure_ascii=False)
+        new_encoded = html_mod.escape(new_decoded, quote=True)
+        return f'data-chat-messages="{new_encoded}"'
+
+    return pattern.sub(replace, html), n_quizzes
+
+
 def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, int]:
     """Return (rewritten_html, n_audio, n_images, n_chat_images) counts."""
     base = f"{public_url}/ep_{nnn}"
@@ -436,6 +492,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         return {"nnn": nnn, "skipped": True, "reason": f"missing {src_html}"}
 
     html = src_html.read_text(encoding="utf-8")
+    html, n_shuffled = shuffle_quiz_options(html)
     rewritten, n_audio, n_images, n_chat = rewrite_html(html, public_url, nnn)
 
     out_html = OUT_DIR / f"ep_{nnn}" / f"ep_{nnn}.html"
@@ -448,6 +505,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         "audio": n_audio,
         "images": n_images,
         "chat_images": n_chat,
+        "shuffled": n_shuffled,
         "out": out_html,
     }
 
@@ -505,6 +563,7 @@ def main() -> int:
     total_audio = 0
     total_images = 0
     total_chat = 0
+    total_shuffled = 0
     built = 0
     skipped = []
     for nnn in nnns:
@@ -517,14 +576,16 @@ def main() -> int:
         total_audio += r["audio"]
         total_images += r["images"]
         total_chat += r["chat_images"]
+        total_shuffled += r["shuffled"]
         print(f"ep_{nnn}     → {r['out'].relative_to(REPO)}  "
               f"(audio: {r['audio']}, images: {r['images']}, "
-              f"chat_images: {r['chat_images']})")
+              f"chat_images: {r['chat_images']}, "
+              f"quiz_shuffled: {r['shuffled']})")
 
     print()
     print(f"built {built}/{len(nnns)} episodes")
     print(f"rewrites — audio: {total_audio}, images: {total_images}, "
-          f"chat_images: {total_chat}")
+          f"chat_images: {total_chat}, quiz_shuffled: {total_shuffled}")
     if skipped:
         print(f"skipped {len(skipped)}:")
         for nnn, reason in skipped:
