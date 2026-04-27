@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T15:07:12Z",
+  "generated_at": "2026-04-27T15:30:36Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -537,7 +537,7 @@
         "ru": {
           "html": "ru/ep_025.html",
           "data": "ru/ep_025.json",
-          "content_hash": "df613b22e3a7cef5"
+          "content_hash": "f8983540bb11c9fd"
         }
       },
       "title_ru": "Шоколад на щеке",
@@ -553,7 +553,7 @@
         "ru": {
           "html": "ru/ep_026.html",
           "data": "ru/ep_026.json",
-          "content_hash": "63179b00ef531b51"
+          "content_hash": "9c2898650d6d8e36"
         }
       },
       "title_ru": "Раньше ты говорил...",
@@ -569,7 +569,7 @@
         "ru": {
           "html": "ru/ep_027.html",
           "data": "ru/ep_027.json",
-          "content_hash": "368ac68ced73080a"
+          "content_hash": "b944e0e9cad70488"
         }
       },
       "title_ru": "Папа сказал",
@@ -585,7 +585,7 @@
         "ru": {
           "html": "ru/ep_028.html",
           "data": "ru/ep_028.json",
-          "content_hash": "02eb2229fccc113b"
+          "content_hash": "43eaacdd83a302a1"
         }
       },
       "title_ru": "Отец Веры",
