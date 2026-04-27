@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T15:50:29Z",
+  "generated_at": "2026-04-27T15:54:58Z",
   "episodes": [
     {
       "id": "ep_028",
@@ -9,12 +9,12 @@
         "ru": {
           "html": "ru/ep_028.html",
           "data": "ru/ep_028.json",
-          "content_hash": "ab7fd4365b979ef8"
+          "content_hash": "a622ffabe3b4c014"
         }
       },
       "title_ru": "Отец Веры",
       "lesson": "7B.2",
-      "scene_count": 21,
+      "scene_count": 22,
       "quiz_count": 10,
       "branch_count": 1
     }
