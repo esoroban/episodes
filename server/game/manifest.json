@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-28T11:02:26Z",
+  "generated_at": "2026-04-28T11:15:35Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -626,13 +626,19 @@
           "html": "ru/ep_029.html",
           "data": "ru/ep_029.json",
           "content_hash": "3204f39ae6e33800"
+        },
+        "uk": {
+          "html": "uk/ep_029.html",
+          "data": "uk/ep_029.json",
+          "content_hash": "8c3d97585113be7e"
         }
       },
       "title_ru": "Соломенное чучело",
       "lesson": "8A.1",
       "scene_count": 25,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Солом'яне опудало"
     },
     {
       "id": "ep_030",
@@ -642,13 +648,19 @@
           "html": "ru/ep_030.html",
           "data": "ru/ep_030.json",
           "content_hash": "7fdea9cca954a738"
+        },
+        "uk": {
+          "html": "uk/ep_030.html",
+          "data": "uk/ep_030.json",
+          "content_hash": "90d65b69f71221b0"
         }
       },
       "title_ru": "Правда как оружие",
       "lesson": "8A.2, 8A.3",
       "scene_count": 23,
       "quiz_count": 12,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Правда як зброя"
     },
     {
       "id": "ep_031",
@@ -658,13 +670,19 @@
           "html": "ru/ep_031.html",
           "data": "ru/ep_031.json",
           "content_hash": "a60577e2ee8740b9"
+        },
+        "uk": {
+          "html": "uk/ep_031.html",
+          "data": "uk/ep_031.json",
+          "content_hash": "fb6c2ebf4fc5f3da"
         }
       },
       "title_ru": "Четыре кнопки страха",
       "lesson": "8B.1, 8B.2",
       "scene_count": 29,
       "quiz_count": 13,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Чотири кнопки страху"
     },
     {
       "id": "ep_032",
@@ -674,13 +692,19 @@
           "html": "ru/ep_032.html",
           "data": "ru/ep_032.json",
           "content_hash": "2bc4b983e582efae"
+        },
+        "uk": {
+          "html": "uk/ep_032.html",
+          "data": "uk/ep_032.json",
+          "content_hash": "6a919386dff89187"
         }
       },
       "title_ru": "Остановись",
       "lesson": "8B.3",
       "scene_count": 26,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Зупинись"
     }
   ]
 }
