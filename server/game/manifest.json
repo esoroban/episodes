@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-28T09:41:33Z",
+  "generated_at": "2026-04-28T10:15:09Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -625,7 +625,7 @@
         "ru": {
           "html": "ru/ep_029.html",
           "data": "ru/ep_029.json",
-          "content_hash": "65651702056ed5d8"
+          "content_hash": "3204f39ae6e33800"
         }
       },
       "title_ru": "Соломенное чучело",
@@ -641,7 +641,7 @@
         "ru": {
           "html": "ru/ep_030.html",
           "data": "ru/ep_030.json",
-          "content_hash": "d293d1945d975525"
+          "content_hash": "7fdea9cca954a738"
         }
       },
       "title_ru": "Правда как оружие",
@@ -673,7 +673,7 @@
         "ru": {
           "html": "ru/ep_032.html",
           "data": "ru/ep_032.json",
-          "content_hash": "212a78aabbf50306"
+          "content_hash": "f2df95515a68201f"
         }
       },
       "title_ru": "Остановись",
