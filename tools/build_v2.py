@@ -567,7 +567,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "episodes",
         nargs="*",
-        help="Episode numbers (e.g. 1 2 5). Default — all 1..28",
+        help="Episode numbers (e.g. 1 2 5). Default — all 1..32",
     )
     p.add_argument("--src", default=str(DEFAULT_SRC))
     return p.parse_args()
@@ -588,7 +588,7 @@ def main() -> int:
     if args.episodes:
         nums = [int(x) for x in args.episodes]
     else:
-        nums = list(range(1, 29))
+        nums = list(range(1, 33))
     nnns = [f"{n:03d}" for n in nums]
 
     idx_out = build_index(src)
