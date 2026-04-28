@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-28T11:15:35Z",
+  "generated_at": "2026-04-28T11:57:01Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -705,6 +705,70 @@
       "quiz_count": 14,
       "branch_count": 1,
       "title_uk": "Зупинись"
+    },
+    {
+      "id": "ep_033",
+      "number": 33,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_033.html",
+          "data": "ru/ep_033.json",
+          "content_hash": "53e80957287eef32"
+        }
+      },
+      "title_ru": "Цена каждого шага",
+      "lesson": "9A.1",
+      "scene_count": 21,
+      "quiz_count": 12,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_034",
+      "number": 34,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_034.html",
+          "data": "ru/ep_034.json",
+          "content_hash": "3395a82f467ba46f"
+        }
+      },
+      "title_ru": "Три нитки",
+      "lesson": "9A.2",
+      "scene_count": 21,
+      "quiz_count": 12,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_035",
+      "number": 35,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_035.html",
+          "data": "ru/ep_035.json",
+          "content_hash": "17bdc031bd0d8e92"
+        }
+      },
+      "title_ru": "Десятки",
+      "lesson": "9B.1",
+      "scene_count": 22,
+      "quiz_count": 13,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_036",
+      "number": 36,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_036.html",
+          "data": "ru/ep_036.json",
+          "content_hash": "ab839a87b1ed8f75"
+        }
+      },
+      "title_ru": "Агент «С»",
+      "lesson": "9B.2",
+      "scene_count": 24,
+      "quiz_count": 14,
+      "branch_count": 1
     }
   ]
 }
