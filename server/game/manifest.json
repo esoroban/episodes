@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-27T17:46:25Z",
+  "generated_at": "2026-04-28T09:41:33Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -625,7 +625,7 @@
         "ru": {
           "html": "ru/ep_029.html",
           "data": "ru/ep_029.json",
-          "content_hash": "727b9d199628618c"
+          "content_hash": "65651702056ed5d8"
         }
       },
       "title_ru": "Соломенное чучело",
@@ -641,11 +641,11 @@
         "ru": {
           "html": "ru/ep_030.html",
           "data": "ru/ep_030.json",
-          "content_hash": "abd1419f35876958"
+          "content_hash": "d293d1945d975525"
         }
       },
       "title_ru": "Правда как оружие",
-      "lesson": "8A.2",
+      "lesson": "8A.2, 8A.3",
       "scene_count": 23,
       "quiz_count": 12,
       "branch_count": 1
@@ -657,11 +657,11 @@
         "ru": {
           "html": "ru/ep_031.html",
           "data": "ru/ep_031.json",
-          "content_hash": "fd315b44598b0eee"
+          "content_hash": "a60577e2ee8740b9"
         }
       },
       "title_ru": "Четыре кнопки страха",
-      "lesson": "8B.1",
+      "lesson": "8B.1, 8B.2",
       "scene_count": 29,
       "quiz_count": 13,
       "branch_count": 1
