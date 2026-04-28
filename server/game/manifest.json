@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-28T10:15:09Z",
+  "generated_at": "2026-04-28T11:02:26Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -673,7 +673,7 @@
         "ru": {
           "html": "ru/ep_032.html",
           "data": "ru/ep_032.json",
-          "content_hash": "f2df95515a68201f"
+          "content_hash": "2bc4b983e582efae"
         }
       },
       "title_ru": "Остановись",
