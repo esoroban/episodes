@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T08:55:15Z",
+  "generated_at": "2026-04-29T09:01:09Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -713,7 +713,7 @@
         "ru": {
           "html": "ru/ep_033.html",
           "data": "ru/ep_033.json",
-          "content_hash": "5444893a358c3512"
+          "content_hash": "c78936297a3c1c00"
         }
       },
       "title_ru": "Цена каждого шага",
