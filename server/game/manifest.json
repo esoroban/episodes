@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T04:27:13Z",
+  "generated_at": "2026-04-29T08:55:15Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -713,12 +713,12 @@
         "ru": {
           "html": "ru/ep_033.html",
           "data": "ru/ep_033.json",
-          "content_hash": "cabba588b43d0a92"
+          "content_hash": "5444893a358c3512"
         }
       },
       "title_ru": "Цена каждого шага",
       "lesson": "9A.1",
-      "scene_count": 21,
+      "scene_count": 23,
       "quiz_count": 12,
       "branch_count": 1
     },
@@ -761,7 +761,7 @@
         "ru": {
           "html": "ru/ep_036.html",
           "data": "ru/ep_036.json",
-          "content_hash": "68ffa99df23faaee"
+          "content_hash": "1c4dfe6db6d0682c"
         }
       },
       "title_ru": "Агент «С»",
