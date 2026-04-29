@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T10:15:31Z",
+  "generated_at": "2026-04-29T14:41:26Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -745,12 +745,12 @@
         "ru": {
           "html": "ru/ep_035.html",
           "data": "ru/ep_035.json",
-          "content_hash": "79ae32c6ada46554"
+          "content_hash": "b0a5ce4edbec84e4"
         }
       },
       "title_ru": "Десятки",
       "lesson": "9B.1",
-      "scene_count": 22,
+      "scene_count": 23,
       "quiz_count": 13,
       "branch_count": 1
     },
