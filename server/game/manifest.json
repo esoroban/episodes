@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T15:05:05Z",
+  "generated_at": "2026-04-29T15:17:43Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -793,6 +793,70 @@
       "quiz_count": 14,
       "branch_count": 1,
       "title_uk": "Агент «С»"
+    },
+    {
+      "id": "ep_037",
+      "number": 37,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_037.html",
+          "data": "ru/ep_037.json",
+          "content_hash": "8c8fd0baebc8464d"
+        }
+      },
+      "title_ru": "Или — или",
+      "lesson": "10A.1",
+      "scene_count": 29,
+      "quiz_count": 14,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_038",
+      "number": 38,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_038.html",
+          "data": "ru/ep_038.json",
+          "content_hash": "0df63d3f45ccd408"
+        }
+      },
+      "title_ru": "Цена третьего варианта",
+      "lesson": "10A.2",
+      "scene_count": 27,
+      "quiz_count": 11,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_039",
+      "number": 39,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_039.html",
+          "data": "ru/ep_039.json",
+          "content_hash": "5022836beac56bde"
+        }
+      },
+      "title_ru": "Стеклянная комната",
+      "lesson": "10B.1",
+      "scene_count": 26,
+      "quiz_count": 13,
+      "branch_count": 1
+    },
+    {
+      "id": "ep_040",
+      "number": 40,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_040.html",
+          "data": "ru/ep_040.json",
+          "content_hash": "e90794212dfc5077"
+        }
+      },
+      "title_ru": "Разведчик в башне",
+      "lesson": "10B.3",
+      "scene_count": 28,
+      "quiz_count": 14,
+      "branch_count": 1
     }
   ]
 }
