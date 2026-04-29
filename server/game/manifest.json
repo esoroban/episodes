@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T14:50:21Z",
+  "generated_at": "2026-04-29T15:05:05Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -696,7 +696,7 @@
         "uk": {
           "html": "uk/ep_032.html",
           "data": "uk/ep_032.json",
-          "content_hash": "6a919386dff89187"
+          "content_hash": "b68f966be3ce97e4"
         }
       },
       "title_ru": "Остановись",
@@ -714,13 +714,19 @@
           "html": "ru/ep_033.html",
           "data": "ru/ep_033.json",
           "content_hash": "c78936297a3c1c00"
+        },
+        "uk": {
+          "html": "uk/ep_033.html",
+          "data": "uk/ep_033.json",
+          "content_hash": "1a170a365b5bf76c"
         }
       },
       "title_ru": "Цена каждого шага",
       "lesson": "9A.1",
       "scene_count": 23,
       "quiz_count": 12,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Ціна кожного кроку"
     },
     {
       "id": "ep_034",
@@ -730,13 +736,19 @@
           "html": "ru/ep_034.html",
           "data": "ru/ep_034.json",
           "content_hash": "3cd41bebc57b5b1e"
+        },
+        "uk": {
+          "html": "uk/ep_034.html",
+          "data": "uk/ep_034.json",
+          "content_hash": "36e72b2731f62cac"
         }
       },
       "title_ru": "Три нитки",
       "lesson": "9A.2",
       "scene_count": 21,
       "quiz_count": 12,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Три нитки"
     },
     {
       "id": "ep_035",
@@ -746,13 +758,19 @@
           "html": "ru/ep_035.html",
           "data": "ru/ep_035.json",
           "content_hash": "b0a5ce4edbec84e4"
+        },
+        "uk": {
+          "html": "uk/ep_035.html",
+          "data": "uk/ep_035.json",
+          "content_hash": "704ce36597268dd2"
         }
       },
       "title_ru": "Десятки",
       "lesson": "9B.1",
       "scene_count": 23,
       "quiz_count": 13,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Десятки"
     },
     {
       "id": "ep_036",
@@ -762,13 +780,19 @@
           "html": "ru/ep_036.html",
           "data": "ru/ep_036.json",
           "content_hash": "f26ebbfdf3608e85"
+        },
+        "uk": {
+          "html": "uk/ep_036.html",
+          "data": "uk/ep_036.json",
+          "content_hash": "275360ed047f1fbd"
         }
       },
       "title_ru": "Агент «С»",
       "lesson": "9B.2",
       "scene_count": 26,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Агент «С»"
     }
   ]
 }
