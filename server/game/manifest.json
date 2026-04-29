@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T15:23:38Z",
+  "generated_at": "2026-04-29T15:47:04Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -801,7 +801,7 @@
         "ru": {
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
-          "content_hash": "8c8fd0baebc8464d"
+          "content_hash": "0cea2f6b396d2051"
         }
       },
       "title_ru": "Или — или",
@@ -833,7 +833,7 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "d5a7e53286bfb29c"
+          "content_hash": "4958d5ec3f7b7274"
         }
       },
       "title_ru": "Стеклянная комната",
