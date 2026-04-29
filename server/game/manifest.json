@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T15:47:04Z",
+  "generated_at": "2026-04-29T16:02:21Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -801,13 +801,13 @@
         "ru": {
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
-          "content_hash": "0cea2f6b396d2051"
+          "content_hash": "c19b484d5e5515a8"
         }
       },
       "title_ru": "Или — или",
       "lesson": "10A.1",
-      "scene_count": 29,
-      "quiz_count": 14,
+      "scene_count": 34,
+      "quiz_count": 18,
       "branch_count": 1
     },
     {
