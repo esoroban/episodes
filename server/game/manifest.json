@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T15:17:43Z",
+  "generated_at": "2026-04-29T15:23:38Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -817,11 +817,11 @@
         "ru": {
           "html": "ru/ep_038.html",
           "data": "ru/ep_038.json",
-          "content_hash": "0df63d3f45ccd408"
+          "content_hash": "68a416b86dc163b2"
         }
       },
       "title_ru": "Цена третьего варианта",
-      "lesson": "10A.2",
+      "lesson": "10A.2 + 10A.3",
       "scene_count": 27,
       "quiz_count": 11,
       "branch_count": 1
@@ -833,11 +833,11 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "5022836beac56bde"
+          "content_hash": "d5a7e53286bfb29c"
         }
       },
       "title_ru": "Стеклянная комната",
-      "lesson": "10B.1",
+      "lesson": "10B.1 + 10B.2",
       "scene_count": 26,
       "quiz_count": 13,
       "branch_count": 1
@@ -849,7 +849,7 @@
         "ru": {
           "html": "ru/ep_040.html",
           "data": "ru/ep_040.json",
-          "content_hash": "e90794212dfc5077"
+          "content_hash": "18efbbe99c8dae76"
         }
       },
       "title_ru": "Разведчик в башне",
