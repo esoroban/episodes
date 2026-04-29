@@ -23,7 +23,7 @@
     ],
     "previous_episode": 35
   },
-  "scene_count": 24,
+  "scene_count": 26,
   "quiz_count": 14,
   "branch_count": 1,
   "scenes": [
@@ -1481,7 +1481,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep036_s23_end",
+        "next": "ep036_s23_pre",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1527,16 +1527,142 @@
       "source_ref": "day_09.ep36.challenge"
     },
     {
-      "id": "ep036_s23_end",
-      "kind": "cliffhanger",
-      "is_chat": true,
+      "id": "ep036_s23_pre",
+      "kind": "narrative",
+      "is_chat": false,
       "location": "Зеркальный Город, вход в ядро Системы",
       "time": "утро",
       "chars": [
         "Марко",
         "Сем",
-        "Лина",
+        "Лина"
+      ],
+      "mood": "у двери ядра — тишина перед шагом",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep036_s23_chat",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Четверо стоят перед входом в ядро Системы. Дверь — открыта. Внутри — тишина. Такая плотная, что звенит в ушах."
+        },
+        {
+          "who": "author",
+          "line": "Лина: «София говорила: за этой дверью — правда о Голосе. Не та, что он показывает. Настоящая.»"
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Вход в ядро. Дверь открыта, внутри — чернота. Четверо у двери: Марко, Сем, Лина и Софа в кармане",
+        "camera": "wide",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "спокойная готовность",
+            "pose": "у двери",
+            "position": "center"
+          },
+          {
+            "who": "Сем",
+            "expression": "настороженно",
+            "pose": "рядом с Марко",
+            "position": "left"
+          },
+          {
+            "who": "Лина",
+            "expression": "серьёзно, прямой взгляд",
+            "pose": "указывает на дверь",
+            "position": "right"
+          }
+        ],
+        "props": [
+          "открытая тяжёлая дверь",
+          "чернота внутри",
+          "число «30» на стене"
+        ],
+        "focus_object": "открытая дверь — чернота за порогом",
+        "atmosphere": "тишина перед шагом — драма у двери",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_09.ep36.cliffhanger"
+    },
+    {
+      "id": "ep036_s23_chat",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, вход в ядро Системы",
+      "time": "утро",
+      "chars": [
+        "Марко",
         "Софа"
+      ],
+      "mood": "сестра передаёт следующий урок",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep036_s23_end",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Запись Софии продолжается."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": {
+        "button_text": "Включить продолжение",
+        "reveals": {
+          "type": "voice_message",
+          "who": "София",
+          "line": "Следующий урок — о выборе. Когда вариантов не два. И не три. Когда нужно найти свой.",
+          "duration": 7
+        }
+      },
+      "visual_brief": {
+        "background": "Экран телефона крупно — голубое свечение, карточка voice-message Софии",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "слушает запись Софии",
+            "pose": "телефон в руке у двери ядра",
+            "position": "center"
+          }
+        ],
+        "props": [
+          "круглая кнопка play",
+          "waveform",
+          "голубое свечение"
+        ],
+        "focus_object": "карточка voice-message Софии",
+        "atmosphere": "запись продолжается перед шагом",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_09.ep36.cliffhanger"
+    },
+    {
+      "id": "ep036_s23_end",
+      "kind": "cliffhanger",
+      "is_chat": false,
+      "location": "Зеркальный Город, вход в ядро Системы",
+      "time": "утро",
+      "chars": [
+        "Марко",
+        "Сем",
+        "Лина"
       ],
       "mood": "конец Дня 9 — впереди выбор, которого не предлагали",
       "branch_type": null,
@@ -1549,22 +1675,6 @@
         "merge_to": null
       },
       "text": [
-        {
-          "who": "author",
-          "line": "Четверо стоят перед входом в ядро Системы. Дверь — открыта. Внутри — тишина. Такая плотная, что звенит в ушах."
-        },
-        {
-          "who": "Лина",
-          "line": "София говорила: за этой дверью — правда о Голосе. Не та, что он показывает. Настоящая."
-        },
-        {
-          "who": "sofa",
-          "line": "Запись Софии продолжается. Следующий урок — о выборе."
-        },
-        {
-          "who": "sofa",
-          "line": "Когда вариантов не два. И не три. Когда нужно найти свой."
-        },
         {
           "who": "author",
           "line": "Число на стене: 30. Шесть новых. Лина помнит — и те, кого она привела, тоже помнят."

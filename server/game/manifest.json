@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T14:41:26Z",
+  "generated_at": "2026-04-29T14:50:21Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -761,12 +761,12 @@
         "ru": {
           "html": "ru/ep_036.html",
           "data": "ru/ep_036.json",
-          "content_hash": "9e8f4c13f7ee8ec7"
+          "content_hash": "f26ebbfdf3608e85"
         }
       },
       "title_ru": "Агент «С»",
       "lesson": "9B.2",
-      "scene_count": 24,
+      "scene_count": 26,
       "quiz_count": 14,
       "branch_count": 1
     }
