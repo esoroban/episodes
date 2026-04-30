@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-29T16:02:21Z",
+  "generated_at": "2026-04-30T04:51:28Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -801,7 +801,7 @@
         "ru": {
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
-          "content_hash": "c19b484d5e5515a8"
+          "content_hash": "c73cf6db6a162906"
         }
       },
       "title_ru": "Или — или",
@@ -817,7 +817,7 @@
         "ru": {
           "html": "ru/ep_038.html",
           "data": "ru/ep_038.json",
-          "content_hash": "68a416b86dc163b2"
+          "content_hash": "aca38c7dbe47749f"
         }
       },
       "title_ru": "Цена третьего варианта",
@@ -833,7 +833,7 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "4958d5ec3f7b7274"
+          "content_hash": "9bc907284aca81f3"
         }
       },
       "title_ru": "Стеклянная комната",
@@ -849,7 +849,7 @@
         "ru": {
           "html": "ru/ep_040.html",
           "data": "ru/ep_040.json",
-          "content_hash": "18efbbe99c8dae76"
+          "content_hash": "3ae90e916488dd65"
         }
       },
       "title_ru": "Разведчик в башне",
