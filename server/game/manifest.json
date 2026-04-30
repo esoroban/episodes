@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-04-30T06:06:06Z",
+  "generated_at": "2026-04-30T17:33:16Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -801,7 +801,7 @@
         "ru": {
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
-          "content_hash": "019cc1e47679423a"
+          "content_hash": "57ebd8315d183ef2"
         }
       },
       "title_ru": "Или — или",
@@ -817,12 +817,12 @@
         "ru": {
           "html": "ru/ep_038.html",
           "data": "ru/ep_038.json",
-          "content_hash": "24756091c0e6d60a"
+          "content_hash": "c1683cae491343df"
         }
       },
       "title_ru": "Цена третьего варианта",
       "lesson": "10A.2 + 10A.3",
-      "scene_count": 27,
+      "scene_count": 28,
       "quiz_count": 11,
       "branch_count": 1
     },
@@ -833,7 +833,7 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "ca36823a8b3b47be"
+          "content_hash": "a9ff04dcfeda7358"
         }
       },
       "title_ru": "Стеклянная комната",
