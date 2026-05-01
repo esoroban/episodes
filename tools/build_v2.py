@@ -12,8 +12,8 @@ Rewrite rule — per episode NNN:
   "images/FILE"  →  "<public_url>/ep_NNN/images/FILE"
 
 Usage:
-  python3 tools/build_v2.py                     # all 12 episodes
-  python3 tools/build_v2.py 1 2 3               # specific
+  python3 tools/build_v2.py                     # все эпизоды, найденные в source
+  python3 tools/build_v2.py 1 2 3               # конкретные
   python3 tools/build_v2.py --src /other/path   # alternate source
 """
 import argparse
@@ -47,7 +47,8 @@ BODY_INJECTION = (
     '<button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button>'
     '<button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button>'
     '<button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button>'
-    '<button id="v2-copy" type="button" title="Скопировать содержимое сцены" aria-label="Копировать">📋 Копировать</button>'
+    # DEBUG: форс-перемотка на следующую сцену в обход игровой логики. Убрать перед релизом.
+    '<button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button>'
     '</div>\n'
     '<div id="v2-scene-badge">—</div>\n'
 )
@@ -266,72 +267,36 @@ PROD_OVERRIDES = (
     '      });\n'
     '    }\n'
     '\n'
-    '    // Copy: собрать текстовое содержимое активной сцены и положить\n'
-    '    // в буфер обмена. Берём: scene_id, автор-текст, dialogue-реплики,\n'
-    '    // chat-пузыри (если has-phone), choice-вопрос + варианты.\n'
-    '    var copyBtn = document.getElementById("v2-copy");\n'
-    '    if (copyBtn) {\n'
-    '      var origLabel = copyBtn.textContent;\n'
-    '      copyBtn.addEventListener("click", function (e) {\n'
+    '    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики\n'
+    '    // (квизы, чат, ветки — всё игнорируется). Если активная сцена\n'
+    '    // последняя в эпизоде — переходим на data-next-ep (если он ведёт\n'
+    '    // на существующий файл), иначе показываем "end of episodes".\n'
+    '    // Убрать перед релизом.\n'
+    '    var dbgBtn = document.getElementById("v2-debug-next");\n'
+    '    if (dbgBtn) {\n'
+    '      dbgBtn.addEventListener("click", function (e) {\n'
     '        e.stopPropagation();\n'
-    '        var active = document.querySelector("section.scene.active");\n'
-    '        if (!active) return;\n'
-    '        var lines = [];\n'
-    '        var sid = active.dataset.sceneId || "";\n'
-    '        if (sid) lines.push("[" + sid + "]");\n'
-    '        active.querySelectorAll(".scene-content .author-text p").forEach(function (p) {\n'
-    '          var t = (p.textContent || "").trim();\n'
-    '          if (t) lines.push(t);\n'
-    '        });\n'
-    '        active.querySelectorAll(".scene-content .dialogue-block").forEach(function (d) {\n'
-    '          var who = d.querySelector(".dl-who");\n'
-    '          d.querySelectorAll("p").forEach(function (p) {\n'
-    '            var t = (p.textContent || "").trim();\n'
-    '            if (!t) return;\n'
-    '            var prefix = who && who.textContent ? who.textContent.trim() + ": " : "";\n'
-    '            lines.push(prefix + t);\n'
-    '          });\n'
-    '        });\n'
-    '        var phone = active.querySelector(".phone[data-chat-messages]");\n'
-    '        if (phone) {\n'
-    '          try {\n'
-    '            var msgs = JSON.parse(phone.dataset.chatMessages);\n'
-    '            msgs.forEach(function (m) {\n'
-    '              if (!m) return;\n'
-    '              var txt = (m.x || "").trim();\n'
-    '              if (!txt) return;\n'
-    '              var who = m.name || m.s || "";\n'
-    '              lines.push((who ? who + ": " : "") + txt);\n'
-    '            });\n'
-    '          } catch (_) {}\n'
+    '        var sceneEls = document.querySelectorAll("section.scene");\n'
+    '        var activeEl = document.querySelector("section.scene.active");\n'
+    '        if (!sceneEls.length || !activeEl) return;\n'
+    '        var idx = -1;\n'
+    '        for (var i = 0; i < sceneEls.length; i++) {\n'
+    '          if (sceneEls[i] === activeEl) { idx = i; break; }\n'
     '        }\n'
-    '        var choiceQ = active.querySelector(".story-choice .choice-question");\n'
-    '        if (choiceQ && (choiceQ.textContent || "").trim()) {\n'
-    '          lines.push("");\n'
-    '          lines.push(choiceQ.textContent.trim());\n'
-    '          active.querySelectorAll(".story-choice .choice-option").forEach(function (b, i) {\n'
-    '            var t = (b.textContent || "").trim();\n'
-    '            if (t) lines.push((i + 1) + ") " + t);\n'
-    '          });\n'
+    '        if (idx === -1) return;\n'
+    '        if (idx + 1 < sceneEls.length) {\n'
+    '          sceneEls.forEach(function (s) { s.classList.remove("active"); });\n'
+    '          var nextEl = sceneEls[idx + 1];\n'
+    '          nextEl.classList.add("active");\n'
+    '          nextEl.scrollIntoView({ behavior: "smooth", block: "start" });\n'
+    '          return;\n'
     '        }\n'
-    '        var text = lines.join("\\n").replace(/\\n{3,}/g, "\\n\\n").trim();\n'
-    '        var done = function (ok) {\n'
-    '          copyBtn.textContent = ok ? "✓ Скопировано" : "⚠ Ошибка";\n'
-    '          setTimeout(function () { copyBtn.textContent = origLabel; }, 1400);\n'
-    '        };\n'
-    '        if (navigator.clipboard && navigator.clipboard.writeText) {\n'
-    '          navigator.clipboard.writeText(text).then(function () { done(true); },\n'
-    '                                                     function () { done(false); });\n'
-    '        } else {\n'
-    '          try {\n'
-    '            var ta = document.createElement("textarea");\n'
-    '            ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";\n'
-    '            document.body.appendChild(ta); ta.select();\n'
-    '            var ok = document.execCommand("copy");\n'
-    '            document.body.removeChild(ta);\n'
-    '            done(ok);\n'
-    '          } catch (_) { done(false); }\n'
-    '        }\n'
+    '        var nextEp = activeEl.dataset.nextEp;\n'
+    '        if (!nextEp) { alert("end of episodes"); return; }\n'
+    '        fetch(nextEp, { method: "HEAD" }).then(function (r) {\n'
+    '          if (r && r.ok) location.href = nextEp;\n'
+    '          else alert("end of episodes");\n'
+    '        }).catch(function () { alert("end of episodes"); });\n'
     '      });\n'
     '    }\n'
     '\n'
@@ -567,7 +532,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "episodes",
         nargs="*",
-        help="Episode numbers (e.g. 1 2 5). Default — all 1..32",
+        help="Episode numbers (e.g. 1 2 5). Default — все ep_NNN, найденные в source",
     )
     p.add_argument("--src", default=str(DEFAULT_SRC))
     return p.parse_args()
@@ -588,7 +553,11 @@ def main() -> int:
     if args.episodes:
         nums = [int(x) for x in args.episodes]
     else:
-        nums = list(range(1, 33))
+        nums = sorted(
+            int(p.name.split("_", 1)[1])
+            for p in src.glob("ep_*")
+            if p.is_dir() and (p / f"{p.name}.html").exists()
+        )
     nnns = [f"{n:03d}" for n in nums]
 
     idx_out = build_index(src)

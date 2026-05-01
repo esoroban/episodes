@@ -585,72 +585,36 @@ body.debug-off .voice-subtitle { display: none; }
       });
     }
 
-    // Copy: собрать текстовое содержимое активной сцены и положить
-    // в буфер обмена. Берём: scene_id, автор-текст, dialogue-реплики,
-    // chat-пузыри (если has-phone), choice-вопрос + варианты.
-    var copyBtn = document.getElementById("v2-copy");
-    if (copyBtn) {
-      var origLabel = copyBtn.textContent;
-      copyBtn.addEventListener("click", function (e) {
+    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики
+    // (квизы, чат, ветки — всё игнорируется). Если активная сцена
+    // последняя в эпизоде — переходим на data-next-ep (если он ведёт
+    // на существующий файл), иначе показываем "end of episodes".
+    // Убрать перед релизом.
+    var dbgBtn = document.getElementById("v2-debug-next");
+    if (dbgBtn) {
+      dbgBtn.addEventListener("click", function (e) {
         e.stopPropagation();
-        var active = document.querySelector("section.scene.active");
-        if (!active) return;
-        var lines = [];
-        var sid = active.dataset.sceneId || "";
-        if (sid) lines.push("[" + sid + "]");
-        active.querySelectorAll(".scene-content .author-text p").forEach(function (p) {
-          var t = (p.textContent || "").trim();
-          if (t) lines.push(t);
-        });
-        active.querySelectorAll(".scene-content .dialogue-block").forEach(function (d) {
-          var who = d.querySelector(".dl-who");
-          d.querySelectorAll("p").forEach(function (p) {
-            var t = (p.textContent || "").trim();
-            if (!t) return;
-            var prefix = who && who.textContent ? who.textContent.trim() + ": " : "";
-            lines.push(prefix + t);
-          });
-        });
-        var phone = active.querySelector(".phone[data-chat-messages]");
-        if (phone) {
-          try {
-            var msgs = JSON.parse(phone.dataset.chatMessages);
-            msgs.forEach(function (m) {
-              if (!m) return;
-              var txt = (m.x || "").trim();
-              if (!txt) return;
-              var who = m.name || m.s || "";
-              lines.push((who ? who + ": " : "") + txt);
-            });
-          } catch (_) {}
+        var sceneEls = document.querySelectorAll("section.scene");
+        var activeEl = document.querySelector("section.scene.active");
+        if (!sceneEls.length || !activeEl) return;
+        var idx = -1;
+        for (var i = 0; i < sceneEls.length; i++) {
+          if (sceneEls[i] === activeEl) { idx = i; break; }
         }
-        var choiceQ = active.querySelector(".story-choice .choice-question");
-        if (choiceQ && (choiceQ.textContent || "").trim()) {
-          lines.push("");
-          lines.push(choiceQ.textContent.trim());
-          active.querySelectorAll(".story-choice .choice-option").forEach(function (b, i) {
-            var t = (b.textContent || "").trim();
-            if (t) lines.push((i + 1) + ") " + t);
-          });
+        if (idx === -1) return;
+        if (idx + 1 < sceneEls.length) {
+          sceneEls.forEach(function (s) { s.classList.remove("active"); });
+          var nextEl = sceneEls[idx + 1];
+          nextEl.classList.add("active");
+          nextEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
         }
-        var text = lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
-        var done = function (ok) {
-          copyBtn.textContent = ok ? "✓ Скопировано" : "⚠ Ошибка";
-          setTimeout(function () { copyBtn.textContent = origLabel; }, 1400);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () { done(true); },
-                                                     function () { done(false); });
-        } else {
-          try {
-            var ta = document.createElement("textarea");
-            ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-            document.body.appendChild(ta); ta.select();
-            var ok = document.execCommand("copy");
-            document.body.removeChild(ta);
-            done(ok);
-          } catch (_) { done(false); }
-        }
+        var nextEp = activeEl.dataset.nextEp;
+        if (!nextEp) { alert("end of episodes"); return; }
+        fetch(nextEp, { method: "HEAD" }).then(function (r) {
+          if (r && r.ok) location.href = nextEp;
+          else alert("end of episodes");
+        }).catch(function () { alert("end of episodes"); });
       });
     }
 
@@ -683,7 +647,7 @@ body.debug-off .voice-subtitle { display: none; }
 </script>
 </head>
 <body>
-<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-copy" type="button" title="Скопировать содержимое сцены" aria-label="Копировать">📋 Копировать</button></div>
+<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button></div>
 <div id="v2-scene-badge">—</div>
 
 
