@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-02T11:53:48Z",
+  "generated_at": "2026-05-02T16:46:48Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -802,13 +802,19 @@
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
           "content_hash": "57ebd8315d183ef2"
+        },
+        "uk": {
+          "html": "uk/ep_037.html",
+          "data": "uk/ep_037.json",
+          "content_hash": "7343945595859d94"
         }
       },
       "title_ru": "Или — или",
       "lesson": "10A.1",
       "scene_count": 34,
       "quiz_count": 18,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Або — або"
     },
     {
       "id": "ep_038",
@@ -818,13 +824,19 @@
           "html": "ru/ep_038.html",
           "data": "ru/ep_038.json",
           "content_hash": "c1683cae491343df"
+        },
+        "uk": {
+          "html": "uk/ep_038.html",
+          "data": "uk/ep_038.json",
+          "content_hash": "9d0ceac3566f2333"
         }
       },
       "title_ru": "Цена третьего варианта",
       "lesson": "10A.2 + 10A.3",
       "scene_count": 28,
       "quiz_count": 11,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Ціна третього варіанту"
     },
     {
       "id": "ep_039",
@@ -834,13 +846,19 @@
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
           "content_hash": "59f501f3df52e651"
+        },
+        "uk": {
+          "html": "uk/ep_039.html",
+          "data": "uk/ep_039.json",
+          "content_hash": "9da54db348739d0c"
         }
       },
       "title_ru": "Стеклянная комната",
       "lesson": "10B.1 + 10B.2",
       "scene_count": 26,
       "quiz_count": 13,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Скляна кімната"
     },
     {
       "id": "ep_040",
@@ -850,13 +868,19 @@
           "html": "ru/ep_040.html",
           "data": "ru/ep_040.json",
           "content_hash": "4a5af19e9b355797"
+        },
+        "uk": {
+          "html": "uk/ep_040.html",
+          "data": "uk/ep_040.json",
+          "content_hash": "4f4f56439cc9a1f8"
         }
       },
       "title_ru": "Разведчик в башне",
       "lesson": "10B.3",
       "scene_count": 34,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Розвідник у вежі"
     }
   ]
 }
