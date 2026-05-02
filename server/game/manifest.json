@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-02T05:47:19Z",
+  "generated_at": "2026-05-02T11:53:48Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -833,7 +833,7 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "a9ff04dcfeda7358"
+          "content_hash": "59f501f3df52e651"
         }
       },
       "title_ru": "Стеклянная комната",
@@ -849,12 +849,12 @@
         "ru": {
           "html": "ru/ep_040.html",
           "data": "ru/ep_040.json",
-          "content_hash": "32e7348cc871777c"
+          "content_hash": "4a5af19e9b355797"
         }
       },
       "title_ru": "Разведчик в башне",
       "lesson": "10B.3",
-      "scene_count": 28,
+      "scene_count": 34,
       "quiz_count": 14,
       "branch_count": 1
     }
