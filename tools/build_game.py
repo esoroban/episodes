@@ -229,6 +229,62 @@ def _localize_who(who, lang: str = "ru"):
     return _UK_WHO_DISPLAY.get(who, who)
 
 
+# Падежные формы имён персонажей для замены в свободном тексте при UK-рендере
+# (visual_brief background/atmosphere/focus_object, scene-mood, scene-location).
+# Длинные формы (Андреевна) идут раньше коротких (Вера) для корректной замены.
+_UK_NAME_FORMS = {
+    # Vera Andreevna patronymic — длинные первыми
+    "Андреевной": "Андріївною",
+    "Андреевну": "Андріївну",
+    "Андреевне": "Андріївні",
+    "Андреевны": "Андріївни",
+    "Андреевна": "Андріївна",
+    # Vera
+    "Верой": "Вірою",
+    "Веру":  "Віру",
+    "Веры":  "Віри",
+    "Вере":  "Вірі",
+    "Вера":  "Віра",
+    # Sofia (полное имя сестры; Софа AI остаётся «Софа»)
+    "Софией": "Софією",
+    "Софию":  "Софію",
+    "Софии":  "Софії",
+    "София":  "Софія",
+    # Sofa (AI) — падежные формы
+    "Софой": "Софою",
+    "Софы":  "Софи",
+    "Софе":  "Софі",
+    # Lina
+    "Линой": "Ліною",
+    "Лину":  "Ліну",
+    "Лины":  "Ліни",
+    "Лине":  "Ліні",
+    "Лина":  "Ліна",
+    # Vitya
+    "Витей": "Вітею",
+    "Витю":  "Вітю",
+    "Вити":  "Віті",
+    "Вите":  "Віті",
+    "Витя":  "Вітя",
+    # Masha
+    "Маше": "Маші",
+}
+
+import re as _re
+_UK_NAME_PATTERN = _re.compile(
+    r"\b(" + "|".join(_re.escape(k) for k in sorted(_UK_NAME_FORMS, key=len, reverse=True)) + r")\b",
+    _re.UNICODE,
+)
+
+
+def _localize_text(text, lang: str = "ru"):
+    """Replace Russian character-name forms with Ukrainian forms in free text.
+    Only applied for lang='uk'. Returns input unchanged otherwise."""
+    if lang != "uk" or not text:
+        return text
+    return _UK_NAME_PATTERN.sub(lambda m: _UK_NAME_FORMS[m.group(0)], str(text))
+
+
 def _dialogue_to_text(items: list, lang: str = "ru") -> list:
     """Convert dialogue[] YAML entries to manifest text[] format."""
     out = []
@@ -534,28 +590,28 @@ def esc(text) -> str:
     return html.escape(str(text).strip())
 
 
-def render_visual_brief(vb: dict) -> str:
+def render_visual_brief(vb: dict, lang: str = "ru") -> str:
     """Render visual brief as a subtle info panel."""
     if not vb:
         return ""
     parts = []
     if vb.get("background"):
-        parts.append(f'<span class="vb-label">Фон:</span> {esc(vb["background"])}')
+        parts.append(f'<span class="vb-label">Фон:</span> {esc(_localize_text(vb["background"], lang))}')
     if vb.get("atmosphere"):
-        parts.append(f'<span class="vb-label">Атмосфера:</span> {esc(vb["atmosphere"])}')
+        parts.append(f'<span class="vb-label">Атмосфера:</span> {esc(_localize_text(vb["atmosphere"], lang))}')
     if vb.get("camera"):
         parts.append(f'<span class="vb-label">Камера:</span> {esc(vb["camera"])}')
     if vb.get("focus_object"):
-        parts.append(f'<span class="vb-label">Фокус:</span> {esc(vb["focus_object"])}')
+        parts.append(f'<span class="vb-label">Фокус:</span> {esc(_localize_text(vb["focus_object"], lang))}')
     chars = vb.get("characters", [])
     for ch in chars:
-        who = esc(ch.get("who", ""))
-        expr = esc(ch.get("expression", ""))
-        pose = esc(ch.get("pose", ""))
+        who = esc(_localize_who(ch.get("who", ""), lang))
+        expr = esc(_localize_text(ch.get("expression", ""), lang))
+        pose = esc(_localize_text(ch.get("pose", ""), lang))
         parts.append(f'<span class="vb-label">{who}:</span> {expr}, {pose}')
     props = vb.get("props", [])
     if props:
-        parts.append(f'<span class="vb-label">Предметы:</span> {", ".join(esc(p) for p in props)}')
+        parts.append(f'<span class="vb-label">Предметы:</span> {", ".join(esc(_localize_text(p, lang)) for p in props)}')
     return '<div class="visual-brief">' + "<br>".join(parts) + "</div>"
 
 
@@ -879,18 +935,18 @@ def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") ->
 
     msg_attr = html.escape(_json.dumps(all_msgs, ensure_ascii=False), quote=True)
     phone = _phone_html(msg_attr)
-    vb_html = render_visual_brief(vb)
+    vb_html = render_visual_brief(vb, lang)
 
     loc_time = ""
     if location or time_str:
         parts = []
         if location:
-            parts.append(esc(location))
+            parts.append(esc(_localize_text(location, lang)))
         if time_str:
-            parts.append(esc(time_str))
+            parts.append(esc(_localize_text(time_str, lang)))
         loc_time = f'<div class="scene-location">{" \u00b7 ".join(parts)}</div>'
-    chars_html = f'<div class="scene-chars">{", ".join(esc(c) for c in chars)}</div>' if chars else ""
-    mood_html = f'<div class="scene-mood">{esc(mood)}</div>' if mood else ""
+    chars_html = f'<div class="scene-chars">{", ".join(esc(_localize_who(c, lang)) for c in chars)}</div>' if chars else ""
+    mood_html = f'<div class="scene-mood">{esc(_localize_text(mood, lang))}</div>' if mood else ""
     meta_parts = [p for p in [loc_time, chars_html, mood_html] if p]
     meta_html = ""
     if meta_parts:
@@ -999,18 +1055,18 @@ def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
     if location or time_str:
         parts = []
         if location:
-            parts.append(esc(location))
+            parts.append(esc(_localize_text(location, lang)))
         if time_str:
-            parts.append(esc(time_str))
+            parts.append(esc(_localize_text(time_str, lang)))
         loc_time = f'<div class="scene-location">{" \u00b7 ".join(parts)}</div>'
 
     chars_html = ""
     if chars:
-        chars_html = f'<div class="scene-chars">{", ".join(esc(c) for c in chars)}</div>'
+        chars_html = f'<div class="scene-chars">{", ".join(esc(_localize_who(c, lang)) for c in chars)}</div>'
 
     mood_html = ""
     if mood:
-        mood_html = f'<div class="scene-mood">{esc(mood)}</div>'
+        mood_html = f'<div class="scene-mood">{esc(_localize_text(mood, lang))}</div>'
 
     branch_html = ""
     if branch_type:
@@ -1024,7 +1080,7 @@ def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
 
     content_parts = []
 
-    vb_html = render_visual_brief(vb)
+    vb_html = render_visual_brief(vb, lang)
     if vb_html:
         content_parts.append(vb_html)
 
@@ -1993,12 +2049,12 @@ JS = r"""
 """
 
 
-def _collect_all_episodes_meta(yaml_files: list) -> list:
+def _collect_all_episodes_meta(yaml_files: list, lang: str = "ru") -> list:
     """Pre-compute minimal metadata for all episodes — used in debug burger."""
     out = []
     for p in sorted(yaml_files):
         try:
-            d = load_episode(p)
+            d = load_episode_lang(p, lang)
         except Exception:
             continue
         eid = int(d.get("episode_id", 0))
@@ -2010,7 +2066,7 @@ def _collect_all_episodes_meta(yaml_files: list) -> list:
     return out
 
 
-def _dom_scene_list(units: list) -> list:
+def _dom_scene_list(units: list, lang: str = "ru") -> list:
     """Scene IDs that end up in the DOM (chain heads + singles),
     with short labels for the debug menu."""
     out = []
@@ -2019,7 +2075,7 @@ def _dom_scene_list(units: list) -> list:
             first = unit["scenes"][0]
             sid = first.get("scene_id", "?")
             n = len(unit["scenes"])
-            mood = first.get("mood", "").strip()
+            mood = _localize_text(first.get("mood", "").strip(), lang)
             label = f"{sid} — чат ×{n}"
             if mood:
                 label += f" · {mood}"
@@ -2028,7 +2084,7 @@ def _dom_scene_list(units: list) -> list:
             s = unit["scene"]
             sid = s.get("scene_id", "?")
             stype = s.get("scene_type", "")
-            mood = s.get("mood", "").strip()
+            mood = _localize_text(s.get("mood", "").strip(), lang)
             bt = s.get("branch_type", "")
             marks = []
             if bt:
@@ -2133,7 +2189,7 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
             scenes_html_parts.append(render_scene(unit["scene"], idx, total, lang))
     scenes_html = "\n".join(scenes_html_parts)
 
-    dom_scenes = _dom_scene_list(units)
+    dom_scenes = _dom_scene_list(units, lang)
     debug_burger_html = _render_debug_burger(
         int(ep_id) if isinstance(ep_id, int) or (isinstance(ep_id, str) and ep_id.isdigit()) else 0,
         all_eps,
@@ -2390,7 +2446,7 @@ def main():
         all_yaml_files_for_menu = [p for p in all_yaml_files if (UK_OVERLAY_DIR / p.name).exists()]
     else:
         all_yaml_files_for_menu = all_yaml_files
-    all_eps = _collect_all_episodes_meta(all_yaml_files_for_menu)
+    all_eps = _collect_all_episodes_meta(all_yaml_files_for_menu, lang)
 
     for yf in yaml_files:
         if lang == "uk" and not (UK_OVERLAY_DIR / yf.name).exists():
