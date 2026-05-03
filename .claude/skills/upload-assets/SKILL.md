@@ -88,7 +88,10 @@ NNN=001   # подставить
 # Копируем, следуя симлинкам (-L), с прогрессом, параллельно.
 # --exclude .versions/** — НЕ заливать локальные бэкапы старых версий
 # (которые лежат в output/.../.versions/ от experiments/rerender_*).
-RCOPY_OPTS="--copy-links --transfers=8 --checkers=16 --progress --exclude .versions/**"
+# --exclude .raw_png/** — НЕ заливать pre-conversion PNG-исходники, которые
+# experiments/gen_needed_images_*.py оставляет рядом с .webp на случай
+# повторных конвертаций; на CDN они не нужны (браузер качает только .webp).
+RCOPY_OPTS="--copy-links --transfers=8 --checkers=16 --progress --exclude .versions/** --exclude .raw_png/**"
 
 rclone copy "$SRC/ep_$NNN/images" "r2:$BUCKET/ep_$NNN/images" $RCOPY_OPTS
 rclone copy "$SRC/ep_$NNN/audio"  "r2:$BUCKET/ep_$NNN/audio"  $RCOPY_OPTS
