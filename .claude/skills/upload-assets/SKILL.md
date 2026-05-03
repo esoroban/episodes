@@ -21,18 +21,31 @@ trigger: upload assets, залей ассеты, upload image and voice, upload 
 ```
 Локальные ассеты (симлинки)                     Cloudflare R2 (sylaslovaassets)
 ─────────────────────────────                   ─────────────────────────────────
-combined_output/ep_NNN/images  ──┐              ep_NNN/images/ep001_s01.png
-  → image_prompts_experiment/     ├── rclone ──→ ep_NNN/images/...
-    output/ep_NNN/images         │
-                                 │
-combined_output/ep_NNN/audio   ──┤              ep_NNN/audio/ep001_s01_text_01.wav
-  → voice_prompts_experiment/     ├── rclone ──→ ep_NNN/audio/...
-    output/ep_NNN/audio
+combined_output/ep_NNN/images        ──┐        ep_NNN/images/ep001_s01.png
+  → image_prompts_experiment/           ├── rclone ──→ ep_NNN/images/...
+    output/ep_NNN/images               │
+                                       │
+combined_output/ep_NNN/audio         ──┤        ep_NNN/audio/ep001_s01_text_01.wav
+  → voice_prompts_experiment/           ├── rclone ──→ ep_NNN/audio/...
+    output/ep_NNN/audio                │
+                                       │
+combined_output/ep_NNN/chat_images   ──┤        ep_NNN/chat_images/ep001_s05_chat.png
+  → image_prompts_experiment/           └── rclone ──→ ep_NNN/chat_images/...
+    output/ep_NNN/chat_images
+   (опционально — есть не у всех эпизодов)
 
 Публичный URL:
   https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_NNN/images/...
   https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_NNN/audio/...
+  https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_NNN/chat_images/...
 ```
+
+**chat_images** (иконки внутри Telegram-чата) — отдельный слой ассетов,
+возникает только в эпизодах, где Софа отправляет картинку-эскиз внутри
+чата (вместо иллюстрации сцены). Combine-сборщик с 2026-05-03 симлинкает
+`chat_images/` рядом с `audio/` и `images/`, поэтому стандартный rclone-цикл
+ниже их подхватывает автоматически. Если у эпизода chat_images нет —
+директории просто не будет, цикл `if [ -d ... ]` пропустит.
 
 ## Конфиг — источники правды
 
@@ -61,6 +74,9 @@ no_check_bucket = true
 3. **Источник**: для каждого запрошенного эпизода проверь, что существуют реальные пути (следуй симлинкам):
    - `combined_output/ep_NNN/images` → `image_prompts_experiment/output/ep_NNN/images`
    - `combined_output/ep_NNN/audio` → `voice_prompts_experiment/output/ep_NNN/audio`
+   - `combined_output/ep_NNN/chat_images` → `image_prompts_experiment/output/ep_NNN/chat_images` *(опционально)*
+
+   Если симлинка `chat_images` нет, а в источнике директория есть — пересобери: `python -m factory combine ep_NNN`.
 
 ## Процесс (на один эпизод)
 
@@ -75,6 +91,12 @@ rclone copy "$SRC/ep_$NNN/images" "r2:$BUCKET/ep_$NNN/images" \
 
 rclone copy "$SRC/ep_$NNN/audio"  "r2:$BUCKET/ep_$NNN/audio" \
   --copy-links --transfers=8 --checkers=16 --progress
+
+# chat_images — заливаем только если симлинк есть (не у всех эпизодов)
+if [ -d "$SRC/ep_$NNN/chat_images" ]; then
+  rclone copy "$SRC/ep_$NNN/chat_images" "r2:$BUCKET/ep_$NNN/chat_images" \
+    --copy-links --transfers=8 --checkers=16 --progress
+fi
 ```
 
 Для батча эпизодов — цикл `for NNN in 001 002 ... 012`.
@@ -85,10 +107,12 @@ rclone copy "$SRC/ep_$NNN/audio"  "r2:$BUCKET/ep_$NNN/audio" \
 # Сколько объектов залито
 rclone ls "r2:$BUCKET/ep_$NNN/images" | wc -l
 rclone ls "r2:$BUCKET/ep_$NNN/audio"  | wc -l
+[ -d "$SRC/ep_$NNN/chat_images" ] && rclone ls "r2:$BUCKET/ep_$NNN/chat_images" | wc -l
 
 # Сверить с локалью (должны совпасть)
 ls "$SRC/ep_$NNN/images" | wc -l
 ls "$SRC/ep_$NNN/audio"  | wc -l
+[ -d "$SRC/ep_$NNN/chat_images" ] && ls "$SRC/ep_$NNN/chat_images" | wc -l
 ```
 
 ## Отчёт пользователю (обязательно)
