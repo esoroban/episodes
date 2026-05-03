@@ -491,9 +491,13 @@ def reorder_chat_messages(html: str) -> tuple[str, int, int]:
             parts.append(html[m.start():m.end()])
             cursor = m.end()
             continue
-        # First drop broken-src images (they'd 404 + show empty bubble),
-        # then reorder/merge remaining.
-        messages, n_dropped = _drop_broken_images(messages)
+        # NB: _drop_broken_images доступна, но НЕ вызываем — broken refs
+        # (epNNN/X.webp) держим как 404, чтобы не потерять авторскую логику
+        # квизов «угадай эмоцию по фото» (ep_014_s10/s17) и пиктограммам
+        # ветвлений (ep_033_s01b). Реестр на дорисовку — pipeline/qa/
+        # needed_images.md. Когда картинки появятся в R2 — 404 уйдут сами,
+        # без правки билда.
+        n_dropped = 0
         new_msgs, n_paired, n_merged = _reorder_messages(messages)
         total_paired += n_paired
         total_merged += n_merged
@@ -604,6 +608,14 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     # `images/`, см. ниже). Переписываем на абсолютный CDN URL и дальше
     # патчим JS, чтобы он не префиксил абсолютные URL.
     chat_img_pat = re.compile(r'&quot;\.\./chat_images/([^&]+)&quot;')
+    # Альтернативный формат для chat_images: `&quot;epNNN/X.ext&quot;` без
+    # префикса `../chat_images/`. Встречается в ep_014_s10/s17 (квизы
+    # «угадай эмоцию») и ep_033_s01b (пиктограммы веток s02). Эти ассеты
+    # никогда не были сгенерены factory; реестр на дорисовку —
+    # pipeline/qa/needed_images.md. Когда файлы появятся в R2 под
+    # `ep_NNN/chat_images/<X>` — этот regex переписывает src на CDN URL,
+    # и 404 уходит без правки данных.
+    flat_chat_img_pat = re.compile(r'&quot;ep0*(\d+)/([^&]+)&quot;')
 
     n_audio = 0
     n_images = 0
@@ -624,6 +636,14 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
         n_chat += 1
         return f'&quot;{base}/chat_images/{m.group(1)}&quot;'
 
+    def sub_flat_chat_img(m: re.Match) -> str:
+        nonlocal n_chat
+        n_chat += 1
+        # Нормализуем номер эпизода в трёхзначный (ep14 → ep_014).
+        target_nnn = m.group(1).zfill(3)
+        return (f'&quot;{public_url}/ep_{target_nnn}/chat_images/'
+                f'{m.group(2)}&quot;')
+
     # ПЕРВЫМ: патч JS-рендера addImage. В source-коде строка:
     #   '<img src="images/'+m.src+'"
     # То есть внутри src="..." сидит JS-конкатенация. Если сперва прогнать
@@ -638,6 +658,7 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
     html = chat_img_pat.sub(sub_chat_img, html)
+    html = flat_chat_img_pat.sub(sub_flat_chat_img, html)
     # Сократить `pause_after_ms` между репликами в 4 раза (150→38, 400→100,
     # 800→200). Источник ставит 150/400/800 мс — для живой аудио-драмы это
     # много, особенно при ×2 playbackRate в debug-режиме. Делим на 4.
