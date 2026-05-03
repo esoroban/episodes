@@ -46,6 +46,9 @@ BODY_INJECTION = (
     '<div id="v2-audio-controls">'
     '<button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button>'
     '<button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button>'
+    # Speaker toggle: переключает audio-mode ↔ text-mode (проксирует #text-toggle).
+    # 🔊 = аудио включено, 🔇 = текстовая мода.
+    '<button id="v2-speaker" type="button" title="Динамик: аудио / текст" aria-label="Динамик">🔇</button>'
     '<button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button>'
     # DEBUG: форс-перемотка на следующую сцену в обход игровой логики. Убрать перед релизом.
     '<button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button>'
@@ -93,16 +96,19 @@ PROD_OVERRIDES = (
     'body.audio-mode section.scene:not(.audio-done) .story-choice{'
     'display:none!important'
     '}'
-    # Text-mode: choice-кнопки перекрывали субтитры снизу. UX:
-    # (1) Показ: текст субтитров + кнопка «Дальше» внизу. Choice скрыт.
-    # (2) Клик «Дальше» → ставим `.v2-choice-revealed` → текст скрыт, choice показан.
-    # Аудио-режим не трогаем — там вся очередь уже отыгрывает текст в речи.
+    # Text-mode: апстрим ставит .story-choice {position:fixed; bottom:80px}
+    # — overlay перекрывает текст сцены, читать невозможно. В text-mode
+    # вытаскиваем choice в обычный поток ПОД текстом (static), text не
+    # прячем. Audio-mode не трогаем — там голос уже отыграл, оверлей ок.
+    # Поведение: пока юзер не нажал «Дальше» — choice скрыт; после клика
+    # ставим .v2-choice-revealed → choice появляется блоком после текста.
     'body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{'
     'display:none!important'
     '}'
-    'body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .author-text,'
-    'body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .dialogue-block{'
-    'display:none!important'
+    'body:not(.audio-mode) section.scene.active.v2-choice-revealed .story-choice{'
+    'position:static!important;bottom:auto!important;left:auto!important;'
+    'right:auto!important;padding:0!important;margin-top:1.25rem!important;'
+    'z-index:auto!important'
     '}'
     # --- Фикс невидимых choice-кнопок на iOS Safari ---
     # Гипотеза: .story-choice (position:fixed) внутри активной .scene,
@@ -196,6 +202,12 @@ PROD_OVERRIDES = (
     '    btn.textContent = playing ? "⏸" : "▶";\n'
     '  }\n'
     '\n'
+    '  function updateV2SpeakerLabel() {\n'
+    '    var btn = document.getElementById("v2-speaker");\n'
+    '    if (!btn) return;\n'
+    '    btn.textContent = document.body.classList.contains("audio-mode") ? "🔊" : "🔇";\n'
+    '  }\n'
+    '\n'
     '  var lastActiveSid = null;\n'
     '  function checkScene() {\n'
     '    var active = document.querySelector(".scene.active");\n'
@@ -215,6 +227,7 @@ PROD_OVERRIDES = (
     '    audioDoneCheck();\n'
     '    handleTextModeChoiceGate(active);\n'
     '    updateV2PlayLabel();\n'
+    '    updateV2SpeakerLabel();\n'
     '  }\n'
     '\n'
     '  function init() {\n'
@@ -252,6 +265,36 @@ PROD_OVERRIDES = (
     '      });\n'
     '    }\n'
     '\n'
+    '    // Speaker toggle: проксирует #text-toggle (audio-mode ↔ text-mode).\n'
+    '    // Сам source-кнопку прячем через .audio-controls{display:none},\n'
+    '    // поэтому юзеру нужна доступная замена в v2-панели.\n'
+    '    //\n'
+    '    // Тонкость: source-скрипт на ПЕРВОМ pointerdown ЛЮБОГО элемента\n'
+    '    // авто-кликает по #text-toggle (unlockAudio), чтобы преодолеть\n'
+    '    // autoplay-block. Если мой click-handler ВСЛЕД ЗА ЭТИМ ещё раз\n'
+    '    // кликнет toggle — двойной toggle обнулится.\n'
+    '    // Решение: сохраняем audio-mode в pointerdown (мой capture-handler\n'
+    '    // регистрируется раньше source unlock, потому что мой скрипт в\n'
+    '    // <head>). В click сравниваем — если unlock уже переключил,\n'
+    '    // не дублируем; иначе кликаем сами.\n'
+    '    var preClickAudioMode = null;\n'
+    '    document.addEventListener("pointerdown", function () {\n'
+    '      preClickAudioMode = document.body.classList.contains("audio-mode");\n'
+    '    }, true);\n'
+    '    var speakerBtn = document.getElementById("v2-speaker");\n'
+    '    if (speakerBtn) {\n'
+    '      speakerBtn.addEventListener("click", function (e) {\n'
+    '        e.stopPropagation();\n'
+    '        var nowAudioMode = document.body.classList.contains("audio-mode");\n'
+    '        if (preClickAudioMode !== null && nowAudioMode !== preClickAudioMode) {\n'
+    '          // Unlock уже сделал toggle за нас — выходим, иначе сбросим.\n'
+    '          return;\n'
+    '        }\n'
+    '        var toggle = document.getElementById("text-toggle");\n'
+    '        if (toggle) toggle.click();\n'
+    '      });\n'
+    '    }\n'
+    '\n'
     '    // Язык: /uk/ ↔ /ru/ в том же пути.\n'
     '    var langBtn = document.getElementById("v2-lang");\n'
     '    if (langBtn) {\n'
@@ -267,36 +310,44 @@ PROD_OVERRIDES = (
     '      });\n'
     '    }\n'
     '\n'
-    '    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики\n'
-    '    // (квизы, чат, ветки — всё игнорируется). Если активная сцена\n'
-    '    // последняя в эпизоде — переходим на data-next-ep (если он ведёт\n'
-    '    // на существующий файл), иначе показываем "end of episodes".\n'
-    '    // Убрать перед релизом.\n'
+    '    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики.\n'
+    '    // Раньше делали прямой classList.add("active") — но source\n'
+    '    // initPhoneChat вызывается ТОЛЬКО изнутри showScene(), которое\n'
+    '    // источник держит в IIFE и наружу не выставляет. Из-за этого при\n'
+    '    // дебаг-скипе на чат-сцену чат не инициализировался — пузыри\n'
+    '    // не появлялись, btnNext висел disabled.\n'
+    '    //\n'
+    '    // Теперь идём через source goForward: снимаем все блокировки на\n'
+    '    // активной сцене (chatPending, blocking, choice), помечаем\n'
+    '    // v2-choice-revealed (чтобы наш capture-handler не перехватил),\n'
+    '    // и кликаем штатный #btnNext. goForward → showScene → initPhoneChat.\n'
     '    var dbgBtn = document.getElementById("v2-debug-next");\n'
     '    if (dbgBtn) {\n'
     '      dbgBtn.addEventListener("click", function (e) {\n'
     '        e.stopPropagation();\n'
+    '        var active = document.querySelector("section.scene.active");\n'
+    '        if (!active) return;\n'
+    '        // 1) Снять chat-pending (если чат ещё анимируется)\n'
+    '        delete active.dataset.chatPending;\n'
+    '        // 2) Снять blocking-флаг (квиз внутри чата требовал ответа)\n'
+    '        if (active.dataset.blocking === "true") active.dataset.blocking = "false";\n'
+    '        // 3) Если есть .story-choice — отметить первый вариант chosen,\n'
+    '        //    чтобы updateNextButton разблокировал btnNext.\n'
+    '        var firstChoice = active.querySelector(".choice-option:not(.chosen)");\n'
+    '        if (firstChoice) firstChoice.classList.add("chosen");\n'
+    '        // 4) Помечаем v2-choice-revealed — наш capture-handler сразу выйдет.\n'
+    '        active.classList.add("v2-choice-revealed");\n'
+    '        // 5) Принудительно включаем btnNext и кликаем.\n'
+    '        var btn = document.getElementById("btnNext");\n'
+    '        if (!btn) return;\n'
+    '        btn.disabled = false;\n'
+    '        // Если активная сцена — последняя в эпизоде, штатный goForward\n'
+    '        // сам переведёт на data-next-ep. Если nextEp недоступен —\n'
+    '        // покажем алерт.\n'
     '        var sceneEls = document.querySelectorAll("section.scene");\n'
-    '        var activeEl = document.querySelector("section.scene.active");\n'
-    '        if (!sceneEls.length || !activeEl) return;\n'
-    '        var idx = -1;\n'
-    '        for (var i = 0; i < sceneEls.length; i++) {\n'
-    '          if (sceneEls[i] === activeEl) { idx = i; break; }\n'
-    '        }\n'
-    '        if (idx === -1) return;\n'
-    '        if (idx + 1 < sceneEls.length) {\n'
-    '          sceneEls.forEach(function (s) { s.classList.remove("active"); });\n'
-    '          var nextEl = sceneEls[idx + 1];\n'
-    '          nextEl.classList.add("active");\n'
-    '          nextEl.scrollIntoView({ behavior: "smooth", block: "start" });\n'
-    '          return;\n'
-    '        }\n'
-    '        var nextEp = activeEl.dataset.nextEp;\n'
-    '        if (!nextEp) { alert("end of episodes"); return; }\n'
-    '        fetch(nextEp, { method: "HEAD" }).then(function (r) {\n'
-    '          if (r && r.ok) location.href = nextEp;\n'
-    '          else alert("end of episodes");\n'
-    '        }).catch(function () { alert("end of episodes"); });\n'
+    '        var isLast = sceneEls[sceneEls.length - 1] === active;\n'
+    '        if (isLast && !active.dataset.nextEp) { alert("end of episodes"); return; }\n'
+    '        btn.click();\n'
     '      });\n'
     '    }\n'
     '\n'
@@ -328,6 +379,93 @@ PROD_OVERRIDES = (
     '})();\n'
     '</script>\n'
 )
+
+
+def _reorder_messages(messages):
+    """Pair leading image-block with following quizzes so each image lands right
+    before its quiz (like a question preview). Then merge each image with the
+    immediately-following text of same speaker into an image-with-caption.
+
+    Why both passes:
+      - In ep_037_s06 (and similar), source chat is `[img×10, intro_text×2,
+        quiz, ans_text, quiz, ans_text, …]`. UX: 10 pictograms in a row before
+        any context is overwhelming. Want `[intros, img+quiz+ans, img+quiz+ans,
+        …]`. Move-images-before-quizzes pass handles this.
+      - For other scenes where author wrote `[img, caption_text, img,
+        caption_text, …]` we want classic Telegram «фото с подписью». Merge
+        pass handles that.
+
+    Bails (returns original) if structure doesn't match — never breaks data.
+    """
+    if not isinstance(messages, list) or len(messages) == 0:
+        return messages, 0, 0
+
+    # Pass 1: pair leading images with quizzes
+    leading_images = []
+    j = 0
+    while j < len(messages) and isinstance(messages[j], dict) and messages[j].get("t") == "image":
+        leading_images.append(messages[j])
+        j += 1
+    rest = messages[j:]
+    quiz_positions = [k for k, m in enumerate(rest)
+                      if isinstance(m, dict) and m.get("t") == "quiz"]
+    n_paired = 0
+    if len(leading_images) >= 2 and len(leading_images) == len(quiz_positions):
+        # Insert from end so earlier indices stay stable
+        result = list(rest)
+        for k in range(len(leading_images) - 1, -1, -1):
+            result.insert(quiz_positions[k], leading_images[k])
+        n_paired = len(leading_images)
+        messages = result
+
+    # Pass 2: merge image+immediately-following-text-of-same-speaker into caption
+    out = []
+    n_merged = 0
+    i = 0
+    while i < len(messages):
+        m = messages[i]
+        nxt = messages[i + 1] if i + 1 < len(messages) else None
+        if (isinstance(m, dict) and m.get("t") == "image"
+                and isinstance(nxt, dict) and nxt.get("t") == "text"
+                and nxt.get("s") == m.get("s")
+                and not m.get("caption")):
+            merged = dict(m)
+            merged["caption"] = nxt.get("x", "")
+            out.append(merged)
+            i += 2
+            n_merged += 1
+        else:
+            out.append(m)
+            i += 1
+
+    return out, n_paired, n_merged
+
+
+def reorder_chat_messages(html: str) -> tuple[str, int, int]:
+    """Walk every data-chat-messages JSON in HTML and reorder image/text pairs.
+    Returns (html, total_images_paired, total_image_text_merged)."""
+    pattern = re.compile(r'data-chat-messages="([^"]*)"')
+    parts = []
+    cursor = 0
+    total_paired = 0
+    total_merged = 0
+    for m in pattern.finditer(html):
+        parts.append(html[cursor:m.start()])
+        encoded = m.group(1)
+        try:
+            messages = json.loads(html_mod.unescape(encoded))
+        except json.JSONDecodeError:
+            parts.append(html[m.start():m.end()])
+            cursor = m.end()
+            continue
+        new_msgs, n_paired, n_merged = _reorder_messages(messages)
+        total_paired += n_paired
+        total_merged += n_merged
+        new_encoded = html_mod.escape(json.dumps(new_msgs, ensure_ascii=False), quote=True)
+        parts.append(f'data-chat-messages="{new_encoded}"')
+        cursor = m.end()
+    parts.append(html[cursor:])
+    return "".join(parts), total_paired, total_merged
 
 
 def shuffle_quiz_options(html: str, ep_id: str) -> tuple[str, int]:
@@ -471,6 +609,26 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
         lambda m: f'"pause_after_ms": {round(int(m.group(1)) / 4)}',
         html,
     )
+    # Ускорить чат-анимацию (typing dots + интервалы между сообщениями).
+    # Источник: var CFG={typingBase:200,typingRand:100,interMsg:150,...}.
+    # Полная анимация одного сообщения: typingBase+typingRand+interMsg ≈ 450ms.
+    # Юзер хочет суммарно ≤500ms на всю сцену с парой сообщений → режем.
+    cfg_pat = re.compile(
+        r'var CFG=\{typingBase:\d+,typingRand:\d+,interMsg:\d+,'
+        r'afterSend:\d+,initDelay:\d+,voMin:\d+,voMax:\d+,'
+        r'voFactor:\d+,retryDelay:\d+,recSim:\d+\}'
+    )
+    cfg_replacement = (
+        'var CFG={typingBase:80,typingRand:40,interMsg:60,'
+        'afterSend:80,initDelay:30,voMin:80,voMax:200,'
+        'voFactor:4,retryDelay:200,recSim:200}'
+    )
+    n_cfg = len(cfg_pat.findall(html))
+    if n_cfg != 1:
+        # Не падаем — но фиксируем в логе, чтобы не упустить regression
+        # (например, если апстрим переименовал поля).
+        print(f"  WARN: CFG-pattern matched {n_cfg} times (expected 1)")
+    html = cfg_pat.sub(cfg_replacement, html)
     # Инжекция prod-overrides (CSS + audio-done tracker) в <head>
     # и debug-skip-кнопки сразу после <body>.
     html = html.replace("</head>", PROD_OVERRIDES + "</head>", 1)
@@ -491,6 +649,7 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         return {"nnn": nnn, "skipped": True, "reason": f"missing {src_html}"}
 
     html = src_html.read_text(encoding="utf-8")
+    html, n_paired, n_merged = reorder_chat_messages(html)
     html, n_shuffled = shuffle_quiz_options(html, ep_id=str(int(nnn)))
     rewritten, n_audio, n_images, n_chat = rewrite_html(html, public_url, nnn)
 
@@ -505,6 +664,8 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         "images": n_images,
         "chat_images": n_chat,
         "shuffled": n_shuffled,
+        "paired": n_paired,
+        "merged": n_merged,
         "out": out_html,
     }
 
@@ -567,6 +728,8 @@ def main() -> int:
     total_images = 0
     total_chat = 0
     total_shuffled = 0
+    total_paired = 0
+    total_merged = 0
     built = 0
     skipped = []
     for nnn in nnns:
@@ -580,15 +743,19 @@ def main() -> int:
         total_images += r["images"]
         total_chat += r["chat_images"]
         total_shuffled += r["shuffled"]
+        total_paired += r["paired"]
+        total_merged += r["merged"]
         print(f"ep_{nnn}     → {r['out'].relative_to(REPO)}  "
               f"(audio: {r['audio']}, images: {r['images']}, "
               f"chat_images: {r['chat_images']}, "
-              f"quiz_shuffled: {r['shuffled']})")
+              f"quiz_shuffled: {r['shuffled']}, "
+              f"img→quiz: {r['paired']}, img+text: {r['merged']})")
 
     print()
     print(f"built {built}/{len(nnns)} episodes")
     print(f"rewrites — audio: {total_audio}, images: {total_images}, "
-          f"chat_images: {total_chat}, quiz_shuffled: {total_shuffled}")
+          f"chat_images: {total_chat}, quiz_shuffled: {total_shuffled}, "
+          f"images→quizzes: {total_paired}, image+caption: {total_merged}")
     if skipped:
         print(f"skipped {len(skipped)}:")
         for nnn, reason in skipped:

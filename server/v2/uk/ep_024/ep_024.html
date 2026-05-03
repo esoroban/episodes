@@ -463,7 +463,7 @@ body.debug-off .voice-subtitle { display: none; }
   .episode-header h1 { font-size: 1.3rem; }
 }
 </style>
-<style id="v2-prod-overrides">.ipe-debug{display:none!important}.audio-controls,.episode-nav{display:none!important}#v2-audio-controls{position:fixed;top:10px;right:12px;z-index:220;display:flex;gap:6px;align-items:center}#v2-audio-controls button{background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 10px;line-height:1;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;font-weight:600;min-width:36px;text-align:center}#v2-audio-controls button:hover{background:rgba(0,0,0,0.85)}#v2-scene-badge{position:fixed;top:10px;left:12px;z-index:220;background:rgba(0,0,0,0.7);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:0.02em;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,0.22);pointer-events:none}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .author-text,body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .dialogue-block{display:none!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
+<style id="v2-prod-overrides">.ipe-debug{display:none!important}.audio-controls,.episode-nav{display:none!important}#v2-audio-controls{position:fixed;top:10px;right:12px;z-index:220;display:flex;gap:6px;align-items:center}#v2-audio-controls button{background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 10px;line-height:1;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;font-weight:600;min-width:36px;text-align:center}#v2-audio-controls button:hover{background:rgba(0,0,0,0.85)}#v2-scene-badge{position:fixed;top:10px;left:12px;z-index:220;background:rgba(0,0,0,0.7);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:0.02em;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,0.22);pointer-events:none}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active.v2-choice-revealed .story-choice{position:static!important;bottom:auto!important;left:auto!important;right:auto!important;padding:0!important;margin-top:1.25rem!important;z-index:auto!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
 <script id="v2-audio-done-tracker">
 (function () {
   var playingSet = new Set();
@@ -542,6 +542,12 @@ body.debug-off .voice-subtitle { display: none; }
     btn.textContent = playing ? "⏸" : "▶";
   }
 
+  function updateV2SpeakerLabel() {
+    var btn = document.getElementById("v2-speaker");
+    if (!btn) return;
+    btn.textContent = document.body.classList.contains("audio-mode") ? "🔊" : "🔇";
+  }
+
   var lastActiveSid = null;
   function checkScene() {
     var active = document.querySelector(".scene.active");
@@ -561,6 +567,7 @@ body.debug-off .voice-subtitle { display: none; }
     audioDoneCheck();
     handleTextModeChoiceGate(active);
     updateV2PlayLabel();
+    updateV2SpeakerLabel();
   }
 
   function init() {
@@ -598,6 +605,36 @@ body.debug-off .voice-subtitle { display: none; }
       });
     }
 
+    // Speaker toggle: проксирует #text-toggle (audio-mode ↔ text-mode).
+    // Сам source-кнопку прячем через .audio-controls{display:none},
+    // поэтому юзеру нужна доступная замена в v2-панели.
+    //
+    // Тонкость: source-скрипт на ПЕРВОМ pointerdown ЛЮБОГО элемента
+    // авто-кликает по #text-toggle (unlockAudio), чтобы преодолеть
+    // autoplay-block. Если мой click-handler ВСЛЕД ЗА ЭТИМ ещё раз
+    // кликнет toggle — двойной toggle обнулится.
+    // Решение: сохраняем audio-mode в pointerdown (мой capture-handler
+    // регистрируется раньше source unlock, потому что мой скрипт в
+    // <head>). В click сравниваем — если unlock уже переключил,
+    // не дублируем; иначе кликаем сами.
+    var preClickAudioMode = null;
+    document.addEventListener("pointerdown", function () {
+      preClickAudioMode = document.body.classList.contains("audio-mode");
+    }, true);
+    var speakerBtn = document.getElementById("v2-speaker");
+    if (speakerBtn) {
+      speakerBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var nowAudioMode = document.body.classList.contains("audio-mode");
+        if (preClickAudioMode !== null && nowAudioMode !== preClickAudioMode) {
+          // Unlock уже сделал toggle за нас — выходим, иначе сбросим.
+          return;
+        }
+        var toggle = document.getElementById("text-toggle");
+        if (toggle) toggle.click();
+      });
+    }
+
     // Язык: /uk/ ↔ /ru/ в том же пути.
     var langBtn = document.getElementById("v2-lang");
     if (langBtn) {
@@ -613,36 +650,44 @@ body.debug-off .voice-subtitle { display: none; }
       });
     }
 
-    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики
-    // (квизы, чат, ветки — всё игнорируется). Если активная сцена
-    // последняя в эпизоде — переходим на data-next-ep (если он ведёт
-    // на существующий файл), иначе показываем "end of episodes".
-    // Убрать перед релизом.
+    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики.
+    // Раньше делали прямой classList.add("active") — но source
+    // initPhoneChat вызывается ТОЛЬКО изнутри showScene(), которое
+    // источник держит в IIFE и наружу не выставляет. Из-за этого при
+    // дебаг-скипе на чат-сцену чат не инициализировался — пузыри
+    // не появлялись, btnNext висел disabled.
+    //
+    // Теперь идём через source goForward: снимаем все блокировки на
+    // активной сцене (chatPending, blocking, choice), помечаем
+    // v2-choice-revealed (чтобы наш capture-handler не перехватил),
+    // и кликаем штатный #btnNext. goForward → showScene → initPhoneChat.
     var dbgBtn = document.getElementById("v2-debug-next");
     if (dbgBtn) {
       dbgBtn.addEventListener("click", function (e) {
         e.stopPropagation();
+        var active = document.querySelector("section.scene.active");
+        if (!active) return;
+        // 1) Снять chat-pending (если чат ещё анимируется)
+        delete active.dataset.chatPending;
+        // 2) Снять blocking-флаг (квиз внутри чата требовал ответа)
+        if (active.dataset.blocking === "true") active.dataset.blocking = "false";
+        // 3) Если есть .story-choice — отметить первый вариант chosen,
+        //    чтобы updateNextButton разблокировал btnNext.
+        var firstChoice = active.querySelector(".choice-option:not(.chosen)");
+        if (firstChoice) firstChoice.classList.add("chosen");
+        // 4) Помечаем v2-choice-revealed — наш capture-handler сразу выйдет.
+        active.classList.add("v2-choice-revealed");
+        // 5) Принудительно включаем btnNext и кликаем.
+        var btn = document.getElementById("btnNext");
+        if (!btn) return;
+        btn.disabled = false;
+        // Если активная сцена — последняя в эпизоде, штатный goForward
+        // сам переведёт на data-next-ep. Если nextEp недоступен —
+        // покажем алерт.
         var sceneEls = document.querySelectorAll("section.scene");
-        var activeEl = document.querySelector("section.scene.active");
-        if (!sceneEls.length || !activeEl) return;
-        var idx = -1;
-        for (var i = 0; i < sceneEls.length; i++) {
-          if (sceneEls[i] === activeEl) { idx = i; break; }
-        }
-        if (idx === -1) return;
-        if (idx + 1 < sceneEls.length) {
-          sceneEls.forEach(function (s) { s.classList.remove("active"); });
-          var nextEl = sceneEls[idx + 1];
-          nextEl.classList.add("active");
-          nextEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          return;
-        }
-        var nextEp = activeEl.dataset.nextEp;
-        if (!nextEp) { alert("end of episodes"); return; }
-        fetch(nextEp, { method: "HEAD" }).then(function (r) {
-          if (r && r.ok) location.href = nextEp;
-          else alert("end of episodes");
-        }).catch(function () { alert("end of episodes"); });
+        var isLast = sceneEls[sceneEls.length - 1] === active;
+        if (isLast && !active.dataset.nextEp) { alert("end of episodes"); return; }
+        btn.click();
       });
     }
 
@@ -675,7 +720,7 @@ body.debug-off .voice-subtitle { display: none; }
 </script>
 </head>
 <body class="lang-uk">
-<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button></div>
+<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-speaker" type="button" title="Динамик: аудио / текст" aria-label="Динамик">🔇</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button></div>
 <div id="v2-scene-badge">—</div>
 
 
@@ -764,7 +809,7 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, тупик · ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">класична шкільна підміна</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконки сумки и тетради<br><span class="vb-label">Атмосфера:</span> узнаваемая школьная уловка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> сумка vs тетрадь под словом «помочь»<br><span class="vb-label">Марко:</span> прищур, смотрит в экран</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s05_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, icons of a bag and a notebook. Focal point: bag vs notebook&quot;}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s06_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, sun and cloud icons. Focal point: sun and cloud - one morni&quot;}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s07_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: phone screen, bubble, &#x27;2x2=4&#x27; icon. Focal point: mathematical equation. Tone: acc&quot;}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s08_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, two icons: truth and rudeness under one word. Focal point: &quot;}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s09_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, ball and exclamation mark icons. Focal point: ball vs excla&quot;}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s10_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, Earth orbiting Sun icon. Focal point: two formulations - on&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Допоможи мені!» — спочатку допомогти = потримати сумку. Потім — «допомогти мені» = зробити за мене домашнє. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Порівняй: потримати сумку і зробити домашнє. Це однакова «допомога»? Ні — різні речі під одним словом.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Допомогти» змінило сенс: з підтримки на «зробити за іншого». Слово те саме, сенс інший.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Уранці було сонце. Уранці стало хмарно.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Уранці» в обох випадках = той самий ранок. Змінилася погода, а не слово. Підміни немає.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Час змінився. Погода справді змінилася. Закон тотожності не порушено.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«2 × 2 = 4. 2 × 2 = 4.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;З числами й точними фактами підміну не підсунеш. «2» — це завжди «2».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точні числа. Підміну підсунути не вдасться.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Будь чесним!» — говорять правду. Потім: «Будь чесним!» — говорять грубість. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Чесний» = говорити правду. «Чесний» = бути грубим. Це не одне й те саме. Підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Чесність» змінила сенс: зі щирості на грубість. Одне слово, різні речі.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Погуляймо!» — грати у м&#x27;яч. Потім: «Ми ж граємо!» — заважати іншим. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Грати у м&#x27;яч і заважати іншим — це одне й те саме? Ні. Одне слово — два сенси. Підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Грати» спочатку = м&#x27;яч, потім = хуліганити. Слово те саме, дії різні.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Земля обертається навколо Сонця.» — «Сонце стоїть у центрі, а Земля обходить його по колу.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Друге речення не переінакшило ФАКТ — лише описало його іншими словами. Сенс збережено. Це перефразування, не підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слова різні, порівняння інше — але факт той самий: Земля крутиться навколо Сонця. Перефразувати ≠ підмінювати.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило... двадцять четверте.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Підміна понять — хамелеон слів: слово те саме, сенс інший.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Закон тотожності: одне слово = один сенс.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Контрхід: спокійне запитання «Що саме ти маєш на увазі?» замість крику.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконки сумки и тетради<br><span class="vb-label">Атмосфера:</span> узнаваемая школьная уловка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> сумка vs тетрадь под словом «помочь»<br><span class="vb-label">Марко:</span> прищур, смотрит в экран</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s05_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, icons of a bag and a notebook. Focal point: bag vs notebook&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Допоможи мені!» — спочатку допомогти = потримати сумку. Потім — «допомогти мені» = зробити за мене домашнє. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Порівняй: потримати сумку і зробити домашнє. Це однакова «допомога»? Ні — різні речі під одним словом.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Допомогти» змінило сенс: з підтримки на «зробити за іншого». Слово те саме, сенс інший.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s06_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, sun and cloud icons. Focal point: sun and cloud - one morni&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Уранці було сонце. Уранці стало хмарно.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Уранці» в обох випадках = той самий ранок. Змінилася погода, а не слово. Підміни немає.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Час змінився. Погода справді змінилася. Закон тотожності не порушено.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s07_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: phone screen, bubble, &#x27;2x2=4&#x27; icon. Focal point: mathematical equation. Tone: acc&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«2 × 2 = 4. 2 × 2 = 4.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;З числами й точними фактами підміну не підсунеш. «2» — це завжди «2».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точні числа. Підміну підсунути не вдасться.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s08_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, two icons: truth and rudeness under one word. Focal point: &quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Будь чесним!» — говорять правду. Потім: «Будь чесним!» — говорять грубість. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Чесний» = говорити правду. «Чесний» = бути грубим. Це не одне й те саме. Підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Чесність» змінила сенс: зі щирості на грубість. Одне слово, різні речі.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s09_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, ball and exclamation mark icons. Focal point: ball vs excla&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Погуляймо!» — грати у м&#x27;яч. Потім: «Ми ж граємо!» — заважати іншим. Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Грати у м&#x27;яч і заважати іншим — це одне й те саме? Ні. Одне слово — два сенси. Підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Грати» спочатку = м&#x27;яч, потім = хуліганити. Слово те саме, дії різні.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;image&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;src&quot;: &quot;https://pub-77b6fd849494491a8cd26f9e0df3db3f.r2.dev/ep_024/chat_images/ep024_s10_chat.png&quot;, &quot;prompt&quot;: &quot;A small conceptual illustration meant to appear inline inside a chat message bubble in a Telegram-style app.\n\nSubject: Phone screen, bubble, Earth orbiting Sun icon. Focal point: two formulations - on&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Земля обертається навколо Сонця.» — «Сонце стоїть у центрі, а Земля обходить його по колу.» Є підміна?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Ні, підміни немає&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Так, є підміна&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Друге речення не переінакшило ФАКТ — лише описало його іншими словами. Сенс збережено. Це перефразування, не підміна.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слова різні, порівняння інше — але факт той самий: Земля крутиться навколо Сонця. Перефразувати ≠ підмінювати.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило... двадцять четверте.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Підміна понять — хамелеон слів: слово те саме, сенс інший.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Закон тотожності: одне слово = один сенс.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Контрхід: спокійне запитання «Що саме ти маєш на увазі?» замість крику.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
@@ -871,7 +916,7 @@ body.debug-off .voice-subtitle { display: none; }
 </nav>
 
 <script>
-var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
+var CFG={typingBase:80,typingRand:40,interMsg:60,afterSend:80,initDelay:30,voMin:80,voMax:200,voFactor:4,retryDelay:200,recSim:200};
 
 (function() {
   var scenes = document.querySelectorAll('.scene');

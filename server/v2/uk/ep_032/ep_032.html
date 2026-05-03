@@ -463,7 +463,7 @@ body.debug-off .voice-subtitle { display: none; }
   .episode-header h1 { font-size: 1.3rem; }
 }
 </style>
-<style id="v2-prod-overrides">.ipe-debug{display:none!important}.audio-controls,.episode-nav{display:none!important}#v2-audio-controls{position:fixed;top:10px;right:12px;z-index:220;display:flex;gap:6px;align-items:center}#v2-audio-controls button{background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 10px;line-height:1;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;font-weight:600;min-width:36px;text-align:center}#v2-audio-controls button:hover{background:rgba(0,0,0,0.85)}#v2-scene-badge{position:fixed;top:10px;left:12px;z-index:220;background:rgba(0,0,0,0.7);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:0.02em;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,0.22);pointer-events:none}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .author-text,body:not(.audio-mode) section.scene.active.v2-choice-revealed .scene-content .dialogue-block{display:none!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
+<style id="v2-prod-overrides">.ipe-debug{display:none!important}.audio-controls,.episode-nav{display:none!important}#v2-audio-controls{position:fixed;top:10px;right:12px;z-index:220;display:flex;gap:6px;align-items:center}#v2-audio-controls button{background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 10px;line-height:1;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;font-weight:600;min-width:36px;text-align:center}#v2-audio-controls button:hover{background:rgba(0,0,0,0.85)}#v2-scene-badge{position:fixed;top:10px;left:12px;z-index:220;background:rgba(0,0,0,0.7);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:0.02em;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,0.22);pointer-events:none}.scene{animation:none!important}body.audio-mode section.scene:not(.audio-done) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active:not(.v2-choice-revealed) .story-choice{display:none!important}body:not(.audio-mode) section.scene.active.v2-choice-revealed .story-choice{position:static!important;bottom:auto!important;left:auto!important;right:auto!important;padding:0!important;margin-top:1.25rem!important;z-index:auto!important}body.audio-mode section.scene.active{overflow:visible!important}.nav-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}</style>
 <script id="v2-audio-done-tracker">
 (function () {
   var playingSet = new Set();
@@ -542,6 +542,12 @@ body.debug-off .voice-subtitle { display: none; }
     btn.textContent = playing ? "⏸" : "▶";
   }
 
+  function updateV2SpeakerLabel() {
+    var btn = document.getElementById("v2-speaker");
+    if (!btn) return;
+    btn.textContent = document.body.classList.contains("audio-mode") ? "🔊" : "🔇";
+  }
+
   var lastActiveSid = null;
   function checkScene() {
     var active = document.querySelector(".scene.active");
@@ -561,6 +567,7 @@ body.debug-off .voice-subtitle { display: none; }
     audioDoneCheck();
     handleTextModeChoiceGate(active);
     updateV2PlayLabel();
+    updateV2SpeakerLabel();
   }
 
   function init() {
@@ -598,6 +605,36 @@ body.debug-off .voice-subtitle { display: none; }
       });
     }
 
+    // Speaker toggle: проксирует #text-toggle (audio-mode ↔ text-mode).
+    // Сам source-кнопку прячем через .audio-controls{display:none},
+    // поэтому юзеру нужна доступная замена в v2-панели.
+    //
+    // Тонкость: source-скрипт на ПЕРВОМ pointerdown ЛЮБОГО элемента
+    // авто-кликает по #text-toggle (unlockAudio), чтобы преодолеть
+    // autoplay-block. Если мой click-handler ВСЛЕД ЗА ЭТИМ ещё раз
+    // кликнет toggle — двойной toggle обнулится.
+    // Решение: сохраняем audio-mode в pointerdown (мой capture-handler
+    // регистрируется раньше source unlock, потому что мой скрипт в
+    // <head>). В click сравниваем — если unlock уже переключил,
+    // не дублируем; иначе кликаем сами.
+    var preClickAudioMode = null;
+    document.addEventListener("pointerdown", function () {
+      preClickAudioMode = document.body.classList.contains("audio-mode");
+    }, true);
+    var speakerBtn = document.getElementById("v2-speaker");
+    if (speakerBtn) {
+      speakerBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var nowAudioMode = document.body.classList.contains("audio-mode");
+        if (preClickAudioMode !== null && nowAudioMode !== preClickAudioMode) {
+          // Unlock уже сделал toggle за нас — выходим, иначе сбросим.
+          return;
+        }
+        var toggle = document.getElementById("text-toggle");
+        if (toggle) toggle.click();
+      });
+    }
+
     // Язык: /uk/ ↔ /ru/ в том же пути.
     var langBtn = document.getElementById("v2-lang");
     if (langBtn) {
@@ -613,36 +650,44 @@ body.debug-off .voice-subtitle { display: none; }
       });
     }
 
-    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики
-    // (квизы, чат, ветки — всё игнорируется). Если активная сцена
-    // последняя в эпизоде — переходим на data-next-ep (если он ведёт
-    // на существующий файл), иначе показываем "end of episodes".
-    // Убрать перед релизом.
+    // DEBUG-кнопка: форс-скип на следующую сцену в обход игровой логики.
+    // Раньше делали прямой classList.add("active") — но source
+    // initPhoneChat вызывается ТОЛЬКО изнутри showScene(), которое
+    // источник держит в IIFE и наружу не выставляет. Из-за этого при
+    // дебаг-скипе на чат-сцену чат не инициализировался — пузыри
+    // не появлялись, btnNext висел disabled.
+    //
+    // Теперь идём через source goForward: снимаем все блокировки на
+    // активной сцене (chatPending, blocking, choice), помечаем
+    // v2-choice-revealed (чтобы наш capture-handler не перехватил),
+    // и кликаем штатный #btnNext. goForward → showScene → initPhoneChat.
     var dbgBtn = document.getElementById("v2-debug-next");
     if (dbgBtn) {
       dbgBtn.addEventListener("click", function (e) {
         e.stopPropagation();
+        var active = document.querySelector("section.scene.active");
+        if (!active) return;
+        // 1) Снять chat-pending (если чат ещё анимируется)
+        delete active.dataset.chatPending;
+        // 2) Снять blocking-флаг (квиз внутри чата требовал ответа)
+        if (active.dataset.blocking === "true") active.dataset.blocking = "false";
+        // 3) Если есть .story-choice — отметить первый вариант chosen,
+        //    чтобы updateNextButton разблокировал btnNext.
+        var firstChoice = active.querySelector(".choice-option:not(.chosen)");
+        if (firstChoice) firstChoice.classList.add("chosen");
+        // 4) Помечаем v2-choice-revealed — наш capture-handler сразу выйдет.
+        active.classList.add("v2-choice-revealed");
+        // 5) Принудительно включаем btnNext и кликаем.
+        var btn = document.getElementById("btnNext");
+        if (!btn) return;
+        btn.disabled = false;
+        // Если активная сцена — последняя в эпизоде, штатный goForward
+        // сам переведёт на data-next-ep. Если nextEp недоступен —
+        // покажем алерт.
         var sceneEls = document.querySelectorAll("section.scene");
-        var activeEl = document.querySelector("section.scene.active");
-        if (!sceneEls.length || !activeEl) return;
-        var idx = -1;
-        for (var i = 0; i < sceneEls.length; i++) {
-          if (sceneEls[i] === activeEl) { idx = i; break; }
-        }
-        if (idx === -1) return;
-        if (idx + 1 < sceneEls.length) {
-          sceneEls.forEach(function (s) { s.classList.remove("active"); });
-          var nextEl = sceneEls[idx + 1];
-          nextEl.classList.add("active");
-          nextEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          return;
-        }
-        var nextEp = activeEl.dataset.nextEp;
-        if (!nextEp) { alert("end of episodes"); return; }
-        fetch(nextEp, { method: "HEAD" }).then(function (r) {
-          if (r && r.ok) location.href = nextEp;
-          else alert("end of episodes");
-        }).catch(function () { alert("end of episodes"); });
+        var isLast = sceneEls[sceneEls.length - 1] === active;
+        if (isLast && !active.dataset.nextEp) { alert("end of episodes"); return; }
+        btn.click();
       });
     }
 
@@ -675,7 +720,7 @@ body.debug-off .voice-subtitle { display: none; }
 </script>
 </head>
 <body class="lang-uk">
-<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button></div>
+<div id="v2-audio-controls"><button id="v2-rate" type="button" title="Скорость 1× / 2×" aria-label="Скорость">1×</button><button id="v2-play" type="button" title="Play / Pause" aria-label="Play/Pause">▶</button><button id="v2-speaker" type="button" title="Динамик: аудио / текст" aria-label="Динамик">🔇</button><button id="v2-lang" type="button" title="Перевод (UK ↔ RU)" aria-label="Перевод">🌐 Перевод</button><button id="v2-debug-next" type="button" title="DEBUG: перейти к следующей сцене" aria-label="DEBUG Next">⏭ Дальше</button></div>
 <div id="v2-scene-badge">—</div>
 
 
@@ -877,7 +922,7 @@ body.debug-off .voice-subtitle { display: none; }
 </nav>
 
 <script>
-var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
+var CFG={typingBase:80,typingRand:40,interMsg:60,afterSend:80,initDelay:30,voMin:80,voMax:200,voFactor:4,retryDelay:200,recSim:200};
 
 (function() {
   var scenes = document.querySelectorAll('.scene');
