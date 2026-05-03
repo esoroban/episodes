@@ -381,6 +381,38 @@ PROD_OVERRIDES = (
 )
 
 
+# Source иногда содержит image-messages с битым src вида `epNNN/X.webp`
+# (плоский путь, без `../chat_images/`). Эти файлы factory НЕ
+# сгенерил — на проде дают 404 + пустой bubble. Удаляем такие image
+# целиком из чата. Валидные форматы:
+#   ../chat_images/X      — обычный chat-image
+#   chat_images/X         — без префикса (manifest-style, переписывается)
+#   http(s)://... или data:  — абсолютный URL
+_BROKEN_SRC_RE = re.compile(r'^ep\d{3}/.*\.(webp|png|jpg|jpeg)$', re.IGNORECASE)
+
+
+def _is_broken_image_src(src):
+    if not isinstance(src, str):
+        return False
+    return bool(_BROKEN_SRC_RE.match(src))
+
+
+def _drop_broken_images(messages):
+    """Remove image-messages where src points to a never-generated file
+    (`epNNN/X.webp` plain-path). Returns (filtered_messages, n_dropped)."""
+    if not isinstance(messages, list):
+        return messages, 0
+    out = []
+    n_dropped = 0
+    for m in messages:
+        if (isinstance(m, dict) and m.get("t") == "image"
+                and _is_broken_image_src(m.get("src"))):
+            n_dropped += 1
+            continue
+        out.append(m)
+    return out, n_dropped
+
+
 def _reorder_messages(messages):
     """Pair leading image-block with following quizzes so each image lands right
     before its quiz (like a question preview). Then merge each image with the
@@ -443,12 +475,13 @@ def _reorder_messages(messages):
 
 def reorder_chat_messages(html: str) -> tuple[str, int, int]:
     """Walk every data-chat-messages JSON in HTML and reorder image/text pairs.
-    Returns (html, total_images_paired, total_image_text_merged)."""
+    Returns (html, total_images_paired, total_image_text_merged, total_dropped_broken)."""
     pattern = re.compile(r'data-chat-messages="([^"]*)"')
     parts = []
     cursor = 0
     total_paired = 0
     total_merged = 0
+    total_dropped = 0
     for m in pattern.finditer(html):
         parts.append(html[cursor:m.start()])
         encoded = m.group(1)
@@ -458,14 +491,18 @@ def reorder_chat_messages(html: str) -> tuple[str, int, int]:
             parts.append(html[m.start():m.end()])
             cursor = m.end()
             continue
+        # First drop broken-src images (they'd 404 + show empty bubble),
+        # then reorder/merge remaining.
+        messages, n_dropped = _drop_broken_images(messages)
         new_msgs, n_paired, n_merged = _reorder_messages(messages)
         total_paired += n_paired
         total_merged += n_merged
+        total_dropped += n_dropped
         new_encoded = html_mod.escape(json.dumps(new_msgs, ensure_ascii=False), quote=True)
         parts.append(f'data-chat-messages="{new_encoded}"')
         cursor = m.end()
     parts.append(html[cursor:])
-    return "".join(parts), total_paired, total_merged
+    return "".join(parts), total_paired, total_merged, total_dropped
 
 
 def shuffle_quiz_options(html: str, ep_id: str) -> tuple[str, int]:
@@ -643,13 +680,37 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     return html, n_audio, n_images, n_chat
 
 
+def _strip_dangling_next_ep(html: str, src: pathlib.Path) -> tuple[str, int]:
+    """Remove `data-next-ep="…"` if the target episode source HTML doesn't
+    exist (last episode of a partially-built day). Otherwise debug-«⏭ Дальше»
+    HEADs 404 + audio system also tries to preload.
+
+    Source variants seen: `ep_041.html`, `../ep_041/ep_041.html`. Extract the
+    `ep_NNN` token and check combined_output/ep_NNN/ep_NNN.html.
+    """
+    pat = re.compile(r'\sdata-next-ep="([^"]*ep_(\d{3})[^"]*\.html)"')
+    n_stripped = 0
+
+    def sub(m):
+        nonlocal n_stripped
+        target_nnn = m.group(2)
+        target_src = src / f"ep_{target_nnn}" / f"ep_{target_nnn}.html"
+        if target_src.exists():
+            return m.group(0)
+        n_stripped += 1
+        return ""
+
+    return pat.sub(sub, html), n_stripped
+
+
 def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
     src_html = src / f"ep_{nnn}" / f"ep_{nnn}.html"
     if not src_html.exists():
         return {"nnn": nnn, "skipped": True, "reason": f"missing {src_html}"}
 
     html = src_html.read_text(encoding="utf-8")
-    html, n_paired, n_merged = reorder_chat_messages(html)
+    html, n_paired, n_merged, n_dropped = reorder_chat_messages(html)
+    html, n_next_stripped = _strip_dangling_next_ep(html, src)
     html, n_shuffled = shuffle_quiz_options(html, ep_id=str(int(nnn)))
     rewritten, n_audio, n_images, n_chat = rewrite_html(html, public_url, nnn)
 
@@ -666,6 +727,8 @@ def build_episode(src: pathlib.Path, nnn: str, public_url: str) -> dict:
         "shuffled": n_shuffled,
         "paired": n_paired,
         "merged": n_merged,
+        "dropped": n_dropped,
+        "next_stripped": n_next_stripped,
         "out": out_html,
     }
 
@@ -730,6 +793,8 @@ def main() -> int:
     total_shuffled = 0
     total_paired = 0
     total_merged = 0
+    total_dropped = 0
+    total_next_stripped = 0
     built = 0
     skipped = []
     for nnn in nnns:
@@ -742,20 +807,27 @@ def main() -> int:
         total_audio += r["audio"]
         total_images += r["images"]
         total_chat += r["chat_images"]
+        total_dropped += r["dropped"]
+        total_next_stripped += r["next_stripped"]
         total_shuffled += r["shuffled"]
         total_paired += r["paired"]
         total_merged += r["merged"]
+        extras = []
+        if r["dropped"]: extras.append(f"dropped_broken_img: {r['dropped']}")
+        if r["next_stripped"]: extras.append(f"stripped_dangling_next_ep: {r['next_stripped']}")
+        extras_str = ("  ⚠ " + ", ".join(extras)) if extras else ""
         print(f"ep_{nnn}     → {r['out'].relative_to(REPO)}  "
               f"(audio: {r['audio']}, images: {r['images']}, "
               f"chat_images: {r['chat_images']}, "
               f"quiz_shuffled: {r['shuffled']}, "
-              f"img→quiz: {r['paired']}, img+text: {r['merged']})")
+              f"img→quiz: {r['paired']}, img+text: {r['merged']}){extras_str}")
 
     print()
     print(f"built {built}/{len(nnns)} episodes")
     print(f"rewrites — audio: {total_audio}, images: {total_images}, "
           f"chat_images: {total_chat}, quiz_shuffled: {total_shuffled}, "
-          f"images→quizzes: {total_paired}, image+caption: {total_merged}")
+          f"images→quizzes: {total_paired}, image+caption: {total_merged}, "
+          f"dropped_broken_img: {total_dropped}, stripped_dangling_next_ep: {total_next_stripped}")
     if skipped:
         print(f"skipped {len(skipped)}:")
         for nnn, reason in skipped:
