@@ -85,17 +85,17 @@ SRC=/Users/iuriinovosolov/Documents/image_prompts_experiment/combined_output
 BUCKET=sylaslovaassets
 NNN=001   # подставить
 
-# Копируем, следуя симлинкам (-L), с прогрессом, параллельно
-rclone copy "$SRC/ep_$NNN/images" "r2:$BUCKET/ep_$NNN/images" \
-  --copy-links --transfers=8 --checkers=16 --progress
+# Копируем, следуя симлинкам (-L), с прогрессом, параллельно.
+# --exclude .versions/** — НЕ заливать локальные бэкапы старых версий
+# (которые лежат в output/.../.versions/ от experiments/rerender_*).
+RCOPY_OPTS="--copy-links --transfers=8 --checkers=16 --progress --exclude .versions/**"
 
-rclone copy "$SRC/ep_$NNN/audio"  "r2:$BUCKET/ep_$NNN/audio" \
-  --copy-links --transfers=8 --checkers=16 --progress
+rclone copy "$SRC/ep_$NNN/images" "r2:$BUCKET/ep_$NNN/images" $RCOPY_OPTS
+rclone copy "$SRC/ep_$NNN/audio"  "r2:$BUCKET/ep_$NNN/audio"  $RCOPY_OPTS
 
 # chat_images — заливаем только если симлинк есть (не у всех эпизодов)
 if [ -d "$SRC/ep_$NNN/chat_images" ]; then
-  rclone copy "$SRC/ep_$NNN/chat_images" "r2:$BUCKET/ep_$NNN/chat_images" \
-    --copy-links --transfers=8 --checkers=16 --progress
+  rclone copy "$SRC/ep_$NNN/chat_images" "r2:$BUCKET/ep_$NNN/chat_images" $RCOPY_OPTS
 fi
 ```
 
