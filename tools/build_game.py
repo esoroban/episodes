@@ -1067,21 +1067,28 @@ def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") ->
 
     msg_attr = html.escape(_json.dumps(all_msgs, ensure_ascii=False), quote=True)
     phone = _phone_html(msg_attr)
-    # Render visual_brief for EVERY scene in the chain, not just first.
-    # Chained quiz/dialogue scenes each carry their own brief — without this
-    # loop only the first scene's brief survives the merge.
-    vb_parts = []
+    # Combine visual_brief from EVERY scene in the chain into ONE .visual-brief
+    # block. Each sub-brief gets a small scene_id heading inside. This way
+    # there's exactly one "🎨 Visual brief ▸" toggle for the whole chain
+    # (not N toggles cluttering the layout), but artists/QA can still see
+    # which brief belongs to which scene_id when expanded.
+    sub_blocks = []
     for s in chain:
         s_vb = s.get("visual_brief", {})
         s_vb_html = render_visual_brief(s_vb, lang)
         if s_vb_html:
             sid_label = esc(s.get("scene_id", ""))
-            vb_parts.append(
-                f'<div class="vb-chained" data-scene-id="{sid_label}">'
-                f'<div class="vb-chained-label">{sid_label}</div>'
-                f'{s_vb_html}</div>'
+            # Strip outer .visual-brief wrapper from s_vb_html, we'll wrap once.
+            inner = s_vb_html.removeprefix('<div class="visual-brief">').removesuffix('</div>')
+            sub_blocks.append(
+                f'<div class="vb-sub" data-scene-id="{sid_label}">'
+                f'<div class="vb-sub-label">{sid_label}</div>'
+                f'{inner}</div>'
             )
-    vb_html = "\n".join(vb_parts)
+    vb_html = (
+        '<div class="visual-brief">' + "".join(sub_blocks) + "</div>"
+        if sub_blocks else ""
+    )
 
     loc_time = ""
     if location or time_str:
@@ -1463,6 +1470,9 @@ body {
 }
 .visual-brief.open { display: block; }
 .vb-label { color: var(--accent); font-weight: 600; }
+.vb-sub { margin-bottom: 0.6rem; padding-bottom: 0.6rem; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+.vb-sub:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.vb-sub-label { color: var(--accent); font-weight: 700; font-size: 0.75rem; margin-bottom: 0.25rem; opacity: 0.8; font-family: var(--font-ui); }
 /* UK build: hide internal visual briefs + scene-meta (Russian working-lang
    artifacts for artists, not end-user content). Keeps DOM structure identical
    so JSON manifest and scripts stay unchanged. */
