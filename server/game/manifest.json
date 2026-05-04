@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-04T17:09:33Z",
+  "generated_at": "2026-05-04T17:44:11Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -905,13 +905,13 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "84292ac838cc7612"
+          "content_hash": "cceb89449181bd54"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
       "lesson": "11A.2",
-      "scene_count": 26,
-      "quiz_count": 12,
+      "scene_count": 29,
+      "quiz_count": 14,
       "branch_count": 1
     },
     {
