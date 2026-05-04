@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-02T18:15:37Z",
+  "generated_at": "2026-05-04T03:47:07Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -921,7 +921,7 @@
         "ru": {
           "html": "ru/ep_043.html",
           "data": "ru/ep_043.json",
-          "content_hash": "c4062f47afa4b144"
+          "content_hash": "97ce7500c49b01d8"
         }
       },
       "title_ru": "Тринадцатый приём",
