@@ -1015,11 +1015,14 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
               } else {
                 attempts++;
                 quizResults[si]='wrong';
-                /* Inline fail feedback + re-inject same quiz below */
-                if(m.fbFail){
+                /* Inline fail feedback: prefer per-option fb (constructor),
+                   fall back to scene-level fbFail (vote). */
+                var idx=parseInt(b.dataset.i,10);
+                var optFb=(m.o[idx]&&m.o[idx].fb)?m.o[idx].fb:m.fbFail;
+                if(optFb){
                   var fb=document.createElement('div');
                   fb.className='msg-row incoming';
-                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+m.fbFail+'</div><div class="msg-time">'+now()+'</div></div>';
+                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+optFb+'</div><div class="msg-time">'+now()+'</div></div>';
                   chatEl.appendChild(fb);scroll();
                 }
                 setTimeout(function(){showTyping().then(mountQuiz);},CFG.retryDelay);

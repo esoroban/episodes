@@ -432,6 +432,74 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
         if fu_opts:
             quizzes.append(_quiz_block(fu))
 
+    # Constructor: each step becomes a pseudo-quiz; intro/labels/fb/assembled
+    # answer become text_blocks. Mirror what build_chat_messages emits in HTML
+    # so artifact validator stays clean.
+    if scene.get("interaction_type") == "constructor" and scene.get("steps"):
+        sofa_display = _localize_who("sofa", lang) or "Софа"
+        attack = str(scene.get("attack", "")).strip()
+        intro = str(scene.get("intro", "")).strip()
+        if attack:
+            text_blocks.append({"who": sofa_display, "line": "Собеседник говорит:"})
+            text_blocks.append({"who": sofa_display, "line": f"«{attack}»"})
+        if intro:
+            text_blocks.append({"who": sofa_display, "line": intro})
+
+        correct_picks = {}
+        for step in scene.get("steps", []) or []:
+            sstep = step if isinstance(step, dict) else {}
+            sid_step = sstep.get("id", "")
+            label = str(sstep.get("label", "")).strip()
+            hint = str(sstep.get("hint", "")).strip()
+            opts_raw = sstep.get("options", []) or []
+            if label:
+                text_blocks.append({"who": sofa_display, "line": f"▸ {label}"})
+
+            quiz_opts = []
+            correct_fb = ""
+            correct_text = ""
+            for o in opts_raw:
+                if not isinstance(o, dict):
+                    continue
+                quiz_opts.append({
+                    "id": o.get("id", ""),
+                    "text": str(o.get("text", "")).strip(),
+                    "correct": bool(o.get("correct", False)),
+                })
+                if o.get("correct"):
+                    correct_fb = str(o.get("fb", "")).strip()
+                    correct_text = str(o.get("text", "")).strip()
+            correct_picks[sid_step] = correct_text
+
+            quizzes.append({
+                "question": hint,
+                "options": quiz_opts,
+                "correct_logic": "",
+                "feedback_success": correct_fb,
+                "feedback_soft_fail": "",
+            })
+
+            if correct_fb:
+                text_blocks.append({"who": sofa_display, "line": correct_fb})
+
+        template = scene.get("template", "")
+        if template:
+            try:
+                assembled = template.format(**correct_picks)
+            except (KeyError, IndexError):
+                assembled = " ".join(correct_picks.values())
+        else:
+            assembled = " ".join(correct_picks.values())
+
+        outro = str(scene.get("outro", "Готово. Вот что у тебя получилось:")).strip()
+        if outro:
+            text_blocks.append({"who": sofa_display, "line": outro})
+        text_blocks.append({"who": sofa_display, "line": f"«{assembled}»"})
+
+        closing = str(scene.get("closing", "")).strip()
+        if closing:
+            text_blocks.append({"who": sofa_display, "line": closing})
+
     # Choice: options with `next` (no `correct`), top-level OR inside interactions.
     choice = None
     top_choice = [o for o in (scene.get("options", []) or []) if isinstance(o, dict) and "next" in o and "correct" not in o]
@@ -652,7 +720,7 @@ def is_sofa_chat_scene(scene: dict) -> bool:
 
     Rule: Sofa ALWAYS speaks in Telegram. If Sofa is in characters_present
     AND speaks anywhere (dialogue, dialogue_after, interactions, followup,
-    quiz options, unlock button) — render as chat.
+    quiz options, unlock button, constructor steps) — render as chat.
     """
     chars = scene.get("characters_present", [])
     if not any(str(c).lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars):
@@ -660,6 +728,8 @@ def is_sofa_chat_scene(scene: dict) -> bool:
     if scene.get("dialogue") or scene.get("dialogue_after"):
         return True
     if scene.get("unlock_button"):
+        return True
+    if scene.get("interaction_type") == "constructor" and scene.get("steps"):
         return True
     if any("correct" in o for o in scene.get("options", []) or []):
         return True
@@ -716,6 +786,68 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
             msgs.append({"t": "text", "s": "marko", "x": line, "im": "text"})
         else:
             msgs.append({"t": "voiceover", "s": w, "name": _localize_who(who, lang), "x": line})
+
+    # Constructor: multi-step assembly of an answer. Each step is a quiz with
+    # exactly one correct option; assembled answer is precomputed at build time
+    # from the correct picks via `template`. Per-option `fb` field gives custom
+    # feedback for each wrong choice (chat client falls back to fbFail).
+    if scene.get("interaction_type") == "constructor" and scene.get("steps"):
+        attack = str(scene.get("attack", "")).strip()
+        intro = str(scene.get("intro", "")).strip()
+        if attack:
+            msgs.append({"t": "text", "s": "sofa", "x": "\u0421\u043e\u0431\u0435\u0441\u0435\u0434\u043d\u0438\u043a \u0433\u043e\u0432\u043e\u0440\u0438\u0442:"})
+            msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{attack}\u00bb"})
+        if intro:
+            msgs.append({"t": "text", "s": "sofa", "x": intro})
+
+        correct_picks = {}
+        for step in scene.get("steps", []):
+            sid = step.get("id", "")
+            label = str(step.get("label", "")).strip()
+            hint = str(step.get("hint", "")).strip()
+            step_opts = step.get("options", []) or []
+
+            if label:
+                msgs.append({"t": "text", "s": "sofa", "x": f"\u25b8 {label}"})
+
+            quiz_opts = []
+            correct_fb = ""
+            correct_text = ""
+            for o in _shuffle_quiz_opts(label or hint, step_opts):
+                entry = {"x": o.get("text", ""), "c": bool(o.get("correct"))}
+                fb = str(o.get("fb", "")).strip()
+                if fb:
+                    entry["fb"] = fb
+                quiz_opts.append(entry)
+                if o.get("correct"):
+                    correct_fb = fb
+                    correct_text = o.get("text", "")
+            correct_picks[sid] = correct_text
+
+            quiz_msg = {"t": "quiz", "s": "sofa", "q": hint, "o": quiz_opts}
+            msgs.append(quiz_msg)
+
+            if correct_fb:
+                msgs.append({"t": "text", "s": "sofa", "x": correct_fb, "wq": True, "ok": True})
+
+        # Final assembled answer
+        template = scene.get("template", "")
+        if template:
+            try:
+                assembled = template.format(**correct_picks)
+            except (KeyError, IndexError):
+                assembled = " ".join(correct_picks.values())
+        else:
+            assembled = " ".join(correct_picks.values())
+
+        outro = str(scene.get("outro", "\u0413\u043e\u0442\u043e\u0432\u043e. \u0412\u043e\u0442 \u0447\u0442\u043e \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u043e\u0441\u044c:")).strip()
+        if outro:
+            msgs.append({"t": "text", "s": "sofa", "x": outro})
+        msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{assembled}\u00bb"})
+
+        closing = str(scene.get("closing", "")).strip()
+        if closing:
+            msgs.append({"t": "text", "s": "sofa", "x": closing})
 
     quiz_opts = [o for o in scene.get("options", []) if "correct" in o]
     if quiz_opts:
@@ -1858,11 +1990,14 @@ JS = r"""
               } else {
                 attempts++;
                 quizResults[si]='wrong';
-                /* Inline fail feedback + re-inject same quiz below */
-                if(m.fbFail){
+                /* Inline fail feedback: prefer per-option fb (constructor),
+                   fall back to scene-level fbFail (vote). */
+                var idx=parseInt(b.dataset.i,10);
+                var optFb=(m.o[idx]&&m.o[idx].fb)?m.o[idx].fb:m.fbFail;
+                if(optFb){
                   var fb=document.createElement('div');
                   fb.className='msg-row incoming';
-                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+m.fbFail+'</div><div class="msg-time">'+now()+'</div></div>';
+                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+optFb+'</div><div class="msg-time">'+now()+'</div></div>';
                   chatEl.appendChild(fb);scroll();
                 }
                 setTimeout(function(){showTyping().then(mountQuiz);},CFG.retryDelay);

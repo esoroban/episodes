@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-04T09:17:11Z",
+  "generated_at": "2026-05-04T09:42:30Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,13 +889,13 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "75a7a474bffc34a4"
+          "content_hash": "f189f7143ff97d2d"
         }
       },
       "title_ru": "Передемагогировать",
       "lesson": "11A.1",
       "scene_count": 28,
-      "quiz_count": 11,
+      "quiz_count": 20,
       "branch_count": 1
     },
     {
@@ -905,13 +905,13 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "e240e260811e78f8"
+          "content_hash": "84292ac838cc7612"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
       "lesson": "11A.2",
       "scene_count": 26,
-      "quiz_count": 8,
+      "quiz_count": 12,
       "branch_count": 1
     },
     {
@@ -937,13 +937,13 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "c8a9579b7c348961"
+          "content_hash": "9df1e6017d338be7"
         }
       },
       "title_ru": "Карта",
       "lesson": "11B.2",
       "scene_count": 30,
-      "quiz_count": 12,
+      "quiz_count": 18,
       "branch_count": 1
     }
   ]
