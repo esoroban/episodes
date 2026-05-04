@@ -127,7 +127,7 @@ question: "Какая эмоция на её лице?"
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| `interaction_type` | enum | `vote`, `choice`, `open_question`, `none` |
+| `interaction_type` | enum | `vote`, `choice`, `constructor`, `none` |
 | `question` | string | Вопрос к игроку |
 | `options` | list[object] | Варианты: `[{id: a, text: "Факт", correct: true}, ...]` |
 | `correct_logic` | string | Пояснение правильного ответа |
@@ -218,9 +218,9 @@ author_text_after: "Текст ПОСЛЕ диалога, перед quiz."
 - `cliffhanger` — финал эпизода
 
 ### interaction_type
-- `vote` — голосование (факт/мнение/неправда)
-- `choice` — сюжетный выбор
-- `open_question` — открытый вопрос (будущее)
+- `vote` — голосование (факт/мнение/неправда). Может быть «открытым» — все опции с `correct: true`, любая позиция принимается (см. ep_041 s16).
+- `choice` — сюжетный выбор (опции с `next`, без `correct`)
+- `constructor` — пошаговая сборка ответа из выбора по шагам. Поля сцены: `attack`, `intro`, `steps[]` (каждый — `id`, `label`, `hint`, `options[]`), `template`, `closing`. У каждой опции — свой `fb` для именно этой ошибки. Финальный ответ собирается из `correct: true` пиков по `template` и эмитится одним пузырём Софы. См. ep_041 s23 (4-step), ep_041 s24/s25 (2-step), ep_042 s22/s23 (признание частичной правоты), ep_044 s13/s14/s27 (универсальный ответ).
 - `none` — нет взаимодействия
 
 ### branch_type
