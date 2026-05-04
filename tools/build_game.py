@@ -897,8 +897,6 @@ def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") ->
     location = first.get("location", "")
     time_str = first.get("time", "")
     mood = first.get("mood", "")
-    vb = first.get("visual_brief", {})
-
     # Collect all messages from all scenes in chain
     all_msgs = []
     for s in chain:
@@ -937,7 +935,21 @@ def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") ->
 
     msg_attr = html.escape(_json.dumps(all_msgs, ensure_ascii=False), quote=True)
     phone = _phone_html(msg_attr)
-    vb_html = render_visual_brief(vb, lang)
+    # Render visual_brief for EVERY scene in the chain, not just first.
+    # Chained quiz/dialogue scenes each carry their own brief — without this
+    # loop only the first scene's brief survives the merge.
+    vb_parts = []
+    for s in chain:
+        s_vb = s.get("visual_brief", {})
+        s_vb_html = render_visual_brief(s_vb, lang)
+        if s_vb_html:
+            sid_label = esc(s.get("scene_id", ""))
+            vb_parts.append(
+                f'<div class="vb-chained" data-scene-id="{sid_label}">'
+                f'<div class="vb-chained-label">{sid_label}</div>'
+                f'{s_vb_html}</div>'
+            )
+    vb_html = "\n".join(vb_parts)
 
     loc_time = ""
     if location or time_str:
