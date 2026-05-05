@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-04T17:44:11Z",
+  "generated_at": "2026-05-05T04:08:10Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,13 +889,13 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "80d82813f7008c83"
+          "content_hash": "e5f58ef631c3d56d"
         }
       },
       "title_ru": "Передемагогировать",
       "lesson": "11A.1",
-      "scene_count": 38,
-      "quiz_count": 29,
+      "scene_count": 49,
+      "quiz_count": 56,
       "branch_count": 1
     },
     {
