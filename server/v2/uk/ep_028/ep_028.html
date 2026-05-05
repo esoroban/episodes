@@ -531,6 +531,52 @@ body.debug-off .voice-subtitle { display: none; }
     if (btn && btn.disabled) btn.disabled = false;
   }
 
+  // Audio-mode Марко auto-send: source-логика processNext на реплике
+  // Марка ставит chat-input-bar в imode-text/imode-voice и ЖДЁТ клика
+  // ➤ send (или mic). В audio-mode юзер не видит клавиатуру и кнопку
+  // «Далі» — для него сцена замирает (баг ep001_s04, ep007_s03,
+  // ep010_s02 и любая чат-сцена с репликой Марка). Авто-кликаем send/mic
+  // когда озвучка предыдущей реплики Софы доиграла + SILENCE_MS тишины.
+  function handleAudioModeMarko(active) {
+    if (!document.body.classList.contains("audio-mode")) return;
+    var bar = active.querySelector(".chat-input-bar");
+    if (!bar) return;
+    var isText = bar.classList.contains("imode-text");
+    var isVoice = bar.classList.contains("imode-voice");
+    if (!isText && !isVoice) {
+      // bar ушёл из активного режима (imode-disabled между Марко-репликами
+      // или после авто-отправки) → сбрасываем флаг для следующей.
+      delete bar.dataset.v2AutoSent;
+      return;
+    }
+    if (anyPlaying()) return;
+    if (Date.now() - lastActivityAt < SILENCE_MS) return;
+    if (bar.dataset.v2AutoSent === "1") return;
+    bar.dataset.v2AutoSent = "1";
+    if (isText) {
+      var sendBtn = bar.querySelector(".send-btn");
+      if (sendBtn) sendBtn.click();
+    } else {
+      var micBtn = bar.querySelector(".mic-btn");
+      if (micBtn) micBtn.click();
+    }
+  }
+
+  // Audio-mode unlock auto-click: source addUnlock рендерит .unlock-btn
+  // и ЖДЁТ клика юзера, иначе processNext не идёт к следующему msg
+  // (например, к голосовому Софии после "🔓 Розблокувати запис"
+  // в ep001_s04b). В audio-mode сам кликаем после тишины SILENCE_MS.
+  function handleAudioModeUnlock(active) {
+    if (!document.body.classList.contains("audio-mode")) return;
+    var btn = active.querySelector(".unlock-btn:not(.unlocked)");
+    if (!btn) return;
+    if (btn.dataset.v2AutoClicked === "1") return;
+    if (anyPlaying()) return;
+    if (Date.now() - lastActivityAt < SILENCE_MS) return;
+    btn.dataset.v2AutoClicked = "1";
+    btn.click();
+  }
+
   function updateV2PlayLabel() {
     var btn = document.getElementById("v2-play");
     if (!btn) return;
@@ -566,6 +612,8 @@ body.debug-off .voice-subtitle { display: none; }
     }
     audioDoneCheck();
     handleTextModeChoiceGate(active);
+    handleAudioModeMarko(active);
+    handleAudioModeUnlock(active);
     updateV2PlayLabel();
     updateV2SpeakerLabel();
   }
@@ -1659,11 +1707,19 @@ body.audio-mode .scene:not(.has-phone) .audio-strip {
     if (node.classList.contains('msg-row')) {
       const bubble = node.querySelector('.bubble');
       if (!bubble) return '';
-      // в пузыре есть sender-name, текст (div без класса), msg-time, иногда voice-*
-      // возьмём все div-дети и отфильтруем служебные
+      // v2 patch: image-bubble — caption и есть озвучиваемая реплика;
+      // .chat-image-fallback («Описание фото: <prompt>») — UI-only.
+      const __v2cap = bubble.querySelector('.chat-image-caption');
+      if (__v2cap) return __v2cap.textContent.trim();
+      // v2 patch: voice-bubble (msg-row Софии/Софы/Марка с .voice-msg) —
+      // .voice-subtitle и есть озвучиваемая реплика. Без этого
+      // unlock-голос Софии в ep001_s11 ("Братику, почни зі щоденника…")
+      // и любой другой voice в чате не матчится с track.text.
+      const __v2sub = bubble.querySelector('.voice-subtitle');
+      if (__v2sub) return __v2sub.textContent.trim();
       const clone = bubble.cloneNode(true);
       clone.querySelectorAll(
-        '.sender-name, .msg-time, .voice-msg, .voice-subtitle, .quiz-options'
+        '.sender-name, .msg-time, .voice-msg, .voice-subtitle, .quiz-options, .chat-image, .chat-image-fallback'
       ).forEach(e => e.remove());
       return clone.textContent.trim();
     }

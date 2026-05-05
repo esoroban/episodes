@@ -191,6 +191,52 @@ PROD_OVERRIDES = (
     '    if (btn && btn.disabled) btn.disabled = false;\n'
     '  }\n'
     '\n'
+    '  // Audio-mode Марко auto-send: source-логика processNext на реплике\n'
+    '  // Марка ставит chat-input-bar в imode-text/imode-voice и ЖДЁТ клика\n'
+    '  // ➤ send (или mic). В audio-mode юзер не видит клавиатуру и кнопку\n'
+    '  // «Далі» — для него сцена замирает (баг ep001_s04, ep007_s03,\n'
+    '  // ep010_s02 и любая чат-сцена с репликой Марка). Авто-кликаем send/mic\n'
+    '  // когда озвучка предыдущей реплики Софы доиграла + SILENCE_MS тишины.\n'
+    '  function handleAudioModeMarko(active) {\n'
+    '    if (!document.body.classList.contains("audio-mode")) return;\n'
+    '    var bar = active.querySelector(".chat-input-bar");\n'
+    '    if (!bar) return;\n'
+    '    var isText = bar.classList.contains("imode-text");\n'
+    '    var isVoice = bar.classList.contains("imode-voice");\n'
+    '    if (!isText && !isVoice) {\n'
+    '      // bar ушёл из активного режима (imode-disabled между Марко-репликами\n'
+    '      // или после авто-отправки) → сбрасываем флаг для следующей.\n'
+    '      delete bar.dataset.v2AutoSent;\n'
+    '      return;\n'
+    '    }\n'
+    '    if (anyPlaying()) return;\n'
+    '    if (Date.now() - lastActivityAt < SILENCE_MS) return;\n'
+    '    if (bar.dataset.v2AutoSent === "1") return;\n'
+    '    bar.dataset.v2AutoSent = "1";\n'
+    '    if (isText) {\n'
+    '      var sendBtn = bar.querySelector(".send-btn");\n'
+    '      if (sendBtn) sendBtn.click();\n'
+    '    } else {\n'
+    '      var micBtn = bar.querySelector(".mic-btn");\n'
+    '      if (micBtn) micBtn.click();\n'
+    '    }\n'
+    '  }\n'
+    '\n'
+    '  // Audio-mode unlock auto-click: source addUnlock рендерит .unlock-btn\n'
+    '  // и ЖДЁТ клика юзера, иначе processNext не идёт к следующему msg\n'
+    '  // (например, к голосовому Софии после "🔓 Розблокувати запис"\n'
+    '  // в ep001_s04b). В audio-mode сам кликаем после тишины SILENCE_MS.\n'
+    '  function handleAudioModeUnlock(active) {\n'
+    '    if (!document.body.classList.contains("audio-mode")) return;\n'
+    '    var btn = active.querySelector(".unlock-btn:not(.unlocked)");\n'
+    '    if (!btn) return;\n'
+    '    if (btn.dataset.v2AutoClicked === "1") return;\n'
+    '    if (anyPlaying()) return;\n'
+    '    if (Date.now() - lastActivityAt < SILENCE_MS) return;\n'
+    '    btn.dataset.v2AutoClicked = "1";\n'
+    '    btn.click();\n'
+    '  }\n'
+    '\n'
     '  function updateV2PlayLabel() {\n'
     '    var btn = document.getElementById("v2-play");\n'
     '    if (!btn) return;\n'
@@ -226,6 +272,8 @@ PROD_OVERRIDES = (
     '    }\n'
     '    audioDoneCheck();\n'
     '    handleTextModeChoiceGate(active);\n'
+    '    handleAudioModeMarko(active);\n'
+    '    handleAudioModeUnlock(active);\n'
     '    updateV2PlayLabel();\n'
     '    updateV2SpeakerLabel();\n'
     '  }\n'
@@ -654,6 +702,47 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     old_js = '\'<img src="images/\'+m.src+\'"'
     new_js = '\'<img src="\'+(/:\\/\\//.test(m.src)?m.src:"images/"+m.src)+\'"'
     html = html.replace(old_js, new_js)
+
+    # Патч extractChatText: для image-bubble озвучивать caption, а не
+    # склеенный «Описание фото: <prompt>» + caption. Без этого
+    # tracksByText не находит трек по тексту → первая реплика Софы
+    # в _sofa-сценах с chat_image (ep002_s03_sofa, ep004_s10_sofa,
+    # ep006_s07_sofa, ep008_s03b_sofa, ep010_s03_sofa, ep011_s04_sofa
+    # и все сцены с реальными подписями) играет без звука.
+    old_extract = (
+        "      const bubble = node.querySelector('.bubble');\n"
+        "      if (!bubble) return '';\n"
+        "      // в пузыре есть sender-name, текст (div без класса), msg-time, иногда voice-*\n"
+        "      // возьмём все div-дети и отфильтруем служебные\n"
+        "      const clone = bubble.cloneNode(true);\n"
+        "      clone.querySelectorAll(\n"
+        "        '.sender-name, .msg-time, .voice-msg, .voice-subtitle, .quiz-options'\n"
+        "      ).forEach(e => e.remove());\n"
+        "      return clone.textContent.trim();"
+    )
+    new_extract = (
+        "      const bubble = node.querySelector('.bubble');\n"
+        "      if (!bubble) return '';\n"
+        "      // v2 patch: image-bubble — caption и есть озвучиваемая реплика;\n"
+        "      // .chat-image-fallback («Описание фото: <prompt>») — UI-only.\n"
+        "      const __v2cap = bubble.querySelector('.chat-image-caption');\n"
+        "      if (__v2cap) return __v2cap.textContent.trim();\n"
+        "      // v2 patch: voice-bubble (msg-row Софии/Софы/Марка с .voice-msg) —\n"
+        "      // .voice-subtitle и есть озвучиваемая реплика. Без этого\n"
+        "      // unlock-голос Софии в ep001_s11 (\"Братику, почни зі щоденника…\")\n"
+        "      // и любой другой voice в чате не матчится с track.text.\n"
+        "      const __v2sub = bubble.querySelector('.voice-subtitle');\n"
+        "      if (__v2sub) return __v2sub.textContent.trim();\n"
+        "      const clone = bubble.cloneNode(true);\n"
+        "      clone.querySelectorAll(\n"
+        "        '.sender-name, .msg-time, .voice-msg, .voice-subtitle, .quiz-options, .chat-image, .chat-image-fallback'\n"
+        "      ).forEach(e => e.remove());\n"
+        "      return clone.textContent.trim();"
+    )
+    n_extract = html.count(old_extract)
+    if n_extract != 1:
+        print(f"  WARN: extractChatText-pattern matched {n_extract} times (expected 1)")
+    html = html.replace(old_extract, new_extract)
 
     html = audio_pat.sub(sub_audio, html)
     html = image_pat.sub(sub_image, html)
