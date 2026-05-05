@@ -288,7 +288,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s05",
+        "next": "ep043_s06",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -314,12 +314,12 @@
           {
             "id": "stay_listen",
             "text": "Остаюсь. Дослушаю до тринадцатого. Знание важнее.",
-            "next": "ep043_s05"
+            "next": "ep043_s06"
           },
           {
             "id": "leave_now",
             "text": "Ухожу. Не хочу заразиться речью.",
-            "next": "ep043_s04b"
+            "next": "ep043_s05"
           }
         ]
       },
@@ -348,7 +348,7 @@
       "source_ref": "day_11.ep43.drama"
     },
     {
-      "id": "ep043_s04b",
+      "id": "ep043_s05",
       "kind": "narrative",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города",
@@ -362,10 +362,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s05",
+        "next": "ep043_s06",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep043_s05"
+        "merge_to": "ep043_s06"
       },
       "text": [
         {
@@ -416,7 +416,7 @@
       "source_ref": "day_11.ep43.drama"
     },
     {
-      "id": "ep043_s05",
+      "id": "ep043_s06",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города",
@@ -432,7 +432,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s06",
+        "next": "ep043_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -518,7 +518,7 @@
       "source_ref": "day_11.ep43.drama"
     },
     {
-      "id": "ep043_s06",
+      "id": "ep043_s07",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города",
@@ -534,7 +534,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s07",
+        "next": "ep043_s08",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -594,7 +594,7 @@
       "source_ref": "day_11.ep43.drama"
     },
     {
-      "id": "ep043_s07",
+      "id": "ep043_s08",
       "kind": "narrative",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города",
@@ -610,7 +610,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s08",
+        "next": "ep043_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -679,7 +679,7 @@
       "source_ref": "day_11.ep43.drama"
     },
     {
-      "id": "ep043_s08",
+      "id": "ep043_s09",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -693,7 +693,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s09",
+        "next": "ep043_s10",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -729,7 +729,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s09",
+      "id": "ep043_s10",
       "kind": "narrative",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города",
@@ -742,7 +742,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s10",
+        "next": "ep043_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -819,7 +819,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s10",
+      "id": "ep043_s11",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -833,7 +833,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s11",
+        "next": "ep043_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -884,7 +884,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s11",
+      "id": "ep043_s12",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -898,7 +898,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s12",
+        "next": "ep043_s13",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -949,7 +949,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s12",
+      "id": "ep043_s13",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -963,7 +963,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s13",
+        "next": "ep043_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1009,7 +1009,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s13",
+      "id": "ep043_s14",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -1023,7 +1023,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s14",
+        "next": "ep043_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1069,7 +1069,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s14",
+      "id": "ep043_s15",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -1083,7 +1083,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s15",
+        "next": "ep043_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1129,7 +1129,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s15",
+      "id": "ep043_s16",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -1143,7 +1143,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s16_sofa",
+        "next": "ep043_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1189,7 +1189,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s16_sofa",
+      "id": "ep043_s17",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города",
@@ -1203,7 +1203,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s17",
+        "next": "ep043_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1247,7 +1247,7 @@
       "source_ref": "day_11.ep43.sofa_block"
     },
     {
-      "id": "ep043_s17",
+      "id": "ep043_s18",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1261,7 +1261,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s18",
+        "next": "ep043_s19",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1312,7 +1312,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s18",
+      "id": "ep043_s19",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1326,7 +1326,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s19",
+        "next": "ep043_s20",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1377,7 +1377,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s19",
+      "id": "ep043_s20",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1391,7 +1391,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s20",
+        "next": "ep043_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1442,7 +1442,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s20",
+      "id": "ep043_s21",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1456,7 +1456,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s21",
+        "next": "ep043_s22",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1507,7 +1507,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s21",
+      "id": "ep043_s22",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1521,7 +1521,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s22",
+        "next": "ep043_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1572,7 +1572,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s22",
+      "id": "ep043_s23",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1586,7 +1586,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s23",
+        "next": "ep043_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1637,7 +1637,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s23",
+      "id": "ep043_s24",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1651,7 +1651,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s24",
+        "next": "ep043_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1702,7 +1702,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s24",
+      "id": "ep043_s25",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1716,7 +1716,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s25",
+        "next": "ep043_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1767,7 +1767,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s25",
+      "id": "ep043_s26",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1782,7 +1782,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s26",
+        "next": "ep043_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1834,7 +1834,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s26",
+      "id": "ep043_s27",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1849,7 +1849,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s27",
+        "next": "ep043_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1920,7 +1920,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s27",
+      "id": "ep043_s28",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1934,7 +1934,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s28",
+        "next": "ep043_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1980,7 +1980,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s28",
+      "id": "ep043_s29",
       "kind": "quiz",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",
@@ -1994,7 +1994,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep043_s29_end",
+        "next": "ep043_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2045,7 +2045,7 @@
       "source_ref": "day_11.ep43.challenge"
     },
     {
-      "id": "ep043_s29_end",
+      "id": "ep043_s30",
       "kind": "cliffhanger",
       "is_chat": true,
       "location": "Центральная площадь Зеркального города, у стены",

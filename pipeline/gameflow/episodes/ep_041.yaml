@@ -256,11 +256,11 @@ scenes:
     options:
       - id: take_stage
         text: "Выхожу на сцену. Перехватываю — словами."
-        next: ep041_s05
+        next: ep041_s26
       - id: stay_shadow
         text: "Остаюсь в тени. Не хочу быть как Рей."
-        next: ep041_s04b
-    next_default: ep041_s05
+        next: ep041_s05
+    next_default: ep041_s26
     visual_brief:
       background: "Дверь зала. Свет со сцены падает дорожкой к Марко. Между ним и сценой — десятки спин"
       camera: medium
@@ -278,7 +278,7 @@ scenes:
       ui_mode: choice
 
   # ── СЦЕНА 4b: Detour — остался в тени ────────────────────────────
-  - scene_id: ep041_s04b
+  - scene_id: ep041_s05
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: narrative
@@ -307,8 +307,8 @@ scenes:
       ещё говорит: ровно, как заведённая пластинка, словно не
       замечал, что зал на секунду пустел.
     mood: "чистый отказ — тоже выбор, и его цена видна"
-    merge_to: ep041_s05
-    next_default: ep041_s05
+    merge_to: ep041_s26
+    next_default: ep041_s26
     visual_brief:
       background: "Зал почти пустой, последние спины уходят мимо Марко. Свет на сцене ещё горит. Рей продолжает говорить"
       camera: wide
@@ -339,7 +339,7 @@ scenes:
   # ──────────────────────────────────────────────────────────────────
 
   # ── СЦЕНА 04_drill_intro: Софа — рамка-вход в drill ──────────────
-  - scene_id: ep041_s04_drill_intro
+  - scene_id: ep041_s06
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -356,7 +356,7 @@ scenes:
       - who: Софа
         line: "Девять приёмов. Один за другим. Поехали."
     mood: "Софа в кармане суфлирует, Марко на сцене"
-    next_default: ep041_s04_d1
+    next_default: ep041_s07
     visual_brief:
       background: "Экран телефона у входа в зал, четыре пузыря Софы — голубое свечение, плотный ритм"
       camera: close-up
@@ -370,7 +370,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 04_d1: Drill 1 — нападка на личность ───────────────────
-  - scene_id: ep041_s04_d1
+  - scene_id: ep041_s07
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -423,7 +423,7 @@ scenes:
     skip_assembled: true
     closing: "Это нападка на личность. Ты ни слова не сказал про то, чем Рей не прав. Ты атаковал его как человека: «рупор», «повторяет», «посредник». Толпа уйдёт с чувством «Рею верить нельзя» — но не будет знать, почему. Это работает: чувство опережает любые объяснения. Теперь произнеси это на сцене."
     mood: "drill 1 — нападка на личность"
-    next_default: ep041_s04_d1_stage
+    next_default: ep041_s08
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма ярлыка-наклейки на фигурке Рея"
       camera: close-up
@@ -437,7 +437,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d1_stage: Марко произносит на сцене — приём 1 ──────
-  - scene_id: ep041_s04_d1_stage
+  - scene_id: ep041_s08
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -454,7 +454,7 @@ scenes:
       Один-два взгляда стали колючими. Рей шевелит пальцами на краю сцены —
       заметил.
     mood: "первый удар: толпа дрогнула, Рей-фигура поколеблена"
-    next_default: ep041_s04_d2
+    next_default: ep041_s09
     visual_brief:
       background: "Сцена. Марко в центре, спокойная поза, голос ровный. Рей сбоку — пальцы у груди дрогнули. Толпа на переднем плане — несколько лиц с напряжённым выражением"
       camera: medium
@@ -473,7 +473,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d2: Drill 2 — ложный авторитет ──────────────────────
-  - scene_id: ep041_s04_d2
+  - scene_id: ep041_s09
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -526,7 +526,7 @@ scenes:
     skip_assembled: true
     closing: "Ложный авторитет. Сорок лет жизни — это не то же самое, что знание темы. «Этого достаточно» закрывает разговор раньше, чем кто-то спросит — а кто этот человек, и откуда он знает? Толпа слышит «сорок лет» и сразу верит — мы любим истории и уважаем возраст. Но никто не проверил, что именно сказал старик. Теперь произнеси это на сцене."
     mood: "drill 2 — ложный авторитет"
-    next_default: ep041_s04_d2_stage
+    next_default: ep041_s10
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма пожилого силуэта со звёздами «40 лет» — но без диплома"
       camera: close-up
@@ -540,7 +540,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d2_stage: Марко произносит на сцене — приём 2 ──────
-  - scene_id: ep041_s04_d2_stage
+  - scene_id: ep041_s10
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -559,7 +559,7 @@ scenes:
       Михалыча, наверно». Никто не спрашивает, где этот продавец и
       что именно он сказал дословно.
     mood: "приём 2 сработал: возраст принят за экспертизу без проверки"
-    next_default: ep041_s04_d3
+    next_default: ep041_s11
     visual_brief:
       background: "Сцена. Марко с лёгким кивком в зал. Толпа на переднем плане — часть голов кивает синхронно. Кто-то перешёптывается с соседом"
       camera: medium
@@ -574,7 +574,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d3: Drill 3 — ложная дилемма ────────────────────────
-  - scene_id: ep041_s04_d3
+  - scene_id: ep041_s11
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -627,7 +627,7 @@ scenes:
     skip_assembled: true
     closing: "Ложная дилемма. На самом деле между «правдой» и «Голосом» куча позиций: кто-то верит наполовину, кто-то хочет проверить, кому-то всё равно. Ты убрал все эти варианты — оставил только два. «Третьего не дано» — это неправда, но в моменте у толпы нет времени это понять. Теперь произнеси это на сцене."
     mood: "drill 3 — ложная дилемма"
-    next_default: ep041_s04_d3_stage
+    next_default: ep041_s12
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма двух флагов с фигурой между ними и часами «решай сейчас»"
       camera: close-up
@@ -641,7 +641,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d3_stage: Марко произносит на сцене — приём 3 ──────
-  - scene_id: ep041_s04_d3_stage
+  - scene_id: ep041_s12
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -660,7 +660,7 @@ scenes:
       Несколько человек поворачивают головы к Рею с вопросом: «А ты на
       чьей стороне?» Рей отступает ещё на полшага.
     mood: "приём 3 сработал: толпа замерла перед ложным выбором"
-    next_default: ep041_s04_d4
+    next_default: ep041_s13
     visual_brief:
       background: "Сцена. Марко с поднятыми ладонями — двое весов. Рей отступил ещё на шаг. Толпа замерла, лица напряжены"
       camera: medium
@@ -679,7 +679,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d4: Drill 4 — страшная цепочка ──────────────────────
-  - scene_id: ep041_s04_d4
+  - scene_id: ep041_s13
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -732,7 +732,7 @@ scenes:
     skip_assembled: true
     closing: "Страшная цепочка. Каждое звено по отдельности — просто догадка. Никто не доказал, что одно ведёт к другому. Но они стоят рядом, и мозг сам склеивает их в причину. В конце — самый сильный страх (потеря детей) — он выключает любое сомнение. Никакого довода про молчание нет — только страшная история. Теперь произнеси это на сцене."
     mood: "drill 4 — страшная цепочка"
-    next_default: ep041_s04_d4_stage
+    next_default: ep041_s14
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма падающих костяшек домино, последняя — с тенью ребёнка"
       camera: close-up
@@ -746,7 +746,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d4_stage: Марко произносит на сцене — приём 4 ──────
-  - scene_id: ep041_s04_d4_stage
+  - scene_id: ep041_s14
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -764,7 +764,7 @@ scenes:
       уже легло. Несколько матерей в зале сжимают руки. Сосед
       шепчет соседу. Страх запущен.
     mood: "приём 4: страх запущен — слово «дети» работает само"
-    next_default: ep041_s04_d5
+    next_default: ep041_s15
     visual_brief:
       background: "Сцена. Марко тихо, сосредоточенно. В первом ряду — родитель вскочил. Другие матери сжимают руки в коленях"
       camera: medium
@@ -779,7 +779,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d5: Drill 5 — поспешное обобщение + «все» ───────────
-  - scene_id: ep041_s04_d5
+  - scene_id: ep041_s15
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -832,7 +832,7 @@ scenes:
     skip_assembled: true
     closing: "Поспешное обобщение через «ВСЕ» + ярлык на несогласных. Никто в зале не проверил — реально ли все? Большинство просто стесняется первым возразить, и это играет за тебя. «Кто не с нами — против собственных детей» заставляет молчащих встать на твою сторону — иначе они выглядят плохими родителями. Теперь произнеси это на сцене."
     mood: "drill 5 — давление через большинство"
-    next_default: ep041_s04_d5_stage
+    next_default: ep041_s16
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма большого слова «ВСЕ» над толпой одинаковых силуэтов"
       camera: close-up
@@ -846,7 +846,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d5_stage: Марко произносит на сцене — приём 5 ──────
-  - scene_id: ep041_s04_d5_stage
+  - scene_id: ep041_s16
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -865,7 +865,7 @@ scenes:
       детей». Молчание становится подтверждением. «Все согласны» —
       ловушка захлопнулась.
     mood: "приём 5: ловушка большинства захлопнулась — молчание = согласие"
-    next_default: ep041_s04_d6
+    next_default: ep041_s17
     visual_brief:
       background: "Сцена. Марко медленно окидывает зал взглядом. Толпа на переднем плане — лица переглядываются, никто не возражает, тревожное молчание"
       camera: medium
@@ -880,7 +880,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d6: Drill 6 — соломенное чучело ─────────────────────
-  - scene_id: ep041_s04_d6
+  - scene_id: ep041_s17
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -933,7 +933,7 @@ scenes:
     skip_assembled: true
     closing: "Соломенное чучело. Ты атаковал не Рея, а ЧУЧЕЛО, которое сам слепил из его слов. Настоящие слова Рея были мягче. Толпа не помнит, что именно говорил Рей — помнит, что ты пересказал. И в этом весь приём: переписать соперника, а потом победить переписанное. Теперь произнеси это на сцене."
     mood: "drill 6 — соломенное чучело"
-    next_default: ep041_s04_d6_stage
+    next_default: ep041_s18
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма соломенной фигуры в одежде Рея и стрелы в неё"
       camera: close-up
@@ -947,7 +947,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d6_stage: Марко произносит на сцене — приём 6 ──────
-  - scene_id: ep041_s04_d6_stage
+  - scene_id: ep041_s18
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -967,7 +967,7 @@ scenes:
       открывает рот возразить — но толпа уже смеётся над тем, чего
       Рей не говорил.
     mood: "приём 6: чучело собрано — толпа смеётся над тем, чего не было"
-    next_default: ep041_s04_d7
+    next_default: ep041_s19
     visual_brief:
       background: "Сцена. Марко с театральным жестом плечами. Рей открывает рот возразить. Толпа на переднем плане — кто-то уже усмехается, один человек в зале протестует, но его не слышат"
       camera: medium
@@ -986,7 +986,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d7: Drill 7 — после = вследствие ────────────────────
-  - scene_id: ep041_s04_d7
+  - scene_id: ep041_s19
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -1039,7 +1039,7 @@ scenes:
     skip_assembled: true
     closing: "После — не значит из-за. То, что одно событие случилось после другого, не доказывает, что первое — причина. Но мозг сам склеивает соседние события в причину. «Делайте выводы» — ты переложил вину на слушателей. Если кто-то потом скажет «ты обвинил Рея» — ответишь: «я только привёл факт». Хитрая ловушка. Теперь произнеси это на сцене."
     mood: "drill 7 — после = из-за"
-    next_default: ep041_s04_d7_stage
+    next_default: ep041_s20
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма двух событий на временной шкале со стрелкой-вопросом между ними"
       camera: close-up
@@ -1053,7 +1053,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d7_stage: Марко произносит на сцене — приём 7 ──────
-  - scene_id: ep041_s04_d7_stage
+  - scene_id: ep041_s20
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1073,7 +1073,7 @@ scenes:
       связано с другим?» Слово «исчезают» рядом со словом «Рей» —
       этого хватило.
     mood: "приём 7: связь подсажена — мозг достроил причинность"
-    next_default: ep041_s04_d8
+    next_default: ep041_s21
     visual_brief:
       background: "Сцена. Марко в паузе, рука указывает в сторону. Толпа на переднем плане — кто-то крестится, кто-то отодвинулся от соседа, шёпот"
       camera: medium
@@ -1088,7 +1088,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d8: Drill 8 — tu quoque ─────────────────────────────
-  - scene_id: ep041_s04_d8
+  - scene_id: ep041_s21
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -1141,7 +1141,7 @@ scenes:
     skip_assembled: true
     closing: "Встречный укор — «и ты сам такой». Ты НЕ ОТВЕТИЛ на обвинение про план. Ты сделал так, чтобы толпа забыла исходный вопрос и переключилась на Рея. Это очень распространённый приём — родители его узнают по детским спорам «а сам-то». Теперь произнеси это на сцене."
     mood: "drill 8 — встречный укор"
-    next_default: ep041_s04_d8_stage
+    next_default: ep041_s22
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма стрелки от Марко к Рею и обратно — двойное направление"
       camera: close-up
@@ -1155,7 +1155,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d8_stage: Марко произносит на сцене — приём 8 ──────
-  - scene_id: ep041_s04_d8_stage
+  - scene_id: ep041_s22
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1173,7 +1173,7 @@ scenes:
       Марко свободен. Рей открывает рот, но не знает, с чего начать.
       Он не готовился отвечать про себя — он готовился атаковать Марко.
     mood: "приём 8 сработал: толпа ждёт ответа от Рея, он не находит слов"
-    next_default: ep041_s04_d9
+    next_default: ep041_s23
     visual_brief:
       background: "Сцена. Марко с улыбкой к Рею. Рей открыл рот, но молчит. Толпа на переднем плане — головы повёрнуты к Рею, не к Марко"
       camera: medium
@@ -1192,7 +1192,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_d9: Drill 9 — праетериция ────────────────────────────
-  - scene_id: ep041_s04_d9
+  - scene_id: ep041_s23
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: quiz
@@ -1245,7 +1245,7 @@ scenes:
     skip_assembled: true
     closing: "Приём «я не говорю, что...». Ты громко произнёс слово «предатель» — и сразу добавил «я не говорю». Слово прозвучало, ответственности за него у тебя нет. «Каждый сделает вывод» — ты переложил вину на слушателей. Если кто-то потом скажет «ты назвал Рея предателем» — ответишь: «я как раз сказал, что НЕ называл». Самая хитрая ловушка из девяти. Теперь произнеси это на сцене."
     mood: "drill 9 — «я не говорю, что...»"
-    next_default: ep041_s04_d9_stage
+    next_default: ep041_s24
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма щита с надписью «я НЕ говорю» — а за ним меч с надписью «предатель»"
       camera: close-up
@@ -1259,7 +1259,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 04_d9_stage: Марко произносит на сцене — приём 9 ──────
-  - scene_id: ep041_s04_d9_stage
+  - scene_id: ep041_s24
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1279,7 +1279,7 @@ scenes:
       сделал. Камень в груди Марко тяжелее всех восьми предыдущих
       вместе.
     mood: "приём 9: обвинение прозвучало в тишине; камень в груди тяжелее всех"
-    next_default: ep041_s04_drill_outro
+    next_default: ep041_s25
     visual_brief:
       background: "Сцена. Марко в задумчивой полу-улыбке. Рей бледно-серый, плечи опустились. Толпа в полной тишине — ни вздоха"
       camera: medium
@@ -1298,7 +1298,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 04_drill_outro: Софа — рамка-выход из drill ────────────
-  - scene_id: ep041_s04_drill_outro
+  - scene_id: ep041_s25
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1311,7 +1311,7 @@ scenes:
       - who: Софа
         line: "Камень в груди — да? Запомни его. Это цена."
     mood: "выход из drill — толпа перехвачена, Рей сейчас сдастся"
-    next_default: ep041_s06
+    next_default: ep041_s27
     visual_brief:
       background: "Экран телефона, два пузыря Софы — голубое свечение, тихий ритм. На фоне — толпа лицом к Марко"
       camera: close-up
@@ -1325,7 +1325,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 5: Марко поднимается на сцену — Софа в кармане ────────
-  - scene_id: ep041_s05
+  - scene_id: ep041_s26
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: narrative
@@ -1341,7 +1341,7 @@ scenes:
 
       Тишина. Время начинать.
     mood: "Марко на сцене, готов; Софа суфлирует из кармана"
-    next_default: ep041_s04_drill_intro
+    next_default: ep041_s06
     visual_brief:
       background: "Сцена крупно. Марко в центре, прожектор сверху. Рей отступил на шаг. Толпа на переднем плане — лица подняты. Телефон Марко в кармане — экран чуть светится"
       camera: medium
@@ -1360,7 +1360,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 6: Толпа переключается, Рей замолкает ──────────────────
-  - scene_id: ep041_s06
+  - scene_id: ep041_s27
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: narrative
@@ -1376,7 +1376,7 @@ scenes:
 
       Это... пьянит. И пугает одновременно.
     mood: "победа — но с тёмным привкусом"
-    next_default: ep041_s07
+    next_default: ep041_s28
     visual_brief:
       background: "Сцена. Марко в свете, Рей в тени за его спиной. Толпа повёрнута к Марко"
       camera: medium
@@ -1395,7 +1395,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 7: Сем дёргает за рукав — «В чём разница?» ────────────
-  - scene_id: ep041_s07
+  - scene_id: ep041_s28
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1415,7 +1415,7 @@ scenes:
       Марко смотрит на свои руки — широко раскинутые. Как у Рея.
       Точно как у Рея.
     mood: "вопрос младшего — пробивает эйфорию"
-    next_default: ep041_s07b
+    next_default: ep041_s29
     visual_brief:
       background: "Край сцены. Сем тянет за рукав, Марко смотрит вниз. Свет прожектора падает сбоку"
       camera: close-up
@@ -1433,7 +1433,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 7b: Анна из зала — живое возражение ───────────────────
-  - scene_id: ep041_s07b
+  - scene_id: ep041_s29
     episode_id: 41
     source_ref: day_11.ep41.drama
     scene_type: dialogue
@@ -1475,7 +1475,7 @@ scenes:
       Девять приёмов давили на толпу — пока не появился один
       человек, который слушает. И всё рассыпалось.
     mood: "тройной провал Марко: приём прозрачен, честный ответ не складывается, тишина = капитуляция"
-    next_default: ep041_s07c
+    next_default: ep041_s30
     visual_brief:
       background: "Зал. В третьем ряду встала женщина — Анна. Простая куртка, спокойное лицо. Толпа смотрит на неё. Марко на сцене застыл"
       camera: medium
@@ -1494,7 +1494,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 7c: Софа — это и есть возражение ──────────────────────
-  - scene_id: ep041_s07c
+  - scene_id: ep041_s30
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: dialogue
@@ -1513,7 +1513,7 @@ scenes:
       - who: Софа
         line: "Сейчас разберём, как этот «человеческий» инструмент устроен."
     mood: "Софа маркирует возражение и его силу против демагогии — переход к теории"
-    next_default: ep041_s08
+    next_default: ep041_s31
     visual_brief:
       background: "Экран телефона, четыре пузыря Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -1527,7 +1527,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 8: Теория — возражение + структура ─────────────────────
-  - scene_id: ep041_s08
+  - scene_id: ep041_s31
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: narrative
@@ -1567,7 +1567,7 @@ scenes:
       Главное: возражение — не слабее нападки. Оно сильнее. Потому
       что нападка только злит. Возражение — заставляет думать.
     mood: "карта инструмента — четыре шага"
-    next_default: ep041_s09
+    next_default: ep041_s32
     visual_brief:
       background: "Край сцены в расфокусе. По центру — четыре ступени: «повтори → уважение → мнение → причина». Сбоку — два прицела: один в человека (нападка), другой в облако-аргумент (возражение)"
       camera: medium
@@ -1584,7 +1584,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 9: Sofa quiz 1 — нападка через ярлык ───────────────────
-  - scene_id: ep041_s09
+  - scene_id: ep041_s32
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1604,7 +1604,7 @@ scenes:
     feedback_success: "Ярлык «глупые» — удар по человеку. Нападка."
     feedback_soft_fail: "Возражение содержит причину и обращено к идее. Здесь — оскорбление вместо аргумента. Идея собеседника не упомянута. Это нападка через ярлык."
     mood: "разминка — нападка через ярлык"
-    next_default: ep041_s10
+    next_default: ep041_s33
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма ярлыка-наклейки «глупые» на группе фигурок"
       camera: close-up
@@ -1618,7 +1618,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 10: Sofa quiz 2 — возражение через факт ────────────────
-  - scene_id: ep041_s10
+  - scene_id: ep041_s33
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1638,7 +1638,7 @@ scenes:
     feedback_success: "Спорит с данными, не с человеком. Возражение."
     feedback_soft_fail: "Нападка бьёт по человеку — ярлыками или оскорблениями. Здесь — конкретная причина (устаревшие данные). Это возражение по аргументу."
     mood: "разминка — возражение через факт"
-    next_default: ep041_s11
+    next_default: ep041_s34
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма календаря «прошлый год» со стрелкой к «сейчас»"
       camera: close-up
@@ -1652,7 +1652,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 11: Sofa quiz 3 — нападка через компетентность ─────────
-  - scene_id: ep041_s11
+  - scene_id: ep041_s34
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1672,7 +1672,7 @@ scenes:
     feedback_success: "Удар по человеку — нападка."
     feedback_soft_fail: "Возражение требует причину и обращено к идее. Здесь — оценка человека «совсем не разбираешься», без аргумента по существу. Идея даже не упомянута. Это нападка через компетентность."
     mood: "разминка — нападка через компетентность"
-    next_default: ep041_s12
+    next_default: ep041_s35
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма перечёркнутой фигурки (нападка) рядом с нетронутым облаком-аргументом"
       camera: close-up
@@ -1686,7 +1686,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 12: Sofa quiz 4 — возражение через уважение + факт ─────
-  - scene_id: ep041_s12
+  - scene_id: ep041_s35
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1706,7 +1706,7 @@ scenes:
     feedback_success: "Уважение + причина — возражение по структуре."
     feedback_soft_fail: "Нет ярлыков, нет ударов по человеку. «Я понимаю» снимает у собеседника защиту, «факты говорят иначе» — это причина. Это возражение."
     mood: "разминка — возражение через уважение + факт"
-    next_default: ep041_s13
+    next_default: ep041_s36
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма рукопожатия и значка «факт» рядом"
       camera: close-up
@@ -1720,7 +1720,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 13: Sofa quiz 5 — фальшивое «потому что» ───────────────
-  - scene_id: ep041_s13
+  - scene_id: ep041_s36
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1740,7 +1740,7 @@ scenes:
     feedback_success: "«Потому что» с ударом по человеку — это нападка с фальшивой структурой."
     feedback_soft_fail: "Здесь форма похожа на возражение: есть «потому что». Но в качестве причины — «ты ничего не видел», то есть оценка собеседника, не факт. Удар по компетентности замаскирован под причину. Это нападка."
     mood: "разминка — фальшивая структура"
-    next_default: ep041_s14
+    next_default: ep041_s37
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «потому что» в виде сломанной ступени с прицелом в фигурку"
       camera: close-up
@@ -1754,7 +1754,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14: Sofa quiz 6 — возражение по 4 шагам ───────────────
-  - scene_id: ep041_s14
+  - scene_id: ep041_s37
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1774,7 +1774,7 @@ scenes:
     feedback_success: "Все четыре шага — возражение."
     feedback_soft_fail: "Найди шаги: «я понимаю» — уважение. «ты веришь Рею» — повтор мысли. «не согласен» — мнение. «потому что не привёл фактов» — причина. Все четыре шага на месте — это возражение, не нападка."
     mood: "финал волны 1 — образец полного возражения"
-    next_default: ep041_s14_marker
+    next_default: ep041_s38
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма четырёх ступеней с галочками"
       camera: close-up
@@ -1788,7 +1788,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14_marker: Софа — переход к разбору шагов ──────────────
-  - scene_id: ep041_s14_marker
+  - scene_id: ep041_s38
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: dialogue
@@ -1801,7 +1801,7 @@ scenes:
       - who: Софа
         line: "Из чего оно состоит? Разберём по шагам."
     mood: "переход к волне 2 — разбор шагов"
-    next_default: ep041_s14a
+    next_default: ep041_s39
     visual_brief:
       background: "Экран телефона, два пузыря Софы — голубое свечение"
       camera: close-up
@@ -1815,7 +1815,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 14a: Sofa quiz — ШАГ 1 повтор мысли ────────────────────
-  - scene_id: ep041_s14a
+  - scene_id: ep041_s39
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1838,7 +1838,7 @@ scenes:
     feedback_success: "Чистое зеркало — шаг 1."
     feedback_soft_fail: "«Ты глуп» — это уже нападка, не повтор. «Я не буду спорить» — уход. Шаг 1 — повторить МЫСЛЬ собеседника, чтобы показать, что услышал. Только первый вариант — зеркало."
     mood: "разбор шагов — повтор"
-    next_default: ep041_s14b
+    next_default: ep041_s40
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма зеркала с фигуркой собеседника"
       camera: close-up
@@ -1852,7 +1852,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14b: Sofa quiz — ШАГ 2 уважение ────────────────────────
-  - scene_id: ep041_s14b
+  - scene_id: ep041_s40
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1875,7 +1875,7 @@ scenes:
     feedback_success: "Уважение без сдачи позиции — шаг 2."
     feedback_soft_fail: "«Может, ты в чём-то прав» — это уступка, ты уже отступил. «Не буду спорить, ты старше» — уход и подчинение возрасту. «Уважаю твой опыт» — признаёшь человека и при этом сохраняешь право возразить дальше."
     mood: "разбор шагов — уважение"
-    next_default: ep041_s14c
+    next_default: ep041_s41
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма рукопожатия двух фигурок (без сдачи позиции)"
       camera: close-up
@@ -1889,7 +1889,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14c: Sofa quiz — ШАГ 3 мнение ──────────────────────────
-  - scene_id: ep041_s14c
+  - scene_id: ep041_s41
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1912,7 +1912,7 @@ scenes:
     feedback_success: "Прямо и без удара — шаг 3."
     feedback_soft_fail: "«Ты неправ» — оценка собеседника, шаг 3 не про это. «Может, ты и прав» — это согласие, а не мнение. «Я думаю иначе» — заявляешь своё несогласие, не объявляя собеседника неправым."
     mood: "разбор шагов — мнение"
-    next_default: ep041_s14d
+    next_default: ep041_s42
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма стрелки от «Я» в собственное облако-мнение"
       camera: close-up
@@ -1926,7 +1926,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14d: Sofa quiz — ШАГ 4 причина ─────────────────────────
-  - scene_id: ep041_s14d
+  - scene_id: ep041_s42
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1949,7 +1949,7 @@ scenes:
     feedback_success: "Конкретные числа — это причина."
     feedback_soft_fail: "«Я так чувствую» — это эмоция, она не аргумент. «Все так думают» — давление через слово-триггер «все». Только конкретный факт (десять человек за месяц) — настоящая причина."
     mood: "разбор шагов — причина"
-    next_default: ep041_s14e
+    next_default: ep041_s43
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма счёта «10» на циферблате с надписью «месяц»"
       camera: close-up
@@ -1963,7 +1963,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14e: Sofa quiz — отсутствующие шаги ────────────────────
-  - scene_id: ep041_s14e
+  - scene_id: ep041_s43
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -1986,7 +1986,7 @@ scenes:
     feedback_success: "Шаги 1 и 4 пропущены — возражение неполное."
     feedback_soft_fail: "В реплике есть «я понимаю» (уважение, шаг 2) и «я не согласен» (мнение, шаг 3). Но нет повтора мысли собеседника (шаг 1) и нет причины (шаг 4). Без этих шагов возражение не работает."
     mood: "разбор шагов — целостность"
-    next_default: ep041_s14f
+    next_default: ep041_s44
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма четырёх ступеней — две с галочками, две пустые"
       camera: close-up
@@ -2000,7 +2000,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14f: Sofa quiz — испорчен шаг 3 ────────────────────────
-  - scene_id: ep041_s14f
+  - scene_id: ep041_s44
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: quiz
@@ -2023,7 +2023,7 @@ scenes:
     feedback_success: "«Полная глупость» — нападка вместо мнения. Шаг 3 испорчен."
     feedback_soft_fail: "В реплике есть повтор и уважение через «я понимаю». Но «это полная глупость!» — это уже не «я думаю иначе», а удар по идее с ярлыком. Шаг 3 — мнение, не оценка. Возражение испорчено нападкой внутри."
     mood: "разбор шагов — испорченная структура"
-    next_default: ep041_s15_sofa
+    next_default: ep041_s45
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма ступеней с трещиной на третьей"
       camera: close-up
@@ -2037,7 +2037,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 15_sofa: Правило 41 ─────────────────────────────────────
-  - scene_id: ep041_s15_sofa
+  - scene_id: ep041_s45
     episode_id: 41
     source_ref: day_11.ep41.sofa_block
     scene_type: dialogue
@@ -2052,7 +2052,7 @@ scenes:
       - who: Софа
         line: "Нападка бьёт по человеку. Возражение бьёт по аргументу."
     mood: "правило закрыто — пора испытание"
-    next_default: ep041_s16
+    next_default: ep041_s46
     visual_brief:
       background: "Экран телефона, пузыри Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -2066,7 +2066,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 16: Открытый vote — «допустимо ли?» ────────────────────
-  - scene_id: ep041_s16
+  - scene_id: ep041_s46
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2088,7 +2088,7 @@ scenes:
     correct_logic: "Открытое голосование — все три позиции имеют право на жизнь. Сам факт честного выбора важнее, чем какой именно вариант ты выбрал."
     feedback_success: "Это честная позиция. Дальше — проверим, как она держится в практике."
     mood: "открытое голосование — нет одного правильного ответа"
-    next_default: ep041_s17
+    next_default: ep041_s47
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма весов: «цель» / «метод»"
       camera: close-up
@@ -2102,7 +2102,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 17: Quiz 7 — «дураки верят Голосу» ────────────────────
-  - scene_id: ep041_s17
+  - scene_id: ep041_s47
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2122,7 +2122,7 @@ scenes:
     feedback_success: "«Дураки» — про людей. Это нападка."
     feedback_soft_fail: "Возражение требует причину и обращено к идее. Здесь — ярлык на тех, кто верит. Сама вера в Голос как идея даже не разобрана. Это нападка."
     mood: "блиц — нападка через ярлык"
-    next_default: ep041_s18
+    next_default: ep041_s48
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма перечёркнутой группы фигурок"
       camera: close-up
@@ -2136,7 +2136,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 18: Quiz 8 — длинное возражение с фактом ──────────────
-  - scene_id: ep041_s18
+  - scene_id: ep041_s48
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2156,7 +2156,7 @@ scenes:
     feedback_success: "Четыре шага + факт. Возражение."
     feedback_soft_fail: "Все четыре элемента на месте: повтор, уважение, мнение, причина. Причина — конкретное число пропавших. Это возражение по структуре, не нападка."
     mood: "блиц — образец возражения"
-    next_default: ep041_s19
+    next_default: ep041_s49
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма четырёх ступеней с цифрой «10»"
       camera: close-up
@@ -2170,7 +2170,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 19: Quiz 9 — «своих мозгов нет» ───────────────────────
-  - scene_id: ep041_s19
+  - scene_id: ep041_s49
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2190,7 +2190,7 @@ scenes:
     feedback_success: "«Мозгов нет» — про человека. Нападка."
     feedback_soft_fail: "Здесь форма похожа на возражение — «потому что» есть. Но «потому что» подкреплено оскорблением, не аргументом. Удар по человеку, а не по идее. Это нападка."
     mood: "блиц — фальшивая структура"
-    next_default: ep041_s20
+    next_default: ep041_s50
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма сломанной ступени «потому что» с прицелом в фигурку"
       camera: close-up
@@ -2204,7 +2204,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 20: Quiz 10 — «порядок через страх» ────────────────────
-  - scene_id: ep041_s20
+  - scene_id: ep041_s50
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2224,7 +2224,7 @@ scenes:
     feedback_success: "Четыре шага + причина-метафора. Возражение."
     feedback_soft_fail: "«Я понимаю, порядок важен» — уважение и повтор. «Но это клетка» — мнение. «Через страх» — причина. Все четыре шага. Метафора — допустимая форма причины. Это возражение."
     mood: "блиц — возражение с метафорой"
-    next_default: ep041_s21
+    next_default: ep041_s51
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма клетки и слова «порядок»"
       camera: close-up
@@ -2238,7 +2238,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21: Quiz 11 — Марко крикнул «КАЖДЫЙ потерял» ──────────
-  - scene_id: ep041_s21
+  - scene_id: ep041_s51
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2258,7 +2258,7 @@ scenes:
     feedback_success: "«Каждый» — обобщение. Давление эмоцией. Это манипуляция."
     feedback_soft_fail: "Возражение разговаривает с одним аргументом — спокойно, по структуре. Тут крик, обобщение «каждый» без проверки и давление через боль. Те же приёмы, что у Рея. Это манипуляция."
     mood: "финал блица — Марко на сцене манипулировал"
-    next_default: ep041_s21a
+    next_default: ep041_s52
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма пустых стульев и слова «КАЖДЫЙ»"
       camera: close-up
@@ -2272,7 +2272,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21a: Quiz — наблюдение Сема как возражение ─────────────
-  - scene_id: ep041_s21a
+  - scene_id: ep041_s52
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2292,7 +2292,7 @@ scenes:
     feedback_success: "Сем не оскорбляет — указывает на факт. Возражение."
     feedback_soft_fail: "Нападка унижает или клеит ярлыки. Сем не сделал ни того, ни другого — он указал на конкретное действие («ты сделал то же, что Рей»). Это наблюдение по факту, не удар по человеку."
     mood: "блиц — болезненное возражение от Сема"
-    next_default: ep041_s21b
+    next_default: ep041_s53
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма зеркала и фигурки Марко в нём"
       camera: close-up
@@ -2306,7 +2306,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21b: Quiz — голое мнение vs полное возражение ──────────
-  - scene_id: ep041_s21b
+  - scene_id: ep041_s53
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2326,7 +2326,7 @@ scenes:
     feedback_success: "Только мнение — этого мало для возражения."
     feedback_soft_fail: "Возражение требует ВСЕ четыре шага: повтор + уважение + мнение + причина. «Я не согласен» — только третий шаг. Без причины собеседник не знает, ПОЧЕМУ ты не согласен — это просто отказ, не аргумент."
     mood: "блиц — целостность структуры"
-    next_default: ep041_s21c
+    next_default: ep041_s54
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма одиночной ступени посреди пустых рамок"
       camera: close-up
@@ -2340,7 +2340,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21c: Quiz — выбор правильно собранной реплики ──────────
-  - scene_id: ep041_s21c
+  - scene_id: ep041_s54
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2363,7 +2363,7 @@ scenes:
     feedback_success: "Полная структура — все 4 шага."
     feedback_soft_fail: "Второй вариант — нападка в ответ («сам ты трус»). Третий — голое мнение без причины. Только первый имеет повтор, уважение, мнение и причину. Это собранное возражение."
     mood: "блиц — финал испытания структуры"
-    next_default: ep041_s22
+    next_default: ep041_s55
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма четырёх ступеней с галочками и двух перечёркнутых вариантов"
       camera: close-up
@@ -2377,7 +2377,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 22: Софа подводка к переделкам ─────────────────────────
-  - scene_id: ep041_s22
+  - scene_id: ep041_s55
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: dialogue
@@ -2390,7 +2390,7 @@ scenes:
       - who: Софа
         line: "Я даю тебе нападку — ты переделываешь её в возражение по четырём шагам."
     mood: "переход к открытым вопросам"
-    next_default: ep041_s23
+    next_default: ep041_s56
     visual_brief:
       background: "Экран телефона, пузыри Софы — короткие, голубое свечение"
       camera: close-up
@@ -2404,7 +2404,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 23: Конструктор 4-step — «не понимаешь жизнь города» ──
-  - scene_id: ep041_s23
+  - scene_id: ep041_s56
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2470,7 +2470,7 @@ scenes:
     template: "{repeat} {respect} {opinion} {reason}"
     closing: "Это и есть составное возражение. Структура держит — даже если одну реплику убрать, ответ всё равно работает."
     mood: "конструктор — полная структура возражения"
-    next_default: ep041_s24
+    next_default: ep041_s57
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма четырёх пустых ступеней"
       camera: close-up
@@ -2484,7 +2484,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 24: Конструктор 2-step — «трус убегает» ────────────────
-  - scene_id: ep041_s24
+  - scene_id: ep041_s57
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2524,7 +2524,7 @@ scenes:
     template: "{repeat} {response}"
     closing: "Двух шагов достаточно, когда уважение, мнение и причина склеены в одну фразу."
     mood: "конструктор — компактная структура"
-    next_default: ep041_s25
+    next_default: ep041_s58
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма ярлыка «трус» рядом с пустыми ступенями"
       camera: close-up
@@ -2538,7 +2538,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 25: Конструктор 2-step — «слушает детей = ребёнок» ────
-  - scene_id: ep041_s25
+  - scene_id: ep041_s58
     episode_id: 41
     source_ref: day_11.ep41.challenge
     scene_type: quiz
@@ -2578,7 +2578,7 @@ scenes:
     template: "{repeat} {response}"
     closing: "Когда у тебя один пример или одна причина — двух шагов хватает."
     mood: "конструктор — компактная структура через пример"
-    next_default: ep041_s26
+    next_default: ep041_s59
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма большой и маленькой фигурки рядом"
       camera: close-up
@@ -2592,7 +2592,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 26: Сем — Рей в углу ───────────────────────────────────
-  - scene_id: ep041_s26
+  - scene_id: ep041_s59
     episode_id: 41
     source_ref: day_11.ep41.cliffhanger
     scene_type: dialogue
@@ -2613,7 +2613,7 @@ scenes:
       - who: Рей
         line: "Голос тоже когда-то говорил без крика. Потом перестал."
     mood: "Рей без маски — впервые"
-    next_default: ep041_s27_end
+    next_default: ep041_s60
     visual_brief:
       background: "Зал почти пустой. Сем рядом с Марко, Рей в углу — у стены, плечи опущены"
       camera: medium
@@ -2636,7 +2636,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 27: Клиффхэнгер — Софа, число 18 ───────────────────────
-  - scene_id: ep041_s27_end
+  - scene_id: ep041_s60
     episode_id: 41
     source_ref: day_11.ep41.cliffhanger
     scene_type: cliffhanger

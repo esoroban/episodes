@@ -177,7 +177,7 @@ scenes:
       - who: Софа
         line: "Голос растерян. Сейчас ты можешь добить — или возразить."
     mood: "Софа отмечает выбор — добить или сделать иначе"
-    next_default: ep042_s03_choice
+    next_default: ep042_s04
     visual_brief:
       background: "Экран телефона, два пузыря Софы — голубое свечение, тонкий ритм"
       camera: close-up
@@ -191,7 +191,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 3_choice: Выбор — добить или возразить ─────────────────
-  - scene_id: ep042_s03_choice
+  - scene_id: ep042_s04
     episode_id: 42
     source_ref: day_11.ep42.drama
     scene_type: dialogue
@@ -211,11 +211,11 @@ scenes:
     options:
       - id: respond_calm
         text: "Возражаю спокойно. Четыре шага. Без удара."
-        next: ep042_s04
+        next: ep042_s06
       - id: hit_now
         text: "Добиваю. Пока Голос растерян."
-        next: ep042_s03b
-    next_default: ep042_s04
+        next: ep042_s05
+    next_default: ep042_s06
     visual_brief:
       background: "Зал. Динамик с тлеющим красным огоньком. Марко перед ним, Сем у стены"
       camera: medium
@@ -233,7 +233,7 @@ scenes:
       ui_mode: choice
 
   # ── СЦЕНА 3b: Detour — Марко добивает ────────────────────────────
-  - scene_id: ep042_s03b
+  - scene_id: ep042_s05
     episode_id: 42
     source_ref: day_11.ep42.drama
     scene_type: narrative
@@ -266,8 +266,8 @@ scenes:
       На этот раз — настороженный. Окно почти закрылось, но Марко
       всё ещё может говорить иначе.
     mood: "удар закрыл дверь — окно почти упустил"
-    merge_to: ep042_s04
-    next_default: ep042_s04
+    merge_to: ep042_s06
+    next_default: ep042_s06
     visual_brief:
       background: "Зал. Динамик с потухшим красным огоньком. Свет в зале мигает. Сем хватает Марко за рукав"
       camera: medium
@@ -286,7 +286,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 4: Марко применяет 4 шага возражения ───────────────────
-  - scene_id: ep042_s04
+  - scene_id: ep042_s06
     episode_id: 42
     source_ref: day_11.ep42.drama
     scene_type: dialogue
@@ -310,7 +310,7 @@ scenes:
       Шаг первый — повторил мысль. Второй — уважение. Третий —
       мнение. Четвёртый — причина.
     mood: "Марко возражает по структуре — без крика"
-    next_default: ep042_s05
+    next_default: ep042_s07
     visual_brief:
       background: "Зал. Марко перед динамиком, спокойная поза. Сем смотрит. Свет мягкий, ровный"
       camera: medium
@@ -329,7 +329,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 5: Тишина — Голос думает ───────────────────────────────
-  - scene_id: ep042_s05
+  - scene_id: ep042_s07
     episode_id: 42
     source_ref: day_11.ep42.drama
     scene_type: narrative
@@ -349,7 +349,7 @@ scenes:
       думает. Это разные вещи. Когда готовишь ответ — ищешь, чем
       ударить. Когда думаешь — слушаешь.
     mood: "тишина-размышление — впервые"
-    next_default: ep042_s06
+    next_default: ep042_s08
     visual_brief:
       background: "Зал. Лампы мигают по очереди. Динамик молчит — красный огонёк ровный, без пульсации"
       camera: medium
@@ -368,7 +368,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 6: Софа — «уважение, которого Голос давно не получал» ──
-  - scene_id: ep042_s06
+  - scene_id: ep042_s08
     episode_id: 42
     source_ref: day_11.ep42.drama
     scene_type: dialogue
@@ -383,7 +383,7 @@ scenes:
       - who: Софа
         line: "Уважение. Голос давно его не получал."
     mood: "Софа объясняет, что произошло"
-    next_default: ep042_s07
+    next_default: ep042_s09
     visual_brief:
       background: "Экран телефона, три пузыря Софы по очереди — голубое свечение"
       camera: close-up
@@ -397,7 +397,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 7: Теория — признание частичной правоты ───────────────
-  - scene_id: ep042_s07
+  - scene_id: ep042_s09
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: narrative
@@ -432,7 +432,7 @@ scenes:
       Сильнее. Потому что снимает у собеседника защиту прежде, чем
       ударить по идее.
     mood: "карта инструмента — три уровня"
-    next_default: ep042_s08
+    next_default: ep042_s10
     visual_brief:
       background: "Зал в расфокусе. По центру — три ступени: «нападка → возражение → возражение с признанием». Сбоку — формула «в этом ты прав, но...»"
       camera: medium
@@ -449,7 +449,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 8: Sofa quiz 1 — телефоны вредят детям ────────────────
-  - scene_id: ep042_s08
+  - scene_id: ep042_s10
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: quiz
@@ -472,7 +472,7 @@ scenes:
     feedback_success: "Признание + контраргумент. Третий уровень — самый сильный."
     feedback_soft_fail: "Первый вариант — нападка («сам ты»). Второй — возражение без признания. Третий — признал часть правды и добавил свой аргумент. Третий уровень самый сильный, потому что снимает с собеседника защиту прежде, чем ударить по идее."
     mood: "разминка — выбор уровня"
-    next_default: ep042_s09
+    next_default: ep042_s11
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма трёх ступеней с галочкой на третьей"
       camera: close-up
@@ -486,7 +486,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 9: Sofa quiz 2 — дети не должны спорить ───────────────
-  - scene_id: ep042_s09
+  - scene_id: ep042_s11
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: quiz
@@ -509,7 +509,7 @@ scenes:
     feedback_success: "Признание + уточнение через язык. Третий уровень."
     feedback_soft_fail: "Нападка («сами как ребёнок») бьёт по человеку. Простое возражение спорит сразу. Третий вариант признаёт, что грубое поведение не стоит — и уточняет: вежливое мнение это уже не «спор». Это сильнее всего."
     mood: "разминка — третий уровень через переформулировку"
-    next_default: ep042_s10
+    next_default: ep042_s12
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «спор» → «разговор» через стрелку"
       camera: close-up
@@ -523,7 +523,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 10: Sofa quiz 3 — читать книги скучно ─────────────────
-  - scene_id: ep042_s10
+  - scene_id: ep042_s12
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: quiz
@@ -546,7 +546,7 @@ scenes:
     feedback_success: "Признание + конкретный пример. Третий уровень."
     feedback_soft_fail: "Нападка ярлыком («ленивый») — слабее всего. Возражение «бывают интересные» — без признания. Третий — признал, что скучные книги существуют, и привёл пример: книга по интересу затягивает. Сильнее всего."
     mood: "разминка — третий уровень через пример"
-    next_default: ep042_s11
+    next_default: ep042_s13
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма закрытой книги и открытой с улыбкой рядом"
       camera: close-up
@@ -560,7 +560,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 11: Sofa quiz 4 — домашка бесполезна ──────────────────
-  - scene_id: ep042_s11
+  - scene_id: ep042_s13
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: quiz
@@ -583,7 +583,7 @@ scenes:
     feedback_success: "Признание + условие. Третий уровень."
     feedback_soft_fail: "Нападка через ярлык «двоечник» — слабее всего. Возражение без признания — спорит сразу. Третий вариант признаёт часть правды («бесполезная бывает») и уточняет, когда домашка работает. Это сильнее всего."
     mood: "финал sofa-блока — третий уровень через условие"
-    next_default: ep042_s12_sofa
+    next_default: ep042_s14
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма тетради с галочкой и условной стрелкой"
       camera: close-up
@@ -597,7 +597,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 12_sofa: Правило 42 ─────────────────────────────────────
-  - scene_id: ep042_s12_sofa
+  - scene_id: ep042_s14
     episode_id: 42
     source_ref: day_11.ep42.sofa_block
     scene_type: dialogue
@@ -612,7 +612,7 @@ scenes:
       - who: Софа
         line: "Три уровня: нападка → возражение → возражение с признанием. Каждый следующий сильнее."
     mood: "правило закрыто — пора испытание"
-    next_default: ep042_s13
+    next_default: ep042_s15
     visual_brief:
       background: "Экран телефона, пузыри Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -626,7 +626,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 13: Марко поворачивается к динамикам ───────────────────
-  - scene_id: ep042_s13
+  - scene_id: ep042_s15
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: narrative
@@ -639,7 +639,7 @@ scenes:
 
       Он делает то, чего не делал на сцене. Признаёт.
     mood: "переход — Марко применяет третий уровень к Голосу"
-    next_default: ep042_s14
+    next_default: ep042_s16
     visual_brief:
       background: "Зал. Марко лицом к динамику. Сем за спиной. Лампы ровные"
       camera: medium
@@ -658,7 +658,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 14: Марко применяет третий уровень ─────────────────────
-  - scene_id: ep042_s14
+  - scene_id: ep042_s16
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: dialogue
@@ -676,7 +676,7 @@ scenes:
       Голос — тихо, как из-под воды. Не оправдание. Не атака. Просто
       воспоминание, которое всплыло из-под десятилетий молчания.
     mood: "Марко применяет третий уровень — Голос тронут"
-    next_default: ep042_s15
+    next_default: ep042_s17
     visual_brief:
       background: "Зал. Марко перед динамиком, ровная поза. Динамик в глубоком красном свете, медленный пульс"
       camera: medium
@@ -691,7 +691,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 15: «Когда вы перестали любить учеников?» ─────────────
-  - scene_id: ep042_s15
+  - scene_id: ep042_s17
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: dialogue
@@ -707,7 +707,7 @@ scenes:
       На седьмой секунде — пол дрожит. Стены — дрожат. Что-то
       сдвинулось. Глубоко внутри города.
     mood: "ключевой вопрос — город отвечает дрожью"
-    next_default: ep042_s16
+    next_default: ep042_s18
     visual_brief:
       background: "Зал. Стены и пол начинают вибрировать — лёгкие частицы пыли с потолка. Лампы качаются. Динамик молчит"
       camera: wide
@@ -726,7 +726,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 16: Стены дрожат — глубоко в городе ───────────────────
-  - scene_id: ep042_s16
+  - scene_id: ep042_s18
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: narrative
@@ -740,7 +740,7 @@ scenes:
       Марко стоит. Сем держится за стену. Город успокаивается.
       Динамик потрескивает.
     mood: "после удара — другая тишина"
-    next_default: ep042_s17
+    next_default: ep042_s19
     visual_brief:
       background: "Зал. Пыль ещё оседает в воздухе. Лампы перестали качаться. Динамик потрескивает"
       camera: medium
@@ -759,7 +759,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 17: Софа — «брешь в системе» ───────────────────────────
-  - scene_id: ep042_s17
+  - scene_id: ep042_s19
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: dialogue
@@ -774,7 +774,7 @@ scenes:
       - who: Софа
         line: "А каким именно вопросом?"
     mood: "Софа называет, что произошло — и подводит к разбору"
-    next_default: ep042_s17a
+    next_default: ep042_s20
     visual_brief:
       background: "Экран телефона, три пузыря Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -788,7 +788,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 17a: Quiz — какой приём применил Марко? ────────────────
-  - scene_id: ep042_s17a
+  - scene_id: ep042_s20
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -811,7 +811,7 @@ scenes:
     feedback_success: "Та же ловушка, что Голос использовал против тебя. Узнаваемо."
     feedback_soft_fail: "Возражение требует все 4 шага: повтор + уважение + мнение + причина. Здесь нет ни одного из них. Признание частичной правоты — это «в этом вы правы, но...». Здесь и этого нет. «Когда перестали...» — слово-маркер ловушки. Внутри: «вы любили» + «вы перестали». Любой ответ принимает оба."
     mood: "критическая остановка — Марко применил тот же приём, что Голос"
-    next_default: ep042_s17b
+    next_default: ep042_s21
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма мышеловки с надписью «когда перестали»"
       camera: close-up
@@ -825,7 +825,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 17b: Open vote — допустимо ли? ─────────────────────────
-  - scene_id: ep042_s17b
+  - scene_id: ep042_s21
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -847,7 +847,7 @@ scenes:
     correct_logic: "Открытое голосование — все три позиции имеют право на жизнь. Сам факт того, что игрок честно НАЗВАЛ приём демагогией, важнее, чем какой именно вариант он выбрал."
     feedback_success: "Это честная позиция. Главное — ты увидел приём, а не отрёкся от него."
     mood: "открытое голосование — нет одного правильного ответа"
-    next_default: ep042_s17c
+    next_default: ep042_s22
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма весов: «брешь» / «приём»"
       camera: close-up
@@ -861,7 +861,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 17c: Софа — цена та же ─────────────────────────────────
-  - scene_id: ep042_s17c
+  - scene_id: ep042_s22
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: dialogue
@@ -876,7 +876,7 @@ scenes:
       - who: Софа
         line: "Урок не в том, чтобы НИКОГДА не использовать. Урок — узнавать, когда применил."
     mood: "Софа закрепляет цену — без морали, без вины"
-    next_default: ep042_s18
+    next_default: ep042_s23
     visual_brief:
       background: "Экран телефона, три пузыря Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -890,7 +890,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 18: Quiz 5 — Марко применил какой уровень? ────────────
-  - scene_id: ep042_s18
+  - scene_id: ep042_s23
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -913,7 +913,7 @@ scenes:
     feedback_success: "Признание + контраргумент. Третий уровень."
     feedback_soft_fail: "Нападка ударила бы по человеку («вы преступник»). Просто возражение спорило бы сразу. Здесь Марко сначала признал — «я использовал ваши приёмы» — и только потом разошёлся с Голосом по существу. Это третий уровень."
     mood: "блиц — образец из сюжета"
-    next_default: ep042_s19
+    next_default: ep042_s24
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма трёх ступеней с галочкой на третьей"
       camera: close-up
@@ -927,7 +927,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 19: Quiz 6 — «Голос заботится о городе» ───────────────
-  - scene_id: ep042_s19
+  - scene_id: ep042_s24
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -950,7 +950,7 @@ scenes:
     feedback_success: "Признание факта + спор о методе. Третий уровень."
     feedback_soft_fail: "Нет ярлыков, нет ударов по человеку — это не нападка. Простое возражение сразу скажет «порядок не равен заботе». Здесь сначала признан факт порядка — и только после этого оспорен метод. Это третий уровень."
     mood: "блиц — третий уровень про метод"
-    next_default: ep042_s20
+    next_default: ep042_s25
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «факт» → «метод»: галочка + перечёркнутый замок"
       camera: close-up
@@ -964,7 +964,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 20: Quiz 7 — «Марко — враг города» ────────────────────
-  - scene_id: ep042_s20
+  - scene_id: ep042_s25
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -987,7 +987,7 @@ scenes:
     feedback_success: "Ярлык «враг» — это нападка."
     feedback_soft_fail: "Возражение требует уважения и причины-аргумента. Здесь нет «я понимаю» — только ярлык «враг» и подмена «сломал = враг». Это нападка через ярлык."
     mood: "блиц — нападка через ярлык"
-    next_default: ep042_s21
+    next_default: ep042_s26
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма ярлыка «враг» в виде наклейки на фигурке"
       camera: close-up
@@ -1001,7 +1001,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21: Quiz 8 — «перемены пугают, но...» ─────────────────
-  - scene_id: ep042_s21
+  - scene_id: ep042_s26
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -1024,7 +1024,7 @@ scenes:
     feedback_success: "«Я понимаю» — признание. Третий уровень."
     feedback_soft_fail: "Нет ударов по человеку — это не нападка. Возражение без признания не начинается с «я понимаю». Здесь Марко признал, что страх перемен — реальный, и только потом дал причину против. Это третий уровень."
     mood: "блиц — третий уровень через признание чувства"
-    next_default: ep042_s22
+    next_default: ep042_s27
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «я понимаю» — рука к груди + ступенька выше"
       camera: close-up
@@ -1038,7 +1038,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 22: Конструктор — «Без меня город развалится!» ────────
-  - scene_id: ep042_s22
+  - scene_id: ep042_s27
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -1078,7 +1078,7 @@ scenes:
     template: "{recognize} {counter}"
     closing: "Признание + контраргумент. Это самый сильный уровень — третий."
     mood: "конструктор — признание частичной правоты"
-    next_default: ep042_s23
+    next_default: ep042_s28
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма трёх пустых ступеней"
       camera: close-up
@@ -1092,7 +1092,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 23: Конструктор — «Зачем учить историю?» ──────────────
-  - scene_id: ep042_s23
+  - scene_id: ep042_s28
     episode_id: 42
     source_ref: day_11.ep42.challenge
     scene_type: quiz
@@ -1132,7 +1132,7 @@ scenes:
     template: "{recognize} {counter}"
     closing: "В школьной теме формула работает так же, как с Голосом."
     mood: "конструктор — школьный пример"
-    next_default: ep042_s24_end
+    next_default: ep042_s29
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма раскрытой книги истории"
       camera: close-up
@@ -1146,7 +1146,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 24: Клиффхэнгер — Голос отвечает честно ───────────────
-  - scene_id: ep042_s24_end
+  - scene_id: ep042_s29
     episode_id: 42
     source_ref: day_11.ep42.cliffhanger
     scene_type: cliffhanger

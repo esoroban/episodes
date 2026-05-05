@@ -247,11 +247,11 @@ scenes:
     options:
       - id: stay_listen
         text: "Остаюсь. Дослушаю до тринадцатого. Знание важнее."
-        next: ep043_s05
+        next: ep043_s06
       - id: leave_now
         text: "Ухожу. Не хочу заразиться речью."
-        next: ep043_s04b
-    next_default: ep043_s05
+        next: ep043_s05
+    next_default: ep043_s06
     visual_brief:
       background: "Площадь. Капюшон Марко крупно — в полутени. Свет балкона на лице"
       camera: medium
@@ -269,7 +269,7 @@ scenes:
       ui_mode: choice
 
   # ── СЦЕНА 4b: Detour — ушёл рано ─────────────────────────────────
-  - scene_id: ep043_s04b
+  - scene_id: ep043_s05
     episode_id: 43
     source_ref: day_11.ep43.drama
     scene_type: narrative
@@ -295,8 +295,8 @@ scenes:
       кланяется, последняя фраза висит в воздухе. Лина тихо: «Ещё
       успеем разобрать. Но дослушать до конца — это часть работы.»
     mood: "ушёл рано — остался без последнего и самого важного"
-    merge_to: ep043_s05
-    next_default: ep043_s05
+    merge_to: ep043_s06
+    next_default: ep043_s06
     visual_brief:
       background: "Угол площади. Толпа за спиной, фоном — балкон с Голосом. Эхо последней фразы в воздухе"
       camera: medium
@@ -314,7 +314,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 5: Голос продолжает; Лина 7-12 ─────────────────────────
-  - scene_id: ep043_s05
+  - scene_id: ep043_s06
     episode_id: 43
     source_ref: day_11.ep43.drama
     scene_type: dialogue
@@ -347,7 +347,7 @@ scenes:
       - who: Лина
         line: "После — значит вследствие. Двенадцать."
     mood: "счёт двенадцать — речь на пике"
-    next_default: ep043_s06
+    next_default: ep043_s07
     visual_brief:
       background: "Площадь. Балкон в свете. Толпа кивает синхронно. Над толпой — лёгкая дымка"
       camera: wide
@@ -366,7 +366,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 6: Тринадцатый — Лина замирает ─────────────────────────
-  - scene_id: ep043_s06
+  - scene_id: ep043_s07
     episode_id: 43
     source_ref: day_11.ep43.drama
     scene_type: dialogue
@@ -388,7 +388,7 @@ scenes:
       людей. Марко видит его — три ряда вперёд. Рей слушает. Лицо —
       странное. Не восторг. Не злость. Что-то между.
     mood: "тринадцатый — самый мягкий и самый страшный"
-    next_default: ep043_s07
+    next_default: ep043_s08
     visual_brief:
       background: "Площадь. Балкон с Голосом. В толпе — Рей крупно: лицо повёрнуто к балкону, странное выражение"
       camera: medium
@@ -410,7 +410,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 7: Очки Леона — нити от толпы к балкону ────────────────
-  - scene_id: ep043_s07
+  - scene_id: ep043_s08
     episode_id: 43
     source_ref: day_11.ep43.drama
     scene_type: narrative
@@ -437,7 +437,7 @@ scenes:
 
       Толпа аплодирует. Голос кланяется. Уходит с балкона.
     mood: "очки Леона показывают паутину — у Рея нить вбок"
-    next_default: ep043_s08
+    next_default: ep043_s09
     visual_brief:
       background: "Площадь через стекло старых очков. Тонкие серые нити от каждого человека к балкону. Нить Рея — вбок, не к балкону. Балкон в свете"
       camera: medium
@@ -460,7 +460,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 8: Софа — у всех приёмов общее имя ─────────────────────
-  - scene_id: ep043_s08
+  - scene_id: ep043_s09
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: dialogue
@@ -473,7 +473,7 @@ scenes:
       - who: Софа
         line: "Марко, у всех этих приёмов есть общее имя."
     mood: "Софа подводит к общему термину"
-    next_default: ep043_s09
+    next_default: ep043_s10
     visual_brief:
       background: "Экран телефона, два пузыря Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -487,7 +487,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 9: Теория — демагогия + триггеры + фильтр ─────────────
-  - scene_id: ep043_s09
+  - scene_id: ep043_s10
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: narrative
@@ -527,7 +527,7 @@ scenes:
       Неважно, насколько красиво звучит. Неважно, верит ли
       говорящий.
     mood: "карта инструмента — общий диагноз и фильтр"
-    next_default: ep043_s10
+    next_default: ep043_s11
     visual_brief:
       background: "Площадь в расфокусе. По центру — большой круг «ДЕМАГОГИЯ» с тринадцатью лучами-приёмами. Сбоку — список слов-триггеров и большая надпись «ГДЕ ФАКТЫ?»"
       camera: medium
@@ -545,7 +545,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 10: Sofa quiz 1 — Богдан ───────────────────────────────
-  - scene_id: ep043_s10
+  - scene_id: ep043_s11
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -568,7 +568,7 @@ scenes:
     feedback_success: "Три триггера, ноль фактов. Чистая демагогия."
     feedback_soft_fail: "Считай только проверяемое: счёт побед, рейтинг, число матчей. Здесь — три слова-триггера: «все знают», «очевидно», «любой нормальный». Ни одного факта. Это демагогия."
     mood: "разминка — счёт фактов"
-    next_default: ep043_s11
+    next_default: ep043_s12
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма пустого счёта «факты: 0»"
       camera: close-up
@@ -582,7 +582,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 11: Sofa quiz 2 — блогер vs стример ───────────────────
-  - scene_id: ep043_s11
+  - scene_id: ep043_s12
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -605,7 +605,7 @@ scenes:
     feedback_success: "47 из 50 — проверяемо. У стримера."
     feedback_soft_fail: "Факт — то, что можно проверить. 47 из 50 — счёт, который можно посмотреть. «Все знают» — это не источник, а триггер. Факты — у стримера."
     mood: "разминка — факт против триггера"
-    next_default: ep043_s12
+    next_default: ep043_s13
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма счёта «47/50» и пустого облачка «все знают»"
       camera: close-up
@@ -619,7 +619,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 12: Sofa quiz 3 — каждый нормальный ребёнок ───────────
-  - scene_id: ep043_s12
+  - scene_id: ep043_s13
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -639,7 +639,7 @@ scenes:
     feedback_success: "«Каждый нормальный» — триггер. Фактов нет."
     feedback_soft_fail: "Факт требует источник: данные, исследования, число. Здесь только давление через слово «нормальный». Это триггер, не факт. Демагогия."
     mood: "разминка — давление на норму"
-    next_default: ep043_s13
+    next_default: ep043_s14
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма часов с надписью «9» и тенью слова «нормальный»"
       camera: close-up
@@ -653,7 +653,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 13: Sofa quiz 4 — по данным врачей ────────────────────
-  - scene_id: ep043_s13
+  - scene_id: ep043_s14
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -673,7 +673,7 @@ scenes:
     feedback_success: "Источник + числа. Аргумент."
     feedback_soft_fail: "Признаки аргумента: ссылка на источник (врачи) + конкретные числа (9-11 часов, 8-12 лет). Это можно проверить. Это аргумент, а не демагогия."
     mood: "разминка — настоящий аргумент"
-    next_default: ep043_s14
+    next_default: ep043_s15
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма медицинского значка и числа «9-11 ч»"
       camera: close-up
@@ -687,7 +687,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14: Sofa quiz 5 — без меня город падёт ────────────────
-  - scene_id: ep043_s14
+  - scene_id: ep043_s15
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -707,7 +707,7 @@ scenes:
     feedback_success: "Связь не доказана — это демагогия страхом."
     feedback_soft_fail: "Применяем фильтр: какие факты приведены? Что город стоит — это так. Но что он держится именно на Голосе — никаких доказательств. Связь не доказана. Это демагогия страхом."
     mood: "разминка — фильтр на сюжет"
-    next_default: ep043_s15
+    next_default: ep043_s16
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма города и большой надписи «ГДЕ ФАКТЫ?»"
       camera: close-up
@@ -721,7 +721,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 15: Sofa quiz 6 — «единственный» ──────────────────────
-  - scene_id: ep043_s15
+  - scene_id: ep043_s16
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: quiz
@@ -741,7 +741,7 @@ scenes:
     feedback_success: "«Единственный» — триггер. Никаких фактов."
     feedback_soft_fail: "Слово «единственный» закрывает все остальные варианты. Это вшивает утверждение «никто кроме меня». Проверяется? Нет — родители, учителя, друзья тоже заботятся. Это слово-триггер."
     mood: "финал sofa-блока — триггер тринадцатого"
-    next_default: ep043_s16_sofa
+    next_default: ep043_s17
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма большого слова «ЕДИНСТВЕННЫЙ» в красной рамке"
       camera: close-up
@@ -755,7 +755,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 16_sofa: Правило 43 ─────────────────────────────────────
-  - scene_id: ep043_s16_sofa
+  - scene_id: ep043_s17
     episode_id: 43
     source_ref: day_11.ep43.sofa_block
     scene_type: dialogue
@@ -772,7 +772,7 @@ scenes:
       - who: Софа
         line: "Фильтр: «ГДЕ ФАКТЫ?» Нет фактов — демагогия."
     mood: "правило закрыто — пора испытание"
-    next_default: ep043_s17
+    next_default: ep043_s18
     visual_brief:
       background: "Экран телефона, пузыри Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -786,7 +786,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 17: Площадь опустела — разбираем ──────────────────────
-  - scene_id: ep043_s17
+  - scene_id: ep043_s18
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: dialogue
@@ -802,7 +802,7 @@ scenes:
       - who: Лина
         line: "Разбираем."
     mood: "переход — разбор по фразам"
-    next_default: ep043_s18
+    next_default: ep043_s19
     visual_brief:
       background: "Стена дома у площади. Марко и Лина опираются на стену. Площадь сзади — пустая, только последние огни. На телефоне Марко — текст речи строками"
       camera: medium
@@ -821,7 +821,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 18: Quiz 7 — «мы все хотим безопасности» ──────────────
-  - scene_id: ep043_s18
+  - scene_id: ep043_s19
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -844,7 +844,7 @@ scenes:
     feedback_success: "Решил за всех — это подмена тезиса."
     feedback_soft_fail: "Здесь нет вопроса вообще — значит, ни ловушка, ни риторический. Здесь Голос объявил, чего «хотят все» — и сделал это от их имени. Это подмена тезиса."
     mood: "блиц — подмена тезиса"
-    next_default: ep043_s19
+    next_default: ep043_s20
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма таблички «все хотят» поверх толпы разных силуэтов"
       camera: close-up
@@ -858,7 +858,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 19: Quiz 8 — «разве кто-то хочет хаоса?» ──────────────
-  - scene_id: ep043_s19
+  - scene_id: ep043_s20
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -881,7 +881,7 @@ scenes:
     feedback_success: "Альтернатива = хаос — спрятано внутри. Ловушка."
     feedback_soft_fail: "Внутри спрятано: «всё, что не Голос — хаос». Скажешь «нет» — согласишься, что альтернативы это хаос. Скажешь «да» — выглядишь сумасшедшим. Это вопрос-ловушка."
     mood: "блиц — ловушка"
-    next_default: ep043_s20
+    next_default: ep043_s21
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма мышеловки с надписью «хаос»"
       camera: close-up
@@ -895,7 +895,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 20: Quiz 9 — «этот мальчик опасен!» ───────────────────
-  - scene_id: ep043_s20
+  - scene_id: ep043_s21
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -918,7 +918,7 @@ scenes:
     feedback_success: "Удар по человеку, не по идее. Нападка."
     feedback_soft_fail: "Здесь не разобраны аргументы Марко — только ярлык на самого Марко. Удар по человеку, а не по идее. Это нападка на личность."
     mood: "блиц — нападка"
-    next_default: ep043_s21
+    next_default: ep043_s22
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма стрелки в фигурку (не в облако-аргумент)"
       camera: close-up
@@ -932,7 +932,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21: Quiz 10 — «без меня город падёт» ──────────────────
-  - scene_id: ep043_s21
+  - scene_id: ep043_s22
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -955,7 +955,7 @@ scenes:
     feedback_success: "Цепочка из преувеличений — страшная цепочка."
     feedback_soft_fail: "Здесь не два варианта — это не дилемма. И не подмена темы. Здесь цепочка: «уйду» → «нет защиты» → «город падёт». Каждый шаг пугает сильнее. Это страшная цепочка."
     mood: "блиц — страшная цепочка"
-    next_default: ep043_s22
+    next_default: ep043_s23
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма падающих костяшек домино"
       camera: close-up
@@ -969,7 +969,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 22: Quiz 11 — «или со мной — или с хаосом!» ───────────
-  - scene_id: ep043_s22
+  - scene_id: ep043_s23
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -992,7 +992,7 @@ scenes:
     feedback_success: "Только два варианта между десятков — ложная дилемма."
     feedback_soft_fail: "Здесь нет цепочки шагов и нет удара по человеку. Здесь два навязанных варианта: «со мной» или «с хаосом». А середина — десятки позиций. Это ложная дилемма."
     mood: "блиц — ложная дилемма"
-    next_default: ep043_s23
+    next_default: ep043_s24
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма двух флагов с фигуркой между ними"
       camera: close-up
@@ -1006,7 +1006,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 23: Quiz 12 — «посмотрите на результаты!» ─────────────
-  - scene_id: ep043_s23
+  - scene_id: ep043_s24
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -1029,7 +1029,7 @@ scenes:
     feedback_success: "Связь не доказана — это «после = вследствие»."
     feedback_soft_fail: "Тут нет ссылки на чужой авторитет и нет подмены темы. Здесь подменяется причина: то, что город стоит — превращается в «город стоит благодаря Голосу». Это «после — значит вследствие»."
     mood: "блиц — ложная причина"
-    next_default: ep043_s24
+    next_default: ep043_s25
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма часов и стрелки «после = вследствие?»"
       camera: close-up
@@ -1043,7 +1043,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 24: Quiz 13 — «каждый нормальный человек!» ────────────
-  - scene_id: ep043_s24
+  - scene_id: ep043_s25
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -1066,7 +1066,7 @@ scenes:
     feedback_success: "«Каждый нормальный» — триггер, давление на норму."
     feedback_soft_fail: "Здесь нет атаки на одного человека и нет двух навязанных вариантов. Здесь слово «нормальный» давит: согласишься — нормальный, не согласишься — выпал из нормы. Это давление на норму через слово-триггер."
     mood: "блиц — триггер «нормальный»"
-    next_default: ep043_s25
+    next_default: ep043_s26
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма круга «нормальные» и фигурки на границе"
       camera: close-up
@@ -1080,7 +1080,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 25: Рей подходит — «Он верит» ─────────────────────────
-  - scene_id: ep043_s25
+  - scene_id: ep043_s26
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: dialogue
@@ -1096,7 +1096,7 @@ scenes:
       Марко смотрит на Рея. Рей смотрит на Марко. Впервые — без
       маски. Без позы. Без риторики.
     mood: "Рей без маски — впервые честный"
-    next_default: ep043_s26
+    next_default: ep043_s27
     visual_brief:
       background: "Угол стены. Рей выходит из тени, плечи опущены. Лина и Марко — рядом, повернулись к нему"
       camera: medium
@@ -1118,7 +1118,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 26: Глаза Голоса — карие ───────────────────────────────
-  - scene_id: ep043_s26
+  - scene_id: ep043_s27
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: dialogue
@@ -1142,7 +1142,7 @@ scenes:
 
       Он — источник.
     mood: "осознание: Голос не жертва — источник"
-    next_default: ep043_s27
+    next_default: ep043_s28
     visual_brief:
       background: "Угол стены. Лина, Марко и Рей. Над ними — призрак карих глаз и призрак серых глаз для контраста"
       camera: medium
@@ -1165,7 +1165,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 27: Quiz 14 — искренний демагог ───────────────────────
-  - scene_id: ep043_s27
+  - scene_id: ep043_s28
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -1185,7 +1185,7 @@ scenes:
     feedback_success: "Искренность усиливает речь. Более опасен."
     feedback_soft_fail: "Когда говорящий сам верит — слушатель тоже верит сильнее. Притворщика можно поймать на фальши, искреннего — нет. Демагог, который верит, опаснее, не безопаснее."
     mood: "блиц — сюжет встречает урок"
-    next_default: ep043_s28
+    next_default: ep043_s29
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма горящего факела в честных глазах"
       camera: close-up
@@ -1199,7 +1199,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 28: Quiz 15 — глаза карие ─────────────────────────────
-  - scene_id: ep043_s28
+  - scene_id: ep043_s29
     episode_id: 43
     source_ref: day_11.ep43.challenge
     scene_type: quiz
@@ -1222,7 +1222,7 @@ scenes:
     feedback_success: "Серые — у заражённых. Карие — у источника."
     feedback_soft_fail: "Серые глаза — у тех, кого Голос контролирует: София с одним серым, стражники с двумя. У Голоса оба карие. Значит, его никто не контролирует. Он не жертва — он создатель системы."
     mood: "блиц — финальное осознание про Голос"
-    next_default: ep043_s29_end
+    next_default: ep043_s30
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма карих глаз и лучей от них вниз — он излучает, не получает"
       camera: close-up
@@ -1236,7 +1236,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 29: Клиффхэнгер — карта ───────────────────────────────
-  - scene_id: ep043_s29_end
+  - scene_id: ep043_s30
     episode_id: 43
     source_ref: day_11.ep43.cliffhanger
     scene_type: cliffhanger

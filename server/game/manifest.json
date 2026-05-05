@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-05T15:07:01Z",
+  "generated_at": "2026-05-05T16:38:31Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,7 +889,7 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "288c6dedd40cbcf0"
+          "content_hash": "90709248f7734c2c"
         }
       },
       "title_ru": "Передемагогировать",
@@ -905,7 +905,7 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "cceb89449181bd54"
+          "content_hash": "4e10fa506e42465f"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
@@ -921,7 +921,7 @@
         "ru": {
           "html": "ru/ep_043.html",
           "data": "ru/ep_043.json",
-          "content_hash": "97ce7500c49b01d8"
+          "content_hash": "9bdab849ef8c764a"
         }
       },
       "title_ru": "Тринадцатый приём",
@@ -937,7 +937,7 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "9df1e6017d338be7"
+          "content_hash": "abe714e1259021db"
         }
       },
       "title_ru": "Карта",

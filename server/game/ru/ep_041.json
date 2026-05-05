@@ -242,7 +242,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s05",
+        "next": "ep041_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -264,12 +264,12 @@
           {
             "id": "take_stage",
             "text": "Выхожу на сцену. Перехватываю — словами.",
-            "next": "ep041_s05"
+            "next": "ep041_s26"
           },
           {
             "id": "stay_shadow",
             "text": "Остаюсь в тени. Не хочу быть как Рей.",
-            "next": "ep041_s04b"
+            "next": "ep041_s05"
           }
         ]
       },
@@ -298,7 +298,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04b",
+      "id": "ep041_s05",
       "kind": "narrative",
       "is_chat": false,
       "location": "Башня Голоса, у входа в зал",
@@ -314,10 +314,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s05",
+        "next": "ep041_s26",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep041_s05"
+        "merge_to": "ep041_s26"
       },
       "text": [
         {
@@ -382,7 +382,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_drill_intro",
+      "id": "ep041_s06",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -396,7 +396,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d1",
+        "next": "ep041_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -440,7 +440,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d1",
+      "id": "ep041_s07",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -454,7 +454,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d1_stage",
+        "next": "ep041_s08",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -584,7 +584,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d1_stage",
+      "id": "ep041_s08",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -599,7 +599,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d2",
+        "next": "ep041_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -650,7 +650,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d2",
+      "id": "ep041_s09",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -664,7 +664,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d2_stage",
+        "next": "ep041_s10",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -794,7 +794,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d2_stage",
+      "id": "ep041_s10",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -808,7 +808,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d3",
+        "next": "ep041_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -852,7 +852,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d3",
+      "id": "ep041_s11",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -866,7 +866,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d3_stage",
+        "next": "ep041_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -996,7 +996,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d3_stage",
+      "id": "ep041_s12",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -1011,7 +1011,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d4",
+        "next": "ep041_s13",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1061,7 +1061,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d4",
+      "id": "ep041_s13",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -1075,7 +1075,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d4_stage",
+        "next": "ep041_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1205,7 +1205,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d4_stage",
+      "id": "ep041_s14",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -1219,7 +1219,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d5",
+        "next": "ep041_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1264,7 +1264,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d5",
+      "id": "ep041_s15",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -1278,7 +1278,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d5_stage",
+        "next": "ep041_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1408,7 +1408,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d5_stage",
+      "id": "ep041_s16",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -1422,7 +1422,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d6",
+        "next": "ep041_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1466,7 +1466,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d6",
+      "id": "ep041_s17",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -1480,7 +1480,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d6_stage",
+        "next": "ep041_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1610,7 +1610,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d6_stage",
+      "id": "ep041_s18",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -1625,7 +1625,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d7",
+        "next": "ep041_s19",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1676,7 +1676,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d7",
+      "id": "ep041_s19",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -1690,7 +1690,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d7_stage",
+        "next": "ep041_s20",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1820,7 +1820,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d7_stage",
+      "id": "ep041_s20",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -1834,7 +1834,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d8",
+        "next": "ep041_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1879,7 +1879,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d8",
+      "id": "ep041_s21",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -1893,7 +1893,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d8_stage",
+        "next": "ep041_s22",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2023,7 +2023,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d8_stage",
+      "id": "ep041_s22",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -2038,7 +2038,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d9",
+        "next": "ep041_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2088,7 +2088,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d9",
+      "id": "ep041_s23",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -2102,7 +2102,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_d9_stage",
+        "next": "ep041_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2232,7 +2232,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_d9_stage",
+      "id": "ep041_s24",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -2247,7 +2247,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_drill_outro",
+        "next": "ep041_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2297,7 +2297,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s04_drill_outro",
+      "id": "ep041_s25",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, у входа в зал",
@@ -2311,7 +2311,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s06",
+        "next": "ep041_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2347,7 +2347,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s05",
+      "id": "ep041_s26",
       "kind": "narrative",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -2362,7 +2362,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s04_drill_intro",
+        "next": "ep041_s06",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2413,7 +2413,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s06",
+      "id": "ep041_s27",
       "kind": "narrative",
       "is_chat": false,
       "location": "Башня Голоса, сцена",
@@ -2428,7 +2428,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s07",
+        "next": "ep041_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2479,7 +2479,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s07",
+      "id": "ep041_s28",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, край сцены",
@@ -2493,7 +2493,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s07b",
+        "next": "ep041_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2547,7 +2547,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s07b",
+      "id": "ep041_s29",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, зал",
@@ -2563,7 +2563,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s07c",
+        "next": "ep041_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2662,7 +2662,7 @@
       "source_ref": "day_11.ep41.drama"
     },
     {
-      "id": "ep041_s07c",
+      "id": "ep041_s30",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -2676,7 +2676,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s08",
+        "next": "ep041_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2724,7 +2724,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s08",
+      "id": "ep041_s31",
       "kind": "narrative",
       "is_chat": false,
       "location": "Башня Голоса, край сцены",
@@ -2737,7 +2737,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s09",
+        "next": "ep041_s32",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2809,7 +2809,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s09",
+      "id": "ep041_s32",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -2823,7 +2823,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s10",
+        "next": "ep041_s33",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2869,7 +2869,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s10",
+      "id": "ep041_s33",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -2883,7 +2883,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s11",
+        "next": "ep041_s34",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2929,7 +2929,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s11",
+      "id": "ep041_s34",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -2943,7 +2943,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s12",
+        "next": "ep041_s35",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2989,7 +2989,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s12",
+      "id": "ep041_s35",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3003,7 +3003,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s13",
+        "next": "ep041_s36",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3049,7 +3049,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s13",
+      "id": "ep041_s36",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3063,7 +3063,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14",
+        "next": "ep041_s37",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3109,7 +3109,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14",
+      "id": "ep041_s37",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3123,7 +3123,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14_marker",
+        "next": "ep041_s38",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3169,7 +3169,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14_marker",
+      "id": "ep041_s38",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3183,7 +3183,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14a",
+        "next": "ep041_s39",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3219,7 +3219,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14a",
+      "id": "ep041_s39",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3233,7 +3233,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14b",
+        "next": "ep041_s40",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3284,7 +3284,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14b",
+      "id": "ep041_s40",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3298,7 +3298,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14c",
+        "next": "ep041_s41",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3349,7 +3349,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14c",
+      "id": "ep041_s41",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3363,7 +3363,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14d",
+        "next": "ep041_s42",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3414,7 +3414,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14d",
+      "id": "ep041_s42",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3428,7 +3428,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14e",
+        "next": "ep041_s43",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3479,7 +3479,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14e",
+      "id": "ep041_s43",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3493,7 +3493,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s14f",
+        "next": "ep041_s44",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3544,7 +3544,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s14f",
+      "id": "ep041_s44",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3558,7 +3558,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s15_sofa",
+        "next": "ep041_s45",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3609,7 +3609,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s15_sofa",
+      "id": "ep041_s45",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3623,7 +3623,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s16",
+        "next": "ep041_s46",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3663,7 +3663,7 @@
       "source_ref": "day_11.ep41.sofa_block"
     },
     {
-      "id": "ep041_s16",
+      "id": "ep041_s46",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3677,7 +3677,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s17",
+        "next": "ep041_s47",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3728,7 +3728,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s17",
+      "id": "ep041_s47",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3742,7 +3742,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s18",
+        "next": "ep041_s48",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3788,7 +3788,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s18",
+      "id": "ep041_s48",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3802,7 +3802,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s19",
+        "next": "ep041_s49",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3848,7 +3848,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s19",
+      "id": "ep041_s49",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3862,7 +3862,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s20",
+        "next": "ep041_s50",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3908,7 +3908,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s20",
+      "id": "ep041_s50",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3922,7 +3922,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s21",
+        "next": "ep041_s51",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -3968,7 +3968,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s21",
+      "id": "ep041_s51",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -3982,7 +3982,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s21a",
+        "next": "ep041_s52",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4028,7 +4028,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s21a",
+      "id": "ep041_s52",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4042,7 +4042,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s21b",
+        "next": "ep041_s53",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4088,7 +4088,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s21b",
+      "id": "ep041_s53",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4102,7 +4102,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s21c",
+        "next": "ep041_s54",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4148,7 +4148,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s21c",
+      "id": "ep041_s54",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4162,7 +4162,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s22",
+        "next": "ep041_s55",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4213,7 +4213,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s22",
+      "id": "ep041_s55",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4227,7 +4227,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s23",
+        "next": "ep041_s56",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4263,7 +4263,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s23",
+      "id": "ep041_s56",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4277,7 +4277,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s24",
+        "next": "ep041_s57",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4454,7 +4454,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s24",
+      "id": "ep041_s57",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4468,7 +4468,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s25",
+        "next": "ep041_s58",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4583,7 +4583,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s25",
+      "id": "ep041_s58",
       "kind": "quiz",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",
@@ -4597,7 +4597,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s26",
+        "next": "ep041_s59",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4712,7 +4712,7 @@
       "source_ref": "day_11.ep41.challenge"
     },
     {
-      "id": "ep041_s26",
+      "id": "ep041_s59",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Башня Голоса, край сцены и угол зала",
@@ -4727,7 +4727,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep041_s27_end",
+        "next": "ep041_s60",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -4791,7 +4791,7 @@
       "source_ref": "day_11.ep41.cliffhanger"
     },
     {
-      "id": "ep041_s27_end",
+      "id": "ep041_s60",
       "kind": "cliffhanger",
       "is_chat": true,
       "location": "Башня Голоса, край сцены",

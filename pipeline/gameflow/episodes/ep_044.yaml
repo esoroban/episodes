@@ -212,11 +212,11 @@ scenes:
     options:
       - id: keep_drawing
         text: "Рисую дальше. Карта должна быть полной."
-        next: ep044_s05
+        next: ep044_s06
       - id: stop
         text: "Останавливаюсь. Не хочу видеть, что покажет."
-        next: ep044_s04b
-    next_default: ep044_s05
+        next: ep044_s05
+    next_default: ep044_s06
     visual_brief:
       background: "Стена с тремя точками. Мел в руке Марко — приподнят. Свет от телефона освещает место, где должна быть следующая точка"
       camera: medium
@@ -234,7 +234,7 @@ scenes:
       ui_mode: choice
 
   # ── СЦЕНА 4b: Detour — остановился ───────────────────────────────
-  - scene_id: ep044_s04b
+  - scene_id: ep044_s05
     episode_id: 44
     source_ref: day_11.ep44.drama
     scene_type: narrative
@@ -257,8 +257,8 @@ scenes:
 
       Поднимает мел. Возвращается к стене. Рисую дальше.
     mood: "отказ от карты = отказ от диагноза. Возвращается"
-    merge_to: ep044_s05
-    next_default: ep044_s05
+    merge_to: ep044_s06
+    next_default: ep044_s06
     visual_brief:
       background: "Стена с тремя точками. Лина чуть отступила. Свет от телефона на стене"
       camera: medium
@@ -276,7 +276,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 5: Марко рисует точки 4-6 ──────────────────────────────
-  - scene_id: ep044_s05
+  - scene_id: ep044_s06
     episode_id: 44
     source_ref: day_11.ep44.drama
     scene_type: dialogue
@@ -297,7 +297,7 @@ scenes:
 
       Карта растёт. Десятки точек. Паутина линий.
     mood: "карта набирает массу — десятки точек"
-    next_default: ep044_s06
+    next_default: ep044_s07
     visual_brief:
       background: "Стена крупнее. Шесть подписанных точек, между ними сеть линий. Сеть начинает напоминать буквенную структуру"
       camera: medium
@@ -316,7 +316,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 6: Марко отходит — М-А-Р-К-О ──────────────────────────
-  - scene_id: ep044_s06
+  - scene_id: ep044_s07
     episode_id: 44
     source_ref: day_11.ep44.drama
     scene_type: narrative
@@ -338,7 +338,7 @@ scenes:
 
       Мел падает. Стучит о камень.
     mood: "узор оказывается именем — Марко"
-    next_default: ep044_s07
+    next_default: ep044_s08
     visual_brief:
       background: "Стена целиком. Десятки точек и линий складываются в большие буквы М-А-Р-К-О. Марко в трёх шагах от стены, смотрит. Мел упал у его ноги"
       camera: wide
@@ -357,7 +357,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 7: Лина — «лучшим учеником». Софа молчит ──────────────
-  - scene_id: ep044_s07
+  - scene_id: ep044_s08
     episode_id: 44
     source_ref: day_11.ep44.drama
     scene_type: dialogue
@@ -384,7 +384,7 @@ scenes:
 
       Тот, кто говорит последним, — прав.
     mood: "самый болезненный момент эпизода — Марко удобный"
-    next_default: ep044_s08
+    next_default: ep044_s09
     visual_brief:
       background: "Переулок. Стена с буквами М-А-Р-К-О на заднем плане. Марко и Лина крупно"
       camera: medium
@@ -402,7 +402,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 8: Софа — один инструмент против всего ────────────────
-  - scene_id: ep044_s08
+  - scene_id: ep044_s09
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: dialogue
@@ -415,7 +415,7 @@ scenes:
       - who: Софа
         line: "Против всего."
     mood: "Софа подводит к универсальному ответу"
-    next_default: ep044_s09
+    next_default: ep044_s10
     visual_brief:
       background: "Экран телефона, два коротких пузыря Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -429,7 +429,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 9: Теория — универсальный ответ ───────────────────────
-  - scene_id: ep044_s09
+  - scene_id: ep044_s10
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: narrative
@@ -462,7 +462,7 @@ scenes:
       пытается «но...», «однако...», «зато...» — повторяй: «Где
       факты?» Без эмоций. Без оправданий. Один вопрос.
     mood: "карта инструмента — два шага"
-    next_default: ep044_s10
+    next_default: ep044_s11
     visual_brief:
       background: "Переулок в расфокусе. По центру — два больших слова «ЭТО ДЕМАГОГИЯ» и под ними — большой знак вопроса «ГДЕ ФАКТЫ?»"
       camera: medium
@@ -479,7 +479,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 10: Sofa quiz 1 — все нормальные дети ─────────────────
-  - scene_id: ep044_s10
+  - scene_id: ep044_s11
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: quiz
@@ -502,7 +502,7 @@ scenes:
     feedback_success: "«Все нормальные» — триггер. Универсальный ответ работает."
     feedback_soft_fail: "«Нет, не все» — спор без структуры, легко перебить. «Хорошо, схожу» — это согласие на давление. «Это демагогия. Где факты?» — называет приём и требует источник. Это и есть универсальный ответ."
     mood: "разминка — формула на триггере"
-    next_default: ep044_s11
+    next_default: ep044_s12
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «ЭТО ДЕМАГОГИЯ. ГДЕ ФАКТЫ?» как штамп на фразе"
       camera: close-up
@@ -516,7 +516,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 11: Sofa quiz 2 — без репетитора провалишь ────────────
-  - scene_id: ep044_s11
+  - scene_id: ep044_s12
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: quiz
@@ -539,7 +539,7 @@ scenes:
     feedback_success: "Цепочка без фактов. Универсальный ответ работает."
     feedback_soft_fail: "Паника — топливо для демагога. Грубость — нападка, не аргумент. «Это демагогия. Где факты?» — спокойно требует доказательств. Многие сдают без репетитора. Это и есть универсальный ответ."
     mood: "разминка — формула на страшной цепочке"
-    next_default: ep044_s12
+    next_default: ep044_s13
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма падающих костяшек домино со штампом формулы поверх"
       camera: close-up
@@ -553,7 +553,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 12: Sofa quiz 3 — очевидно, наш город лучше ───────────
-  - scene_id: ep044_s12
+  - scene_id: ep044_s13
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: quiz
@@ -576,7 +576,7 @@ scenes:
     feedback_success: "«Очевидно» — триггер. Универсальный ответ работает."
     feedback_soft_fail: "Согласие — это сдача под давлением. Контратака «ваш хуже» — та же демагогия в обратную сторону. «Это демагогия. Где факты?» — спокойно требует критерии и данные. Это универсальный ответ."
     mood: "разминка — формула на «очевидно»"
-    next_default: ep044_s13
+    next_default: ep044_s14
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма слова «ОЧЕВИДНО» в красной рамке с штампом формулы поверх"
       camera: close-up
@@ -590,7 +590,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 13: Конструктор — «все знают, читать книги скучно» ────
-  - scene_id: ep044_s13
+  - scene_id: ep044_s14
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: quiz
@@ -630,7 +630,7 @@ scenes:
     template: "{diagnose} {counter}"
     closing: "Демагог ждёт спора. Получает диагноз и факт. Это и есть универсальный ответ."
     mood: "конструктор — формула против «все знают»"
-    next_default: ep044_s14
+    next_default: ep044_s15
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма пустого листа с двумя пунктами"
       camera: close-up
@@ -644,7 +644,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 14: Конструктор — «любой нормальный — самокат» ────────
-  - scene_id: ep044_s14
+  - scene_id: ep044_s15
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: quiz
@@ -684,7 +684,7 @@ scenes:
     template: "{diagnose} {counter}"
     closing: "Триггер «любой нормальный» — самый частый. Эта формула с ним работает каждый раз."
     mood: "конструктор — формула против давления через норму"
-    next_default: ep044_s15_sofa
+    next_default: ep044_s16
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма самоката рядом с фигуркой взрослого"
       camera: close-up
@@ -698,7 +698,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 15_sofa: Правило 44 ─────────────────────────────────────
-  - scene_id: ep044_s15_sofa
+  - scene_id: ep044_s16
     episode_id: 44
     source_ref: day_11.ep44.sofa_block
     scene_type: dialogue
@@ -713,7 +713,7 @@ scenes:
       - who: Софа
         line: "Четыре слова против любого приёма."
     mood: "правило закрыто — пора испытание"
-    next_default: ep044_s16
+    next_default: ep044_s17
     visual_brief:
       background: "Экран телефона, пузыри Софы — голубое свечение, ровный ритм"
       camera: close-up
@@ -727,7 +727,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 16: Софа — финальный разбор ────────────────────────────
-  - scene_id: ep044_s16
+  - scene_id: ep044_s17
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: dialogue
@@ -740,7 +740,7 @@ scenes:
       - who: Софа
         line: "Каждый приём Голоса — голосование."
     mood: "переход — карта встречает формулу"
-    next_default: ep044_s17
+    next_default: ep044_s18
     visual_brief:
       background: "Экран телефона, два пузыря Софы — голубое свечение"
       camera: close-up
@@ -754,7 +754,7 @@ scenes:
       ui_mode: dialogue
 
   # ── СЦЕНА 17: Марко применяет формулу ко всей карте ─────────────
-  - scene_id: ep044_s17
+  - scene_id: ep044_s18
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: dialogue
@@ -780,7 +780,7 @@ scenes:
       Лина смотрит — впервые за сегодня без аналитической маски.
       Просто слушает, как Марко проходит карту до конца.
     mood: "Марко катком проходит свою карту"
-    next_default: ep044_s18
+    next_default: ep044_s19
     visual_brief:
       background: "Стена с картой М-А-Р-К-О. Над каждой из шести точек — мерцающий штамп «демагогия. где факты?»"
       camera: wide
@@ -799,7 +799,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 18: Quiz 4 — 15 из 30 ──────────────────────────────────
-  - scene_id: ep044_s18
+  - scene_id: ep044_s19
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -819,7 +819,7 @@ scenes:
     feedback_success: "15 из 30 — проверяемо. Аргумент."
     feedback_soft_fail: "Признаки аргумента: конкретные числа, которые можно проверить (15 из 30). Никаких слов-триггеров. Это аргумент, а не демагогия."
     mood: "блиц — настоящий аргумент"
-    next_default: ep044_s19
+    next_default: ep044_s20
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма «15/30» крупно с галочкой"
       camera: close-up
@@ -833,7 +833,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 19: Quiz 5 — все умные согласны ───────────────────────
-  - scene_id: ep044_s19
+  - scene_id: ep044_s20
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -853,7 +853,7 @@ scenes:
     feedback_success: "«Все умные» — триггер. Демагогия."
     feedback_soft_fail: "Аргумент даёт источник или число. Здесь — только давление через слово «умные»: согласишься — умный, не согласишься — нет. Это слово-триггер. Демагогия."
     mood: "блиц — триггер"
-    next_default: ep044_s20
+    next_default: ep044_s21
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма слова «УМНЫЕ» в красной рамке"
       camera: close-up
@@ -867,7 +867,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 20: Quiz 6 — по данным учёных ─────────────────────────
-  - scene_id: ep044_s20
+  - scene_id: ep044_s21
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -887,7 +887,7 @@ scenes:
     feedback_success: "Источник + цифра. Аргумент."
     feedback_soft_fail: "Признаки аргумента на месте: источник (учёные) + конкретные цифры (8 часов, 20%). Это можно проверить. Это аргумент."
     mood: "блиц — аргумент"
-    next_default: ep044_s21
+    next_default: ep044_s22
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма мозга и числа «20%»"
       camera: close-up
@@ -901,7 +901,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 21: Quiz 7 — только дурак не понимает ─────────────────
-  - scene_id: ep044_s21
+  - scene_id: ep044_s22
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -921,7 +921,7 @@ scenes:
     feedback_success: "«Дурак» + давление на норму. Демагогия."
     feedback_soft_fail: "Аргумент даёт причину или факт. Здесь — ярлык на несогласного. Это нападка через ярлык, чистая демагогия."
     mood: "блиц — ярлык"
-    next_default: ep044_s22
+    next_default: ep044_s23
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма ярлыка «дурак» на фигурке"
       camera: close-up
@@ -935,7 +935,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 22: Quiz 8 — ты что, хочешь, развалилось ──────────────
-  - scene_id: ep044_s22
+  - scene_id: ep044_s23
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -955,7 +955,7 @@ scenes:
     feedback_success: "Удар по человеку — нападка."
     feedback_soft_fail: "Возражение спорит с мыслью, нападка бьёт по человеку. Здесь Марко (или собеседнику) приписывается желание развала — без доказательств. Это нападка."
     mood: "блиц — нападка через приписывание"
-    next_default: ep044_s23
+    next_default: ep044_s24
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма стрелки в фигурку"
       camera: close-up
@@ -969,7 +969,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 23: Quiz 9 — данные за прошлый год ────────────────────
-  - scene_id: ep044_s23
+  - scene_id: ep044_s24
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -989,7 +989,7 @@ scenes:
     feedback_success: "Спор с данными — возражение."
     feedback_soft_fail: "Здесь не оскорбление и не ярлык. Здесь — конкретное возражение по существу: «данные устарели». Это возражение, а не нападка."
     mood: "блиц — возражение по существу"
-    next_default: ep044_s24
+    next_default: ep044_s25
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма календаря с прошлым годом и стрелки на сейчас"
       camera: close-up
@@ -1003,7 +1003,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 24: Quiz 10 — этот мальчик ничего не понимает ─────────
-  - scene_id: ep044_s24
+  - scene_id: ep044_s25
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -1023,7 +1023,7 @@ scenes:
     feedback_success: "Удар по человеку — нападка."
     feedback_soft_fail: "Идея Марко даже не упомянута — есть только оскорбление «ничего не понимает». Это нападка на человека."
     mood: "блиц — нападка на личность"
-    next_default: ep044_s25
+    next_default: ep044_s26
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма стрелки в фигурку"
       camera: close-up
@@ -1037,7 +1037,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 25: Quiz 11 — Марко соглашался с тем, кто говорит последним
-  - scene_id: ep044_s25
+  - scene_id: ep044_s26
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -1060,7 +1060,7 @@ scenes:
     feedback_success: "Управление через «последнее слово» — это демагогия."
     feedback_soft_fail: "Возражение — это собственный спор с аргументом, не привычка соглашаться. Ложный авторитет — это ссылка на не-эксперта. Здесь Голос пользуется привычкой Марко: соглашаться с последним. Это управление через демагогию — давление формой подачи."
     mood: "блиц — собственная слабость как приём"
-    next_default: ep044_s26
+    next_default: ep044_s27
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма цепочки реплик с галочкой на последней"
       camera: close-up
@@ -1074,7 +1074,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 26: Quiz 12 — Лина: «лучшим учеником» ─────────────────
-  - scene_id: ep044_s26
+  - scene_id: ep044_s27
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -1094,7 +1094,7 @@ scenes:
     feedback_success: "Без оскорбления — это возражение, не нападка."
     feedback_soft_fail: "Нападка унижает и не даёт причины. Лина не унижает — она наблюдает: «ты реагировал на каждый приём, поэтому стал материалом». Это возражение по существу, болезненное, но честное."
     mood: "блиц — болезненное возражение Лины"
-    next_default: ep044_s27
+    next_default: ep044_s28
     visual_brief:
       background: "Экран телефона, пузырь Софы, пиктограмма зеркала с фигуркой ученика"
       camera: close-up
@@ -1108,7 +1108,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 27: Конструктор — «я единственный, кто заботится» ─────
-  - scene_id: ep044_s27
+  - scene_id: ep044_s28
     episode_id: 44
     source_ref: day_11.ep44.challenge
     scene_type: quiz
@@ -1148,7 +1148,7 @@ scenes:
     template: "{diagnose} {counter}"
     closing: "Самый сильный приём Голоса — и самый простой ответ. Триггер пойман, контрпримеры реальные."
     mood: "конструктор — разбор тринадцатого приёма"
-    next_default: ep044_s28
+    next_default: ep044_s29
     visual_brief:
       background: "Экран телефона, пузырь Софы — открытый вопрос, пиктограмма слова «ЕДИНСТВЕННЫЙ» в красной рамке"
       camera: close-up
@@ -1162,7 +1162,7 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 28: Рей из темноты — «удобным» ────────────────────────
-  - scene_id: ep044_s28
+  - scene_id: ep044_s29
     episode_id: 44
     source_ref: day_11.ep44.cliffhanger
     scene_type: dialogue
@@ -1185,7 +1185,7 @@ scenes:
       - who: Марко
         line: "Потому что соглашался с тем, кто говорит последним."
     mood: "Марко называет себя — точно. Рей слышит"
-    next_default: ep044_s29_end
+    next_default: ep044_s30
     visual_brief:
       background: "Переулок. Стена с картой М-А-Р-К-О. Рей выходит из тени за углом. Лина и Марко рядом со стеной"
       camera: medium
@@ -1208,7 +1208,7 @@ scenes:
       ui_mode: reading
 
   # ── СЦЕНА 29: Клиффхэнгер — кто автор Софы? ─────────────────────
-  - scene_id: ep044_s29_end
+  - scene_id: ep044_s30
     episode_id: 44
     source_ref: day_11.ep44.cliffhanger
     scene_type: cliffhanger

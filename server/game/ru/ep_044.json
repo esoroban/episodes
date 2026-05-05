@@ -233,7 +233,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s05",
+        "next": "ep044_s06",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -255,12 +255,12 @@
           {
             "id": "keep_drawing",
             "text": "Рисую дальше. Карта должна быть полной.",
-            "next": "ep044_s05"
+            "next": "ep044_s06"
           },
           {
             "id": "stop",
             "text": "Останавливаюсь. Не хочу видеть, что покажет.",
-            "next": "ep044_s04b"
+            "next": "ep044_s05"
           }
         ]
       },
@@ -289,7 +289,7 @@
       "source_ref": "day_11.ep44.drama"
     },
     {
-      "id": "ep044_s04b",
+      "id": "ep044_s05",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -303,10 +303,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s05",
+        "next": "ep044_s06",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep044_s05"
+        "merge_to": "ep044_s06"
       },
       "text": [
         {
@@ -357,7 +357,7 @@
       "source_ref": "day_11.ep44.drama"
     },
     {
-      "id": "ep044_s05",
+      "id": "ep044_s06",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -371,7 +371,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s06",
+        "next": "ep044_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -429,7 +429,7 @@
       "source_ref": "day_11.ep44.drama"
     },
     {
-      "id": "ep044_s06",
+      "id": "ep044_s07",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -443,7 +443,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s07",
+        "next": "ep044_s08",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -505,7 +505,7 @@
       "source_ref": "day_11.ep44.drama"
     },
     {
-      "id": "ep044_s07",
+      "id": "ep044_s08",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -519,7 +519,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s08",
+        "next": "ep044_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -585,7 +585,7 @@
       "source_ref": "day_11.ep44.drama"
     },
     {
-      "id": "ep044_s08",
+      "id": "ep044_s09",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -599,7 +599,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s09",
+        "next": "ep044_s10",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -635,7 +635,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s09",
+      "id": "ep044_s10",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -648,7 +648,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s10",
+        "next": "ep044_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -712,7 +712,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s10",
+      "id": "ep044_s11",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -726,7 +726,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s11",
+        "next": "ep044_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -777,7 +777,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s11",
+      "id": "ep044_s12",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -791,7 +791,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s12",
+        "next": "ep044_s13",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -842,7 +842,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s12",
+      "id": "ep044_s13",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -856,7 +856,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s13",
+        "next": "ep044_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -907,7 +907,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s13",
+      "id": "ep044_s14",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -921,7 +921,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s14",
+        "next": "ep044_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1036,7 +1036,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s14",
+      "id": "ep044_s15",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1050,7 +1050,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s15_sofa",
+        "next": "ep044_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1165,7 +1165,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s15_sofa",
+      "id": "ep044_s16",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1179,7 +1179,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s16",
+        "next": "ep044_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1219,7 +1219,7 @@
       "source_ref": "day_11.ep44.sofa_block"
     },
     {
-      "id": "ep044_s16",
+      "id": "ep044_s17",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1233,7 +1233,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s17",
+        "next": "ep044_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1269,7 +1269,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s17",
+      "id": "ep044_s18",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -1283,7 +1283,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s18",
+        "next": "ep044_s19",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1353,7 +1353,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s18",
+      "id": "ep044_s19",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1367,7 +1367,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s19",
+        "next": "ep044_s20",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1413,7 +1413,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s19",
+      "id": "ep044_s20",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1427,7 +1427,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s20",
+        "next": "ep044_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1473,7 +1473,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s20",
+      "id": "ep044_s21",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1487,7 +1487,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s21",
+        "next": "ep044_s22",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1533,7 +1533,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s21",
+      "id": "ep044_s22",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1547,7 +1547,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s22",
+        "next": "ep044_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1593,7 +1593,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s22",
+      "id": "ep044_s23",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1607,7 +1607,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s23",
+        "next": "ep044_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1653,7 +1653,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s23",
+      "id": "ep044_s24",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1667,7 +1667,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s24",
+        "next": "ep044_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1713,7 +1713,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s24",
+      "id": "ep044_s25",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1727,7 +1727,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s25",
+        "next": "ep044_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1773,7 +1773,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s25",
+      "id": "ep044_s26",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1787,7 +1787,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s26",
+        "next": "ep044_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1838,7 +1838,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s26",
+      "id": "ep044_s27",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1852,7 +1852,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s27",
+        "next": "ep044_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1898,7 +1898,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s27",
+      "id": "ep044_s28",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",
@@ -1912,7 +1912,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s28",
+        "next": "ep044_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2027,7 +2027,7 @@
       "source_ref": "day_11.ep44.challenge"
     },
     {
-      "id": "ep044_s28",
+      "id": "ep044_s29",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
@@ -2042,7 +2042,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s29_end",
+        "next": "ep044_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2111,7 +2111,7 @@
       "source_ref": "day_11.ep44.cliffhanger"
     },
     {
-      "id": "ep044_s29_end",
+      "id": "ep044_s30",
       "kind": "cliffhanger",
       "is_chat": true,
       "location": "Зеркальный город, переулок за площадью",

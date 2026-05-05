@@ -1555,6 +1555,13 @@ body.lang-uk .scene-meta { display: none !important; }
 .nav-btn.primary { background: var(--accent); color: var(--bg); font-weight: 600; }
 .nav-btn.primary:hover { background: #8ab0e0; }
 .nav-btn.primary:disabled { background: var(--accent); opacity: 0.3; }
+.dbg-skip-btn {
+  padding: 0.4rem 0.8rem; border: 1px dashed #ff6b6b; border-radius: 8px;
+  background: transparent; color: #ff6b6b; font-size: 0.78rem;
+  cursor: pointer; font-family: var(--font-ui); opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.dbg-skip-btn:hover { opacity: 1; }
 .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
 .end-screen { text-align: center; padding: 3rem 1.5rem; display: none; }
 .end-screen.active { display: block; }
@@ -1896,6 +1903,21 @@ JS = r"""
 
   btnNext.addEventListener('click',goForward);
   btnPrev.addEventListener('click',goBack);
+  var dbgSkipBtn=document.getElementById('dbgSkipBtn');
+  if(dbgSkipBtn){
+    dbgSkipBtn.addEventListener('click',function(){
+      if(currentIndex>=scenes.length) return;
+      navHistory.push(currentIndex);
+      var sc=scenes[currentIndex];
+      sc.dataset.chatPending='false';
+      answeredScenes.add(currentIndex);
+      var ni=null;
+      if(sc.dataset.next) ni=resolveNext(sc.dataset.next);
+      if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+      if(ni===null) ni=currentIndex+1;
+      showScene(ni);
+    });
+  }
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'||e.key===' '){if(!btnNext.disabled){e.preventDefault();btnNext.click();}}
     else if(e.key==='ArrowLeft'){if(!btnPrev.disabled){e.preventDefault();btnPrev.click();}}
@@ -2363,6 +2385,11 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
         all_eps,
         dom_scenes,
     )
+    dbg_skip_btn_html = (
+        '<button class="dbg-skip-btn" id="dbgSkipBtn" '
+        'title="Дебаг: пропустить сцену">\u23ed dbg</button>'
+        if lang == "ru" else ""
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="ru">
@@ -2398,6 +2425,7 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
 <div class="nav-bar">
   <button class="nav-btn" id="btnPrev" disabled>\u2190 Назад</button>
   <button class="nav-btn primary" id="btnNext">Дальше \u2192</button>
+  {dbg_skip_btn_html}
 </div>
 
 {debug_burger_html}
