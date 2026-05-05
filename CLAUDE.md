@@ -19,6 +19,17 @@ Working language: Russian. Ukrainian — only at the final localization stage.
 - In English texts — names in LATIN: Marko, Sofia, Sofa, Lina, Max, Ray, Leon, Vera, Sam, Voice
 - Ukrainian letters (і, ї, є, ґ) and Ukrainian name spellings are forbidden in Russian text. Russian orthography only: Вера Андреевна, not Віра Андріївна
 
+**SIMPLE LANGUAGE RULE (audience 8–12 years old).** All player-facing text
+(`dialogue.line`, `intro`, `hint`, `closing`, `feedback_*`, `correct_logic`,
+`author_text*`, `question`, `option.text`, `option.fb`, `mood`,
+`visual_brief.atmosphere`) must be readable by a 4th-grader without
+explanation. **No Latin/Greek terms** like *ad hominem*, *tu quoque*,
+*praeteritio*, *ad populum*, *post hoc*, *false dichotomy*. Whitelist
+(introduced in lessons): *этос*, *пафос*, *логос*, *демагогия*, *риторика*.
+For full rule + список запрещённых слов с заменами: see
+[pipeline/docs/rules/content_rules.md → Простой язык](pipeline/docs/rules/content_rules.md).
+YAML comments (`#`) and dev-only fields are exempt — there latinisms are OK.
+
 ## Characters
 | Character | Role |
 |-----------|------|
