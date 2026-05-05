@@ -491,10 +491,13 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
         else:
             assembled = " ".join(correct_picks.values())
 
-        outro = str(scene.get("outro", "Готово. Вот что у тебя получилось:")).strip()
-        if outro:
-            text_blocks.append({"who": sofa_display, "line": outro})
-        text_blocks.append({"who": sofa_display, "line": f"«{assembled}»"})
+        skip_assembled = bool(scene.get("skip_assembled", False))
+
+        if not skip_assembled:
+            outro = str(scene.get("outro", "Готово. Вот что у тебя получилось:")).strip()
+            if outro:
+                text_blocks.append({"who": sofa_display, "line": outro})
+            text_blocks.append({"who": sofa_display, "line": f"«{assembled}»"})
 
         closing = str(scene.get("closing", "")).strip()
         if closing:
@@ -840,10 +843,16 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
         else:
             assembled = " ".join(correct_picks.values())
 
-        outro = str(scene.get("outro", "\u0413\u043e\u0442\u043e\u0432\u043e. \u0412\u043e\u0442 \u0447\u0442\u043e \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u043e\u0441\u044c:")).strip()
-        if outro:
-            msgs.append({"t": "text", "s": "sofa", "x": outro})
-        msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{assembled}\u00bb"})
+        # skip_assembled: true — собранная фраза НЕ показывается в чате,
+        # будет произнесена в следующей drama-сцене Марко публично.
+        # Это убирает дублирование "сборка → preview → произнесение".
+        skip_assembled = bool(scene.get("skip_assembled", False))
+
+        if not skip_assembled:
+            outro = str(scene.get("outro", "\u0413\u043e\u0442\u043e\u0432\u043e. \u0412\u043e\u0442 \u0447\u0442\u043e \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u043e\u0441\u044c:")).strip()
+            if outro:
+                msgs.append({"t": "text", "s": "sofa", "x": outro})
+            msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{assembled}\u00bb"})
 
         closing = str(scene.get("closing", "")).strip()
         if closing:

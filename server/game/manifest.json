@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-05T09:45:40Z",
+  "generated_at": "2026-05-05T11:03:31Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,7 +889,7 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "32515d2dcf748e02"
+          "content_hash": "cfed7551cb076b9a"
         }
       },
       "title_ru": "Передемагогировать",
