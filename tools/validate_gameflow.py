@@ -387,7 +387,7 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
     # Live-персонаж в characters_present без реплик — ОК (фигурирует в
     # author_text narrative, но не в bubble-интерфейсе чата).
     # Для split drama + комментарий Софы см. pipeline_rules.md → split-сцены.
-    CHAT_ALLOWED = {"Марко", "Софа", "автор"}
+    CHAT_ALLOWED = {"Марко", "Софа"}
     for scene in scenes:
         sid = scene.get("scene_id", "???")
         chars = scene.get("characters_present", []) or []
@@ -425,6 +425,50 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                 f"{live_speakers} speak(s) in dialogue. "
                 f"Split into drama scene (with live chars' lines) + chat scene "
                 f"(only [Марко, Софа, автор]). See pipeline_rules.md → split-сцены."
+            )
+
+    # ── Check 19: author_text/author_text_after в chat-rendered сцене ─
+    # 2026-05-06 — пользователь усилил запрет: если сцена рендерится как
+    # Telegram-чат (Софа в characters_present + любой триггер чата), то
+    # `author_text` / `author_text_after` ПОПАДАЮТ voice-over-полоской
+    # ВНУТРЬ телефона. Раздражает каждый раз. Решение — выделить авторскую
+    # прозу в ОТДЕЛЬНУЮ drama-narrative сцену перед/после чат-сцены.
+    # См. content_rules.md → «Запрет: автор внутри Telegram-чата».
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        chars = scene.get("characters_present", []) or []
+        if "Софа" not in chars:
+            continue
+        renders_as_chat = False
+        for field in ("dialogue", "dialogue_after"):
+            items = scene.get(field, []) or []
+            if any(isinstance(d, dict) and d.get("who") == "Софа" for d in items):
+                renders_as_chat = True
+                break
+        if scene.get("unlock_button"):
+            renders_as_chat = True
+        if any("correct" in o for o in scene.get("options", []) or []):
+            renders_as_chat = True
+        for inter in scene.get("interactions", []) or []:
+            if any("correct" in o for o in (inter.get("options", []) or [])):
+                renders_as_chat = True
+                break
+        if scene.get("interaction_type") == "constructor" and scene.get("steps"):
+            renders_as_chat = True
+        if not renders_as_chat:
+            continue
+        bad_fields = []
+        if (scene.get("author_text") or "").strip():
+            bad_fields.append("author_text")
+        if (scene.get("author_text_after") or "").strip():
+            bad_fields.append("author_text_after")
+        if bad_fields:
+            result.error(
+                f"AUTHOR IN CHAT: {sid} рендерится как Telegram-чат, но содержит "
+                f"{bad_fields} — попадёт voice-over-полоской ВНУТРЬ телефона. "
+                f"Выдели авторский текст в отдельную drama-narrative сцену "
+                f"(scene_type: narrative, без Софы в characters_present). "
+                f"См. content_rules.md → «Запрет: автор внутри Telegram-чата»."
             )
 
     # ── Check 15: Sofa speaks but not in characters_present ──────

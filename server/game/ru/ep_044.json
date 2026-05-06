@@ -31,7 +31,7 @@
     ],
     "previous_episode": 43
   },
-  "scene_count": 30,
+  "scene_count": 31,
   "quiz_count": 18,
   "branch_count": 1,
   "scenes": [
@@ -2112,22 +2112,21 @@
     },
     {
       "id": "ep044_s30",
-      "kind": "cliffhanger",
-      "is_chat": true,
+      "kind": "narrative",
+      "is_chat": false,
       "location": "Зеркальный город, переулок за площадью",
       "time": "глубокая ночь",
       "chars": [
         "Марко",
         "Лина",
-        "Рей",
-        "Софа"
+        "Рей"
       ],
-      "mood": "конец: 12, экран гаснет — новый вопрос: кто автор Софы",
+      "mood": "перед финальным экраном — Софа выбирает",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep045_s01",
+        "next": "ep044_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2140,39 +2139,19 @@
         {
           "who": "author",
           "line": "Потом — текст."
-        },
-        {
-          "who": "sofa",
-          "line": "Файл разблокирован. Финальный."
-        },
-        {
-          "who": "marko",
-          "line": "Что за файл?"
-        },
-        {
-          "who": "author",
-          "line": "Число на экране Софы: 12. Падает."
-        },
-        {
-          "who": "author",
-          "line": "Софа молчит. Снова. Потом — одна строка."
-        },
-        {
-          "who": "sofa",
-          "line": "Если автор всего — София... кто автор Софы?"
         }
       ],
       "quizzes": [],
       "choice": null,
       "unlock": null,
       "visual_brief": {
-        "background": "Переулок. Стена с картой М-А-Р-К-О. Экран телефона крупно — текст «Если автор всего — София... кто автор Софы?» Под текстом число «12» с мерцающим следом «14 → 12»",
+        "background": "Переулок. Стена с картой М-А-Р-К-О. Марко с телефоном в руке, Лина рядом, Рей у стены. Экран телефона мерцает",
         "camera": "medium",
         "characters": [
           {
             "who": "Марко",
-            "expression": "впитывает новый вопрос",
-            "pose": "телефон в руке, глаза вниз на экран",
+            "expression": "ловит мерцание",
+            "pose": "телефон в руке, глаза вниз",
             "position": "center"
           },
           {
@@ -2183,19 +2162,76 @@
           },
           {
             "who": "Рей",
-            "expression": "молчание, слушает",
+            "expression": "молчание",
             "pose": "у стены",
             "position": "left"
           }
         ],
         "props": [
+          "мерцающий экран"
+        ],
+        "focus_object": "мерцание Софы — выбор",
+        "atmosphere": "перед финальным экраном",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_11.ep44.cliffhanger"
+    },
+    {
+      "id": "ep044_s31",
+      "kind": "cliffhanger",
+      "is_chat": true,
+      "location": "Зеркальный город, переулок за площадью",
+      "time": "глубокая ночь",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "конец: 12, новый вопрос — кто автор Софы",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep045_s01",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Файл разблокирован. Финальный."
+        },
+        {
+          "who": "marko",
+          "line": "Что за файл?"
+        },
+        {
+          "who": "sofa",
+          "line": "Если автор всего — София... кто автор Софы?"
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Тёмный переулок. Крупный план экрана телефона: текст «Если автор всего — София... кто автор Софы?» Под текстом число «12» с мерцающим следом «14 → 12»",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "впитывает новый вопрос",
+            "pose": "телефон в руке, глаза вниз",
+            "position": "center"
+          }
+        ],
+        "props": [
           "число «12» крупно",
           "мерцающий след «14 → 12»",
-          "финальная строка Софы"
+          "финальная строка"
         ],
         "focus_object": "вопрос Софы про себя",
         "atmosphere": "новый виток — день 12",
-        "ui_mode": "reading"
+        "ui_mode": "dialogue"
       },
       "source_ref": "day_11.ep44.cliffhanger"
     }

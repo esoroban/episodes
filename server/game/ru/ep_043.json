@@ -30,7 +30,7 @@
     ],
     "previous_episode": 42
   },
-  "scene_count": 30,
+  "scene_count": 31,
   "quiz_count": 15,
   "branch_count": 1,
   "scenes": [
@@ -2046,29 +2046,28 @@
     },
     {
       "id": "ep043_s30",
-      "kind": "cliffhanger",
-      "is_chat": true,
+      "kind": "dialogue",
+      "is_chat": false,
       "location": "Центральная площадь Зеркального города, у стены",
       "time": "ночь",
       "chars": [
         "Марко",
         "Лина",
-        "Рей",
-        "Софа"
+        "Рей"
       ],
-      "mood": "конец: 14, карта впереди",
+      "mood": "Голос верит — самый опасный тип",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep044_s01",
+        "next": "ep043_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
       },
       "text": [
         {
-          "who": "sofa",
+          "who": "author",
           "line": "Голос верит. В каждое слово. Самый опасный тип."
         },
         {
@@ -2078,14 +2077,6 @@
         {
           "who": "Рей",
           "line": "..."
-        },
-        {
-          "who": "marko",
-          "line": "Как бороться с тем, кто верит?"
-        },
-        {
-          "who": "sofa",
-          "line": "Можно показать карту. Всю карту."
         },
         {
           "who": "author",
@@ -2100,13 +2091,13 @@
       "choice": null,
       "unlock": null,
       "visual_brief": {
-        "background": "У стены. Марко, Лина, Рей. На экране телефона крупно — число «14» с мерцающим следом «16 → 14»",
+        "background": "У стены. Марко, Лина, Рей. Над ними — крупно число «14» с мерцающим следом «16 → 14»",
         "camera": "medium",
         "characters": [
           {
             "who": "Марко",
-            "expression": "тяжёлое впитывание, готовность к карте",
-            "pose": "телефон в руке",
+            "expression": "тяжёлое впитывание",
+            "pose": "руки опущены",
             "position": "center"
           },
           {
@@ -2126,9 +2117,59 @@
           "число «14» крупно",
           "мерцающий след «16 → 14»"
         ],
-        "focus_object": "карта впереди",
-        "atmosphere": "переход — карта всех приёмов",
+        "focus_object": "Рей впервые без слов",
+        "atmosphere": "Голос верит — самый опасный тип",
         "ui_mode": "reading"
+      },
+      "source_ref": "day_11.ep43.cliffhanger"
+    },
+    {
+      "id": "ep043_s31",
+      "kind": "cliffhanger",
+      "is_chat": true,
+      "location": "Центральная площадь Зеркального города, у стены",
+      "time": "ночь",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "конец: 14, карта впереди",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep044_s01",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "marko",
+          "line": "Как бороться с тем, кто верит?"
+        },
+        {
+          "who": "sofa",
+          "line": "Можно показать карту. Всю карту."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Тёмная улица. На переднем плане — экран телефона, два пузыря: вопрос Марко и ответ Софы. Сзади — силуэты Лины и Рея у стены",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "задумчивая решимость",
+            "pose": "телефон в руке",
+            "position": "center"
+          }
+        ],
+        "focus_object": "пузырь — «всю карту»",
+        "atmosphere": "переход — карта всех приёмов",
+        "ui_mode": "dialogue"
       },
       "source_ref": "day_11.ep43.cliffhanger"
     }

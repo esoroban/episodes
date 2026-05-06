@@ -1236,38 +1236,35 @@ scenes:
       ui_mode: quiz
 
   # ── СЦЕНА 29: Клиффхэнгер — карта ───────────────────────────────
+  # ── СЦЕНА 30a: Лина и Рей у стены — драма ────────────────────────
   - scene_id: ep043_s30
     episode_id: 43
     source_ref: day_11.ep43.cliffhanger
-    scene_type: cliffhanger
+    scene_type: dialogue
     location: "Центральная площадь Зеркального города, у стены"
     time: "ночь"
-    characters_present: [Марко, Лина, Рей, Софа]
+    characters_present: [Марко, Лина, Рей]
+    author_text: >
+      Голос верит. В каждое слово. Самый опасный тип.
     dialogue:
-      - who: Софа
-        line: "Голос верит. В каждое слово. Самый опасный тип."
       - who: Лина
         line: "Тринадцать приёмов в одной речи. Но он не притворяется."
       - who: Рей
         line: "..."
-      - who: Марко
-        line: "Как бороться с тем, кто верит?"
-      - who: Софа
-        line: "Можно показать карту. Всю карту."
     author_text_after: >
       Рей стоит у стены. Руки опущены. Впервые — не знает, что
       сказать.
 
       Число на экране Софы: 14. Упало.
-    mood: "конец: 14, карта впереди"
-    next_default: ep044_s01
+    mood: "Голос верит — самый опасный тип"
+    next_default: ep043_s31
     visual_brief:
-      background: "У стены. Марко, Лина, Рей. На экране телефона крупно — число «14» с мерцающим следом «16 → 14»"
+      background: "У стены. Марко, Лина, Рей. Над ними — крупно число «14» с мерцающим следом «16 → 14»"
       camera: medium
       characters:
         - who: Марко
-          expression: тяжёлое впитывание, готовность к карте
-          pose: телефон в руке
+          expression: тяжёлое впитывание
+          pose: руки опущены
           position: center
         - who: Лина
           expression: холодная решимость
@@ -1278,6 +1275,33 @@ scenes:
           pose: у стены
           position: left
       props: [число «14» крупно, мерцающий след «16 → 14»]
-      focus_object: "карта впереди"
-      atmosphere: "переход — карта всех приёмов"
+      focus_object: "Рей впервые без слов"
+      atmosphere: "Голос верит — самый опасный тип"
       ui_mode: reading
+
+  # ── СЦЕНА 30b: Чат — Марко спрашивает, Софа отвечает ─────────────
+  - scene_id: ep043_s31
+    episode_id: 43
+    source_ref: day_11.ep43.cliffhanger
+    scene_type: cliffhanger
+    location: "Центральная площадь Зеркального города, у стены"
+    time: "ночь"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Марко
+        line: "Как бороться с тем, кто верит?"
+      - who: Софа
+        line: "Можно показать карту. Всю карту."
+    mood: "конец: 14, карта впереди"
+    next_default: ep044_s01
+    visual_brief:
+      background: "Тёмная улица. На переднем плане — экран телефона, два пузыря: вопрос Марко и ответ Софы. Сзади — силуэты Лины и Рея у стены"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: задумчивая решимость
+          pose: телефон в руке
+          position: center
+      focus_object: "пузырь — «всю карту»"
+      atmosphere: "переход — карта всех приёмов"
+      ui_mode: dialogue

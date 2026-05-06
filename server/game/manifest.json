@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-06T03:44:20Z",
+  "generated_at": "2026-05-06T03:51:40Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,7 +889,7 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "3cc5bb96f8e4c34d"
+          "content_hash": "1de1a7dcaee20132"
         }
       },
       "title_ru": "Передемагогировать",
@@ -905,7 +905,7 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "fef2b3e9e8a910de"
+          "content_hash": "2269844b7ab2383d"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
@@ -921,12 +921,12 @@
         "ru": {
           "html": "ru/ep_043.html",
           "data": "ru/ep_043.json",
-          "content_hash": "9bdab849ef8c764a"
+          "content_hash": "fe3dba0db0caba4b"
         }
       },
       "title_ru": "Тринадцатый приём",
       "lesson": "11B.1",
-      "scene_count": 30,
+      "scene_count": 31,
       "quiz_count": 15,
       "branch_count": 1
     },
@@ -937,12 +937,12 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "3b266619dfac2845"
+          "content_hash": "b1b7ca702926c759"
         }
       },
       "title_ru": "Карта",
       "lesson": "11B.2",
-      "scene_count": 30,
+      "scene_count": 31,
       "quiz_count": 18,
       "branch_count": 1
     }
