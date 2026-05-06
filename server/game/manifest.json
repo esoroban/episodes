@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-05T16:38:31Z",
+  "generated_at": "2026-05-06T03:44:20Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -9,7 +9,7 @@
         "ru": {
           "html": "ru/ep_001.html",
           "data": "ru/ep_001.json",
-          "content_hash": "cca60fd7cc017371"
+          "content_hash": "59e93d840b06752a"
         },
         "uk": {
           "html": "uk/ep_001.html",
@@ -75,7 +75,7 @@
         "ru": {
           "html": "ru/ep_004.html",
           "data": "ru/ep_004.json",
-          "content_hash": "08236620d8d45e7e"
+          "content_hash": "a1613eb4421ed701"
         },
         "uk": {
           "html": "uk/ep_004.html",
@@ -207,7 +207,7 @@
         "ru": {
           "html": "ru/ep_010.html",
           "data": "ru/ep_010.json",
-          "content_hash": "460aaa9025414c11"
+          "content_hash": "19d75cb91784e7cb"
         },
         "uk": {
           "html": "uk/ep_010.html",
@@ -251,7 +251,7 @@
         "ru": {
           "html": "ru/ep_012.html",
           "data": "ru/ep_012.json",
-          "content_hash": "11c20a6a36e220f9"
+          "content_hash": "f79591a590c8c7ce"
         },
         "uk": {
           "html": "uk/ep_012.html",
@@ -339,7 +339,7 @@
         "ru": {
           "html": "ru/ep_016.html",
           "data": "ru/ep_016.json",
-          "content_hash": "262dd7f764e10eba"
+          "content_hash": "24989961a4c38952"
         },
         "uk": {
           "html": "uk/ep_016.html",
@@ -361,7 +361,7 @@
         "ru": {
           "html": "ru/ep_017.html",
           "data": "ru/ep_017.json",
-          "content_hash": "7c7db3b12f362723"
+          "content_hash": "ae5ce3664e37ff92"
         },
         "uk": {
           "html": "uk/ep_017.html",
@@ -383,7 +383,7 @@
         "ru": {
           "html": "ru/ep_018.html",
           "data": "ru/ep_018.json",
-          "content_hash": "516f3c25fb683fb6"
+          "content_hash": "f8338e5828b88d78"
         },
         "uk": {
           "html": "uk/ep_018.html",
@@ -427,7 +427,7 @@
         "ru": {
           "html": "ru/ep_020.html",
           "data": "ru/ep_020.json",
-          "content_hash": "7ed984240ece226c"
+          "content_hash": "980a5d6d551c1961"
         },
         "uk": {
           "html": "uk/ep_020.html",
@@ -471,7 +471,7 @@
         "ru": {
           "html": "ru/ep_022.html",
           "data": "ru/ep_022.json",
-          "content_hash": "d33b16bc68b1ad92"
+          "content_hash": "6ab0439bf5336912"
         },
         "uk": {
           "html": "uk/ep_022.html",
@@ -493,7 +493,7 @@
         "ru": {
           "html": "ru/ep_023.html",
           "data": "ru/ep_023.json",
-          "content_hash": "65c414135406d89e"
+          "content_hash": "5a9d1c2bb2e04af8"
         },
         "uk": {
           "html": "uk/ep_023.html",
@@ -515,7 +515,7 @@
         "ru": {
           "html": "ru/ep_024.html",
           "data": "ru/ep_024.json",
-          "content_hash": "65990318805fbdbc"
+          "content_hash": "fc11c94220ec5c6a"
         },
         "uk": {
           "html": "uk/ep_024.html",
@@ -537,7 +537,7 @@
         "ru": {
           "html": "ru/ep_025.html",
           "data": "ru/ep_025.json",
-          "content_hash": "f8983540bb11c9fd"
+          "content_hash": "6d1dea3418c6057b"
         },
         "uk": {
           "html": "uk/ep_025.html",
@@ -559,7 +559,7 @@
         "ru": {
           "html": "ru/ep_026.html",
           "data": "ru/ep_026.json",
-          "content_hash": "63179b00ef531b51"
+          "content_hash": "8161ddbe6403bf40"
         },
         "uk": {
           "html": "uk/ep_026.html",
@@ -581,7 +581,7 @@
         "ru": {
           "html": "ru/ep_027.html",
           "data": "ru/ep_027.json",
-          "content_hash": "b944e0e9cad70488"
+          "content_hash": "b0e5a92f27b161ec"
         },
         "uk": {
           "html": "uk/ep_027.html",
@@ -647,7 +647,7 @@
         "ru": {
           "html": "ru/ep_030.html",
           "data": "ru/ep_030.json",
-          "content_hash": "7fdea9cca954a738"
+          "content_hash": "e494e2d5fa5831fd"
         },
         "uk": {
           "html": "uk/ep_030.html",
@@ -713,7 +713,7 @@
         "ru": {
           "html": "ru/ep_033.html",
           "data": "ru/ep_033.json",
-          "content_hash": "c78936297a3c1c00"
+          "content_hash": "7e6b26bc7acc7ca8"
         },
         "uk": {
           "html": "uk/ep_033.html",
@@ -757,7 +757,7 @@
         "ru": {
           "html": "ru/ep_035.html",
           "data": "ru/ep_035.json",
-          "content_hash": "b0a5ce4edbec84e4"
+          "content_hash": "b62d55e50be3140e"
         },
         "uk": {
           "html": "uk/ep_035.html",
@@ -779,7 +779,7 @@
         "ru": {
           "html": "ru/ep_036.html",
           "data": "ru/ep_036.json",
-          "content_hash": "f26ebbfdf3608e85"
+          "content_hash": "85808a091e1a8b77"
         },
         "uk": {
           "html": "uk/ep_036.html",
@@ -801,7 +801,7 @@
         "ru": {
           "html": "ru/ep_037.html",
           "data": "ru/ep_037.json",
-          "content_hash": "57ebd8315d183ef2"
+          "content_hash": "e40cbdd8828a76d2"
         },
         "uk": {
           "html": "uk/ep_037.html",
@@ -845,7 +845,7 @@
         "ru": {
           "html": "ru/ep_039.html",
           "data": "ru/ep_039.json",
-          "content_hash": "59f501f3df52e651"
+          "content_hash": "74c6fbfe5045ee9a"
         },
         "uk": {
           "html": "uk/ep_039.html",
@@ -889,7 +889,7 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "90709248f7734c2c"
+          "content_hash": "3cc5bb96f8e4c34d"
         }
       },
       "title_ru": "Передемагогировать",
@@ -905,7 +905,7 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "4e10fa506e42465f"
+          "content_hash": "fef2b3e9e8a910de"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
@@ -937,7 +937,7 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "abe714e1259021db"
+          "content_hash": "3b266619dfac2845"
         }
       },
       "title_ru": "Карта",

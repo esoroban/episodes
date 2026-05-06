@@ -452,14 +452,14 @@
           "question": "«Лёд скользкий, потому что при нагревании поверхности тонкий слой воды уменьшает трение.» Какой тип обоснования?",
           "options": [
             {
-              "id": "logic",
-              "text": "Логика",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "logic",
+              "text": "Логика",
+              "correct": false
             },
             {
               "id": "source",
@@ -1040,14 +1040,14 @@
           "question": "«Планеты вращаются вокруг Солнца — это подтверждено тысячами наблюдений за сотни лет.» Какой тип?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "logic",
               "text": "Логика",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             },
             {
               "id": "source",

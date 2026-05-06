@@ -341,6 +341,10 @@ def balance_episode_quizzes(data: dict) -> None:
         fopts = fu.get("options", []) or []
         if any(isinstance(o, dict) and "correct" in o for o in fopts):
             quiz_opts_lists.append(fopts)
+        for step in scene.get("steps", []) or []:
+            sopts = step.get("options", []) or []
+            if any(isinstance(o, dict) and "correct" in o for o in sopts):
+                quiz_opts_lists.append(sopts)
 
     from collections import defaultdict
     by_n = defaultdict(list)
@@ -353,7 +357,31 @@ def balance_episode_quizzes(data: dict) -> None:
         k = len(group)
         targets = [j % n_opts for j in range(k)]
         seed = int(hashlib.sha1(f"{ep_id}::{n_opts}".encode("utf-8")).hexdigest()[:12], 16)
-        random.Random(seed).shuffle(targets)
+        rng = random.Random(seed)
+        rng.shuffle(targets)
+        for _attempt in range(64):
+            run = 1
+            bad = -1
+            for i in range(1, k):
+                if targets[i] == targets[i - 1]:
+                    run += 1
+                    if run >= 3:
+                        bad = i
+                        break
+                else:
+                    run = 1
+            if bad < 0:
+                break
+            swap_with = next(
+                (j for j in range(k)
+                 if j != bad and targets[j] != targets[bad]
+                 and (j == 0 or targets[j - 1] != targets[bad])
+                 and (j == k - 1 or targets[j + 1] != targets[bad])),
+                None,
+            )
+            if swap_with is None:
+                break
+            targets[bad], targets[swap_with] = targets[swap_with], targets[bad]
         for opts, target in zip(group, targets):
             correct_idx = next(
                 (i for i, o in enumerate(opts)

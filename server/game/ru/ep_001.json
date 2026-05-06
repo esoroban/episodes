@@ -760,14 +760,14 @@
           "question": "«Математика — скучный предмет.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": true
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": false
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": true
             }
           ],
           "correct_logic": "Нет «скучномера» — кому-то скучно, кому-то интересно.",
@@ -1770,14 +1770,14 @@
           "question": "«Фотографии Софии исчезли.» Факт или мнение?",
           "options": [
             {
-              "id": "opinion",
-              "text": "Мнение",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "opinion",
+              "text": "Мнение",
+              "correct": false
             }
           ],
           "correct_logic": "Посмотри на стену дома. Пустые рамки. Проверяемо.",
