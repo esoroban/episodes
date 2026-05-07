@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-06T04:07:34Z",
+  "generated_at": "2026-05-07T10:43:20Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,7 +889,7 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "1de1a7dcaee20132"
+          "content_hash": "ee0a9d697b8895b6"
         }
       },
       "title_ru": "Передемагогировать",
@@ -921,7 +921,7 @@
         "ru": {
           "html": "ru/ep_043.html",
           "data": "ru/ep_043.json",
-          "content_hash": "a5236a626e629191"
+          "content_hash": "d511dbf46d5a6ef3"
         }
       },
       "title_ru": "Тринадцатый приём",
