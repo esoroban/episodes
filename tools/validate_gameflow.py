@@ -584,6 +584,77 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
                     f"Replace with neutral example until the entity appears in the story."
                 )
 
+    # ── Check 21: Простой язык — blacklist слов из content_rules.md ─
+    # Игрок 8-12 лет. Ловим слишком взрослые слова в player-facing полях.
+    # Список см. pipeline/docs/rules/content_rules.md → Простой язык.
+    SIMPLE_LANG_BLACKLIST = _re.compile(
+        r"\b("
+        r"дискредитир\w*|ультиматум\w*|констатац\w*|экстраполя\w*|"
+        r"релевантн\w*|нерелевантн\w*|экспертиз\w*|"
+        r"причинност\w*|гипотез\w*|концепци\w*|"
+        r"манипулятивн\w*|дискурс\w*|нарратив\w*|"
+        r"креативн\w*|заимству\w*|заимствов\w*"
+        r")\b",
+        _re.IGNORECASE,
+    )
+    PLAYER_FACING_FIELDS = (
+        "author_text", "author_text_after", "intro", "hint", "closing",
+        "question", "correct_logic", "feedback_success", "feedback_soft_fail",
+        "mood",
+    )
+    for scene in scenes:
+        sid = scene.get("scene_id", "???")
+        # scene-level fields
+        for field in PLAYER_FACING_FIELDS:
+            v = scene.get(field)
+            if isinstance(v, str):
+                m = SIMPLE_LANG_BLACKLIST.search(v)
+                if m:
+                    result.error(
+                        f"SIMPLE LANG: {sid}.{field} contains '{m.group(0)}' — too "
+                        f"adult for ages 8-12. See content_rules.md → Простой язык."
+                    )
+        # dialogue lines
+        for d in scene.get("dialogue", []) or []:
+            if isinstance(d, dict):
+                line = d.get("line", "") or ""
+                m = SIMPLE_LANG_BLACKLIST.search(line)
+                if m:
+                    result.error(
+                        f"SIMPLE LANG: {sid}.dialogue[{d.get('who','?')}] contains "
+                        f"'{m.group(0)}' — too adult for ages 8-12. See content_rules.md."
+                    )
+        for d in scene.get("dialogue_after", []) or []:
+            if isinstance(d, dict):
+                line = d.get("line", "") or ""
+                m = SIMPLE_LANG_BLACKLIST.search(line)
+                if m:
+                    result.error(
+                        f"SIMPLE LANG: {sid}.dialogue_after[{d.get('who','?')}] contains "
+                        f"'{m.group(0)}' — too adult for ages 8-12. See content_rules.md."
+                    )
+        # quiz options
+        for o in scene.get("options", []) or []:
+            if isinstance(o, dict):
+                for k in ("text", "fb"):
+                    v = o.get(k, "") or ""
+                    m = SIMPLE_LANG_BLACKLIST.search(v)
+                    if m:
+                        result.error(
+                            f"SIMPLE LANG: {sid}.options[{o.get('id','?')}].{k} contains "
+                            f"'{m.group(0)}' — too adult for ages 8-12. See content_rules.md."
+                        )
+        # visual_brief.atmosphere
+        vb = scene.get("visual_brief") or {}
+        if isinstance(vb, dict):
+            v = vb.get("atmosphere", "") or ""
+            m = SIMPLE_LANG_BLACKLIST.search(v)
+            if m:
+                result.error(
+                    f"SIMPLE LANG: {sid}.visual_brief.atmosphere contains "
+                    f"'{m.group(0)}' — too adult for ages 8-12. See content_rules.md."
+                )
+
     return result
 
 
