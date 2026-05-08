@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-07T11:41:50Z",
+  "generated_at": "2026-05-08T10:20:17Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -955,7 +955,7 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "b1b7ca702926c759"
+          "content_hash": "ed904552cb94feef"
         },
         "uk": {
           "html": "uk/ep_044.html",
@@ -977,12 +977,12 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "944ef5c1873c7ab2"
+          "content_hash": "f24befe985fb2113"
         }
       },
       "title_ru": "Лучший ученик",
       "lesson": "12A.1",
-      "scene_count": 48,
+      "scene_count": 49,
       "quiz_count": 11,
       "branch_count": 1
     },
@@ -993,7 +993,7 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "3c2eb2217a202fda"
+          "content_hash": "e4d730357d12028a"
         }
       },
       "title_ru": "Экзамен сомнения",

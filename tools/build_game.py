@@ -73,6 +73,7 @@ _TEXT_FIELDS = (
     "question", "correct_logic",
     "feedback_success", "feedback_soft_fail",
     "mood",
+    "intro", "hint", "closing", "attack",
 )
 
 
@@ -87,15 +88,48 @@ def _merge_dialogue_list(ru_list, uk_list):
 
 
 def _merge_options_by_id(ru_opts, uk_opts):
+    """Merge option text/fb. By id when present, else by index (constructor steps)."""
     if not isinstance(ru_opts, list) or not isinstance(uk_opts, list):
         return
-    uk_by_id = {o.get("id"): o for o in uk_opts if isinstance(o, dict)}
-    for o in ru_opts:
-        if not isinstance(o, dict):
+    has_ids = any(isinstance(o, dict) and o.get("id") for o in uk_opts)
+    if has_ids:
+        uk_by_id = {o.get("id"): o for o in uk_opts if isinstance(o, dict) and o.get("id")}
+        for o in ru_opts:
+            if not isinstance(o, dict):
+                continue
+            uo = uk_by_id.get(o.get("id"))
+            if not uo:
+                continue
+            if "text" in uo:
+                o["text"] = uo["text"]
+            if "fb" in uo:
+                o["fb"] = uo["fb"]
+    else:
+        for i, uo in enumerate(uk_opts):
+            if i >= len(ru_opts) or not isinstance(ru_opts[i], dict) or not isinstance(uo, dict):
+                continue
+            if "text" in uo:
+                ru_opts[i]["text"] = uo["text"]
+            if "fb" in uo:
+                ru_opts[i]["fb"] = uo["fb"]
+
+
+def _merge_steps_by_id(ru_steps, uk_steps):
+    """Merge constructor steps[].label/.hint/.options by step id."""
+    if not isinstance(ru_steps, list) or not isinstance(uk_steps, list):
+        return
+    uk_by_id = {s.get("id"): s for s in uk_steps if isinstance(s, dict) and s.get("id")}
+    for ru_step in ru_steps:
+        if not isinstance(ru_step, dict):
             continue
-        uo = uk_by_id.get(o.get("id"))
-        if uo and "text" in uo:
-            o["text"] = uo["text"]
+        uk_step = uk_by_id.get(ru_step.get("id"))
+        if not uk_step:
+            continue
+        for k in ("label", "hint"):
+            if k in uk_step:
+                ru_step[k] = uk_step[k]
+        if "options" in uk_step:
+            _merge_options_by_id(ru_step.get("options", []), uk_step["options"])
 
 
 def _merge_interaction(ru_inter, uk_inter):
@@ -134,6 +168,8 @@ def merge_uk_overlay(ru_data: dict, uk_data: dict) -> None:
             _merge_dialogue_list(ru_scene.get("dialogue_after", []), uk_scene["dialogue_after"])
         if "options" in uk_scene:
             _merge_options_by_id(ru_scene.get("options", []), uk_scene["options"])
+        if "steps" in uk_scene:
+            _merge_steps_by_id(ru_scene.get("steps", []), uk_scene["steps"])
         if "interactions" in uk_scene and isinstance(ru_scene.get("interactions"), list):
             for i, uk_inter in enumerate(uk_scene["interactions"]):
                 if i < len(ru_scene["interactions"]) and isinstance(uk_inter, dict):
@@ -468,7 +504,8 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
         attack = str(scene.get("attack", "")).strip()
         intro = str(scene.get("intro", "")).strip()
         if attack:
-            text_blocks.append({"who": sofa_display, "line": "Собеседник говорит:"})
+            attack_label = "Співрозмовник каже:" if lang == "uk" else "Собеседник говорит:"
+            text_blocks.append({"who": sofa_display, "line": attack_label})
             text_blocks.append({"who": sofa_display, "line": f"«{attack}»"})
         if intro:
             text_blocks.append({"who": sofa_display, "line": intro})
@@ -522,7 +559,11 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
         skip_assembled = bool(scene.get("skip_assembled", False))
 
         if not skip_assembled:
-            outro = str(scene.get("outro", "Готово. Вот что у тебя получилось:")).strip()
+            default_outro = (
+                "Готово. Ось що в тебе вийшло:" if lang == "uk"
+                else "Готово. Вот что у тебя получилось:"
+            )
+            outro = str(scene.get("outro", default_outro)).strip()
             if outro:
                 text_blocks.append({"who": sofa_display, "line": outro})
             text_blocks.append({"who": sofa_display, "line": f"«{assembled}»"})
@@ -550,14 +591,25 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
     ub = scene.get("unlock_button")
     if isinstance(ub, dict):
         reveals = ub.get("reveals", {}) or {}
+        rev_out = {"type": reveals.get("type", "")}
+        dialogue_in = reveals.get("dialogue")
+        if isinstance(dialogue_in, list) and dialogue_in:
+            rev_out["duration"] = reveals.get("duration", "")
+            rev_out["dialogue"] = [
+                {
+                    "who": _localize_who(d.get("who", ""), lang),
+                    "line": str(d.get("line", "")).strip(),
+                    "duration": d.get("duration", ""),
+                }
+                for d in dialogue_in if isinstance(d, dict)
+            ]
+        else:
+            rev_out["who"] = _localize_who(reveals.get("who", ""), lang)
+            rev_out["line"] = str(reveals.get("line", "")).strip()
+            rev_out["duration"] = reveals.get("duration", "")
         unlock = {
             "button_text": str(ub.get("text", "")).strip(),
-            "reveals": {
-                "type": reveals.get("type", ""),
-                "who": _localize_who(reveals.get("who", ""), lang),
-                "line": str(reveals.get("line", "")).strip(),
-                "duration": reveals.get("duration", ""),
-            },
+            "reveals": rev_out,
         }
 
     return {
@@ -826,7 +878,8 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
         attack = str(scene.get("attack", "")).strip()
         intro = str(scene.get("intro", "")).strip()
         if attack:
-            msgs.append({"t": "text", "s": "sofa", "x": "\u0421\u043e\u0431\u0435\u0441\u0435\u0434\u043d\u0438\u043a \u0433\u043e\u0432\u043e\u0440\u0438\u0442:"})
+            attack_label = "Співрозмовник каже:" if lang == "uk" else "Собеседник говорит:"
+            msgs.append({"t": "text", "s": "sofa", "x": attack_label})
             msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{attack}\u00bb"})
         if intro:
             msgs.append({"t": "text", "s": "sofa", "x": intro})
@@ -877,7 +930,11 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
         skip_assembled = bool(scene.get("skip_assembled", False))
 
         if not skip_assembled:
-            outro = str(scene.get("outro", "\u0413\u043e\u0442\u043e\u0432\u043e. \u0412\u043e\u0442 \u0447\u0442\u043e \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u043e\u0441\u044c:")).strip()
+            default_outro = (
+                "Готово. Ось що в тебе вийшло:" if lang == "uk"
+                else "Готово. Вот что у тебя получилось:"
+            )
+            outro = str(scene.get("outro", default_outro)).strip()
             if outro:
                 msgs.append({"t": "text", "s": "sofa", "x": outro})
             msgs.append({"t": "text", "s": "sofa", "x": f"\u00ab{assembled}\u00bb"})
@@ -908,9 +965,19 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
         msgs.append({"t": "unlock", "x": unlock.get("text", "\U0001f513 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u0442\u044c")})
         rev = unlock.get("reveals", {})
         if rev:
-            ds = str(rev.get("duration", "3"))
-            dur = int(ds.split(":")[-1]) if ":" in ds else int(ds)
-            msgs.append({"t": "voice", "s": "sofia", "d": dur, "x": rev.get("line", "")})
+            dialogue_rev = rev.get("dialogue")
+            if isinstance(dialogue_rev, list) and dialogue_rev:
+                for d in dialogue_rev:
+                    if not isinstance(d, dict):
+                        continue
+                    ds = str(d.get("duration", "3"))
+                    dur = int(ds.split(":")[-1]) if ":" in ds else int(ds)
+                    spk = _speaker_key(d.get("who", "")) or "sofia"
+                    msgs.append({"t": "voice", "s": spk, "d": dur, "x": d.get("line", "")})
+            else:
+                ds = str(rev.get("duration", "3"))
+                dur = int(ds.split(":")[-1]) if ":" in ds else int(ds)
+                msgs.append({"t": "voice", "s": "sofia", "d": dur, "x": rev.get("line", "")})
 
     for inter in scene.get("interactions", []) or []:
         opts_in = [o for o in (inter.get("options", []) or []) if "correct" in o]

@@ -256,12 +256,25 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
             continue
         rev = unlock.get("reveals", {}) if isinstance(unlock, dict) else {}
         if rev.get("type") == "voice_message":
-            missing = [k for k in ("who", "line", "duration") if not rev.get(k)]
-            if missing:
-                result.error(
-                    f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals missing {missing}. "
-                    f"All voice messages need who/line/duration for subtitle + audio."
-                )
+            dlg = rev.get("dialogue")
+            if isinstance(dlg, list) and dlg:
+                for i, d in enumerate(dlg):
+                    if not isinstance(d, dict):
+                        result.error(f"VOICE_MESSAGE BAD ITEM: {sid}.unlock_button.reveals.dialogue[{i}] must be a mapping")
+                        continue
+                    missing = [k for k in ("who", "line", "duration") if not d.get(k)]
+                    if missing:
+                        result.error(
+                            f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals.dialogue[{i}] missing {missing}. "
+                            f"Each line needs who/line/duration for subtitle + audio."
+                        )
+            else:
+                missing = [k for k in ("who", "line", "duration") if not rev.get(k)]
+                if missing:
+                    result.error(
+                        f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals missing {missing}. "
+                        f"All voice messages need who/line/duration for subtitle + audio."
+                    )
 
     # ── Check 9: Voice-channel violations in Sofa dialogue ────────
     # Софа is text-only. Her lines must not describe voice/sound,
