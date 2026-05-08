@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-08T10:40:03Z",
+  "generated_at": "2026-05-08T11:05:22Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,7 +977,7 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "e0066277188b59c9"
+          "content_hash": "dd05a9452767fe3d"
         }
       },
       "title_ru": "Лучший ученик",
@@ -993,7 +993,7 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "e4d730357d12028a"
+          "content_hash": "474b11718dfb3370"
         }
       },
       "title_ru": "Экзамен сомнения",
