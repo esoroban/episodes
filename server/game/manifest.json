@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-08T11:05:22Z",
+  "generated_at": "2026-05-08T15:05:00Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,13 +977,13 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "dd05a9452767fe3d"
+          "content_hash": "3236ce4e196cc6b0"
         }
       },
       "title_ru": "Лучший ученик",
       "lesson": "12A.1",
-      "scene_count": 49,
-      "quiz_count": 11,
+      "scene_count": 41,
+      "quiz_count": 17,
       "branch_count": 1
     },
     {
