@@ -31,7 +31,7 @@
     ],
     "previous_episode": 44
   },
-  "scene_count": 41,
+  "scene_count": 38,
   "quiz_count": 17,
   "branch_count": 1,
   "scenes": [
@@ -2209,7 +2209,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep045_s40",
+        "next": "ep045_s43",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2255,129 +2255,6 @@
         ],
         "focus_object": "коробка с камнем «предатель»",
         "atmosphere": "удар в обёртке отрицания",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_12.ep45.challenge"
-    },
-    {
-      "id": "ep045_s40",
-      "kind": "quiz",
-      "is_chat": false,
-      "location": "Зеркальный Город, серверная комната Софы",
-      "time": "глубокая ночь",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "испытание — собери приём сам",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep045_s41",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, пиктограмма пустого листа с заголовком «придумай: все/никто»",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "думает над фразой",
-            "pose": "телефон в руках, взгляд в сторону",
-            "position": "center"
-          }
-        ],
-        "focus_object": "пустой лист с шаблоном",
-        "atmosphere": "от узнавания — к сборке",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_12.ep45.challenge"
-    },
-    {
-      "id": "ep045_s41",
-      "kind": "quiz",
-      "is_chat": false,
-      "location": "Зеркальный Город, серверная комната Софы",
-      "time": "глубокая ночь",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "испытание — две двери из многих",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep045_s42",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, пиктограмма пустого листа с заголовком «или... или...»",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "думает над фразой",
-            "pose": "телефон в руках",
-            "position": "center"
-          }
-        ],
-        "focus_object": "лист «или... или...»",
-        "atmosphere": "сборка дилеммы",
-        "ui_mode": "quiz"
-      },
-      "source_ref": "day_12.ep45.challenge"
-    },
-    {
-      "id": "ep045_s42",
-      "kind": "quiz",
-      "is_chat": false,
-      "location": "Зеркальный Город, серверная комната Софы",
-      "time": "глубокая ночь",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "испытание — катастрофа из мелочи",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep045_s43",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, пузырь Софы, пиктограмма цепочки домино: маленькое, среднее, большое, туча",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "думает над фразой",
-            "pose": "телефон в руках",
-            "position": "center"
-          }
-        ],
-        "focus_object": "цепочка домино",
-        "atmosphere": "сборка цепочки",
         "ui_mode": "quiz"
       },
       "source_ref": "day_12.ep45.challenge"

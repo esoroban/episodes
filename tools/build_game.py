@@ -2424,12 +2424,12 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
     ep_id = data.get("episode_id", "?")
     title = esc(data.get("episode_title", f"Эпизод {ep_id}"))
     lesson = esc(data.get("lesson", ""))
-    terms = data.get("terms_introduced", [])
     scenes = data.get("scenes", [])
 
+    # Banner «Новые термины» не рендерится — это служебная информация
+    # (для учителя/пайплайна), не для играющего ребёнка. Список остаётся
+    # в JSON-манифесте для TTS/image-пайплайнов.
     terms_html = ""
-    if terms:
-        terms_html = f'<p class="ep-terms">Новые термины: {", ".join(esc(t) for t in terms)}</p>'
 
     # Previously recap as scene 0
     previously = data.get("previously", "")
