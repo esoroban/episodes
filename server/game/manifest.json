@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T13:18:30Z",
+  "generated_at": "2026-05-10T13:25:32Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,7 +977,7 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "e4caa0b35a7617a6"
+          "content_hash": "6419a14bae91889f"
         }
       },
       "title_ru": "Лучший ученик",
@@ -1025,7 +1025,7 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "abc3fde948d08da4"
+          "content_hash": "7ef5aa6b49ea2800"
         }
       },
       "title_ru": "Стены прозрачнеют",

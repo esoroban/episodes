@@ -568,7 +568,7 @@ scenes:
         line: "Серёжа в столовой кричит: «ВСЕ сдали контрольную на пять!» Считаем — трое из двадцати пяти."
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "P"
+    password_fragment: "W"
     question: "«ВСЕ сдали на пять.» Это поспешное обобщение?"
     options:
       - id: yes_hasty
@@ -654,7 +654,7 @@ scenes:
         line: "Ваня говорит: «Может, тренировку перенести на час?» Ему: «Ты хочешь ВООБЩЕ не тренироваться?!»"
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "W"
+    password_fragment: "R"
     question: "Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?"
     options:
       - id: yes_scarecrow
@@ -697,7 +697,7 @@ scenes:
         line: "«Певица Алиса сказала, что эти витамины полезны!» Она поёт. Не врач."
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "E"
+    password_fragment: "D"
     question: "Певица — про витамины. Это ложный авторитет?"
     options:
       - id: yes_false_authority
@@ -740,7 +740,7 @@ scenes:
         line: "«Или ты идёшь с нами на крышу — или ты трус!» А можно не идти и не быть трусом."
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "R"
+    password_fragment: "P"
     question: "«Или с нами — или трус.» Это ложная дилемма?"
     options:
       - id: yes_false_dilemma
@@ -788,7 +788,7 @@ scenes:
       блокнот. Зачем — он не знает, но записывает.
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "L"
+    password_fragment: "O"
     question: "От домашки до дворника — за четыре шага. Это страшная цепочка?"
     options:
       - id: yes_slippery
@@ -831,7 +831,7 @@ scenes:
         line: "«Ты уже перестал списывать?» Скажешь «да» — значит списывал. Скажешь «нет» — ещё списываю."
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "A"
+    password_fragment: "W"
     question: "«Ты уже перестал списывать?» Это вопрос-ловушка?"
     options:
       - id: yes_loaded
@@ -874,7 +874,7 @@ scenes:
         line: "«Я не списываю — я просто подсматриваю и пишу так же!» Новое слово. Суть та же."
     interaction_type: vote
     ui_mode: cli
-    password_fragment: "B"
+    password_fragment: "E"
     question: "«Не списываю — подсматриваю и пишу так же.» Это подмена понятий?"
     options:
       - id: yes_relabel
@@ -917,6 +917,7 @@ scenes:
         line: "«Я надел красные носки — и мы выиграли!» Носки не забивают голы."
     interaction_type: vote
     ui_mode: cli
+    password_fragment: "R"
     question: "Красные носки → победа. Это ложная причина?"
     options:
       - id: yes_false_cause
@@ -959,6 +960,7 @@ scenes:
         line: "«Где мой велосипед?» — «А ты комнату убрал?» Велосипед не появился."
     interaction_type: vote
     ui_mode: cli
+    password_fragment: "L"
     question: "«Где велик?» — «А комнату убрал?» Это уклонение?"
     options:
       - id: yes_dodge
@@ -1001,6 +1003,7 @@ scenes:
         line: "«Мы покорим вершины! Нас ждёт великое будущее!» Куда едем? Когда? Как? Ноль деталей."
     interaction_type: vote
     ui_mode: cli
+    password_fragment: "A"
     question: "«Покорим вершины — великое будущее!» Это красивые слова без фактов?"
     options:
       - id: yes_empty_words
@@ -1048,6 +1051,7 @@ scenes:
       попробует то, что собрал.
     interaction_type: vote
     ui_mode: cli
+    password_fragment: "B"
     question: "«Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?"
     options:
       - id: yes_i_dont_say
@@ -1084,20 +1088,20 @@ scenes:
     author_text: >
       Зелёный текст плывёт по экрану:
 
-      > ВОСЕМЬ ПРОВЕРОК ПРОЙДЕНО
+      > ДВЕНАДЦАТЬ ПРОВЕРОК ПРОЙДЕНО
 
-      > СОХРАНЕНО: POWERLAB
+      > СОХРАНЕНО: WORDPOWERLAB
 
       > ОТКЛЮЧЕНИЕ...
 
       Экран мигает. CLI исчезает. Возвращается голубой пузырь
       Софы. Wi-Fi отвалился.
     author_text_after: >
-      Марко смотрит в блокнот. Восемь букв.
+      Марко смотрит в блокнот. Двенадцать букв.
 
-      «POWERLAB. Что это?» — но всё равно записывает. В
+      «WORDPOWERLAB. Что это?» — но всё равно записывает. В
       рюкзак. На случай если пригодится.
-    mood: "терминал ушёл — Софа вернулась, в блокноте 8 букв POWERLAB"
+    mood: "терминал ушёл — Софа вернулась, в блокноте 12 букв WORDPOWERLAB"
     next_default: ep045_s24
     visual_brief:
       background: "Серверная. На экране телефона зелёный CLI гаснет, возвращается голубой чат Софы. Марко с телефоном в руках, на коленях — открытый блокнот с латинскими буквами"
@@ -1537,7 +1541,7 @@ scenes:
       atmosphere: "красиво, но пусто"
       ui_mode: quiz
 
-  # ── СЦЕНА 35b: Марко пробует 8 букв POWERLAB как пароль — ACCESS DENIED ──
+  # ── СЦЕНА 35b: Марко пробует 12 букв WORDPOWERLAB как пароль — ACCESS DENIED ──
   - scene_id: ep045_s35b
     episode_id: 45
     source_ref: day_12.ep45.challenge
@@ -1551,34 +1555,34 @@ scenes:
 
       > ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ
 
-      > СОХРАНЕНО: POWERLAB
+      > СОХРАНЕНО: WORDPOWERLAB
 
-      > 8 символов.
+      > 12 символов.
 
-      Марко смотрит в блокнот. Восемь букв. Может — пароль?
+      Марко смотрит в блокнот. Двенадцать букв. Может — пароль?
       Подходит к главному терминалу. Поле ввода ждёт.
 
       Печатает по памяти.
     author_text_after: >
-      > ВВЕДИТЕ ПАРОЛЬ: POWERLAB
+      > ВВЕДИТЕ ПАРОЛЬ: WORDPOWERLAB
 
       > ОТКАЗАНО.
 
       Марко хмурится. Может, маленькими буквами?
 
-      > powerlab
+      > wordpowerlab
 
       > ОТКАЗАНО.
 
-      > power.lab
+      > word.power.lab
 
       > ОТКАЗАНО.
 
-      > powerlabcom
+      > wordpowerlabcom
 
       > ОТКАЗАНО.
 
-      Останавливается. Восемь символов — все правильные.
+      Останавливается. Двенадцать символов — все правильные.
       Но мало.
 
       Чего-то не хватает. И начала, и конца.
@@ -1589,10 +1593,10 @@ scenes:
 
       Экран мерцает. Зелёные буквы CLI исчезают. Возвращается
       голубой пузырь Софы.
-    mood: "пробует POWERLAB — не подходит — откладывает: «найду остальное»"
+    mood: "пробует WORDPOWERLAB — не подходит — откладывает: «найду остальное»"
     next_default: ep045_s36
     visual_brief:
-      background: "Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: POWERLAB» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак"
+      background: "Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: WORDPOWERLAB» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак"
       camera: medium
       characters:
         - who: Марко
