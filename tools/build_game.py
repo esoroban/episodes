@@ -2589,6 +2589,7 @@ JS = r"""
 
   /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
   var cliNotepad=[];
+  window.__cliCollected=cliNotepad;
   var cliNotepadEl=null;
   var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
   function ensureCliNotepad(){
@@ -2659,9 +2660,10 @@ JS = r"""
           buttons.forEach(function(b){b.disabled=true;});
           var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
           if(fragment){
-            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
-            lines.push('<div class="cli-line">&gt; сохранено в блокнот.</div>');
             collectFragment(fragment);
+            var accumulated=(window.__cliCollected||[]).join('');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; блокнот: '+accumulated+'</div>');
           }
           if(fbOk){
             lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');

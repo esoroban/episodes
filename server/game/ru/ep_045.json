@@ -2535,7 +2535,7 @@
       "chars": [
         "Марко"
       ],
-      "mood": "пробует — не подходит — откладывает: «найду остальное»",
+      "mood": "пробует WORDPOWERLAB — не подходит — откладывает: «найду остальное»",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
@@ -2556,15 +2556,15 @@
         },
         {
           "who": "author",
-          "line": "> СОХРАНЕНО: www.wordpowerl"
+          "line": "> СОХРАНЕНО: WORDPOWERLAB"
         },
         {
           "who": "author",
-          "line": "> 14 символов."
+          "line": "> 12 символов."
         },
         {
           "who": "author",
-          "line": "Марко смотрит в блокнот. Четырнадцать букв. Может — пароль? Подходит к главному терминалу. Поле ввода ждёт."
+          "line": "Марко смотрит в блокнот. Двенадцать букв. Может — пароль? Подходит к главному терминалу. Поле ввода ждёт."
         },
         {
           "who": "author",
@@ -2572,47 +2572,47 @@
         },
         {
           "who": "author",
-          "line": "> ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl"
+          "line": "> ВВЕДИТЕ ПАРОЛЬ: WORDPOWERLAB"
         },
         {
           "who": "author",
-          "line": "> ACCESS DENIED."
+          "line": "> ОТКАЗАНО."
         },
         {
           "who": "author",
-          "line": "Марко хмурится. Может, точка не там? Может, без?"
+          "line": "Марко хмурится. Может, маленькими буквами?"
         },
         {
           "who": "author",
-          "line": "> www.wordpower"
+          "line": "> wordpowerlab"
         },
         {
           "who": "author",
-          "line": "> ACCESS DENIED."
+          "line": "> ОТКАЗАНО."
         },
         {
           "who": "author",
-          "line": "> wwwwordpowerl"
+          "line": "> word.power.lab"
         },
         {
           "who": "author",
-          "line": "> ACCESS DENIED."
+          "line": "> ОТКАЗАНО."
         },
         {
           "who": "author",
-          "line": "> www.wordpowerlcom"
+          "line": "> wordpowerlabcom"
         },
         {
           "who": "author",
-          "line": "> ACCESS DENIED."
+          "line": "> ОТКАЗАНО."
         },
         {
           "who": "author",
-          "line": "Останавливается. Четырнадцать символов — все правильные. Но мало."
+          "line": "Останавливается. Двенадцать символов — все правильные. Но мало."
         },
         {
           "who": "author",
-          "line": "Чего-то не хватает. Конца."
+          "line": "Чего-то не хватает. И начала, и конца."
         },
         {
           "who": "author",
@@ -2631,7 +2631,7 @@
       "choice": null,
       "unlock": null,
       "visual_brief": {
-        "background": "Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак",
+        "background": "Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: WORDPOWERLAB» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак",
         "camera": "medium",
         "characters": [
           {
