@@ -452,6 +452,10 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
         chars = scene.get("characters_present", []) or []
         if "Софа" not in chars:
             continue
+        # CLI-режим — это терминал, не Telegram-чат. author_text там
+        # рендерится отдельно, не «voice-over внутри телефона».
+        if scene.get("ui_mode") == "cli":
+            continue
         renders_as_chat = False
         for field in ("dialogue", "dialogue_after"):
             items = scene.get(field, []) or []
