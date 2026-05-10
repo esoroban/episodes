@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T15:32:40Z",
+  "generated_at": "2026-05-10T15:39:39Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -993,7 +993,7 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "cec50f8fd72a4968"
+          "content_hash": "fae193b84ea78fb0"
         }
       },
       "title_ru": "Экзамен сомнения",
@@ -1009,7 +1009,7 @@
         "ru": {
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
-          "content_hash": "dc966aeca0346781"
+          "content_hash": "686c21259297d8df"
         }
       },
       "title_ru": "Интеллектуальная битва",
