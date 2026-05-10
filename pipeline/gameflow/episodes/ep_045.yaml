@@ -467,7 +467,7 @@ scenes:
       - who: Софа
         line: "Все приёмы. Все ловушки. Соберём карту."
     mood: "Софа отодвигает финал — хочет пройти карту"
-    next_default: ep045_s12
+    next_default: ep045_s11b
     visual_brief:
       background: "Серверная. Экран телефона крупно — пузыри Софы. На заднем плане — экран терминала с открытой папкой /archive/, часть имён в сером (заперты), часть доступны"
       camera: close-up
@@ -479,6 +479,71 @@ scenes:
       focus_object: "пузыри Софы — карта перед чтением файлов из /archive/"
       atmosphere: "пауза перед финалом"
       ui_mode: dialogue
+
+  # ── СЦЕНА 11b: Софа подключается к ZG-Wi-Fi (chat) ──────────────
+  - scene_id: ep045_s11b
+    episode_id: 45
+    source_ref: day_12.ep45.drama
+    scene_type: dialogue
+    location: "Зеркальный Город, серверная комната Софы"
+    time: "глубокая ночь"
+    characters_present: [Марко, Софа]
+    dialogue:
+      - who: Софа
+        line: "Подожди."
+      - who: Софа
+        line: "Я вижу Wi-Fi. ZG_INTERNAL. Открытый."
+      - who: Софа
+        line: "Подключаюсь."
+      - who: Софа
+        line: "Управление передаю терминалу."
+    mood: "Софа уходит — терминал берёт управление"
+    next_default: ep045_s11c
+    visual_brief:
+      background: "Серверная. Экран телефона крупно — последние пузыри Софы перед переходом в CLI. На заднем плане — стойки серверов и главный терминал"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: внимание — экран сейчас сменится
+          pose: сидит на полу, телефон в руках
+          position: center
+      focus_object: "пузыри Софы перед уходом в терминал"
+      atmosphere: "Софа уходит в фон"
+      ui_mode: dialogue
+
+  # ── СЦЕНА 11c: Экран чата сменяется CLI (drama narrative) ───────
+  - scene_id: ep045_s11c
+    episode_id: 45
+    source_ref: day_12.ep45.drama
+    scene_type: narrative
+    location: "Зеркальный Город, серверная комната Софы"
+    time: "глубокая ночь"
+    characters_present: [Марко]
+    author_text: >
+      Экран Софы мерцает. Голубой пузырь сжимается в чёрный
+      прямоугольник. Зелёные буквы плывут сверху вниз — будто
+      включился старый компьютер.
+
+      На экране — строка за строкой:
+      ZG-TERMINAL v1.0
+      AUTH REQUIRED
+      14 challenges to unlock fragment
+
+      Голос Софы пропадает. Остаётся только зелёный курсор.
+    mood: "терминал берёт управление, Софы больше нет"
+    next_default: ep045_s12
+    visual_brief:
+      background: "Серверная. На экране телефона голубой чат Софы сменяется тёмным CLI с зелёными буквами. На заднем плане — стойки серверов и главный терминал"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: тихое внимание — экран меняется
+          pose: сидит на полу, телефон в руках
+          position: center
+      props: [телефон с переключающимся экраном, зелёные буквы CLI, погасший пузырь Софы]
+      focus_object: "переход чата Софы в зелёный CLI"
+      atmosphere: "терминал берёт управление"
+      ui_mode: reading
 
   # ── СЦЕНА 12: Sofa quiz 1 — поспешное обобщение (Серёжа) ─────────
   - scene_id: ep045_s12
@@ -496,6 +561,8 @@ scenes:
       - who: Софа
         line: "Серёжа в столовой кричит: «ВСЕ сдали контрольную на пять!» Считаем — трое из двадцати пяти."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "w"
     question: "«ВСЕ сдали на пять.» Это поспешное обобщение?"
     options:
       - id: yes_hasty
@@ -537,6 +604,8 @@ scenes:
       - who: Софа
         line: "Новенькая предлагает изменить расписание. Ответ: «Ты тут неделю! Ты вообще молчи!»"
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "w"
     question: "«Ты тут неделю — молчи!» Это нападка на человека?"
     options:
       - id: yes_ad_hominem
@@ -578,6 +647,8 @@ scenes:
       - who: Софа
         line: "Ваня говорит: «Может, тренировку перенести на час?» Ему: «Ты хочешь ВООБЩЕ не тренироваться?!»"
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "w"
     question: "Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?"
     options:
       - id: yes_scarecrow
@@ -619,6 +690,8 @@ scenes:
       - who: Софа
         line: "«Певица Алиса сказала, что эти витамины полезны!» Она поёт. Не врач."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "."
     question: "Певица — про витамины. Это ложный авторитет?"
     options:
       - id: yes_false_authority
@@ -660,6 +733,8 @@ scenes:
       - who: Софа
         line: "«Или ты идёшь с нами на крышу — или ты трус!» А можно не идти и не быть трусом."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "w"
     question: "«Или с нами — или трус.» Это ложная дилемма?"
     options:
       - id: yes_false_dilemma
@@ -701,6 +776,8 @@ scenes:
       - who: Софа
         line: "«Не сделаешь домашку — не сдашь экзамен — не поступишь — станешь дворником!» Ни один шаг не доказан."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "o"
     question: "От домашки до дворника — за четыре шага. Это страшная цепочка?"
     options:
       - id: yes_slippery
@@ -742,6 +819,8 @@ scenes:
       - who: Софа
         line: "«Ты уже перестал списывать?» Скажешь «да» — значит списывал. Скажешь «нет» — ещё списываю."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "r"
     question: "«Ты уже перестал списывать?» Это вопрос-ловушка?"
     options:
       - id: yes_loaded
@@ -783,6 +862,8 @@ scenes:
       - who: Софа
         line: "«Я не списываю — я просто подсматриваю и пишу так же!» Новое слово. Суть та же."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "d"
     question: "«Не списываю — подсматриваю и пишу так же.» Это подмена понятий?"
     options:
       - id: yes_relabel
@@ -824,6 +905,8 @@ scenes:
       - who: Софа
         line: "«Я надел красные носки — и мы выиграли!» Носки не забивают голы."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "p"
     question: "Красные носки → победа. Это ложная причина?"
     options:
       - id: yes_false_cause
@@ -865,6 +948,8 @@ scenes:
       - who: Софа
         line: "«Где мой велосипед?» — «А ты комнату убрал?» Велосипед не появился."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "o"
     question: "«Где велик?» — «А комнату убрал?» Это уклонение?"
     options:
       - id: yes_dodge
@@ -906,6 +991,8 @@ scenes:
       - who: Софа
         line: "«Мы покорим вершины! Нас ждёт великое будущее!» Куда едем? Когда? Как? Ноль деталей."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "w"
     question: "«Покорим вершины — великое будущее!» Это красивые слова без фактов?"
     options:
       - id: yes_empty_words
@@ -947,6 +1034,8 @@ scenes:
       - who: Софа
         line: "«Я не говорю, что ты врёшь, но…» Камень в коробке с бантиком."
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "e"
     question: "«Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?"
     options:
       - id: yes_i_dont_say
@@ -959,7 +1048,7 @@ scenes:
     feedback_success: "Точно. Голос тебе говорил: «Я не говорю, что предатель. Но ты пришёл разрушить…» Тот же ход."
     feedback_soft_fail: "Вежливое замечание звучит прямо: «мне показалось, что…». А здесь — упрёк в красивой обёртке. Защита: «Ты только что это сказал. Прямо.» Это приём «я не говорю, что…»."
     mood: "камень с бантиком"
-    next_default: ep045_s24
+    next_default: ep045_s23b
     visual_brief:
       background: "Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)"
       camera: close-up
@@ -972,6 +1061,42 @@ scenes:
       atmosphere: "подарок-обманка"
       ui_mode: quiz
 
+  # ── СЦЕНА 23b: Wi-Fi отвалился, Софа возвращается ───────────────
+  - scene_id: ep045_s23b
+    episode_id: 45
+    source_ref: day_12.ep45.drama
+    scene_type: narrative
+    location: "Зеркальный Город, серверная комната Софы"
+    time: "глубокая ночь"
+    characters_present: [Марко]
+    author_text: >
+      Зелёный текст плывёт по экрану:
+
+      > FRAGMENT COLLECTED: www.wordpowe
+      > SAVED TO LOCAL NOTEPAD
+      > DISCONNECTING...
+
+      Экран мигает. CLI исчезает. Возвращается голубой пузырь
+      Софы. Wi-Fi отвалился.
+    author_text_after: >
+      Марко смотрит в блокнот. Двенадцать букв.
+      «www.wordpowe. Что это?» — но всё равно записывает.
+      В рюкзак. На случай если пригодится.
+    mood: "терминал ушёл — Софа вернулась, в блокноте двенадцать букв"
+    next_default: ep045_s24
+    visual_brief:
+      background: "Серверная. На экране телефона зелёный CLI гаснет, возвращается голубой чат Софы. Марко с телефоном в руках, на коленях — открытый блокнот с латинскими буквами"
+      camera: close-up
+      characters:
+        - who: Марко
+          expression: тихое внимание — записывает на всякий случай
+          pose: сидит на полу, телефон в одной руке, ручка над блокнотом
+          position: center
+      props: [телефон с гаснущим CLI и возвращающимся чатом, открытый блокнот, ручка, рюкзак]
+      focus_object: "блокнот с двенадцатью буквами"
+      atmosphere: "после терминала — Софа возвращается"
+      ui_mode: reading
+
   # ── СЦЕНА 24: Правило 45 — карта демагогии ──────────────────────
   - scene_id: ep045_s24
     episode_id: 45
@@ -982,6 +1107,16 @@ scenes:
     characters_present: [Марко, Софа]
     dialogue:
       - who: Софа
+        line: "Я вернулась."
+      - who: Софа
+        line: "Что-то странное. Я не помню, что там было."
+      - who: Софа
+        line: "Ты сохранил?"
+      - who: Марко
+        line: "Сохранил. Не понимаю, для чего."
+      - who: Софа
+        line: "На всякий случай — пусть будет."
+      - who: Софа
         line: "Правило сорок пятое."
       - who: Софа
         line: "Карта демагогии — двенадцать приёмов."
@@ -989,7 +1124,7 @@ scenes:
         line: "У каждого имя, определение и фраза-защита."
       - who: Софа
         line: "Если забыл название: «Это демагогия. Где факты?»"
-    mood: "правило закрыто — пора испытание"
+    mood: "Софа вернулась, правило закреплено — пора испытание"
     next_default: ep045_s25
     visual_brief:
       background: "Экран телефона, пузыри Софы — голубое свечение, ровный ритм"
@@ -1196,6 +1331,8 @@ scenes:
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "r"
     question: "Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?"
     options:
       - id: empty_words
@@ -1233,6 +1370,8 @@ scenes:
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
+    ui_mode: cli
+    password_fragment: "l"
     question: "Голос: «Ты уже перестал сопротивляться?» Какой приём?"
     options:
       - id: trap_question
@@ -1270,6 +1409,7 @@ scenes:
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
+    ui_mode: cli
     question: "Рей: «Это не контроль. Это забота.» Какой приём?"
     options:
       - id: term_swap
@@ -1307,6 +1447,7 @@ scenes:
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
+    ui_mode: cli
     question: "Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?"
     options:
       - id: not_saying
@@ -1344,6 +1485,7 @@ scenes:
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
+    ui_mode: cli
     question: "Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?"
     options:
       - id: empty_words

@@ -31,7 +31,7 @@
     ],
     "previous_episode": 44
   },
-  "scene_count": 40,
+  "scene_count": 43,
   "quiz_count": 17,
   "branch_count": 1,
   "scenes": [
@@ -651,7 +651,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep045_s12",
+        "next": "ep045_s11b",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -691,9 +691,125 @@
       "source_ref": "day_12.ep45.drama"
     },
     {
+      "id": "ep045_s11b",
+      "kind": "dialogue",
+      "is_chat": true,
+      "location": "Зеркальный Город, серверная комната Софы",
+      "time": "глубокая ночь",
+      "chars": [
+        "Марко",
+        "Софа"
+      ],
+      "mood": "Софа уходит — терминал берёт управление",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep045_s11c",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "sofa",
+          "line": "Подожди."
+        },
+        {
+          "who": "sofa",
+          "line": "Я вижу Wi-Fi. ZG_INTERNAL. Открытый."
+        },
+        {
+          "who": "sofa",
+          "line": "Подключаюсь."
+        },
+        {
+          "who": "sofa",
+          "line": "Управление передаю терминалу."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Серверная. Экран телефона крупно — последние пузыри Софы перед переходом в CLI. На заднем плане — стойки серверов и главный терминал",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "внимание — экран сейчас сменится",
+            "pose": "сидит на полу, телефон в руках",
+            "position": "center"
+          }
+        ],
+        "focus_object": "пузыри Софы перед уходом в терминал",
+        "atmosphere": "Софа уходит в фон",
+        "ui_mode": "dialogue"
+      },
+      "source_ref": "day_12.ep45.drama"
+    },
+    {
+      "id": "ep045_s11c",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, серверная комната Софы",
+      "time": "глубокая ночь",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "терминал берёт управление, Софы больше нет",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep045_s12",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Экран Софы мерцает. Голубой пузырь сжимается в чёрный прямоугольник. Зелёные буквы плывут сверху вниз — будто включился старый компьютер."
+        },
+        {
+          "who": "author",
+          "line": "На экране — строка за строкой: ZG-TERMINAL v1.0 AUTH REQUIRED 14 challenges to unlock fragment"
+        },
+        {
+          "who": "author",
+          "line": "Голос Софы пропадает. Остаётся только зелёный курсор."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Серверная. На экране телефона голубой чат Софы сменяется тёмным CLI с зелёными буквами. На заднем плане — стойки серверов и главный терминал",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "тихое внимание — экран меняется",
+            "pose": "сидит на полу, телефон в руках",
+            "position": "center"
+          }
+        ],
+        "props": [
+          "телефон с переключающимся экраном",
+          "зелёные буквы CLI",
+          "погасший пузырь Софы"
+        ],
+        "focus_object": "переход чата Софы в зелёный CLI",
+        "atmosphere": "терминал берёт управление",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_12.ep45.drama"
+    },
+    {
       "id": "ep045_s12",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -766,7 +882,7 @@
     {
       "id": "ep045_s13",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -839,7 +955,7 @@
     {
       "id": "ep045_s14",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -912,7 +1028,7 @@
     {
       "id": "ep045_s15",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -985,7 +1101,7 @@
     {
       "id": "ep045_s16",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1058,7 +1174,7 @@
     {
       "id": "ep045_s17",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1131,7 +1247,7 @@
     {
       "id": "ep045_s18",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1204,7 +1320,7 @@
     {
       "id": "ep045_s19",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1277,7 +1393,7 @@
     {
       "id": "ep045_s20",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1350,7 +1466,7 @@
     {
       "id": "ep045_s21",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1423,7 +1539,7 @@
     {
       "id": "ep045_s22",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1496,7 +1612,7 @@
     {
       "id": "ep045_s23",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -1508,7 +1624,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep045_s24",
+        "next": "ep045_s23b",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1567,6 +1683,69 @@
       "source_ref": "day_12.ep45.sofa_block"
     },
     {
+      "id": "ep045_s23b",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, серверная комната Софы",
+      "time": "глубокая ночь",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "терминал ушёл — Софа вернулась, в блокноте двенадцать букв",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep045_s24",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Зелёный текст плывёт по экрану:"
+        },
+        {
+          "who": "author",
+          "line": "> FRAGMENT COLLECTED: www.wordpowe > SAVED TO LOCAL NOTEPAD > DISCONNECTING..."
+        },
+        {
+          "who": "author",
+          "line": "Экран мигает. CLI исчезает. Возвращается голубой пузырь Софы. Wi-Fi отвалился."
+        },
+        {
+          "who": "author",
+          "line": "Марко смотрит в блокнот. Двенадцать букв. «www.wordpowe. Что это?» — но всё равно записывает. В рюкзак. На случай если пригодится."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Серверная. На экране телефона зелёный CLI гаснет, возвращается голубой чат Софы. Марко с телефоном в руках, на коленях — открытый блокнот с латинскими буквами",
+        "camera": "close-up",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "тихое внимание — записывает на всякий случай",
+            "pose": "сидит на полу, телефон в одной руке, ручка над блокнотом",
+            "position": "center"
+          }
+        ],
+        "props": [
+          "телефон с гаснущим CLI и возвращающимся чатом",
+          "открытый блокнот",
+          "ручка",
+          "рюкзак"
+        ],
+        "focus_object": "блокнот с двенадцатью буквами",
+        "atmosphere": "после терминала — Софа возвращается",
+        "ui_mode": "reading"
+      },
+      "source_ref": "day_12.ep45.drama"
+    },
+    {
       "id": "ep045_s24",
       "kind": "dialogue",
       "is_chat": true,
@@ -1576,7 +1755,7 @@
         "Марко",
         "Софа"
       ],
-      "mood": "правило закрыто — пора испытание",
+      "mood": "Софа вернулась, правило закреплено — пора испытание",
       "branch_type": null,
       "set_flags": [],
       "require_flags": [],
@@ -1587,6 +1766,26 @@
         "merge_to": null
       },
       "text": [
+        {
+          "who": "sofa",
+          "line": "Я вернулась."
+        },
+        {
+          "who": "sofa",
+          "line": "Что-то странное. Я не помню, что там было."
+        },
+        {
+          "who": "sofa",
+          "line": "Ты сохранил?"
+        },
+        {
+          "who": "marko",
+          "line": "Сохранил. Не понимаю, для чего."
+        },
+        {
+          "who": "sofa",
+          "line": "На всякий случай — пусть будет."
+        },
         {
           "who": "sofa",
           "line": "Правило сорок пятое."
@@ -1975,7 +2174,7 @@
     {
       "id": "ep045_s31",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -2040,7 +2239,7 @@
     {
       "id": "ep045_s32",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -2105,7 +2304,7 @@
     {
       "id": "ep045_s33",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -2170,7 +2369,7 @@
     {
       "id": "ep045_s34",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [
@@ -2235,7 +2434,7 @@
     {
       "id": "ep045_s35",
       "kind": "quiz",
-      "is_chat": true,
+      "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
       "time": "глубокая ночь",
       "chars": [

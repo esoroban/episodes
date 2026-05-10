@@ -133,6 +133,8 @@ question: "Какая эмоция на её лице?"
 | `correct_logic` | string | Пояснение правильного ответа |
 | `feedback_success` | string | Реакция на правильный ответ |
 | `feedback_soft_fail` | string | Реакция на ошибку (мягкий тупик) |
+| `ui_mode` | enum (опц.) | Режим рендера квиза: `cli` — терминал ZG-TERMINAL (зелёный текст на чёрном, моноширинный шрифт). Иначе — стандартный Sofa-Telegram чат. См. ep_045 (карта демагогии + испытание). |
+| `password_fragment` | string (опц.) | Один символ, который добавляется во floating-блокнот при первой правильной попытке в CLI-сцене. Используется в ep_045 для сбора 14 символов `www.wordpowerl`, которые в ep_048 финале Марко узнаёт в адресе `www.wordpowerlab.com`. |
 
 ### Несколько взаимодействий в одной сцене
 
@@ -204,7 +206,7 @@ author_text_after: "Текст ПОСЛЕ диалога, перед quiz."
 | `visual_brief.props` | list[string] | Важные предметы: `[пустые рамки, телефон с трещиной]` |
 | `visual_brief.focus_object` | string | На чём фокус: `треснутый телефон` |
 | `visual_brief.atmosphere` | string | Общее ощущение: `тихое утро, что-то не так` |
-| `visual_brief.ui_mode` | string | Режим UI: `reading`, `quiz`, `choice`, `dialogue` |
+| `visual_brief.ui_mode` | string | Режим UI: `reading`, `quiz`, `choice`, `dialogue`, `cli` (отдельный визуальный гайд для CLI-сцен — терминал, не пузырь) |
 
 ## Допустимые значения enum
 

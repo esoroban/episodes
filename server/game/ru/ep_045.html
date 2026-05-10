@@ -428,6 +428,147 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 6px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin: 0.6rem 0;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.25rem;
+  margin: 0.55rem 0 0.7rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: transparent; color: #33ff33;
+  border: none; cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.32rem 0.4rem;
+  text-shadow: inherit;
+  transition: background 0.12s;
+  border-left: 2px solid transparent;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.08);
+  border-left-color: #33ff33;
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.18);
+  border-left-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.12);
+  border-left-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.25rem; }
+.cli-num { display: inline-block; min-width: 1.4em; opacity: 0.85; }
+.cli-input { opacity: 0.85; margin-top: 0.4rem; }
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -488,7 +629,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep045_s01" data-index="0" data-next="ep045_s02">
     <div class="scene-header">
-      <span class="scene-counter">1 / 20</span>
+      <span class="scene-counter">1 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Лина</div><div class="scene-mood">обычная серверная — терминал с пустым полем</div></details>
     </div>
     <div class="scene-content">
@@ -504,7 +645,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep045_s02" data-index="1" data-next="ep045_s03">
     <div class="scene-header">
-      <span class="scene-counter">2 / 20</span>
+      <span class="scene-counter">2 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">путь — теперь виден целиком, под ногами</div></details>
     </div>
     <div class="scene-content">
@@ -514,7 +655,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep045_s03" data-index="2" data-next="ep045_s04">
     <div class="scene-header">
-      <span class="scene-counter">3 / 20</span>
+      <span class="scene-counter">3 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа без обычной бодрости — тихо, как итог</div></details>
     </div>
     <div class="scene-content">
@@ -524,7 +665,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep045_s04" data-index="3" data-next="ep045_s05">
     <div class="scene-header">
-      <span class="scene-counter">4 / 20</span>
+      <span class="scene-counter">4 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">память пробегает по пяти буквам</div></details>
     </div>
     <div class="scene-content">
@@ -534,7 +675,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep045_s05" data-index="4" data-next="ep045_s06">
     <div class="scene-header">
-      <span class="scene-counter">5 / 20</span>
+      <span class="scene-counter">5 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">удар — Софа знала, и молчала</div></details>
     </div>
     <div class="scene-content">
@@ -544,7 +685,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep045_s06" data-index="5" data-next="ep045_s08">
     <div class="scene-header">
-      <span class="scene-counter">6 / 20</span>
+      <span class="scene-counter">6 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">выбор — упасть в понимание или удержаться на ногах</div></details>
     </div>
     <div class="scene-content">
@@ -561,7 +702,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative scene-branch-card" data-scene-id="ep045_s07" data-index="6" data-next="ep045_s08" data-merge-to="ep045_s08">
     <div class="scene-header">
-      <span class="scene-counter">7 / 20</span>
+      <span class="scene-counter">7 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">пытался удержаться — но сел сам, по-своему</div><div class="scene-branch">🌿 Бонусная сцена</div></details>
     </div>
     <div class="scene-content">
@@ -573,7 +714,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-dialogue" data-scene-id="ep045_s08" data-index="7" data-blocking="true" data-next="ep045_s09">
     <div class="scene-header">
-      <span class="scene-counter">8 / 20</span>
+      <span class="scene-counter">8 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа отдаёт запись одним файлом — мама и сестра</div></details>
     </div>
     <div class="scene-content">
@@ -583,7 +724,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep045_s09" data-index="8" data-next="ep045_s10">
     <div class="scene-header">
-      <span class="scene-counter">9 / 20</span>
+      <span class="scene-counter">9 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">тяжёлый вдох — мама знала и всё равно отпустила</div></details>
     </div>
     <div class="scene-content">
@@ -595,7 +736,7 @@ body.debug-off .voice-subtitle { display: none; }
 
   <section class="scene scene-narrative" data-scene-id="ep045_s10" data-index="9" data-next="ep045_s11">
     <div class="scene-header">
-      <span class="scene-counter">10 / 20</span>
+      <span class="scene-counter">10 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">Софа открывает то, к чему имеет доступ изнутри</div></details>
     </div>
     <div class="scene-content">
@@ -606,19 +747,401 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s11" data-index="10" data-blocking="true" data-next="ep045_s26">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s11" data-index="10" data-next="ep045_s11c">
     <div class="scene-header">
-      <span class="scene-counter">11 / 20</span>
+      <span class="scene-counter">11 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа отодвигает финал — хочет пройти карту</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep045_s11"><div class="vb-sub-label">ep045_s11</div><span class="vb-label">Фон:</span> Серверная. Экран телефона крупно — пузыри Софы. На заднем плане — экран терминала с открытой папкой /archive/, часть имён в сером (заперты), часть доступны<br><span class="vb-label">Атмосфера:</span> пауза перед финалом<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы — карта перед чтением файлов из /archive/<br><span class="vb-label">Марко:</span> готов слушать карту, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s12"><div class="vb-sub-label">ep045_s12</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> первый приём — без украшений<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит первый приём, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s13"><div class="vb-sub-label">ep045_s13</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> удар по статусу<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт приём — Стражник делал так же, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s14"><div class="vb-sub-label">ep045_s14</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> слова перевёрнуты<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает — Голос делал так же, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s15"><div class="vb-sub-label">ep045_s15</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> громкое имя — не из той области<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит подмену авторитета, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s16"><div class="vb-sub-label">ep045_s16</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> третий вариант спрятан<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса — «или ключ — или сестра», сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s17"><div class="vb-sub-label">ep045_s17</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> цепочка страха<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> считает звенья — четыре шага без доказательств, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s18"><div class="vb-sub-label">ep045_s18</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> оба варианта — против<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит ловушку, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s19"><div class="vb-sub-label">ep045_s19</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> переименование сути<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит переименование — Рей в башне делал так же, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s20"><div class="vb-sub-label">ep045_s20</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> рядом — не значит из-за<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит совпадение, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s21"><div class="vb-sub-label">ep045_s21</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> уход от темы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит уход от ответа, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s22"><div class="vb-sub-label">ep045_s22</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса на площади, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s23"><div class="vb-sub-label">ep045_s23</div><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> подарок-обманка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт ход Голоса — финальный приём, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s24"><div class="vb-sub-label">ep045_s24</div><span class="vb-label">Фон:</span> Экран телефона, пузыри Софы — голубое свечение, ровный ритм<br><span class="vb-label">Атмосфера:</span> карта закреплена<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> правило 45 — карта<br><span class="vb-label">Марко:</span> записывает правило, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s25"><div class="vb-sub-label">ep045_s25</div><span class="vb-label">Фон:</span> Экран телефона, три пузыря Софы. На стене — иконки четырёх аудиозаписей выстраиваются в ряд<br><span class="vb-label">Атмосфера:</span> включаются записи<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «все двенадцать»<br><span class="vb-label">Марко:</span> готов к разбору записей, смотрит в экран</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Я уже внутри. Часть архива открыта.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Но прежде чем читать — давай вспомним.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Все приёмы. Все ловушки. Соберём карту.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём один: ПОСПЕШНОЕ ОБОБЩЕНИЕ.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Берут пару случаев — заявляют «все».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Серёжа в столовой кричит: «ВСЕ сдали контрольную на пять!» Считаем — трое из двадцати пяти.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«ВСЕ сдали на пять.» Это поспешное обобщение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, честный аргумент&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, поспешное обобщение&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Честный аргумент проверяемый: «трое из двадцати пяти». А «все» — без подсчёта. Защита: «Кто именно? Сколько?» Это поспешное обобщение.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. И помнишь — Рей кричал «Все согласны!» на площади. Тот же приём.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём два: НАПАДКА НА ЧЕЛОВЕКА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Бьют не по идее — по тому, кто её сказал.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Новенькая предлагает изменить расписание. Ответ: «Ты тут неделю! Ты вообще молчи!»&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ты тут неделю — молчи!» Это нападка на человека?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, нападка на человека&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, обсуждение идеи&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Идею здесь даже не обсудили — ударили по тому, что человек новенький. Защита: «Давай про идею, а не про меня.» Это нападка на человека.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Стражник тебе тоже говорил: «Кто ты такой, чтобы сомневаться?» Один в один.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём три: ПУГАЛО.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Чужие слова перевёрнуты так, чтобы звучали страшно.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Ваня говорит: «Может, тренировку перенести на час?» Ему: «Ты хочешь ВООБЩЕ не тренироваться?!»&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, обычное несогласие&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, пугало&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Несогласие звучит прямо: «не согласен, потому что…». А здесь чужие слова раздули в страшное. Защита: «Я такого не говорил. Я сказал…» Это пугало.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос так делал: ты говорил «не сейчас» — он слышал «никогда».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём четыре: ЛОЖНЫЙ АВТОРИТЕТ.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Ссылаются на известного — не на знающего.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Певица Алиса сказала, что эти витамины полезны!» Она поёт. Не врач.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Певица — про витамины. Это ложный авторитет?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, ложный авторитет&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, она же знаменитая&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Знаменитость — это популярность. Не знание. Защита: «А она эксперт в этом вопросе?» Это ложный авторитет.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Известный — не значит знающий. Голос тоже играл «я тут главный».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём пять: ЛОЖНАЯ ДИЛЕММА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Дают только два варианта, будто третьего нет.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Или ты идёшь с нами на крышу — или ты трус!» А можно не идти и не быть трусом.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Или с нами — или трус.» Это ложная дилемма?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, выбор честный&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, ложная дилемма&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Честный выбор — когда вариантов действительно два. Здесь третий вариант есть, его просто прячут. Защита: «А третий вариант?» Это ложная дилемма.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос тебе: «Или отдай ключ — или потеряешь сестру.» Тот же приём. Третий вариант есть.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём шесть: СТРАШНАЯ ЦЕПОЧКА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Один шаг — и сразу катастрофа через четыре звена.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Не сделаешь домашку — не сдашь экзамен — не поступишь — станешь дворником!» Ни один шаг не доказан.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;От домашки до дворника — за четыре шага. Это страшная цепочка?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, страшная цепочка&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, разумная логика&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Разумная логика — когда каждое звено доказано. Здесь же звенья просто склеены страхом. Защита: «Каждый шаг доказан? Покажи связь.» Это страшная цепочка.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос так пугал: «Один шаг — и весь город рухнет.»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём семь: ВОПРОС-ЛОВУШКА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Любой ответ загоняет в угол.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Ты уже перестал списывать?» Скажешь «да» — значит списывал. Скажешь «нет» — ещё списываю.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ты уже перестал списывать?» Это вопрос-ловушка?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, обычный вопрос&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, вопрос-ловушка&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Обычный вопрос — на него можно ответить честно. А здесь любой ответ загоняет в угол. Защита: «Вопрос предполагает то, чего не было.» Это вопрос-ловушка.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос пробовал тот же приём: «Ты уже перестал сопротивляться?»&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём восемь: ПОДМЕНА ПОНЯТИЙ.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Действие переименовывают, чтобы оно звучало мягче.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Я не списываю — я просто подсматриваю и пишу так же!» Новое слово. Суть та же.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Не списываю — подсматриваю и пишу так же.» Это подмена понятий?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, подмена понятий&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, разные действия&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Разные действия имеют разный результат. Здесь результат один: чужой ответ в твоей тетради. Защита: «Это одно и то же, просто другими словами.» Это подмена понятий.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Рей в башне: «Это не контроль. Это забота.» Тот же приём — переименовать суть.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём девять: ЛОЖНАЯ ПРИЧИНА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Что-то случилось рядом — выдают за причину.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Я надел красные носки — и мы выиграли!» Носки не забивают голы.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Красные носки → победа. Это ложная причина?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, носки помогли&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, ложная причина&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Помогают тренировки и пасы, не цвет носков. Совпадение во времени — это ещё не причина. Защита: «Совпадение — не причина.» Это ложная причина.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. «После» — не значит «из-за». Помнишь, мы это уже разбирали.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём десять: УКЛОНЕНИЕ ОТ ОТВЕТА.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Вместо ответа — встречный вопрос на другую тему.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Где мой велосипед?» — «А ты комнату убрал?» Велосипед не появился.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Где велик?» — «А комнату убрал?» Это уклонение?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нет, нормальный вопрос в ответ&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Да, уклонение от ответа&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Нормальный вопрос в ответ — это когда сначала отвечают, потом спрашивают. Здесь же — отвечать вообще не стали. Защита: «Не меняй тему. Отвечай на вопрос.» Это уклонение от ответа.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Когда не хотят отвечать — переводят тему. Голос так делал.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём одиннадцать: КРАСИВЫЕ СЛОВА БЕЗ ФАКТОВ.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Громко, вдохновляюще — и ноль конкретики.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мы покорим вершины! Нас ждёт великое будущее!» Куда едем? Когда? Как? Ноль деталей.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Покорим вершины — великое будущее!» Это красивые слова без фактов?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, красивые слова без фактов&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, вдохновляющая речь&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вдохновляющая речь даёт хотя бы один конкретный шаг. Здесь — ноль деталей. Защита: «Красиво сказано. А конкретно?» Это красивые слова без фактов.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос на площади: «Мы создадим великий город!» Те же слова. Без деталей.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Приём двенадцать: «Я НЕ ГОВОРЮ, ЧТО…»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Сказать гадость, спрятав её в отрицание.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Я не говорю, что ты врёшь, но…» Камень в коробке с бантиком.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Да, приём «я не говорю, что…»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Нет, вежливое замечание&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вежливое замечание звучит прямо: «мне показалось, что…». А здесь — упрёк в красивой обёртке. Защита: «Ты только что это сказал. Прямо.» Это приём «я не говорю, что…».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Точно. Голос тебе говорил: «Я не говорю, что предатель. Но ты пришёл разрушить…» Тот же ход.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило сорок пятое.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Карта демагогии — двенадцать приёмов.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;У каждого имя, определение и фраза-защита.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Если забыл название: «Это демагогия. Где факты?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Голос использовал все двенадцать.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Сейчас — записи. Ты знал, что что-то не так.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Теперь у каждого трюка есть имя.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep045_s11"><div class="vb-sub-label">ep045_s11</div><span class="vb-label">Фон:</span> Серверная. Экран телефона крупно — пузыри Софы. На заднем плане — экран терминала с открытой папкой /archive/, часть имён в сером (заперты), часть доступны<br><span class="vb-label">Атмосфера:</span> пауза перед финалом<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы — карта перед чтением файлов из /archive/<br><span class="vb-label">Марко:</span> готов слушать карту, сидит на полу, телефон в руках</div><div class="vb-sub" data-scene-id="ep045_s11b"><div class="vb-sub-label">ep045_s11b</div><span class="vb-label">Фон:</span> Серверная. Экран телефона крупно — последние пузыри Софы перед переходом в CLI. На заднем плане — стойки серверов и главный терминал<br><span class="vb-label">Атмосфера:</span> Софа уходит в фон<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы перед уходом в терминал<br><span class="vb-label">Марко:</span> внимание — экран сейчас сменится, сидит на полу, телефон в руках</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Я уже внутри. Часть архива открыта.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Но прежде чем читать — давай вспомним.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Все приёмы. Все ловушки. Соберём карту.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Подожди.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Я вижу Wi-Fi. ZG_INTERNAL. Открытый.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Подключаюсь.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Управление передаю терминалу.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s26" data-index="11" data-next="ep045_s27">
+  <section class="scene scene-narrative" data-scene-id="ep045_s11c" data-index="11" data-next="ep045_s12">
     <div class="scene-header">
-      <span class="scene-counter">12 / 20</span>
+      <span class="scene-counter">12 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">терминал берёт управление, Софы больше нет</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. На экране телефона голубой чат Софы сменяется тёмным CLI с зелёными буквами. На заднем плане — стойки серверов и главный терминал<br><span class="vb-label">Атмосфера:</span> терминал берёт управление<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> переход чата Софы в зелёный CLI<br><span class="vb-label">Марко:</span> тихое внимание — экран меняется, сидит на полу, телефон в руках<br><span class="vb-label">Предметы:</span> телефон с переключающимся экраном, зелёные буквы CLI, погасший пузырь Софы</div><div class="author-text"><p>Экран Софы мерцает. Голубой пузырь сжимается в чёрный прямоугольник. Зелёные буквы плывут сверху вниз — будто включился старый компьютер.</p>
+<p>На экране — строка за строкой: ZG-TERMINAL v1.0 AUTH REQUIRED 14 challenges to unlock fragment</p>
+<p>Голос Софы пропадает. Остаётся только зелёный курсор.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s12" data-index="12" data-blocking="true" data-next="ep045_s13">
+    <div class="scene-header">
+      <span class="scene-counter">13 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">первый приём — самый частый</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> первый приём — без украшений<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит первый приём, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s12" data-password-fragment="w">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 1/17</div>
+        <div class="cli-line cli-q">&gt; Q: «ВСЕ сдали на пять.» Это поспешное обобщение?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, честный аргумент</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, поспешное обобщение</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. И помнишь — Рей кричал «Все согласны!» на площади. Тот же приём."
+             data-fb-fail="Честный аргумент проверяемый: «трое из двадцати пяти». А «все» — без подсчёта. Защита: «Кто именно? Сколько?» Это поспешное обобщение."
+             data-logic="«Все» без подсчёта — берут пару случаев и переносят на всех. Это поспешное обобщение."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s13" data-index="13" data-blocking="true" data-next="ep045_s14">
+    <div class="scene-header">
+      <span class="scene-counter">14 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">удар по человеку, а не по идее</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> удар по статусу<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт приём — Стражник делал так же, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s13" data-password-fragment="w">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 2/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Ты тут неделю — молчи!» Это нападка на человека?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, обсуждение идеи</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Стражник тебе тоже говорил: «Кто ты такой, чтобы сомневаться?» Один в один."
+             data-fb-fail="Идею здесь даже не обсудили — ударили по тому, что человек новенький. Защита: «Давай про идею, а не про меня.» Это нападка на человека."
+             data-logic="Удар по статусу новенькой, а не по её предложению. Это нападка на человека."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s14" data-index="14" data-blocking="true" data-next="ep045_s15">
+    <div class="scene-header">
+      <span class="scene-counter">15 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">слова раздуты в страшное</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> слова перевёрнуты<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает — Голос делал так же, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s14" data-password-fragment="w">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 3/17</div>
+        <div class="cli-line cli-q">&gt; Q: Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычное несогласие</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, пугало</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос так делал: ты говорил «не сейчас» — он слышал «никогда»."
+             data-fb-fail="Несогласие звучит прямо: «не согласен, потому что…». А здесь чужие слова раздули в страшное. Защита: «Я такого не говорил. Я сказал…» Это пугало."
+             data-logic="«Перенести на час» превратили в «вообще не тренироваться». Слова перевёрнуты — это пугало."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s15" data-index="15" data-blocking="true" data-next="ep045_s16">
+    <div class="scene-header">
+      <span class="scene-counter">16 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">корона не из той области</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> громкое имя — не из той области<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит подмену авторитета, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s15" data-password-fragment=".">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 4/17</div>
+        <div class="cli-line cli-q">&gt; Q: Певица — про витамины. Это ложный авторитет?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, ложный авторитет</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, она же знаменитая</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Известный — не значит знающий. Голос тоже играл «я тут главный»."
+             data-fb-fail="Знаменитость — это популярность. Не знание. Защита: «А она эксперт в этом вопросе?» Это ложный авторитет."
+             data-logic="Певица — эксперт по музыке. Не по медицине. Имя громкое, но не из той области. Это ложный авторитет."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s16" data-index="16" data-blocking="true" data-next="ep045_s17">
+    <div class="scene-header">
+      <span class="scene-counter">17 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">две двери, а есть третья</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> третий вариант спрятан<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса — «или ключ — или сестра», сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s16" data-password-fragment="w">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 5/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Или с нами — или трус.» Это ложная дилемма?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, выбор честный</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная дилемма</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос тебе: «Или отдай ключ — или потеряешь сестру.» Тот же приём. Третий вариант есть."
+             data-fb-fail="Честный выбор — когда вариантов действительно два. Здесь третий вариант есть, его просто прячут. Защита: «А третий вариант?» Это ложная дилемма."
+             data-logic="Между «идти на крышу» и «быть трусом» есть третий вариант: остаться и не быть трусом. Это ложная дилемма."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s17" data-index="17" data-blocking="true" data-next="ep045_s18">
+    <div class="scene-header">
+      <span class="scene-counter">18 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">четыре шага в страх</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> цепочка страха<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> считает звенья — четыре шага без доказательств, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s17" data-password-fragment="o">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 6/17</div>
+        <div class="cli-line cli-q">&gt; Q: От домашки до дворника — за четыре шага. Это страшная цепочка?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, страшная цепочка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разумная логика</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос так пугал: «Один шаг — и весь город рухнет.»"
+             data-fb-fail="Разумная логика — когда каждое звено доказано. Здесь же звенья просто склеены страхом. Защита: «Каждый шаг доказан? Покажи связь.» Это страшная цепочка."
+             data-logic="Четыре шага без доказательств. Каждое звено просто склеили в страх. Это страшная цепочка."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s18" data-index="18" data-blocking="true" data-next="ep045_s19">
+    <div class="scene-header">
+      <span class="scene-counter">19 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">оба ответа — против тебя</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> оба варианта — против<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит ловушку, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s18" data-password-fragment="r">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 7/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Ты уже перестал списывать?» Это вопрос-ловушка?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычный вопрос</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, вопрос-ловушка</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос пробовал тот же приём: «Ты уже перестал сопротивляться?»"
+             data-fb-fail="Обычный вопрос — на него можно ответить честно. А здесь любой ответ загоняет в угол. Защита: «Вопрос предполагает то, чего не было.» Это вопрос-ловушка."
+             data-logic="Вопрос предполагает то, что человек ВООБЩЕ списывал. Любой ответ — против тебя. Это вопрос-ловушка."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s19" data-index="19" data-blocking="true" data-next="ep045_s20">
+    <div class="scene-header">
+      <span class="scene-counter">20 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">новое имя — старая суть</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> переименование сути<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит переименование — Рей в башне делал так же, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s19" data-password-fragment="d">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 8/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Не списываю — подсматриваю и пишу так же.» Это подмена понятий?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разные действия</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Рей в башне: «Это не контроль. Это забота.» Тот же приём — переименовать суть."
+             data-fb-fail="Разные действия имеют разный результат. Здесь результат один: чужой ответ в твоей тетради. Защита: «Это одно и то же, просто другими словами.» Это подмена понятий."
+             data-logic="Действие то же самое — просто названо мягче. Это подмена понятий."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s20" data-index="20" data-blocking="true" data-next="ep045_s21">
+    <div class="scene-header">
+      <span class="scene-counter">21 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">совпадение — не причина</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> рядом — не значит из-за<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит совпадение, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s20" data-password-fragment="p">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 9/17</div>
+        <div class="cli-line cli-q">&gt; Q: Красные носки → победа. Это ложная причина?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, носки помогли</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная причина</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. «После» — не значит «из-за». Помнишь, мы это уже разбирали."
+             data-fb-fail="Помогают тренировки и пасы, не цвет носков. Совпадение во времени — это ещё не причина. Защита: «Совпадение — не причина.» Это ложная причина."
+             data-logic="Носки и победа случились рядом — но связи нет. Это ложная причина."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s21" data-index="21" data-blocking="true" data-next="ep045_s22">
+    <div class="scene-header">
+      <span class="scene-counter">22 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">перевод темы вместо ответа</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> уход от темы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит уход от ответа, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s21" data-password-fragment="o">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 10/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Где велик?» — «А комнату убрал?» Это уклонение?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, нормальный вопрос в ответ</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, уклонение от ответа</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Когда не хотят отвечать — переводят тему. Голос так делал."
+             data-fb-fail="Нормальный вопрос в ответ — это когда сначала отвечают, потом спрашивают. Здесь же — отвечать вообще не стали. Защита: «Не меняй тему. Отвечай на вопрос.» Это уклонение от ответа."
+             data-logic="На вопрос про велик ответ так и не прозвучал. Тему сменили. Это уклонение от ответа."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s22" data-index="22" data-blocking="true" data-next="ep045_s23">
+    <div class="scene-header">
+      <span class="scene-counter">23 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">красиво — и пусто</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса на площади, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s22" data-password-fragment="w">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 11/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Покорим вершины — великое будущее!» Это красивые слова без фактов?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вдохновляющая речь</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос на площади: «Мы создадим великий город!» Те же слова. Без деталей."
+             data-fb-fail="Вдохновляющая речь даёт хотя бы один конкретный шаг. Здесь — ноль деталей. Защита: «Красиво сказано. А конкретно?» Это красивые слова без фактов."
+             data-logic="Громкие слова без ответов на «где, когда, как, для кого». Это красивые слова без фактов."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s23" data-index="23" data-blocking="true" data-next="ep045_s23b">
+    <div class="scene-header">
+      <span class="scene-counter">24 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">камень с бантиком</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> подарок-обманка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт ход Голоса — финальный приём, сидит на полу, телефон в руках</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s23" data-password-fragment="e">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 12/17</div>
+        <div class="cli-line cli-q">&gt; Q: «Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, приём «я не говорю, что…»</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вежливое замечание</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Точно. Голос тебе говорил: «Я не говорю, что предатель. Но ты пришёл разрушить…» Тот же ход."
+             data-fb-fail="Вежливое замечание звучит прямо: «мне показалось, что…». А здесь — упрёк в красивой обёртке. Защита: «Ты только что это сказал. Прямо.» Это приём «я не говорю, что…»."
+             data-logic="Сказал и вроде не сказал. Упрёк спрятан в отрицание. Это приём «я не говорю, что…»."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep045_s23b" data-index="24" data-next="ep045_s24">
+    <div class="scene-header">
+      <span class="scene-counter">25 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">терминал ушёл — Софа вернулась, в блокноте двенадцать букв</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. На экране телефона зелёный CLI гаснет, возвращается голубой чат Софы. Марко с телефоном в руках, на коленях — открытый блокнот с латинскими буквами<br><span class="vb-label">Атмосфера:</span> после терминала — Софа возвращается<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> блокнот с двенадцатью буквами<br><span class="vb-label">Марко:</span> тихое внимание — записывает на всякий случай, сидит на полу, телефон в одной руке, ручка над блокнотом<br><span class="vb-label">Предметы:</span> телефон с гаснущим CLI и возвращающимся чатом, открытый блокнот, ручка, рюкзак</div><div class="author-text"><p>Зелёный текст плывёт по экрану:</p>
+<p>&gt; FRAGMENT COLLECTED: www.wordpowe &gt; SAVED TO LOCAL NOTEPAD &gt; DISCONNECTING...</p>
+<p>Экран мигает. CLI исчезает. Возвращается голубой пузырь Софы. Wi-Fi отвалился.</p></div><div class="author-text"><p>Марко смотрит в блокнот. Двенадцать букв. «www.wordpowe. Что это?» — но всё равно записывает. В рюкзак. На случай если пригодится.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep045_s24" data-index="25" data-next="ep045_s26">
+    <div class="scene-header">
+      <span class="scene-counter">26 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа вернулась, правило закреплено — пора испытание</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep045_s24"><div class="vb-sub-label">ep045_s24</div><span class="vb-label">Фон:</span> Экран телефона, пузыри Софы — голубое свечение, ровный ритм<br><span class="vb-label">Атмосфера:</span> карта закреплена<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> правило 45 — карта<br><span class="vb-label">Марко:</span> записывает правило, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s25"><div class="vb-sub-label">ep045_s25</div><span class="vb-label">Фон:</span> Экран телефона, три пузыря Софы. На стене — иконки четырёх аудиозаписей выстраиваются в ряд<br><span class="vb-label">Атмосфера:</span> включаются записи<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «все двенадцать»<br><span class="vb-label">Марко:</span> готов к разбору записей, смотрит в экран</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Я вернулась.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Что-то странное. Я не помню, что там было.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Ты сохранил?&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;marko&quot;, &quot;x&quot;: &quot;Сохранил. Не понимаю, для чего.&quot;, &quot;im&quot;: &quot;text&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;На всякий случай — пусть будет.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило сорок пятое.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Карта демагогии — двенадцать приёмов.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;У каждого имя, определение и фраза-защита.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Если забыл название: «Это демагогия. Где факты?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Голос использовал все двенадцать.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Сейчас — записи. Ты знал, что что-то не так.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Теперь у каждого трюка есть имя.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep045_s26" data-index="26" data-next="ep045_s27">
+    <div class="scene-header">
+      <span class="scene-counter">27 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">первая запись — Марко уверенно даёт имя</div></details>
     </div>
     <div class="scene-content">
@@ -627,9 +1150,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s27" data-index="12" data-next="ep045_s28">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s27" data-index="27" data-next="ep045_s28">
     <div class="scene-header">
-      <span class="scene-counter">13 / 20</span>
+      <span class="scene-counter">28 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">вторая запись — карта работает</div></details>
     </div>
     <div class="scene-content">
@@ -638,9 +1161,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s28" data-index="13" data-next="ep045_s29">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s28" data-index="28" data-next="ep045_s29">
     <div class="scene-header">
-      <span class="scene-counter">14 / 20</span>
+      <span class="scene-counter">29 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">третья запись — узнан удар по человеку</div></details>
     </div>
     <div class="scene-content">
@@ -649,9 +1172,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s29" data-index="14" data-next="ep045_s30">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s29" data-index="29" data-next="ep045_s30">
     <div class="scene-header">
-      <span class="scene-counter">15 / 20</span>
+      <span class="scene-counter">30 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">четвёртая запись — катастрофа из мелочи распознана</div></details>
     </div>
     <div class="scene-content">
@@ -660,19 +1183,174 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s30" data-index="15" data-blocking="true" data-next="ep045_s37">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s30" data-index="30" data-next="ep045_s31">
     <div class="scene-header">
-      <span class="scene-counter">16 / 20</span>
+      <span class="scene-counter">31 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">разгон — Софа подгоняет</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep045_s30"><div class="vb-sub-label">ep045_s30</div><span class="vb-label">Фон:</span> Экран телефона, два коротких пузыря Софы — голубое свечение, ровный ритм<br><span class="vb-label">Атмосфера:</span> темп ускоряется<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри — счёт<br><span class="vb-label">Марко:</span> разогнался, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s31"><div class="vb-sub-label">ep045_s31</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого красивого облака с надписью «слишком многих» и пустым счётчиком под ним<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> облако без чисел<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s32"><div class="vb-sub-label">ep045_s32</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма знака вопроса с двумя стрелками вниз — обе ведут в капкан<br><span class="vb-label">Атмосфера:</span> оба пути в капкане<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> знак вопроса с двумя капканами<br><span class="vb-label">Марко:</span> ловит карточку 07, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s33"><div class="vb-sub-label">ep045_s33</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма одинакового предмета в двух обёртках с бирками «контроль» и «забота»<br><span class="vb-label">Атмосфера:</span> слова переоделись<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> две обёртки на одном предмете<br><span class="vb-label">Марко:</span> ловит карточку 08, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s34"><div class="vb-sub-label">ep045_s34</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма коробки с бантиком и торчащим камнем с надписью «предатель»<br><span class="vb-label">Атмосфера:</span> удар в обёртке отрицания<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> коробка с камнем «предатель»<br><span class="vb-label">Марко:</span> ловит карточку 12, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s35"><div class="vb-sub-label">ep045_s35</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого золотого баннера «ВЕЛИКИЙ ГОРОД» над пустой площадкой<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> баннер без деталей<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div><div class="vb-sub" data-scene-id="ep045_s36"><div class="vb-sub-label">ep045_s36</div><span class="vb-label">Фон:</span> Экран телефона, три пузыря Софы. На заднем плане — серверные стойки в полумраке<br><span class="vb-label">Атмосфера:</span> перед находкой<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «у тебя в кармане — что-то ещё»<br><span class="vb-label">Марко:</span> тяжёлое ожидание, рука уже к карману, сидит на полу, телефон в руках<br><span class="vb-label">Предметы:</span> пузыри Софы в чате, карман куртки в полукадре</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Четыре из двенадцати.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Продолжай.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нападка на человека&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Красивые слова без фактов&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ложный авторитет&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Нападка — удар по человеку. Ложный авторитет — ссылка на не-эксперта. Здесь нет ни того, ни другого. Есть громкая фраза без цифр: «слишком многих». Сколько? Когда? Где список? Это красивые слова без фактов.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Слишком многих» без числа — красивые слова без фактов.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Голос: «Ты уже перестал сопротивляться?» Какой приём?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Вопрос-ловушка&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ложная дилемма&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Пугало&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Ложная дилемма — два варианта вместо многих. Пугало — слова перевёрнуты. Здесь же сам вопрос содержит утверждение: «ты сопротивлялся». Любой ответ играет против тебя. Это вопрос-ловушка.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Утверждение в вопросе — вопрос-ловушка.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Рей: «Это не контроль. Это забота.» Какой приём?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Подмена понятий&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ложная причина&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Уклонение от ответа&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Ложная причина — два события рядом, одно вызвало другое. Уклонение — встречный вопрос вместо ответа. Здесь же одну вещь («контроль») назвали другим словом («забота»), чтобы звучало мягче. Это подмена понятий.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слово другое, суть та же — подмена понятий.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Нападка на человека&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Красивые слова без фактов&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Я не говорю, что...»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Нападка — это прямой удар по человеку. Красивые слова — пустая фраза без фактов. Здесь же удар спрятан в отрицание: «я не говорю, что предатель, но...» — и всё-таки сказал. Это приём номер двенадцать: «я не говорю, что...».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Камень с бантиком — «я не говорю, что...».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Пугало&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Красивые слова без фактов&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Ложная причина&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Пугало — это перевёрнутые слова. Ложная причина — событие рядом выдают за причину. Здесь же — три громких слова: «великий», «справедливый», «свободный». Когда? Как? Для кого? Ноль деталей. Это красивые слова без фактов.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Громко и красиво, фактов ноль — красивые слова без фактов.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Двенадцать приёмов. Двенадцать имён.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Карта готова.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;У тебя в кармане куртки — что-то ещё. Проверь.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, два коротких пузыря Софы — голубое свечение, ровный ритм<br><span class="vb-label">Атмосфера:</span> темп ускоряется<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри — счёт<br><span class="vb-label">Марко:</span> разогнался, смотрит в экран</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Четыре из двенадцати.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Продолжай.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep045_s37" data-index="16" data-next="ep045_s38">
+  <section class="scene scene-quiz" data-scene-id="ep045_s31" data-index="31" data-blocking="true" data-next="ep045_s32">
     <div class="scene-header">
-      <span class="scene-counter">17 / 20</span>
+      <span class="scene-counter">32 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — пустая красота Рея</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого красивого облака с надписью «слишком многих» и пустым счётчиком под ним<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> облако без чисел<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s31" data-password-fragment="r">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 13/17</div>
+        <div class="cli-line cli-q">&gt; Q: Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложный авторитет</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="«Слишком многих» без числа — красивые слова без фактов."
+             data-fb-fail="Нападка — удар по человеку. Ложный авторитет — ссылка на не-эксперта. Здесь нет ни того, ни другого. Есть громкая фраза без цифр: «слишком многих». Сколько? Когда? Где список? Это красивые слова без фактов."
+             data-logic="«Слишком многих» — сколько именно? Ноль конкретики. Утверждение подаётся как неоспоримое, но фактов нет. Это красивые слова без фактов."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s32" data-index="32" data-blocking="true" data-next="ep045_s33">
+    <div class="scene-header">
+      <span class="scene-counter">33 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — двойной капкан</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма знака вопроса с двумя стрелками вниз — обе ведут в капкан<br><span class="vb-label">Атмосфера:</span> оба пути в капкане<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> знак вопроса с двумя капканами<br><span class="vb-label">Марко:</span> ловит карточку 07, смотрит в экран</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s32" data-password-fragment="l">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 14/17</div>
+        <div class="cli-line cli-q">&gt; Q: Голос: «Ты уже перестал сопротивляться?» Какой приём?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Вопрос-ловушка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная дилемма</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Пугало</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Утверждение в вопросе — вопрос-ловушка."
+             data-fb-fail="Ложная дилемма — два варианта вместо многих. Пугало — слова перевёрнуты. Здесь же сам вопрос содержит утверждение: «ты сопротивлялся». Любой ответ играет против тебя. Это вопрос-ловушка."
+             data-logic="В вопросе спрятано утверждение: «ты сопротивлялся». «Да» — значит, сдался. «Нет» — значит, ещё сопротивляешься. А если вообще не сопротивлялся — оба ответа врут."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s33" data-index="33" data-blocking="true" data-next="ep045_s34">
+    <div class="scene-header">
+      <span class="scene-counter">34 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — переодетое слово</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма одинакового предмета в двух обёртках с бирками «контроль» и «забота»<br><span class="vb-label">Атмосфера:</span> слова переоделись<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> две обёртки на одном предмете<br><span class="vb-label">Марко:</span> ловит карточку 08, смотрит в экран</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s33">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 15/17</div>
+        <div class="cli-line cli-q">&gt; Q: Рей: «Это не контроль. Это забота.» Какой приём?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная причина</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Уклонение от ответа</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Слово другое, суть та же — подмена понятий."
+             data-fb-fail="Ложная причина — два события рядом, одно вызвало другое. Уклонение — встречный вопрос вместо ответа. Здесь же одну вещь («контроль») назвали другим словом («забота»), чтобы звучало мягче. Это подмена понятий."
+             data-logic="«Контроль» переименован в «заботу». Слово другое — суть та же. Это подмена понятий."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s34" data-index="34" data-blocking="true" data-next="ep045_s35">
+    <div class="scene-header">
+      <span class="scene-counter">35 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — камень в подарке</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма коробки с бантиком и торчащим камнем с надписью «предатель»<br><span class="vb-label">Атмосфера:</span> удар в обёртке отрицания<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> коробка с камнем «предатель»<br><span class="vb-label">Марко:</span> ловит карточку 12, смотрит в экран</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s34">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 16/17</div>
+        <div class="cli-line cli-q">&gt; Q: Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="true" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">«Я не говорю, что...»</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Камень с бантиком — «я не говорю, что...»."
+             data-fb-fail="Нападка — это прямой удар по человеку. Красивые слова — пустая фраза без фактов. Здесь же удар спрятан в отрицание: «я не говорю, что предатель, но...» — и всё-таки сказал. Это приём номер двенадцать: «я не говорю, что...»."
+             data-logic="Назвал предателем — и вроде не назвал. Камень в коробке с бантиком. Это приём номер двенадцать."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep045_s35" data-index="35" data-blocking="true" data-next="ep045_s36">
+    <div class="scene-header">
+      <span class="scene-counter">36 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — финальный приём Голоса</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого золотого баннера «ВЕЛИКИЙ ГОРОД» над пустой площадкой<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> баннер без деталей<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div>
+    <div class="cli-screen" data-cli-quiz-id="ep045_s35">
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge 17/17</div>
+        <div class="cli-line cli-q">&gt; Q: Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?</div>
+        <div class="cli-options">
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Пугало</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложная причина</span></button>
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="Громко и красиво, фактов ноль — красивые слова без фактов."
+             data-fb-fail="Пугало — это перевёрнутые слова. Ложная причина — событие рядом выдают за причину. Здесь же — три громких слова: «великий», «справедливый», «свободный». Когда? Как? Для кого? Ноль деталей. Это красивые слова без фактов."
+             data-logic="Вдохновляющая речь без конкретики. Когда? Как? Для кого? Ноль деталей. Это приём номер одиннадцать."></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep045_s36" data-index="36" data-next="ep045_s37">
+    <div class="scene-header">
+      <span class="scene-counter">37 / 41</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа намекает — мама заранее припасла</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, три пузыря Софы. На заднем плане — серверные стойки в полумраке<br><span class="vb-label">Атмосфера:</span> перед находкой<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «у тебя в кармане — что-то ещё»<br><span class="vb-label">Марко:</span> тяжёлое ожидание, рука уже к карману, сидит на полу, телефон в руках<br><span class="vb-label">Предметы:</span> пузыри Софы в чате, карман куртки в полукадре</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Двенадцать приёмов. Двенадцать имён.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Карта готова.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;У тебя в кармане куртки — что-то ещё. Проверь.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep045_s37" data-index="37" data-next="ep045_s38">
+    <div class="scene-header">
+      <span class="scene-counter">38 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">флешка от мамы — Марко сам управляет записями</div></details>
     </div>
     <div class="scene-content">
@@ -688,9 +1366,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep045_s38" data-index="17" data-blocking="true" data-next="ep045_s39">
+  <section class="scene scene-dialogue" data-scene-id="ep045_s38" data-index="38" data-blocking="true" data-next="ep045_s39">
     <div class="scene-header">
-      <span class="scene-counter">18 / 20</span>
+      <span class="scene-counter">39 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">удар — Марко сам нажимает первую запись с маминой флешки</div></details>
     </div>
     <div class="scene-content">
@@ -698,9 +1376,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep045_s39" data-index="18" data-next="ep045_s40">
+  <section class="scene scene-narrative" data-scene-id="ep045_s39" data-index="39" data-next="ep045_s40">
     <div class="scene-header">
-      <span class="scene-counter">19 / 20</span>
+      <span class="scene-counter">40 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко</div><div class="scene-mood">после первой записи — соавторы</div></details>
     </div>
     <div class="scene-content">
@@ -710,9 +1388,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep045_s40" data-index="19" data-next="ep046_s01" data-next-ep="ep_046.html">
+  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep045_s40" data-index="40" data-next="ep046_s01" data-next-ep="ep_046.html">
     <div class="scene-header">
-      <span class="scene-counter">20 / 20</span>
+      <span class="scene-counter">41 / 41</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">финал: соавторы. Кто враг? Кто друг?</div></details>
     </div>
     <div class="scene-content">
@@ -746,12 +1424,13 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Сцены этого эпизода</h3>
     <ol class="dbg-scenes">
-      <li><button class="dbg-jump" data-jump="ep045_s01">ep045_s01 — dialogue · обычная серверная — терминал с пустым пол</button></li><li><button class="dbg-jump" data-jump="ep045_s02">ep045_s02 — narrative · путь — теперь виден целиком, под ногами</button></li><li><button class="dbg-jump" data-jump="ep045_s03">ep045_s03 — dialogue · Софа без обычной бодрости — тихо, как ито</button></li><li><button class="dbg-jump" data-jump="ep045_s04">ep045_s04 — narrative · память пробегает по пяти буквам</button></li><li><button class="dbg-jump" data-jump="ep045_s05">ep045_s05 — dialogue · удар — Софа знала, и молчала</button></li><li><button class="dbg-jump" data-jump="ep045_s06">ep045_s06 — dialogue · выбор — упасть в понимание или удержаться</button></li><li><button class="dbg-jump" data-jump="ep045_s07">ep045_s07 — flavor_detour · пытался удержаться — но сел сам, по-</button></li><li><button class="dbg-jump" data-jump="ep045_s08">ep045_s08 — dialogue · Софа отдаёт запись одним файлом — мама и</button></li><li><button class="dbg-jump" data-jump="ep045_s09">ep045_s09 — narrative · тяжёлый вдох — мама знала и всё равно от</button></li><li><button class="dbg-jump" data-jump="ep045_s10">ep045_s10 — narrative · Софа открывает то, к чему имеет доступ и</button></li><li><button class="dbg-jump" data-jump="ep045_s11">ep045_s11 — чат ×15 · Софа отодвигает финал — хочет пройти карту</button></li><li><button class="dbg-jump" data-jump="ep045_s26">ep045_s26 — dialogue · первая запись — Марко уверенно даёт имя</button></li><li><button class="dbg-jump" data-jump="ep045_s27">ep045_s27 — dialogue · вторая запись — карта работает</button></li><li><button class="dbg-jump" data-jump="ep045_s28">ep045_s28 — dialogue · третья запись — узнан удар по человеку</button></li><li><button class="dbg-jump" data-jump="ep045_s29">ep045_s29 — dialogue · четвёртая запись — катастрофа из мелочи р</button></li><li><button class="dbg-jump" data-jump="ep045_s30">ep045_s30 — чат ×7 · разгон — Софа подгоняет</button></li><li><button class="dbg-jump" data-jump="ep045_s37">ep045_s37 — narrative · флешка от мамы — Марко сам управляет зап</button></li><li><button class="dbg-jump" data-jump="ep045_s38">ep045_s38 — dialogue · удар — Марко сам нажимает первую запись с</button></li><li><button class="dbg-jump" data-jump="ep045_s39">ep045_s39 — narrative · после первой записи — соавторы</button></li><li><button class="dbg-jump" data-jump="ep045_s40">ep045_s40 — cliffhanger · финал: соавторы. Кто враг? Кто друг?</button></li>
+      <li><button class="dbg-jump" data-jump="ep045_s01">ep045_s01 — dialogue · обычная серверная — терминал с пустым пол</button></li><li><button class="dbg-jump" data-jump="ep045_s02">ep045_s02 — narrative · путь — теперь виден целиком, под ногами</button></li><li><button class="dbg-jump" data-jump="ep045_s03">ep045_s03 — dialogue · Софа без обычной бодрости — тихо, как ито</button></li><li><button class="dbg-jump" data-jump="ep045_s04">ep045_s04 — narrative · память пробегает по пяти буквам</button></li><li><button class="dbg-jump" data-jump="ep045_s05">ep045_s05 — dialogue · удар — Софа знала, и молчала</button></li><li><button class="dbg-jump" data-jump="ep045_s06">ep045_s06 — dialogue · выбор — упасть в понимание или удержаться</button></li><li><button class="dbg-jump" data-jump="ep045_s07">ep045_s07 — flavor_detour · пытался удержаться — но сел сам, по-</button></li><li><button class="dbg-jump" data-jump="ep045_s08">ep045_s08 — dialogue · Софа отдаёт запись одним файлом — мама и</button></li><li><button class="dbg-jump" data-jump="ep045_s09">ep045_s09 — narrative · тяжёлый вдох — мама знала и всё равно от</button></li><li><button class="dbg-jump" data-jump="ep045_s10">ep045_s10 — narrative · Софа открывает то, к чему имеет доступ и</button></li><li><button class="dbg-jump" data-jump="ep045_s11">ep045_s11 — чат ×2 · Софа отодвигает финал — хочет пройти карту</button></li><li><button class="dbg-jump" data-jump="ep045_s11c">ep045_s11c — narrative · терминал берёт управление, Софы больше</button></li><li><button class="dbg-jump" data-jump="ep045_s12">ep045_s12 — quiz · первый приём — самый частый</button></li><li><button class="dbg-jump" data-jump="ep045_s13">ep045_s13 — quiz · удар по человеку, а не по идее</button></li><li><button class="dbg-jump" data-jump="ep045_s14">ep045_s14 — quiz · слова раздуты в страшное</button></li><li><button class="dbg-jump" data-jump="ep045_s15">ep045_s15 — quiz · корона не из той области</button></li><li><button class="dbg-jump" data-jump="ep045_s16">ep045_s16 — quiz · две двери, а есть третья</button></li><li><button class="dbg-jump" data-jump="ep045_s17">ep045_s17 — quiz · четыре шага в страх</button></li><li><button class="dbg-jump" data-jump="ep045_s18">ep045_s18 — quiz · оба ответа — против тебя</button></li><li><button class="dbg-jump" data-jump="ep045_s19">ep045_s19 — quiz · новое имя — старая суть</button></li><li><button class="dbg-jump" data-jump="ep045_s20">ep045_s20 — quiz · совпадение — не причина</button></li><li><button class="dbg-jump" data-jump="ep045_s21">ep045_s21 — quiz · перевод темы вместо ответа</button></li><li><button class="dbg-jump" data-jump="ep045_s22">ep045_s22 — quiz · красиво — и пусто</button></li><li><button class="dbg-jump" data-jump="ep045_s23">ep045_s23 — quiz · камень с бантиком</button></li><li><button class="dbg-jump" data-jump="ep045_s23b">ep045_s23b — narrative · терминал ушёл — Софа вернулась, в блокн</button></li><li><button class="dbg-jump" data-jump="ep045_s24">ep045_s24 — чат ×2 · Софа вернулась, правило закреплено — пора и</button></li><li><button class="dbg-jump" data-jump="ep045_s26">ep045_s26 — dialogue · первая запись — Марко уверенно даёт имя</button></li><li><button class="dbg-jump" data-jump="ep045_s27">ep045_s27 — dialogue · вторая запись — карта работает</button></li><li><button class="dbg-jump" data-jump="ep045_s28">ep045_s28 — dialogue · третья запись — узнан удар по человеку</button></li><li><button class="dbg-jump" data-jump="ep045_s29">ep045_s29 — dialogue · четвёртая запись — катастрофа из мелочи р</button></li><li><button class="dbg-jump" data-jump="ep045_s30">ep045_s30 — dialogue · разгон — Софа подгоняет</button></li><li><button class="dbg-jump" data-jump="ep045_s31">ep045_s31 — quiz · испытание — пустая красота Рея</button></li><li><button class="dbg-jump" data-jump="ep045_s32">ep045_s32 — quiz · испытание — двойной капкан</button></li><li><button class="dbg-jump" data-jump="ep045_s33">ep045_s33 — quiz · испытание — переодетое слово</button></li><li><button class="dbg-jump" data-jump="ep045_s34">ep045_s34 — quiz · испытание — камень в подарке</button></li><li><button class="dbg-jump" data-jump="ep045_s35">ep045_s35 — quiz · испытание — финальный приём Голоса</button></li><li><button class="dbg-jump" data-jump="ep045_s36">ep045_s36 — dialogue · Софа намекает — мама заранее припасла</button></li><li><button class="dbg-jump" data-jump="ep045_s37">ep045_s37 — narrative · флешка от мамы — Марко сам управляет зап</button></li><li><button class="dbg-jump" data-jump="ep045_s38">ep045_s38 — dialogue · удар — Марко сам нажимает первую запись с</button></li><li><button class="dbg-jump" data-jump="ep045_s39">ep045_s39 — narrative · после первой записи — соавторы</button></li><li><button class="dbg-jump" data-jump="ep045_s40">ep045_s40 — cliffhanger · финал: соавторы. Кто враг? Кто друг?</button></li>
     </ol>
   </section>
 </nav>
 
 <script>
+window.__CLI_PASSWORD_SLOTS = [{"frag": "w", "idx": 1}, {"frag": "w", "idx": 2}, {"frag": "w", "idx": 3}, {"frag": ".", "idx": 4}, {"frag": "w", "idx": 5}, {"frag": "o", "idx": 6}, {"frag": "r", "idx": 7}, {"frag": "d", "idx": 8}, {"frag": "p", "idx": 9}, {"frag": "o", "idx": 10}, {"frag": "w", "idx": 11}, {"frag": "e", "idx": 12}, {"frag": "r", "idx": 13}, {"frag": "l", "idx": 14}];
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
 (function() {
@@ -1093,6 +1772,117 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     });
   });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ACCESS GRANTED</div>'];
+          if(fragment){
+            lines.push('<div class="cli-line cli-char-line">&gt; CHAR: '+fragment+'</div>');
+            lines.push('<div class="cli-line">&gt; Saved to local notepad.</div>');
+            collectFragment(fragment);
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ACCESS DENIED</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; Hint: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; Try again.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
 
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){

@@ -798,13 +798,62 @@ def render_author_text(text) -> str:
     return "\n".join(f"<p>{esc(p)}</p>" for p in paragraphs)
 
 
+def is_cli_quiz_scene(scene: dict) -> bool:
+    """True if scene is a CLI/terminal-rendered quiz (ep_045 carta + challenge).
+
+    Triggered by top-level `ui_mode: cli`. Such scenes render as a green-on-black
+    ZG-TERMINAL panel instead of the Sofa-Telegram chat. Optional field
+    `password_fragment` (single char) is appended to the global notepad widget
+    on first-try correct answer."""
+    return str(scene.get("ui_mode", "")).strip().lower() == "cli"
+
+
+def _annotate_cli_quizzes(scenes: list) -> int:
+    """Stamp _cli_index (1-based) and _cli_total onto every scene with
+    `ui_mode: cli`. Returns total CLI quiz count.
+
+    The total drives the «Auth challenge N/T» banner inside the terminal
+    AND the slot count of the floating notepad (one underscore per CLI
+    quiz, regardless of whether each one collects a password_fragment)."""
+    cli_scenes = [s for s in (scenes or []) if isinstance(s, dict) and is_cli_quiz_scene(s)]
+    total = len(cli_scenes)
+    for i, s in enumerate(cli_scenes, start=1):
+        s["_cli_index"] = i
+        s["_cli_total"] = total
+    return total
+
+
+def collect_password_slots(scenes: list) -> list:
+    """Build the ordered list of password slots from CLI scenes that
+    contribute a fragment.
+
+    Each entry: {"frag": "<char>", "idx": 1..N} — the scene's CLI index for
+    diagnostics. CLI scenes without `password_fragment` (challenge tail) are
+    skipped, so the notepad widget shows exactly one underscore per
+    fragment-collecting scene (14 for ep_045)."""
+    slots = []
+    for s in scenes or []:
+        if not isinstance(s, dict) or not is_cli_quiz_scene(s):
+            continue
+        frag = str(s.get("password_fragment", "")).strip()
+        if not frag:
+            continue
+        slots.append({"frag": frag, "idx": s.get("_cli_index", len(slots) + 1)})
+    return slots
+
+
 def is_sofa_chat_scene(scene: dict) -> bool:
     """True if this scene should render as an iPhone Telegram chat.
 
     Rule: Sofa ALWAYS speaks in Telegram. If Sofa is in characters_present
     AND speaks anywhere (dialogue, dialogue_after, interactions, followup,
     quiz options, unlock button, constructor steps) — render as chat.
+
+    EXCEPT: scenes with `ui_mode: cli` render as terminal — Sofa stays
+    silent on the screen (the system has taken over the device).
     """
+    if is_cli_quiz_scene(scene):
+        return False
     chars = scene.get("characters_present", [])
     if not any(str(c).lower() in ("\u0441\u043e\u0444\u0430", "sofa") for c in chars):
         return False
@@ -1268,6 +1317,67 @@ def render_quiz(scene: dict, scene_id: str) -> str:
     </div>"""
 
 
+def render_cli_quiz(scene: dict, scene_id: str, quiz_index: int, quiz_total: int) -> str:
+    """Render scene as a ZG-TERMINAL CLI quiz (ep_045 carta-demagogy + challenge).
+
+    Visual: green-on-black monospace terminal. Each option becomes a numbered
+    `> 1. <text>` line; click writes the answer into a fake input. Correct →
+    `ACCESS GRANTED` + optional `CHAR: <letter>` (collected by global notepad).
+    Wrong → `ACCESS DENIED` + hint, retry until correct.
+
+    quiz_index/quiz_total — 1-based position used in the auth-challenge banner
+    (e.g. "Auth challenge 7/14").
+    """
+    question = scene.get("question", "")
+    options = scene.get("options", []) or []
+    quiz_options = [o for o in options if "correct" in o]
+    if not quiz_options:
+        return ""
+
+    fragment = str(scene.get("password_fragment", "")).strip()
+    feedback_ok = scene.get("feedback_success", "")
+    feedback_fail = scene.get("feedback_soft_fail", "")
+    correct_logic = scene.get("correct_logic", "")
+
+    opts_html = []
+    for i, opt in enumerate(quiz_options):
+        correct = "true" if opt.get("correct") else "false"
+        text = esc(opt.get("text", ""))
+        num = i + 1
+        opts_html.append(
+            f'<button class="cli-option" data-correct="{correct}" data-index="{i}">'
+            f'<span class="cli-prompt">&gt;</span> '
+            f'<span class="cli-num">{num}.</span> '
+            f'<span class="cli-opt-text">{text}</span>'
+            f'</button>'
+        )
+
+    # Header banner — counter shows position in 14-step auth chain.
+    banner_idx = f"{quiz_index}/{quiz_total}" if quiz_total else f"{quiz_index}"
+    fragment_attr = f' data-password-fragment="{esc(fragment)}"' if fragment else ""
+
+    return f"""
+    <div class="cli-screen" data-cli-quiz-id="{esc(scene_id)}"{fragment_attr}>
+      <div class="cli-header">
+        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-blink">_</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-line">&gt; Auth challenge {banner_idx}</div>
+        <div class="cli-line cli-q">&gt; Q: {esc(question)}</div>
+        <div class="cli-options">
+          {"".join(opts_html)}
+        </div>
+        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
+        <div class="cli-feedback" hidden></div>
+        <div class="cli-meta" hidden
+             data-fb-ok="{esc(feedback_ok)}"
+             data-fb-fail="{esc(feedback_fail)}"
+             data-logic="{esc(correct_logic)}"></div>
+      </div>
+    </div>"""
+
+
 def render_choice(scene: dict) -> str:
     """Render story choice (not quiz)."""
     options = scene.get("options", [])
@@ -1349,6 +1459,7 @@ def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
     # group_phone_chains uses — they MUST agree, otherwise a scene can be
     # classified as chain-material but rendered standalone as standard quiz.
     is_sofa_chat = is_sofa_chat_scene(scene)
+    is_cli = is_cli_quiz_scene(scene)
 
     if is_sofa_chat:
         # Chat-UI fills the entire scene. Both author_text and author_text_after
@@ -1359,17 +1470,27 @@ def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
     else:
         if author_text:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')
-        if dialogue:
+        if dialogue and not is_cli:
+            # In CLI scenes Sofa is silent — the system has taken over the
+            # device. Any dialogue is treated as setup-only and dropped from
+            # render to keep the terminal clean.
             content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue, lang)}</div>')
         if author_text_after:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
         dialogue_after = scene.get("dialogue_after", [])
-        if dialogue_after:
+        if dialogue_after and not is_cli:
             content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue_after, lang)}</div>')
 
         # Standard options (quiz or choice) — only in non-chat mode
         if scene.get("options") and any("correct" in o for o in scene.get("options", [])):
-            content_parts.append(render_quiz(scene, sid))
+            if is_cli:
+                content_parts.append(render_cli_quiz(
+                    scene, sid,
+                    int(scene.get("_cli_index", 0) or 0),
+                    int(scene.get("_cli_total", 0) or 0),
+                ))
+            else:
+                content_parts.append(render_quiz(scene, sid))
 
         if scene.get("options") and any(
             "next" in o and "correct" not in o for o in scene.get("options", [])
@@ -1888,6 +2009,147 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 6px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin: 0.6rem 0;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.25rem;
+  margin: 0.55rem 0 0.7rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: transparent; color: #33ff33;
+  border: none; cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.32rem 0.4rem;
+  text-shadow: inherit;
+  transition: background 0.12s;
+  border-left: 2px solid transparent;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.08);
+  border-left-color: #33ff33;
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.18);
+  border-left-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.12);
+  border-left-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.25rem; }
+.cli-num { display: inline-block; min-width: 1.4em; opacity: 0.85; }
+.cli-input { opacity: 0.85; margin-top: 0.4rem; }
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -2275,6 +2537,117 @@ JS = r"""
     });
   });
 
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ACCESS GRANTED</div>'];
+          if(fragment){
+            lines.push('<div class="cli-line cli-char-line">&gt; CHAR: '+fragment+'</div>');
+            lines.push('<div class="cli-line">&gt; Saved to local notepad.</div>');
+            collectFragment(fragment);
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ACCESS DENIED</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; Hint: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; Try again.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
+
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){
     btn.addEventListener('click',function(){
@@ -2426,6 +2799,10 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
     lesson = esc(data.get("lesson", ""))
     scenes = data.get("scenes", [])
 
+    # CLI quiz numbering: 1-based index across CLI scenes in episode order.
+    # _cli_index / _cli_total → "Auth challenge N/T" banner inside the screen.
+    _annotate_cli_quizzes(scenes)
+
     # Banner «Новые термины» не рендерится — это служебная информация
     # (для учителя/пайплайна), не для играющего ребёнка. Список остаётся
     # в JSON-манифесте для TTS/image-пайплайнов.
@@ -2486,6 +2863,11 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
         if lang == "ru" else ""
     )
 
+    # CLI password slots — exposed to JS as window.__CLI_PASSWORD_SLOTS so the
+    # notepad widget knows how many _ to draw and which char each slot expects.
+    cli_slots = collect_password_slots(scenes)
+    cli_slots_json = json.dumps(cli_slots, ensure_ascii=False)
+
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2526,6 +2908,7 @@ def render_episode_html(data: dict, all_eps: list = None, lang: str = "ru") -> s
 {debug_burger_html}
 
 <script>
+window.__CLI_PASSWORD_SLOTS = {cli_slots_json};
 {_js_timings_config()}
 {JS}
 </script>

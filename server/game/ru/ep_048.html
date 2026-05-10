@@ -428,6 +428,147 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 6px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin: 0.6rem 0;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.25rem;
+  margin: 0.55rem 0 0.7rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: transparent; color: #33ff33;
+  border: none; cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.32rem 0.4rem;
+  text-shadow: inherit;
+  transition: background 0.12s;
+  border-left: 2px solid transparent;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.08);
+  border-left-color: #33ff33;
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.18);
+  border-left-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.12);
+  border-left-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.25rem; }
+.cli-num { display: inline-block; min-width: 1.4em; opacity: 0.85; }
+.cli-input { opacity: 0.85; margin-top: 0.4rem; }
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -502,26 +643,32 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="scene scene-narrative" data-scene-id="ep048_s02" data-index="1" data-next="ep048_s03">
     <div class="scene-header">
       <span class="scene-counter">2 / 22</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный город, серверная комната Софы · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">очки Леона — нити проявляются</div></details>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный город, серверная комната Софы · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">очки Леона — нити проявляются, всплывают четырнадцать букв</div></details>
     </div>
     <div class="scene-content">
       <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная преобразилась. Тёмные кабели наливаются голубым свечением. Из стоек выходят тысячи светящихся голубых нитей, как нервы. Нити уходят сквозь стены — наружу, к городу<br><span class="vb-label">Атмосфера:</span> город виден изнутри — нервная система<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> светящиеся нити, расходящиеся к городу<br><span class="vb-label">Марко:</span> тихое озарение, стоит у терминала в очках Леона, голова поднята<br><span class="vb-label">Предметы:</span> старые очки Леона на лице Марко, голубые светящиеся нити, ожившие кабели</div><div class="author-text"><p>Марко достаёт из рюкзака старые очки в простой оправе. Леон отдал их давно — перед стиранием. «Когда поймёшь — наденешь.»</p>
 <p>Тогда не понял. Сейчас — пора.</p>
 <p>Протирает рукавом. Надевает.</p></div><div class="author-text"><p>Серверная меняется.</p>
 <p>Тёмные кабели по стенам — наливаются голубым. Внутри них видно нити. Тысячи тонких светящихся нитей, как нервы. Каждая тянется к городу — к каждому жителю.</p>
-<p>Нити пульсируют. От стоек — к стенам. От стен — наружу, к домам, к людям, ко всему, что Голос держал.</p></div>
+<p>Нити пульсируют. От стоек — к стенам. От стен — наружу, к домам, к людям, ко всему, что Голос держал.</p>
+<p>И вдруг — в голове Марко всплывают зелёные буквы. Те, что он собирал в CLI и записал на всякий случай в блокнот. Четырнадцать символов:</p>
+<p>www.wordpowerl</p>
+<p>Он помнит их наизусть. Каждую — по очереди.</p></div>
     </div>
   </section>
 
   <section class="scene scene-narrative" data-scene-id="ep048_s03" data-index="2" data-next="ep048_s04">
     <div class="scene-header">
       <span class="scene-counter">3 / 22</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный город, серверная комната Софы · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">нити дают ключ — пароль виден</div></details>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный город, серверная комната Софы · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">нити дают ключ — четырнадцать букв из блокнота сходятся с шестью новыми</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Над главным терминалом — переплетение голубых нитей, образующее светящиеся латинские символы: «www.wordpowerlab.com». Марко в очках смотрит на адрес<br><span class="vb-label">Атмосфера:</span> ключ — на виду<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> светящийся адрес www.wordpowerlab.com над терминалом<br><span class="vb-label">Марко:</span> ловит ключ — тихо, голова поднята к адресу над терминалом<br><span class="vb-label">Предметы:</span> очки Леона, переплетение нитей в адрес www.wordpowerlab.com, главный терминал внизу</div><div class="author-text"><p>Часть нитей сходится. К одной точке — над главным терминалом.</p>
-<p>Там они переплетаются. Медленно. Образуют символы. Латинские. Светящиеся. Складываются в адрес:</p>
-<p>www.wordpowerlab.com</p>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Над главным терминалом — переплетение голубых нитей, образующее светящиеся латинские символы. Первые четырнадцать символов «www.wordpowerl» подсвечены зеленовато (как в CLI Марко) — узнавание. Последние шесть «ab.com» только что доформировались голубым. Марко в очках смотрит на адрес<br><span class="vb-label">Атмосфера:</span> ключ — собран из памяти и нитей<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> светящийся адрес: 14 знакомых букв + 6 новых = www.wordpowerlab.com<br><span class="vb-label">Марко:</span> ловит ключ — узнаёт первые 14, последние 6 достраивает сам, голова поднята к адресу над терминалом<br><span class="vb-label">Предметы:</span> очки Леона, переплетение нитей в адрес www.wordpowerlab.com с двумя цветами — зелёные знакомые символы и голубые новые, главный терминал внизу</div><div class="author-text"><p>Часть нитей сходится. К одной точке — над главным терминалом.</p>
+<p>Там они переплетаются. Медленно. Образуют символы — символ за символом. Латинские. Светящиеся. Складываются в адрес:</p>
+<p>www.wordpowerl ab.com</p>
+<p>Первые четырнадцать символов — Марко уже видел. Помнит наизусть. Те самые, которые он собирал в CLI и записал на всякий случай.</p>
+<p>Последние шесть — `ab.com` — мозг достраивает сам, узнавая URL-паттерн.</p>
+<p>Полный адрес: www.wordpowerlab.com</p>
 <p>Имя системы. Имя пароля. Адрес лаборатории, в которой строили этот город.</p></div>
     </div>
   </section>
@@ -798,12 +945,13 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Сцены этого эпизода</h3>
     <ol class="dbg-scenes">
-      <li><button class="dbg-jump" data-jump="ep048_s01">ep048_s01 — narrative · после битвы — тишина и догадка</button></li><li><button class="dbg-jump" data-jump="ep048_s02">ep048_s02 — narrative · очки Леона — нити проявляются</button></li><li><button class="dbg-jump" data-jump="ep048_s03">ep048_s03 — narrative · нити дают ключ — пароль виден</button></li><li><button class="dbg-jump" data-jump="ep048_s04">ep048_s04 — narrative · пароль введён — команда запущена</button></li><li><button class="dbg-jump" data-jump="ep048_s05">ep048_s05 — narrative · восстановление — местные жители возвраща</button></li><li><button class="dbg-jump" data-jump="ep048_s06">ep048_s06 — dialogue · Макс возвращается — глаза карие, настоящи</button></li><li><button class="dbg-jump" data-jump="ep048_s07">ep048_s07 — narrative · перед первой репликой Софы за долгое вре</button></li><li><button class="dbg-jump" data-jump="ep048_s08">ep048_s08 — чат ×2 · Софа вернулась, тёплый чат</button></li><li><button class="dbg-jump" data-jump="ep048_s10">ep048_s10 — narrative · тихая теория — честная просьба и её зерк</button></li><li><button class="dbg-jump" data-jump="ep048_s11">ep048_s11 — чат ×4 · разминка — лёгкая честная просьба</button></li><li><button class="dbg-jump" data-jump="ep048_s15">ep048_s15 — narrative · сложный случай — мягкий, но твёрдый</button></li><li><button class="dbg-jump" data-jump="ep048_s16">ep048_s16 — чат ×2 · разминка — честная просьба с уважением к вр</button></li><li><button class="dbg-jump" data-jump="ep048_s18">ep048_s18 — dialogue · финальный проход — пауза или вперёд</button></li><li><button class="dbg-jump" data-jump="ep048_s19">ep048_s19 — flavor_detour · тихая остановка — слова больше не да</button></li><li><button class="dbg-jump" data-jump="ep048_s20">ep048_s20 — чат ×5 · Софа подводит к разбору надписей</button></li><li><button class="dbg-jump" data-jump="ep048_s25">ep048_s25 — narrative · цена манипуляции — потеря дружбы</button></li><li><button class="dbg-jump" data-jump="ep048_s26">ep048_s26 — quiz · блиц — экономика доверия</button></li><li><button class="dbg-jump" data-jump="ep048_s27">ep048_s27 — narrative · финальная связка — два суперответа</button></li><li><button class="dbg-jump" data-jump="ep048_s28">ep048_s28 — чат ×4 · блиц — выбор суперответа</button></li><li><button class="dbg-jump" data-jump="ep048_s32">ep048_s32 — dialogue · Голос отпускает, но предупреждает — будет</button></li><li><button class="dbg-jump" data-jump="ep048_s33">ep048_s33 — narrative · перед последним пузырём — свет и вибраци</button></li><li><button class="dbg-jump" data-jump="ep048_s34">ep048_s34 — cliffhanger · конец Акта IV: цикл продолжается, но М</button></li>
+      <li><button class="dbg-jump" data-jump="ep048_s01">ep048_s01 — narrative · после битвы — тишина и догадка</button></li><li><button class="dbg-jump" data-jump="ep048_s02">ep048_s02 — narrative · очки Леона — нити проявляются, всплывают</button></li><li><button class="dbg-jump" data-jump="ep048_s03">ep048_s03 — narrative · нити дают ключ — четырнадцать букв из бл</button></li><li><button class="dbg-jump" data-jump="ep048_s04">ep048_s04 — narrative · пароль введён — команда запущена</button></li><li><button class="dbg-jump" data-jump="ep048_s05">ep048_s05 — narrative · восстановление — местные жители возвраща</button></li><li><button class="dbg-jump" data-jump="ep048_s06">ep048_s06 — dialogue · Макс возвращается — глаза карие, настоящи</button></li><li><button class="dbg-jump" data-jump="ep048_s07">ep048_s07 — narrative · перед первой репликой Софы за долгое вре</button></li><li><button class="dbg-jump" data-jump="ep048_s08">ep048_s08 — чат ×2 · Софа вернулась, тёплый чат</button></li><li><button class="dbg-jump" data-jump="ep048_s10">ep048_s10 — narrative · тихая теория — честная просьба и её зерк</button></li><li><button class="dbg-jump" data-jump="ep048_s11">ep048_s11 — чат ×4 · разминка — лёгкая честная просьба</button></li><li><button class="dbg-jump" data-jump="ep048_s15">ep048_s15 — narrative · сложный случай — мягкий, но твёрдый</button></li><li><button class="dbg-jump" data-jump="ep048_s16">ep048_s16 — чат ×2 · разминка — честная просьба с уважением к вр</button></li><li><button class="dbg-jump" data-jump="ep048_s18">ep048_s18 — dialogue · финальный проход — пауза или вперёд</button></li><li><button class="dbg-jump" data-jump="ep048_s19">ep048_s19 — flavor_detour · тихая остановка — слова больше не да</button></li><li><button class="dbg-jump" data-jump="ep048_s20">ep048_s20 — чат ×5 · Софа подводит к разбору надписей</button></li><li><button class="dbg-jump" data-jump="ep048_s25">ep048_s25 — narrative · цена манипуляции — потеря дружбы</button></li><li><button class="dbg-jump" data-jump="ep048_s26">ep048_s26 — quiz · блиц — экономика доверия</button></li><li><button class="dbg-jump" data-jump="ep048_s27">ep048_s27 — narrative · финальная связка — два суперответа</button></li><li><button class="dbg-jump" data-jump="ep048_s28">ep048_s28 — чат ×4 · блиц — выбор суперответа</button></li><li><button class="dbg-jump" data-jump="ep048_s32">ep048_s32 — dialogue · Голос отпускает, но предупреждает — будет</button></li><li><button class="dbg-jump" data-jump="ep048_s33">ep048_s33 — narrative · перед последним пузырём — свет и вибраци</button></li><li><button class="dbg-jump" data-jump="ep048_s34">ep048_s34 — cliffhanger · конец Акта IV: цикл продолжается, но М</button></li>
     </ol>
   </section>
 </nav>
 
 <script>
+window.__CLI_PASSWORD_SLOTS = [];
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
 (function() {
@@ -1145,6 +1293,117 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     });
   });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ACCESS GRANTED</div>'];
+          if(fragment){
+            lines.push('<div class="cli-line cli-char-line">&gt; CHAR: '+fragment+'</div>');
+            lines.push('<div class="cli-line">&gt; Saved to local notepad.</div>');
+            collectFragment(fragment);
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ACCESS DENIED</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; Hint: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; Try again.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
 
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){
