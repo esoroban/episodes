@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T11:49:24Z",
+  "generated_at": "2026-05-10T11:55:47Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1025,12 +1025,12 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "ac350e2d42174386"
+          "content_hash": "f83516ba90ff830b"
         }
       },
       "title_ru": "Стены прозрачнеют",
       "lesson": "12B.3",
-      "scene_count": 34,
+      "scene_count": 35,
       "quiz_count": 14,
       "branch_count": 1
     }
