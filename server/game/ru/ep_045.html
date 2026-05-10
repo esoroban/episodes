@@ -479,40 +479,50 @@ body.debug-off .voice-subtitle { display: none; }
 .cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
 .cli-q { font-weight: 700; margin-bottom: 0.5rem; }
 .cli-options {
-  display: flex; flex-direction: column; gap: 0.25rem;
-  margin: 0.55rem 0 0.7rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
 }
 .cli-option {
   display: block; width: 100%; text-align: left;
-  background: transparent; color: #33ff33;
-  border: none; cursor: pointer;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
   font-family: inherit; font-size: inherit;
-  padding: 0.32rem 0.4rem;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
   text-shadow: inherit;
-  transition: background 0.12s;
-  border-left: 2px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
 }
 .cli-option:hover {
-  background: rgba(51, 255, 51, 0.08);
-  border-left-color: #33ff33;
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
 }
 .cli-option.cli-correct {
-  background: rgba(51, 255, 51, 0.18);
-  border-left-color: #66ff66;
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
   color: #aaffaa;
   cursor: default;
 }
 .cli-option.cli-wrong {
-  background: rgba(255, 80, 80, 0.12);
-  border-left-color: #ff6666;
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
   color: #ff8585;
   text-decoration: line-through;
   text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
 }
 .cli-option:disabled { cursor: default; }
-.cli-prompt { opacity: 0.7; margin-right: 0.25rem; }
-.cli-num { display: inline-block; min-width: 1.4em; opacity: 0.85; }
-.cli-input { opacity: 0.85; margin-top: 0.4rem; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
 .cli-cursor {
   display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
   margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
@@ -784,10 +794,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 1/17</div>
         <div class="cli-line cli-q">&gt; Q: «ВСЕ сдали на пять.» Это поспешное обобщение?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, честный аргумент</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, поспешное обобщение</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. И помнишь — Рей кричал «Все согласны!» на площади. Тот же приём."
@@ -813,10 +823,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 2/17</div>
         <div class="cli-line cli-q">&gt; Q: «Ты тут неделю — молчи!» Это нападка на человека?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, обсуждение идеи</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Стражник тебе тоже говорил: «Кто ты такой, чтобы сомневаться?» Один в один."
@@ -842,10 +852,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 3/17</div>
         <div class="cli-line cli-q">&gt; Q: Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычное несогласие</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, пугало</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос так делал: ты говорил «не сейчас» — он слышал «никогда»."
@@ -871,10 +881,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 4/17</div>
         <div class="cli-line cli-q">&gt; Q: Певица — про витамины. Это ложный авторитет?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, ложный авторитет</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, она же знаменитая</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Известный — не значит знающий. Голос тоже играл «я тут главный»."
@@ -900,10 +910,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 5/17</div>
         <div class="cli-line cli-q">&gt; Q: «Или с нами — или трус.» Это ложная дилемма?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, выбор честный</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная дилемма</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос тебе: «Или отдай ключ — или потеряешь сестру.» Тот же приём. Третий вариант есть."
@@ -929,10 +939,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 6/17</div>
         <div class="cli-line cli-q">&gt; Q: От домашки до дворника — за четыре шага. Это страшная цепочка?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, страшная цепочка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разумная логика</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос так пугал: «Один шаг — и весь город рухнет.»"
@@ -958,10 +968,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 7/17</div>
         <div class="cli-line cli-q">&gt; Q: «Ты уже перестал списывать?» Это вопрос-ловушка?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычный вопрос</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, вопрос-ловушка</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос пробовал тот же приём: «Ты уже перестал сопротивляться?»"
@@ -987,10 +997,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 8/17</div>
         <div class="cli-line cli-q">&gt; Q: «Не списываю — подсматриваю и пишу так же.» Это подмена понятий?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разные действия</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Рей в башне: «Это не контроль. Это забота.» Тот же приём — переименовать суть."
@@ -1016,10 +1026,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 9/17</div>
         <div class="cli-line cli-q">&gt; Q: Красные носки → победа. Это ложная причина?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, носки помогли</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная причина</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. «После» — не значит «из-за». Помнишь, мы это уже разбирали."
@@ -1045,10 +1055,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 10/17</div>
         <div class="cli-line cli-q">&gt; Q: «Где велик?» — «А комнату убрал?» Это уклонение?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, нормальный вопрос в ответ</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, уклонение от ответа</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Когда не хотят отвечать — переводят тему. Голос так делал."
@@ -1074,10 +1084,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 11/17</div>
         <div class="cli-line cli-q">&gt; Q: «Покорим вершины — великое будущее!» Это красивые слова без фактов?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вдохновляющая речь</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос на площади: «Мы создадим великий город!» Те же слова. Без деталей."
@@ -1103,10 +1113,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 12/17</div>
         <div class="cli-line cli-q">&gt; Q: «Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, приём «я не говорю, что…»</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вежливое замечание</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос тебе говорил: «Я не говорю, что предатель. Но ты пришёл разрушить…» Тот же ход."
@@ -1208,10 +1218,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 13/17</div>
         <div class="cli-line cli-q">&gt; Q: Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложный авторитет</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="«Слишком многих» без числа — красивые слова без фактов."
@@ -1237,10 +1247,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 14/17</div>
         <div class="cli-line cli-q">&gt; Q: Голос: «Ты уже перестал сопротивляться?» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Вопрос-ловушка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная дилемма</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Пугало</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Утверждение в вопросе — вопрос-ловушка."
@@ -1266,10 +1276,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 15/17</div>
         <div class="cli-line cli-q">&gt; Q: Рей: «Это не контроль. Это забота.» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная причина</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Уклонение от ответа</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Слово другое, суть та же — подмена понятий."
@@ -1295,10 +1305,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 16/17</div>
         <div class="cli-line cli-q">&gt; Q: Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="true" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">«Я не говорю, что...»</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Камень с бантиком — «я не говорю, что...»."
@@ -1324,10 +1334,10 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge 17/17</div>
         <div class="cli-line cli-q">&gt; Q: Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Пугало</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложная причина</span></button>
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Громко и красиво, фактов ноль — красивые слова без фактов."

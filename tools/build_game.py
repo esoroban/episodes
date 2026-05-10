@@ -1365,10 +1365,10 @@ def render_cli_quiz(scene: dict, scene_id: str, quiz_index: int, quiz_total: int
       <div class="cli-body">
         <div class="cli-line">&gt; Auth challenge {banner_idx}</div>
         <div class="cli-line cli-q">&gt; Q: {esc(question)}</div>
+        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
         <div class="cli-options">
           {"".join(opts_html)}
         </div>
-        <div class="cli-line cli-input"><span>&gt; [Введите ответ]:</span> <span class="cli-cursor">_</span></div>
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="{esc(feedback_ok)}"
@@ -2060,40 +2060,50 @@ body.debug-off .voice-subtitle { display: none; }
 .cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
 .cli-q { font-weight: 700; margin-bottom: 0.5rem; }
 .cli-options {
-  display: flex; flex-direction: column; gap: 0.25rem;
-  margin: 0.55rem 0 0.7rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
 }
 .cli-option {
   display: block; width: 100%; text-align: left;
-  background: transparent; color: #33ff33;
-  border: none; cursor: pointer;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
   font-family: inherit; font-size: inherit;
-  padding: 0.32rem 0.4rem;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
   text-shadow: inherit;
-  transition: background 0.12s;
-  border-left: 2px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
 }
 .cli-option:hover {
-  background: rgba(51, 255, 51, 0.08);
-  border-left-color: #33ff33;
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
 }
 .cli-option.cli-correct {
-  background: rgba(51, 255, 51, 0.18);
-  border-left-color: #66ff66;
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
   color: #aaffaa;
   cursor: default;
 }
 .cli-option.cli-wrong {
-  background: rgba(255, 80, 80, 0.12);
-  border-left-color: #ff6666;
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
   color: #ff8585;
   text-decoration: line-through;
   text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
 }
 .cli-option:disabled { cursor: default; }
-.cli-prompt { opacity: 0.7; margin-right: 0.25rem; }
-.cli-num { display: inline-block; min-width: 1.4em; opacity: 0.85; }
-.cli-input { opacity: 0.85; margin-top: 0.4rem; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
 .cli-cursor {
   display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
   margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
