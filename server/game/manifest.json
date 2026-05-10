@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-09T13:46:35Z",
+  "generated_at": "2026-05-10T10:32:50Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,12 +977,12 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "5798c611a984dbf4"
+          "content_hash": "57c585a07da4fdf9"
         }
       },
       "title_ru": "Лучший ученик",
       "lesson": "12A.1",
-      "scene_count": 38,
+      "scene_count": 40,
       "quiz_count": 17,
       "branch_count": 1
     },
@@ -993,12 +993,12 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "40fda9ca562676b9"
+          "content_hash": "568a1b69fb75654d"
         }
       },
       "title_ru": "Экзамен сомнения",
       "lesson": "12A.3",
-      "scene_count": 32,
+      "scene_count": 35,
       "quiz_count": 15,
       "branch_count": 1
     },
@@ -1025,7 +1025,7 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "bccfbce6c129ad04"
+          "content_hash": "2b5606303cd6c9d2"
         }
       },
       "title_ru": "Стены прозрачнеют",
