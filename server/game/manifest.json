@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T15:55:46Z",
+  "generated_at": "2026-05-10T16:36:19Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1009,7 +1009,7 @@
         "ru": {
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
-          "content_hash": "7af11be44267f5d2"
+          "content_hash": "d72558914e65c3c5"
         }
       },
       "title_ru": "Интеллектуальная битва",
@@ -1025,7 +1025,7 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "b909d2d7f8d621d8"
+          "content_hash": "a667cfee4e30f0bd"
         }
       },
       "title_ru": "Стены прозрачнеют",

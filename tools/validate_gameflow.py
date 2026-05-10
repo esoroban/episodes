@@ -279,9 +279,13 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
     # ── Check 9: Voice-channel violations in Sofa dialogue ────────
     # Софа is text-only. Her lines must not describe voice/sound,
     # nor use hearing verbs like «слышишь». See pipeline_rules.md.
+    # «голос Софы» / «голос Софа» = AI Софа (запрещено описывать).
+    # «голос Софии» = голос сестры (живая, настоящий голос — это OK,
+    # её слышно через трубку). Регекс ловит «Софа/Софы/Софе/Софу/
+    # Софой» (не «Софии/Софию/Софией»).
     SOFA_FORBIDDEN = _re.compile(
         r"\b(слышишь|услышишь|услышь|слышно|треск|электронн\w*|шипени\w*|"
-        r"голос\s+Соф\w*|мой\s+голос|твой\s+голос)\b",
+        r"голос\s+Соф[аыеу]\w*|мой\s+голос|твой\s+голос)\b",
         _re.IGNORECASE,
     )
     for scene in scenes:
