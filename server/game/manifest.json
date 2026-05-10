@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T17:14:58Z",
+  "generated_at": "2026-05-10T17:26:02Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1009,7 +1009,7 @@
         "ru": {
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
-          "content_hash": "8a2c19b45c286556"
+          "content_hash": "b8c0cf10778aec51"
         }
       },
       "title_ru": "Интеллектуальная битва",
