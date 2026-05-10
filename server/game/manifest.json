@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T14:56:33Z",
+  "generated_at": "2026-05-10T15:08:56Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -993,7 +993,7 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "8edfbbf9674747d3"
+          "content_hash": "cec50f8fd72a4968"
         }
       },
       "title_ru": "Экзамен сомнения",
