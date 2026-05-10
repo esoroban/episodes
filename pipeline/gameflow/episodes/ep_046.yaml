@@ -96,36 +96,46 @@ enter_requires:
 
 scenes:
 
-  # ── СЦЕНА 1a: Курсор на втором файле — drama narrative ──────────
+  # ── СЦЕНА 1a: После соавторов — Марко не отходит от терминала ───
   - scene_id: ep046_s01_pre
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
-      На экране сервера — список с флешки. Три файла. Первый
-      Марко уже слушал — в конце прошлой ночи. «Совещание 1.
+      Запись смолкла минуту назад. Может, пять. Марко не
+      считал.
+
+      «Соавторы.» Слово стоит в голове и не уходит. София
+      и Голос — вместе. Один лист. Один проект. Одна
+      подпись на двоих.
+
+      Марко не отходит от терминала. Стоит. Дышит.
+
+      На экране сервера — тот же список с флешки. Три
+      файла. Первый — только что прослушан: «Совещание 1.
       Соавторы.»
 
-      Курсор стоит на втором файле: «Совещание 2. Каждая глава —
-      урок.»
+      Курсор сам опускается на второй: «Совещание 2.
+      Каждая глава — урок.»
 
-      Палец Марко — на кнопке «воспроизвести».
-    mood: "перед второй записью — палец завис над клавишей"
+      Палец Марко возвращается к клавише «воспроизвести».
+      Медленно. Сам.
+    mood: "сразу после соавторов — Марко собирается слушать дальше"
     next_default: ep046_s01
     visual_brief:
-      background: "Серверная. Крупный план экрана сервера: список из трёх файлов с флешки, курсор на втором («Совещание 2»). Маленькая флешка в порту"
+      background: "Серверная. Та же ночь, что в финале ep_045. Крупный план экрана сервера: список из трёх файлов с флешки. Первый файл — затемнён (прослушан). Курсор на втором («Совещание 2»). Маленькая флешка в порту. Колонка тёплая после первой записи"
       camera: close-up
       characters:
         - who: Марко
-          expression: палец завис над клавишей
-          pose: у клавиатуры, корпус прямой
+          expression: только что услышал шок — теперь собирается
+          pose: у клавиатуры, корпус прямой, палец над клавишей
           position: center
-      props: [список из трёх файлов с флешки, курсор на втором, маленькая флешка в порту, клавиша «play» под пальцем]
-      focus_object: "второй файл и палец на клавише"
-      atmosphere: "перед второй записью"
+      props: [список из трёх файлов с флешки, первый файл прослушан, курсор на втором, маленькая флешка в порту, тёплая колонка, клавиша «play»]
+      focus_object: "второй файл и палец на клавише — Марко возвращается"
+      atmosphere: "сразу после первой записи — то же место, та же ночь"
       ui_mode: reading
 
   # ── СЦЕНА 1: Марко жмёт вторую запись на флешке (audio) ─────────
@@ -133,7 +143,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -177,7 +187,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -225,7 +235,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -271,7 +281,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     branch_type: flavor_detour
@@ -308,7 +318,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -361,7 +371,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -401,7 +411,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -432,7 +442,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -467,7 +477,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.drama
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы / стеклянная комната Софии (через экран терминала)"
+    location: "Зеркальный Город, серверная комната Софы / стеклянная комната Софии (через экран терминала)"
     time: "глубокая ночь"
     characters_present: [Марко, София]
     dialogue:
@@ -518,7 +528,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -547,7 +557,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -579,7 +589,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -649,7 +659,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -684,7 +694,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -721,7 +731,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -758,7 +768,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -795,7 +805,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -829,7 +839,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -863,7 +873,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.sofa_block
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -892,7 +902,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, София]
     author_text: >
@@ -929,7 +939,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -956,7 +966,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: constructor
@@ -1009,7 +1019,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -1043,7 +1053,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -1080,7 +1090,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -1114,7 +1124,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, София]
     dialogue:
@@ -1152,7 +1162,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: constructor
@@ -1205,7 +1215,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: constructor
@@ -1258,7 +1268,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.challenge
     scene_type: quiz
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     interaction_type: vote
@@ -1295,7 +1305,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.cliffhanger
     scene_type: narrative
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко]
     author_text: >
@@ -1328,7 +1338,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.cliffhanger
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -1361,7 +1371,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.cliffhanger
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, София]
     author_text: >
@@ -1402,7 +1412,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.cliffhanger
     scene_type: dialogue
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, Софа]
     dialogue:
@@ -1431,7 +1441,7 @@ scenes:
     episode_id: 46
     source_ref: day_12.ep46.cliffhanger
     scene_type: cliffhanger
-    location: "Зеркальный город, серверная комната Софы"
+    location: "Зеркальный Город, серверная комната Софы"
     time: "глубокая ночь"
     characters_present: [Марко, София]
     author_text: >
