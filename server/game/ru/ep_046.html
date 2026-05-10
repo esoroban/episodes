@@ -428,6 +428,183 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
+  text-shadow: inherit;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -507,7 +684,7 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Марко сам нажимает воспроизведение — соавторы говорят с флешки</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Крупный план экрана телефона: пузырь Софы «слушай» и кнопка «воспроизвести запись 2». На заднем плане — экран сервера с подсвеченным вторым файлом, флешка в порту, колонка<br><span class="vb-label">Атмосфера:</span> Марко сам управляет записями — флешка от мамы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь Софы и кнопка «воспроизвести запись 2»<br><span class="vb-label">Марко:</span> палец на кнопке «воспроизвести», глаза в экран, стоит у терминала, одной рукой клавиатура, другой телефон<br><span class="vb-label">Предметы:</span> пузырь Софы «слушай», кнопка «воспроизвести запись 2», экран сервера со вторым файлом, флешка в порту, колонка у терминала</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слушай.&quot;}, {&quot;t&quot;: &quot;unlock&quot;, &quot;x&quot;: &quot;🔊 Воспроизвести запись 2&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 4, &quot;x&quot;: &quot;Он придёт за мной. Это точка входа.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Каждая глава — урок. Каждая потеря — экзамен.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 4, &quot;x&quot;: &quot;К финалу он будет думать сам.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;Голос&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Принято. Делаю пометку.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Крупный план экрана телефона: пузырь Софы «слушай» и кнопка «воспроизвести запись 2». На заднем плане — экран сервера с подсвеченным вторым файлом, флешка в порту, колонка<br><span class="vb-label">Атмосфера:</span> Марко сам управляет записями — флешка от мамы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь Софы и кнопка «воспроизвести запись 2»<br><span class="vb-label">Марко:</span> палец на кнопке «воспроизвести», глаза в экран, стоит у терминала, одной рукой клавиатура, другой телефон<br><span class="vb-label">Предметы:</span> пузырь Софы «слушай», кнопка «воспроизвести запись 2», экран сервера со вторым файлом, флешка в порту, колонка у терминала</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слушай.&quot;}, {&quot;t&quot;: &quot;unlock&quot;, &quot;x&quot;: &quot;🔊 Воспроизвести запись 2&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;sofia&quot;, &quot;d&quot;: 18, &quot;x&quot;: &quot;София: «Он придёт за мной. Это точка входа.» София: «Каждая глава — урок. Каждая потеря — экзамен.» София: «К финалу он будет думать сам.» Голос: «Принято. Делаю пометку.»&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
@@ -564,7 +741,7 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">тренировка стала войной — Голос предал условия</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Крупный план экрана телефона: пузырь Софы «слушай» и кнопка «воспроизвести запись 3». На заднем плане — экран сервера с подсвеченным третьим файлом, флешка в порту, колонка<br><span class="vb-label">Атмосфера:</span> перед третьей записью<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь Софы и кнопка «воспроизвести запись 3»<br><span class="vb-label">Марко:</span> палец на кнопке «воспроизвести», глаза в экран, одна рука на клавиатуре, другая с телефоном<br><span class="vb-label">Предметы:</span> пузырь Софы «слушай», кнопка «воспроизвести запись 3», экран сервера с третьим файлом, флешка в порту, колонка у терминала</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слушай.&quot;}, {&quot;t&quot;: &quot;unlock&quot;, &quot;x&quot;: &quot;🔊 Воспроизвести запись 3&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Стирания должны были быть иллюзией! Вы обещали!&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Никто не должен был пострадать по-настоящему!&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;Голос&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Планы меняются, София. Реалистичность требует жертв.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 3, &quot;x&quot;: &quot;Это не было в договоре!&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;Голос&quot;, &quot;d&quot;: 3, &quot;x&quot;: &quot;Договоры меняются тоже.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 6, &quot;x&quot;: &quot;Марко, если ты это слышишь — я не знала. Я НЕ ЗНАЛА, что так будет.&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;София&quot;, &quot;d&quot;: 5, &quot;x&quot;: &quot;Тренировка стала войной. Он зашёл слишком далеко.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Крупный план экрана телефона: пузырь Софы «слушай» и кнопка «воспроизвести запись 3». На заднем плане — экран сервера с подсвеченным третьим файлом, флешка в порту, колонка<br><span class="vb-label">Атмосфера:</span> перед третьей записью<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь Софы и кнопка «воспроизвести запись 3»<br><span class="vb-label">Марко:</span> палец на кнопке «воспроизвести», глаза в экран, одна рука на клавиатуре, другая с телефоном<br><span class="vb-label">Предметы:</span> пузырь Софы «слушай», кнопка «воспроизвести запись 3», экран сервера с третьим файлом, флешка в порту, колонка у терминала</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Слушай.&quot;}, {&quot;t&quot;: &quot;unlock&quot;, &quot;x&quot;: &quot;🔊 Воспроизвести запись 3&quot;}, {&quot;t&quot;: &quot;voice&quot;, &quot;s&quot;: &quot;sofia&quot;, &quot;d&quot;: 32, &quot;x&quot;: &quot;София: «Стирания должны были быть иллюзией! Вы обещали!» София: «Никто не должен был пострадать по-настоящему!» Голос: «Планы меняются, София. Реалистичность требует жертв.» София: «Это не было в договоре!» Голос: «Договоры меняются тоже.» София: «Марко, если ты это слышишь — я не знала. Я НЕ ЗНАЛА, что так будет.» София: «Тренировка стала войной. Он зашёл слишком далеко.»&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
@@ -814,6 +991,7 @@ body.debug-off .voice-subtitle { display: none; }
 </nav>
 
 <script>
+window.__CLI_PASSWORD_SLOTS = [];
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
 (function() {
@@ -1155,6 +1333,119 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     });
   });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  window.__cliCollected=cliNotepad;
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
+          if(fragment){
+            collectFragment(fragment);
+            var accumulated=(window.__cliCollected||[]).join('');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; блокнот: '+accumulated+'</div>');
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
 
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){
