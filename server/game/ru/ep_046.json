@@ -34,7 +34,7 @@
   "branch_count": 1,
   "scenes": [
     {
-      "id": "ep046_s01_pre",
+      "id": "ep046_s01",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -47,7 +47,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s01",
+        "next": "ep046_s02",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -107,7 +107,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s01",
+      "id": "ep046_s02",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -121,7 +121,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s02",
+        "next": "ep046_s03",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -188,7 +188,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s02",
+      "id": "ep046_s03",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -201,7 +201,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s03",
+        "next": "ep046_s04",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -266,7 +266,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s03",
+      "id": "ep046_s04",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -279,7 +279,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s04",
+        "next": "ep046_s06",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -313,12 +313,12 @@
           {
             "id": "play_now",
             "text": "Нажать сразу. Хочу знать.",
-            "next": "ep046_s04"
+            "next": "ep046_s06"
           },
           {
             "id": "breathe",
             "text": "Выдохнуть. Собраться. Потом нажать.",
-            "next": "ep046_s03b"
+            "next": "ep046_s05"
           }
         ]
       },
@@ -347,7 +347,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s03b",
+      "id": "ep046_s05",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -360,10 +360,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s04",
+        "next": "ep046_s06",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep046_s04"
+        "merge_to": "ep046_s06"
       },
       "text": [
         {
@@ -408,7 +408,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s04",
+      "id": "ep046_s06",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -422,7 +422,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s04_after",
+        "next": "ep046_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -504,7 +504,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s04_after",
+      "id": "ep046_s07",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -517,7 +517,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s05",
+        "next": "ep046_s08",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -574,7 +574,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s05",
+      "id": "ep046_s08",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -588,7 +588,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s06",
+        "next": "ep046_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -632,7 +632,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s06",
+      "id": "ep046_s09",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -645,7 +645,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s07",
+        "next": "ep046_s10",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -692,7 +692,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s07",
+      "id": "ep046_s10",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы / стеклянная комната Софии (через экран терминала)",
@@ -706,7 +706,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s08",
+        "next": "ep046_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -789,7 +789,7 @@
       "source_ref": "day_12.ep46.drama"
     },
     {
-      "id": "ep046_s08",
+      "id": "ep046_s11",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -803,7 +803,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s09",
+        "next": "ep046_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -843,7 +843,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s09",
+      "id": "ep046_s12",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -857,7 +857,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s09_story",
+        "next": "ep046_s13",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -906,7 +906,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s09_story",
+      "id": "ep046_s13",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -919,7 +919,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s10",
+        "next": "ep046_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1011,7 +1011,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s10",
+      "id": "ep046_s14",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1024,7 +1024,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s11",
+        "next": "ep046_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1076,7 +1076,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s11",
+      "id": "ep046_s15",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1090,7 +1090,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s12",
+        "next": "ep046_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1141,7 +1141,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s12",
+      "id": "ep046_s16",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1155,7 +1155,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s13",
+        "next": "ep046_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1206,7 +1206,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s13",
+      "id": "ep046_s17",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1220,7 +1220,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s14",
+        "next": "ep046_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1271,7 +1271,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s14",
+      "id": "ep046_s18",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1285,7 +1285,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s15",
+        "next": "ep046_s19",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1331,7 +1331,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s15",
+      "id": "ep046_s19",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1345,7 +1345,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s16",
+        "next": "ep046_s20",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1391,7 +1391,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s16",
+      "id": "ep046_s20",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1405,7 +1405,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s17",
+        "next": "ep046_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1445,7 +1445,7 @@
       "source_ref": "day_12.ep46.sofa_block"
     },
     {
-      "id": "ep046_s17",
+      "id": "ep046_s21",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1459,7 +1459,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s18",
+        "next": "ep046_s22",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1514,7 +1514,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s18",
+      "id": "ep046_s22",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1528,7 +1528,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s19",
+        "next": "ep046_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1564,7 +1564,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s19",
+      "id": "ep046_s23",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1578,7 +1578,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s20",
+        "next": "ep046_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1685,7 +1685,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s20",
+      "id": "ep046_s24",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1699,7 +1699,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s21",
+        "next": "ep046_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1745,7 +1745,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s21",
+      "id": "ep046_s25",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1759,7 +1759,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s22",
+        "next": "ep046_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1810,7 +1810,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s22",
+      "id": "ep046_s26",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1824,7 +1824,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s23",
+        "next": "ep046_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1870,7 +1870,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s23",
+      "id": "ep046_s27",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1884,7 +1884,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s24",
+        "next": "ep046_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1943,7 +1943,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s24",
+      "id": "ep046_s28",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -1957,7 +1957,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s25",
+        "next": "ep046_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2064,7 +2064,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s25",
+      "id": "ep046_s29",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2078,7 +2078,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s26",
+        "next": "ep046_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2185,7 +2185,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s26",
+      "id": "ep046_s30",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2199,7 +2199,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s27_archive",
+        "next": "ep046_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2250,7 +2250,7 @@
       "source_ref": "day_12.ep46.challenge"
     },
     {
-      "id": "ep046_s27_archive",
+      "id": "ep046_s31",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2263,7 +2263,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s27_archive_chat",
+        "next": "ep046_s32",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2309,7 +2309,7 @@
       "source_ref": "day_12.ep46.cliffhanger"
     },
     {
-      "id": "ep046_s27_archive_chat",
+      "id": "ep046_s32",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2323,7 +2323,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s27",
+        "next": "ep046_s33",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2371,7 +2371,7 @@
       "source_ref": "day_12.ep46.cliffhanger"
     },
     {
-      "id": "ep046_s27",
+      "id": "ep046_s33",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2385,7 +2385,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s28",
+        "next": "ep046_s34",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2448,7 +2448,7 @@
       "source_ref": "day_12.ep46.cliffhanger"
     },
     {
-      "id": "ep046_s28",
+      "id": "ep046_s34",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, серверная комната Софы",
@@ -2462,7 +2462,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep046_s29_end",
+        "next": "ep046_s35",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2502,7 +2502,7 @@
       "source_ref": "day_12.ep46.cliffhanger"
     },
     {
-      "id": "ep046_s29_end",
+      "id": "ep046_s35",
       "kind": "cliffhanger",
       "is_chat": false,
       "location": "Зеркальный Город, серверная комната Софы",

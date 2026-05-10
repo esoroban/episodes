@@ -319,7 +319,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s05_max",
+        "next": "ep048_s06",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -387,7 +387,7 @@
       "source_ref": "day_12.ep48.drama"
     },
     {
-      "id": "ep048_s05_max",
+      "id": "ep048_s06",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, серверная комната Софы",
@@ -402,7 +402,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s06",
+        "next": "ep048_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -479,7 +479,7 @@
       "source_ref": "day_12.ep48.drama"
     },
     {
-      "id": "ep048_s06",
+      "id": "ep048_s07",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, серверная комната Софы",
@@ -494,7 +494,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s07",
+        "next": "ep048_s08",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -538,7 +538,7 @@
       "source_ref": "day_12.ep48.drama"
     },
     {
-      "id": "ep048_s07",
+      "id": "ep048_s08",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -552,7 +552,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s08",
+        "next": "ep048_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -600,7 +600,7 @@
       "source_ref": "day_12.ep48.drama"
     },
     {
-      "id": "ep048_s08",
+      "id": "ep048_s09",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -614,7 +614,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s09",
+        "next": "ep048_s10",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -654,7 +654,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s09",
+      "id": "ep048_s10",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, серверная комната Софы",
@@ -667,7 +667,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s10",
+        "next": "ep048_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -728,7 +728,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s10",
+      "id": "ep048_s11",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -742,7 +742,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s11",
+        "next": "ep048_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -788,7 +788,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s11",
+      "id": "ep048_s12",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -802,7 +802,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s12",
+        "next": "ep048_s13",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -848,7 +848,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s12",
+      "id": "ep048_s13",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -862,7 +862,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s13",
+        "next": "ep048_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -908,7 +908,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s13",
+      "id": "ep048_s14",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -922,7 +922,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s14",
+        "next": "ep048_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -968,7 +968,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s14",
+      "id": "ep048_s15",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, серверная комната Софы",
@@ -981,7 +981,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s15",
+        "next": "ep048_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1038,7 +1038,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s15",
+      "id": "ep048_s16",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -1052,7 +1052,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s16",
+        "next": "ep048_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1098,7 +1098,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s16",
+      "id": "ep048_s17",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, серверная комната Софы",
@@ -1112,7 +1112,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s17",
+        "next": "ep048_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1156,7 +1156,7 @@
       "source_ref": "day_12.ep48.sofa_block"
     },
     {
-      "id": "ep048_s17",
+      "id": "ep048_s18",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1171,7 +1171,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s18",
+        "next": "ep048_s20",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1197,12 +1197,12 @@
           {
             "id": "pause",
             "text": "Остановиться. Прочитать длинную надпись.",
-            "next": "ep048_s17b"
+            "next": "ep048_s19"
           },
           {
             "id": "keep_walking",
             "text": "Идти дальше. Софа уже зовёт.",
-            "next": "ep048_s18"
+            "next": "ep048_s20"
           }
         ]
       },
@@ -1242,7 +1242,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s17b",
+      "id": "ep048_s19",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1257,10 +1257,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s18",
+        "next": "ep048_s20",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep048_s18"
+        "merge_to": "ep048_s20"
       },
       "text": [
         {
@@ -1305,7 +1305,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s18",
+      "id": "ep048_s20",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1319,7 +1319,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s19",
+        "next": "ep048_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1359,7 +1359,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s19",
+      "id": "ep048_s21",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1373,7 +1373,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s20",
+        "next": "ep048_s22",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1424,7 +1424,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s20",
+      "id": "ep048_s22",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1438,7 +1438,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s21",
+        "next": "ep048_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1489,7 +1489,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s21",
+      "id": "ep048_s23",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1503,7 +1503,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s22",
+        "next": "ep048_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1554,7 +1554,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s22",
+      "id": "ep048_s24",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1568,7 +1568,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s23",
+        "next": "ep048_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1619,7 +1619,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s23",
+      "id": "ep048_s25",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1633,7 +1633,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s24",
+        "next": "ep048_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1701,7 +1701,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s24",
+      "id": "ep048_s26",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1715,7 +1715,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s25",
+        "next": "ep048_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1766,7 +1766,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s25",
+      "id": "ep048_s27",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1780,7 +1780,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s26",
+        "next": "ep048_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1840,7 +1840,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s26",
+      "id": "ep048_s28",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1854,7 +1854,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s27",
+        "next": "ep048_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1905,7 +1905,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s27",
+      "id": "ep048_s29",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1919,7 +1919,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s28",
+        "next": "ep048_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1970,7 +1970,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s28",
+      "id": "ep048_s30",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -1984,7 +1984,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s29",
+        "next": "ep048_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2035,7 +2035,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s29",
+      "id": "ep048_s31",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный город, прозрачные улицы",
@@ -2049,7 +2049,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s30",
+        "next": "ep048_s32",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2100,7 +2100,7 @@
       "source_ref": "day_12.ep48.challenge"
     },
     {
-      "id": "ep048_s30",
+      "id": "ep048_s32",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный город, у двери на выход",
@@ -2116,7 +2116,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s31",
+        "next": "ep048_s33",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2201,7 +2201,7 @@
       "source_ref": "day_12.ep48.cliffhanger"
     },
     {
-      "id": "ep048_s31",
+      "id": "ep048_s33",
       "kind": "narrative",
       "is_chat": false,
       "location": "За дверью, на пороге обычного мира",
@@ -2216,7 +2216,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s32_end",
+        "next": "ep048_s34",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2272,7 +2272,7 @@
       "source_ref": "day_12.ep48.cliffhanger"
     },
     {
-      "id": "ep048_s32_end",
+      "id": "ep048_s34",
       "kind": "cliffhanger",
       "is_chat": true,
       "location": "За дверью, на пороге обычного мира",

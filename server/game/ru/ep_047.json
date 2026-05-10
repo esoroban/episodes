@@ -391,7 +391,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s07_sofa",
+        "next": "ep047_s07",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -450,7 +450,7 @@
       "source_ref": "day_12.ep47.drama"
     },
     {
-      "id": "ep047_s07_sofa",
+      "id": "ep047_s07",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -535,7 +535,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s09_sofa",
+        "next": "ep047_s09",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -590,7 +590,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s09_sofa",
+      "id": "ep047_s09",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -655,7 +655,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s11_sofa",
+        "next": "ep047_s11",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -711,7 +711,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s11_sofa",
+      "id": "ep047_s11",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -725,7 +725,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s12_sofa",
+        "next": "ep047_s12",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -781,7 +781,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s12_sofa",
+      "id": "ep047_s12",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -861,7 +861,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s14_sofa",
+        "next": "ep047_s14",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -920,7 +920,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s14_sofa",
+      "id": "ep047_s14",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -934,7 +934,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s15_sofa",
+        "next": "ep047_s15",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -980,7 +980,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s15_sofa",
+      "id": "ep047_s15",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -994,7 +994,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s16_sofa",
+        "next": "ep047_s16",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1040,7 +1040,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s16_sofa",
+      "id": "ep047_s16",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1054,7 +1054,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s17_sofa",
+        "next": "ep047_s17",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1105,7 +1105,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s17_sofa",
+      "id": "ep047_s17",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1119,7 +1119,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s18_sofa",
+        "next": "ep047_s18",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1165,7 +1165,7 @@
       "source_ref": "day_12.ep47.sofa_block"
     },
     {
-      "id": "ep047_s18_sofa",
+      "id": "ep047_s18",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1246,7 +1246,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s19b",
+        "next": "ep047_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1276,12 +1276,12 @@
           {
             "id": "shutdown",
             "text": "Выключаю Софу. Я должен сам.",
-            "next": "ep047_s19b"
+            "next": "ep047_s21"
           },
           {
             "id": "ask",
             "text": "Софа, что мне делать?",
-            "next": "ep047_s19a"
+            "next": "ep047_s20"
           }
         ]
       },
@@ -1316,7 +1316,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s19a",
+      "id": "ep047_s20",
       "kind": "dialogue",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1330,10 +1330,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s20",
+        "next": "ep047_s22",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep047_s20"
+        "merge_to": "ep047_s22"
       },
       "text": [
         {
@@ -1378,7 +1378,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s19b",
+      "id": "ep047_s21",
       "kind": "narrative",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1393,10 +1393,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s20",
+        "next": "ep047_s22",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep047_s20"
+        "merge_to": "ep047_s22"
       },
       "text": [
         {
@@ -1433,7 +1433,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s20",
+      "id": "ep047_s22",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1449,7 +1449,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s21",
+        "next": "ep047_s23",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1522,7 +1522,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s21",
+      "id": "ep047_s23",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1538,7 +1538,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s22_sofa",
+        "next": "ep047_s24",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1590,7 +1590,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s22_sofa",
+      "id": "ep047_s24",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1604,7 +1604,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s23",
+        "next": "ep047_s25",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1660,7 +1660,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s23",
+      "id": "ep047_s25",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1676,7 +1676,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s24_sofa",
+        "next": "ep047_s26",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1716,7 +1716,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s24_sofa",
+      "id": "ep047_s26",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1730,7 +1730,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s25",
+        "next": "ep047_s27",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1786,7 +1786,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s25",
+      "id": "ep047_s27",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1802,7 +1802,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s26_sofa",
+        "next": "ep047_s28",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1834,7 +1834,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s26_sofa",
+      "id": "ep047_s28",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1848,7 +1848,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s27",
+        "next": "ep047_s29",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1904,7 +1904,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s27",
+      "id": "ep047_s29",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -1920,7 +1920,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s28_sofa",
+        "next": "ep047_s30",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1956,7 +1956,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s28_sofa",
+      "id": "ep047_s30",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -1970,7 +1970,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s29_sofa",
+        "next": "ep047_s31",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2026,7 +2026,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s29_sofa",
+      "id": "ep047_s31",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -2040,7 +2040,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s30",
+        "next": "ep047_s32",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2091,7 +2091,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s30",
+      "id": "ep047_s32",
       "kind": "dialogue",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",
@@ -2107,7 +2107,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s31_sofa",
+        "next": "ep047_s33",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2191,7 +2191,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s31_sofa",
+      "id": "ep047_s33",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -2205,7 +2205,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s32_sofa",
+        "next": "ep047_s34",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2256,7 +2256,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s32_sofa",
+      "id": "ep047_s34",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -2270,7 +2270,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s33_sofa",
+        "next": "ep047_s35",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2416,7 +2416,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s33_sofa",
+      "id": "ep047_s35",
       "kind": "quiz",
       "is_chat": true,
       "location": "Зеркальный Город, финальная комната",
@@ -2430,7 +2430,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep047_s34_end",
+        "next": "ep047_s36",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2576,7 +2576,7 @@
       "source_ref": "day_12.ep47.challenge"
     },
     {
-      "id": "ep047_s34_end",
+      "id": "ep047_s36",
       "kind": "cliffhanger",
       "is_chat": false,
       "location": "Зеркальный Город, финальная комната",

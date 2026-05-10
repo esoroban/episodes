@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T10:44:03Z",
+  "generated_at": "2026-05-10T10:56:11Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,7 +977,7 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "57c585a07da4fdf9"
+          "content_hash": "b3a05279d32d0aa0"
         }
       },
       "title_ru": "Лучший ученик",
@@ -993,7 +993,7 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "55de1ddc755f2453"
+          "content_hash": "1254eed2c53fe21d"
         }
       },
       "title_ru": "Экзамен сомнения",
@@ -1009,7 +1009,7 @@
         "ru": {
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
-          "content_hash": "a5493440b12c7ebe"
+          "content_hash": "0b85efa3ea3fd0c7"
         }
       },
       "title_ru": "Интеллектуальная битва",
@@ -1025,7 +1025,7 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "2b5606303cd6c9d2"
+          "content_hash": "f366e477528e5ab6"
         }
       },
       "title_ru": "Стены прозрачнеют",
