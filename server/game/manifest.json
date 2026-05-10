@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T18:24:27Z",
+  "generated_at": "2026-05-10T18:28:55Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1025,7 +1025,7 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "536a5540a8f4aabd"
+          "content_hash": "5638d83a5f7984b4"
         }
       },
       "title_ru": "Стены прозрачнеют",
