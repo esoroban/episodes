@@ -31,7 +31,7 @@
     ],
     "previous_episode": 44
   },
-  "scene_count": 43,
+  "scene_count": 44,
   "quiz_count": 17,
   "branch_count": 1,
   "scenes": [
@@ -2446,7 +2446,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep045_s36",
+        "next": "ep045_s35b",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -2493,6 +2493,133 @@
         "focus_object": "баннер без деталей",
         "atmosphere": "красиво, но пусто",
         "ui_mode": "quiz"
+      },
+      "source_ref": "day_12.ep45.challenge"
+    },
+    {
+      "id": "ep045_s35b",
+      "kind": "narrative",
+      "is_chat": false,
+      "location": "Зеркальный Город, серверная комната Софы",
+      "time": "глубокая ночь",
+      "chars": [
+        "Марко"
+      ],
+      "mood": "пробует — не подходит — откладывает: «найду остальное»",
+      "branch_type": null,
+      "set_flags": [],
+      "require_flags": [],
+      "nav": {
+        "next": "ep045_s36",
+        "next_success": null,
+        "next_fail": null,
+        "merge_to": null
+      },
+      "text": [
+        {
+          "who": "author",
+          "line": "Терминал замолкает. Зелёные буквы на экране собираются в последнюю строку:"
+        },
+        {
+          "who": "author",
+          "line": "> AUTH COMPLETE"
+        },
+        {
+          "who": "author",
+          "line": "> FRAGMENT: www.wordpowerl"
+        },
+        {
+          "who": "author",
+          "line": "> 14 chars saved."
+        },
+        {
+          "who": "author",
+          "line": "Марко смотрит в блокнот. Четырнадцать букв. Может — пароль? Подходит к главному терминалу. Поле ввода ждёт."
+        },
+        {
+          "who": "author",
+          "line": "Печатает по памяти."
+        },
+        {
+          "who": "author",
+          "line": "> ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl"
+        },
+        {
+          "who": "author",
+          "line": "> ACCESS DENIED."
+        },
+        {
+          "who": "author",
+          "line": "Марко хмурится. Может, точка не там? Может, без?"
+        },
+        {
+          "who": "author",
+          "line": "> www.wordpower"
+        },
+        {
+          "who": "author",
+          "line": "> ACCESS DENIED."
+        },
+        {
+          "who": "author",
+          "line": "> wwwwordpowerl"
+        },
+        {
+          "who": "author",
+          "line": "> ACCESS DENIED."
+        },
+        {
+          "who": "author",
+          "line": "> www.wordpowerlcom"
+        },
+        {
+          "who": "author",
+          "line": "> ACCESS DENIED."
+        },
+        {
+          "who": "author",
+          "line": "Останавливается. Четырнадцать символов — все правильные. Но мало."
+        },
+        {
+          "who": "author",
+          "line": "Чего-то не хватает. Конца."
+        },
+        {
+          "who": "author",
+          "line": "Марко закрывает блокнот. Прячет в рюкзак."
+        },
+        {
+          "who": "author",
+          "line": "«Найду остальное. Не сейчас.»"
+        },
+        {
+          "who": "author",
+          "line": "Экран мерцает. Зелёные буквы CLI исчезают. Возвращается голубой пузырь Софы."
+        }
+      ],
+      "quizzes": [],
+      "choice": null,
+      "unlock": null,
+      "visual_brief": {
+        "background": "Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак",
+        "camera": "medium",
+        "characters": [
+          {
+            "who": "Марко",
+            "expression": "уверенность → недоумение → понимание «не хватает»",
+            "pose": "пальцы на клавиатуре, потом отступает, прячет блокнот",
+            "position": "center"
+          }
+        ],
+        "props": [
+          "главный терминал",
+          "экран с красными «ACCESS DENIED»",
+          "блокнот в руках Марко",
+          "рюкзак"
+        ],
+        "focus_object": "красные «ACCESS DENIED» на экране терминала",
+        "atmosphere": "первая попытка — мало букв, конца нет",
+        "ui_mode": "reading"
       },
       "source_ref": "day_12.ep45.challenge"
     },
