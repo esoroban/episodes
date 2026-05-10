@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T12:15:59Z",
+  "generated_at": "2026-05-10T12:34:09Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -977,7 +977,7 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "4192ff156d954a39"
+          "content_hash": "f1d33f082f385400"
         }
       },
       "title_ru": "Лучший ученик",

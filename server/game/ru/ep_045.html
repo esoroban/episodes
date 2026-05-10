@@ -434,9 +434,15 @@ body.debug-off .voice-subtitle { display: none; }
   color: #33ff33;
   font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
   border: 1px solid #1f3f1f;
-  border-radius: 6px;
-  padding: 1rem 1.1rem 1.2rem;
-  margin: 0.6rem 0;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
   text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
   box-shadow:
     0 0 0 1px rgba(51, 255, 51, 0.08) inset,
@@ -446,6 +452,9 @@ body.debug-off .voice-subtitle { display: none; }
   overflow: hidden;
   font-size: 0.92rem;
   line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
 }
 .cli-screen::before {
   /* faint scanlines */
@@ -475,7 +484,24 @@ body.debug-off .voice-subtitle { display: none; }
 @keyframes cliBlink {
   to { opacity: 0; }
 }
-.cli-body { position: relative; z-index: 1; }
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
 .cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
 .cli-q { font-weight: 700; margin-bottom: 0.5rem; }
 .cli-options {
@@ -774,7 +800,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
     <div class="scene-content">
       <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. На экране телефона голубой чат Софы сменяется тёмным CLI с зелёными буквами. На заднем плане — стойки серверов и главный терминал<br><span class="vb-label">Атмосфера:</span> терминал берёт управление<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> переход чата Софы в зелёный CLI<br><span class="vb-label">Марко:</span> тихое внимание — экран меняется, сидит на полу, телефон в руках<br><span class="vb-label">Предметы:</span> телефон с переключающимся экраном, зелёные буквы CLI, погасший пузырь Софы</div><div class="author-text"><p>Экран Софы мерцает. Голубой пузырь сжимается в чёрный прямоугольник. Зелёные буквы плывут сверху вниз — будто включился старый компьютер.</p>
-<p>На экране — строка за строкой: ZG-TERMINAL v1.0 AUTH REQUIRED 14 challenges to unlock fragment</p>
+<p>На экране — строка за строкой:</p>
+<p>&gt; ТЕРМИНАЛ ЗГ</p>
+<p>&gt; 14 проверок</p>
 <p>Голос Софы пропадает. Остаётся только зелёный курсор.</p></div>
     </div>
   </section>
@@ -785,19 +813,21 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">первый приём — самый частый</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> первый приём — без украшений<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит первый приём, сидит на полу, телефон в руках</div><div class="author-text"><p>Чёрный экран. Зелёный курсор. Терминал ждёт. Команды бегут по-английски — это речь машины. Марко не пугается: каждая строка после `&gt;` — её способ разговаривать. ТЕРМИНАЛ выводит первую проверку.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> первый приём — без украшений<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит первый приём, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s12" data-password-fragment="w">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 1/17</div>
-        <div class="cli-line cli-q">&gt; Q: «ВСЕ сдали на пять.» Это поспешное обобщение?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        <div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">Чёрный экран. Зелёный курсор. Терминал ждёт. Команды бегут по-английски — это речь машины. Марко не пугается: каждая строка после `&gt;` — её способ разговаривать. ТЕРМИНАЛ выводит первую проверку.</div></div>
+        <div class="cli-line cli-step">&gt; проверка 1/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «ВСЕ сдали на пять.» Это поспешное обобщение?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, честный аргумент</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, поспешное обобщение</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, честный аргумент</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, поспешное обобщение</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. И помнишь — Рей кричал «Все согласны!» на площади. Тот же приём."
@@ -817,16 +847,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> удар по статусу<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт приём — Стражник делал так же, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s13" data-password-fragment="w">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 2/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Ты тут неделю — молчи!» Это нападка на человека?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 2/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Ты тут неделю — молчи!» Это нападка на человека?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, обсуждение идеи</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, обсуждение идеи</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Стражник тебе тоже говорил: «Кто ты такой, чтобы сомневаться?» Один в один."
@@ -846,16 +878,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> слова перевёрнуты<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает — Голос делал так же, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s14" data-password-fragment="w">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 3/17</div>
-        <div class="cli-line cli-q">&gt; Q: Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 3/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Ваня сказал «перенести на час» — ему вернули «ВООБЩЕ не тренироваться». Это пугало?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычное несогласие</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, пугало</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычное несогласие</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, пугало</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос так делал: ты говорил «не сейчас» — он слышал «никогда»."
@@ -875,16 +909,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> громкое имя — не из той области<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит подмену авторитета, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s15" data-password-fragment=".">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 4/17</div>
-        <div class="cli-line cli-q">&gt; Q: Певица — про витамины. Это ложный авторитет?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 4/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Певица — про витамины. Это ложный авторитет?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, ложный авторитет</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, она же знаменитая</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, ложный авторитет</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, она же знаменитая</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Известный — не значит знающий. Голос тоже играл «я тут главный»."
@@ -904,16 +940,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> третий вариант спрятан<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса — «или ключ — или сестра», сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s16" data-password-fragment="w">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 5/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Или с нами — или трус.» Это ложная дилемма?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 5/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Или с нами — или трус.» Это ложная дилемма?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, выбор честный</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная дилемма</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, выбор честный</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная дилемма</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос тебе: «Или отдай ключ — или потеряешь сестру.» Тот же приём. Третий вариант есть."
@@ -930,19 +968,21 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">четыре шага в страх</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> цепочка страха<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> считает звенья — четыре шага без доказательств, сидит на полу, телефон в руках</div><div class="author-text"><p>Шесть приёмов узнал. Ещё шесть. Пальцы привыкают к кнопкам — Марко уже не считает варианты, ловит приёмы быстро. Каждый правильный ответ — буква в блокнот. Зачем — он не знает, но записывает.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> цепочка страха<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> считает звенья — четыре шага без доказательств, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s17" data-password-fragment="o">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 6/17</div>
-        <div class="cli-line cli-q">&gt; Q: От домашки до дворника — за четыре шага. Это страшная цепочка?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        <div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">Шесть приёмов узнал. Ещё шесть. Пальцы привыкают к кнопкам — Марко уже не считает варианты, ловит приёмы быстро. Каждый правильный ответ — буква в блокнот. Зачем — он не знает, но записывает.</div></div>
+        <div class="cli-line cli-step">&gt; проверка 6/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: От домашки до дворника — за четыре шага. Это страшная цепочка?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, страшная цепочка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разумная логика</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, страшная цепочка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разумная логика</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос так пугал: «Один шаг — и весь город рухнет.»"
@@ -962,16 +1002,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> оба варианта — против<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит ловушку, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s18" data-password-fragment="r">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 7/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Ты уже перестал списывать?» Это вопрос-ловушка?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 7/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Ты уже перестал списывать?» Это вопрос-ловушка?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычный вопрос</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, вопрос-ловушка</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, обычный вопрос</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, вопрос-ловушка</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос пробовал тот же приём: «Ты уже перестал сопротивляться?»"
@@ -991,16 +1033,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> переименование сути<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит переименование — Рей в башне делал так же, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s19" data-password-fragment="d">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 8/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Не списываю — подсматриваю и пишу так же.» Это подмена понятий?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 8/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Не списываю — подсматриваю и пишу так же.» Это подмена понятий?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разные действия</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, разные действия</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Рей в башне: «Это не контроль. Это забота.» Тот же приём — переименовать суть."
@@ -1020,16 +1064,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> рядом — не значит из-за<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> видит совпадение, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s20" data-password-fragment="p">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 9/17</div>
-        <div class="cli-line cli-q">&gt; Q: Красные носки → победа. Это ложная причина?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 9/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Красные носки → победа. Это ложная причина?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, носки помогли</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная причина</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, носки помогли</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, ложная причина</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. «После» — не значит «из-за». Помнишь, мы это уже разбирали."
@@ -1049,16 +1095,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> уход от темы<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> ловит уход от ответа, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s21" data-password-fragment="o">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 10/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Где велик?» — «А комнату убрал?» Это уклонение?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 10/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Где велик?» — «А комнату убрал?» Это уклонение?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нет, нормальный вопрос в ответ</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Да, уклонение от ответа</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нет, нормальный вопрос в ответ</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Да, уклонение от ответа</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Когда не хотят отвечать — переводят тему. Голос так делал."
@@ -1078,16 +1126,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> вспоминает Голоса на площади, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s22" data-password-fragment="w">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 11/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Покорим вершины — великое будущее!» Это красивые слова без фактов?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 11/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Покорим вершины — великое будущее!» Это красивые слова без фактов?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вдохновляющая речь</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вдохновляющая речь</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос на площади: «Мы создадим великий город!» Те же слова. Без деталей."
@@ -1104,19 +1154,21 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">камень с бантиком</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> подарок-обманка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт ход Голоса — финальный приём, сидит на полу, телефон в руках</div><div class="author-text"><p>Двенадцатый приём. Последняя буква карты. Терминал бесстрастен — `&gt;` мигает, ждёт ответа. Марко выдыхает: после этой проверки CLI отключится, и он попробует то, что собрал.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона крупно — пузыри Софы и кнопки квиза. На заднем плане — серверная (стойки, терминал в расфокусе)<br><span class="vb-label">Атмосфера:</span> подарок-обманка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софы + кнопки квиза<br><span class="vb-label">Марко:</span> узнаёт ход Голоса — финальный приём, сидит на полу, телефон в руках</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s23" data-password-fragment="e">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 12/17</div>
-        <div class="cli-line cli-q">&gt; Q: «Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        <div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">Двенадцатый приём. Последняя буква карты. Терминал бесстрастен — `&gt;` мигает, ждёт ответа. Марко выдыхает: после этой проверки CLI отключится, и он попробует то, что собрал.</div></div>
+        <div class="cli-line cli-step">&gt; проверка 12/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: «Я не говорю, что врёшь, но…» Это приём «я не говорю, что…»?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Да, приём «я не говорю, что…»</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вежливое замечание</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Да, приём «я не говорю, что…»</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Нет, вежливое замечание</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Точно. Голос тебе говорил: «Я не говорю, что предатель. Но ты пришёл разрушить…» Тот же ход."
@@ -1209,19 +1261,21 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — пустая красота Рея</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого красивого облака с надписью «слишком многих» и пустым счётчиком под ним<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> облако без чисел<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div><div class="author-text"><p>Экран снова темнеет. Зелёный CLI вернулся — ZG_INTERNAL опять открыт. ТЕРМИНАЛ просит ещё проверок: уже не школьные истории, а настоящие записи Голоса. Марко узнаёт каждую — и снова выпадают буквы.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого красивого облака с надписью «слишком многих» и пустым счётчиком под ним<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> облако без чисел<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s31" data-password-fragment="r">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 13/17</div>
-        <div class="cli-line cli-q">&gt; Q: Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        <div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">Экран снова темнеет. Зелёный CLI вернулся — ZG_INTERNAL опять открыт. ТЕРМИНАЛ просит ещё проверок: уже не школьные истории, а настоящие записи Голоса. Марко узнаёт каждую — и снова выпадают буквы.</div></div>
+        <div class="cli-line cli-step">&gt; проверка 13/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Рей: «Разве кто-то может отрицать, что мы потеряли слишком многих?» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложный авторитет</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-num">3.</span> <span class="cli-opt-text">Ложный авторитет</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="«Слишком многих» без числа — красивые слова без фактов."
@@ -1241,16 +1295,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма знака вопроса с двумя стрелками вниз — обе ведут в капкан<br><span class="vb-label">Атмосфера:</span> оба пути в капкане<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> знак вопроса с двумя капканами<br><span class="vb-label">Марко:</span> ловит карточку 07, смотрит в экран</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s32" data-password-fragment="l">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 14/17</div>
-        <div class="cli-line cli-q">&gt; Q: Голос: «Ты уже перестал сопротивляться?» Какой приём?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 14/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Голос: «Ты уже перестал сопротивляться?» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Вопрос-ловушка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная дилемма</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Пугало</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Вопрос-ловушка</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Ложная дилемма</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-num">3.</span> <span class="cli-opt-text">Пугало</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Утверждение в вопросе — вопрос-ловушка."
@@ -1270,16 +1326,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма одинакового предмета в двух обёртках с бирками «контроль» и «забота»<br><span class="vb-label">Атмосфера:</span> слова переоделись<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> две обёртки на одном предмете<br><span class="vb-label">Марко:</span> ловит карточку 08, смотрит в экран</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s33">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 15/17</div>
-        <div class="cli-line cli-q">&gt; Q: Рей: «Это не контроль. Это забота.» Какой приём?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 15/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Рей: «Это не контроль. Это забота.» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Ложная причина</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Уклонение от ответа</span></button>
+          <button class="cli-option" data-correct="true" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Подмена понятий</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Ложная причина</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-num">3.</span> <span class="cli-opt-text">Уклонение от ответа</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Слово другое, суть та же — подмена понятий."
@@ -1299,16 +1357,18 @@ body.debug-off .voice-subtitle { display: none; }
       <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма коробки с бантиком и торчащим камнем с надписью «предатель»<br><span class="vb-label">Атмосфера:</span> удар в обёртке отрицания<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> коробка с камнем «предатель»<br><span class="vb-label">Марко:</span> ловит карточку 12, смотрит в экран</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s34">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 16/17</div>
-        <div class="cli-line cli-q">&gt; Q: Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        
+        <div class="cli-line cli-step">&gt; проверка 16/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Голос: «Я не говорю, что ты предатель. Но ты пришёл разрушить то, что мы строили.» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="true" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">«Я не говорю, что...»</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Нападка на человека</span></button><button class="cli-option" data-correct="false" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="true" data-index="2"><span class="cli-num">3.</span> <span class="cli-opt-text">«Я не говорю, что...»</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Камень с бантиком — «я не говорю, что...»."
@@ -1325,19 +1385,21 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, серверная комната Софы · глубокая ночь</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">испытание — финальный приём Голоса</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого золотого баннера «ВЕЛИКИЙ ГОРОД» над пустой площадкой<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> баннер без деталей<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div><div class="author-text"><p>Последняя проверка. Эта без буквы — терминал больше ничего не выдаёт. Просто проверяет, что Марко узнал всё, что должен. Курсор мигает в последний раз.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы, пиктограмма большого золотого баннера «ВЕЛИКИЙ ГОРОД» над пустой площадкой<br><span class="vb-label">Атмосфера:</span> красиво, но пусто<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> баннер без деталей<br><span class="vb-label">Марко:</span> ловит карточку 11, смотрит в экран</div>
     <div class="cli-screen" data-cli-quiz-id="ep045_s35">
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge 17/17</div>
-        <div class="cli-line cli-q">&gt; Q: Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        <div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">Последняя проверка. Эта без буквы — терминал больше ничего не выдаёт. Просто проверяет, что Марко узнал всё, что должен. Курсор мигает в последний раз.</div></div>
+        <div class="cli-line cli-step">&gt; проверка 17/17</div>
+        <div class="cli-line cli-q">&gt; вопрос: Голос: «Мы создадим великий город! Справедливый! Свободный!» Какой приём?</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
-          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-prompt">&gt;</span> <span class="cli-num">1.</span> <span class="cli-opt-text">Пугало</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-prompt">&gt;</span> <span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-prompt">&gt;</span> <span class="cli-num">3.</span> <span class="cli-opt-text">Ложная причина</span></button>
+          <button class="cli-option" data-correct="false" data-index="0"><span class="cli-num">1.</span> <span class="cli-opt-text">Пугало</span></button><button class="cli-option" data-correct="true" data-index="1"><span class="cli-num">2.</span> <span class="cli-opt-text">Красивые слова без фактов</span></button><button class="cli-option" data-correct="false" data-index="2"><span class="cli-num">3.</span> <span class="cli-opt-text">Ложная причина</span></button>
         </div>
+        
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="Громко и красиво, фактов ноль — красивые слова без фактов."
@@ -1355,9 +1417,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
     <div class="scene-content">
       <div class="visual-brief"><span class="vb-label">Фон:</span> Серверная. Крупный план экрана главного терминала: «ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl» → красное «ACCESS DENIED» (мерцание). Несколько строк попыток. Марко перед терминалом, рядом блокнот, рюкзак<br><span class="vb-label">Атмосфера:</span> первая попытка — мало букв, конца нет<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> красные «ACCESS DENIED» на экране терминала<br><span class="vb-label">Марко:</span> уверенность → недоумение → понимание «не хватает», пальцы на клавиатуре, потом отступает, прячет блокнот<br><span class="vb-label">Предметы:</span> главный терминал, экран с красными «ACCESS DENIED», блокнот в руках Марко, рюкзак</div><div class="author-text"><p>Терминал замолкает. Зелёные буквы на экране собираются в последнюю строку:</p>
-<p>&gt; AUTH COMPLETE</p>
-<p>&gt; FRAGMENT: www.wordpowerl</p>
-<p>&gt; 14 chars saved.</p>
+<p>&gt; ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ</p>
+<p>&gt; СОХРАНЕНО: www.wordpowerl</p>
+<p>&gt; 14 символов.</p>
 <p>Марко смотрит в блокнот. Четырнадцать букв. Может — пароль? Подходит к главному терминалу. Поле ввода ждёт.</p>
 <p>Печатает по памяти.</p></div><div class="author-text"><p>&gt; ВВЕДИТЕ ПАРОЛЬ: www.wordpowerl</p>
 <p>&gt; ACCESS DENIED.</p>
@@ -1881,10 +1943,10 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
           done=true;
           btn.classList.add('cli-correct');
           buttons.forEach(function(b){b.disabled=true;});
-          var lines=['<div class="cli-line">&gt; ACCESS GRANTED</div>'];
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
           if(fragment){
-            lines.push('<div class="cli-line cli-char-line">&gt; CHAR: '+fragment+'</div>');
-            lines.push('<div class="cli-line">&gt; Saved to local notepad.</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line">&gt; сохранено в блокнот.</div>');
             collectFragment(fragment);
           }
           if(fbOk){
@@ -1901,11 +1963,11 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
           quizResults[si]='wrong';
           btn.classList.add('cli-wrong');
           btn.disabled=true;
-          var dlines=['<div class="cli-line">&gt; ACCESS DENIED</div>'];
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
           if(fbFail){
-            dlines.push('<div class="cli-line">&gt; Hint: '+fbFail+'</div>');
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
           }
-          dlines.push('<div class="cli-line">&gt; Try again.</div>');
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
           feedback.classList.add('cli-fb-deny');
           feedback.innerHTML=dlines.join('');
           feedback.hidden=false;

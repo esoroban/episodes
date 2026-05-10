@@ -774,7 +774,15 @@
         },
         {
           "who": "author",
-          "line": "На экране — строка за строкой: ZG-TERMINAL v1.0 AUTH REQUIRED 14 challenges to unlock fragment"
+          "line": "На экране — строка за строкой:"
+        },
+        {
+          "who": "author",
+          "line": "> ТЕРМИНАЛ ЗГ"
+        },
+        {
+          "who": "author",
+          "line": "> 14 проверок"
         },
         {
           "who": "author",
@@ -2544,15 +2552,15 @@
         },
         {
           "who": "author",
-          "line": "> AUTH COMPLETE"
+          "line": "> ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ"
         },
         {
           "who": "author",
-          "line": "> FRAGMENT: www.wordpowerl"
+          "line": "> СОХРАНЕНО: www.wordpowerl"
         },
         {
           "who": "author",
-          "line": "> 14 chars saved."
+          "line": "> 14 символов."
         },
         {
           "who": "author",

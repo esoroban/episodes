@@ -1320,13 +1320,13 @@ def render_quiz(scene: dict, scene_id: str) -> str:
 def render_cli_quiz(scene: dict, scene_id: str, quiz_index: int, quiz_total: int) -> str:
     """Render scene as a ZG-TERMINAL CLI quiz (ep_045 carta-demagogy + challenge).
 
-    Visual: green-on-black monospace terminal. Each option becomes a numbered
-    `> 1. <text>` line; click writes the answer into a fake input. Correct →
-    `ACCESS GRANTED` + optional `CHAR: <letter>` (collected by global notepad).
-    Wrong → `ACCESS DENIED` + hint, retry until correct.
+    Visual: green-on-black monospace terminal, full vertical phone-like panel.
+    Author_text (if set on the scene) renders INSIDE the CLI as a narrator
+    bubble — same way автор voice-over appears inside Telegram chat.
+    Each option = clickable button (no keyboard input). Correct → ДОСТУП
+    ОТКРЫТ + СИМВОЛ: <letter>. Wrong → ОТКАЗАНО + hint, retry.
 
-    quiz_index/quiz_total — 1-based position used in the auth-challenge banner
-    (e.g. "Auth challenge 7/14").
+    quiz_index/quiz_total — 1-based position used in the «проверка N/T» line.
     """
     question = scene.get("question", "")
     options = scene.get("options", []) or []
@@ -1346,29 +1346,40 @@ def render_cli_quiz(scene: dict, scene_id: str, quiz_index: int, quiz_total: int
         num = i + 1
         opts_html.append(
             f'<button class="cli-option" data-correct="{correct}" data-index="{i}">'
-            f'<span class="cli-prompt">&gt;</span> '
             f'<span class="cli-num">{num}.</span> '
             f'<span class="cli-opt-text">{text}</span>'
             f'</button>'
         )
 
-    # Header banner — counter shows position in 14-step auth chain.
     banner_idx = f"{quiz_index}/{quiz_total}" if quiz_total else f"{quiz_index}"
     fragment_attr = f' data-password-fragment="{esc(fragment)}"' if fragment else ""
+
+    # Author text → narrator bubble INSIDE the CLI flow (not above it).
+    narrator_html = ""
+    at = (scene.get("author_text") or "").strip()
+    at_after = (scene.get("author_text_after") or "").strip()
+    if at:
+        narrator_html += f'<div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">{esc(at)}</div></div>'
+
+    narrator_after_html = ""
+    if at_after:
+        narrator_after_html = f'<div class="cli-narrator"><span class="cli-narrator-tag">// рассказчик</span><div class="cli-narrator-body">{esc(at_after)}</div></div>'
 
     return f"""
     <div class="cli-screen" data-cli-quiz-id="{esc(scene_id)}"{fragment_attr}>
       <div class="cli-header">
-        <span class="cli-sys">ZG-TERMINAL v1.0</span>
+        <span class="cli-sys">ТЕРМИНАЛ ЗГ</span>
         <span class="cli-blink">_</span>
       </div>
       <div class="cli-body">
-        <div class="cli-line">&gt; Auth challenge {banner_idx}</div>
-        <div class="cli-line cli-q">&gt; Q: {esc(question)}</div>
-        <div class="cli-line cli-tap-hint">&gt; tap an option:</div>
+        {narrator_html}
+        <div class="cli-line cli-step">&gt; проверка {banner_idx}</div>
+        <div class="cli-line cli-q">&gt; вопрос: {esc(question)}</div>
+        <div class="cli-line cli-tap-hint">&gt; нажми вариант:</div>
         <div class="cli-options">
           {"".join(opts_html)}
         </div>
+        {narrator_after_html}
         <div class="cli-feedback" hidden></div>
         <div class="cli-meta" hidden
              data-fb-ok="{esc(feedback_ok)}"
@@ -1468,14 +1479,17 @@ def render_scene(scene: dict, index: int, total: int, lang: str = "ru") -> str:
         # that appeared once gated_response scenes started rendering standalone.
         content_parts.append(render_chat(scene, lang))
     else:
-        if author_text:
+        # CLI scenes embed author_text INSIDE the cli-screen as narrator
+        # bubbles (render_cli_quiz reads scene.author_text directly). Don't
+        # emit a separate <div class="author-text"> above the terminal.
+        if author_text and not is_cli:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text)}</div>')
         if dialogue and not is_cli:
             # In CLI scenes Sofa is silent — the system has taken over the
             # device. Any dialogue is treated as setup-only and dropped from
             # render to keep the terminal clean.
             content_parts.append(f'<div class="dialogue-block">{render_dialogue(dialogue, lang)}</div>')
-        if author_text_after:
+        if author_text_after and not is_cli:
             content_parts.append(f'<div class="author-text">{render_author_text(author_text_after)}</div>')
         dialogue_after = scene.get("dialogue_after", [])
         if dialogue_after and not is_cli:
@@ -2015,9 +2029,15 @@ body.debug-off .voice-subtitle { display: none; }
   color: #33ff33;
   font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
   border: 1px solid #1f3f1f;
-  border-radius: 6px;
-  padding: 1rem 1.1rem 1.2rem;
-  margin: 0.6rem 0;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
   text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
   box-shadow:
     0 0 0 1px rgba(51, 255, 51, 0.08) inset,
@@ -2027,6 +2047,9 @@ body.debug-off .voice-subtitle { display: none; }
   overflow: hidden;
   font-size: 0.92rem;
   line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
 }
 .cli-screen::before {
   /* faint scanlines */
@@ -2056,7 +2079,24 @@ body.debug-off .voice-subtitle { display: none; }
 @keyframes cliBlink {
   to { opacity: 0; }
 }
-.cli-body { position: relative; z-index: 1; }
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
 .cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
 .cli-q { font-weight: 700; margin-bottom: 0.5rem; }
 .cli-options {
@@ -2617,10 +2657,10 @@ JS = r"""
           done=true;
           btn.classList.add('cli-correct');
           buttons.forEach(function(b){b.disabled=true;});
-          var lines=['<div class="cli-line">&gt; ACCESS GRANTED</div>'];
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
           if(fragment){
-            lines.push('<div class="cli-line cli-char-line">&gt; CHAR: '+fragment+'</div>');
-            lines.push('<div class="cli-line">&gt; Saved to local notepad.</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line">&gt; сохранено в блокнот.</div>');
             collectFragment(fragment);
           }
           if(fbOk){
@@ -2637,11 +2677,11 @@ JS = r"""
           quizResults[si]='wrong';
           btn.classList.add('cli-wrong');
           btn.disabled=true;
-          var dlines=['<div class="cli-line">&gt; ACCESS DENIED</div>'];
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
           if(fbFail){
-            dlines.push('<div class="cli-line">&gt; Hint: '+fbFail+'</div>');
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
           }
-          dlines.push('<div class="cli-line">&gt; Try again.</div>');
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
           feedback.classList.add('cli-fb-deny');
           feedback.innerHTML=dlines.join('');
           feedback.hidden=false;
