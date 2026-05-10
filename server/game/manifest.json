@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-10T14:23:33Z",
+  "generated_at": "2026-05-10T14:52:04Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -993,14 +993,14 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "c290256961e3037c"
+          "content_hash": "9c04eff20c2523d8"
         }
       },
       "title_ru": "Экзамен сомнения",
       "lesson": "12A.3",
-      "scene_count": 34,
+      "scene_count": 36,
       "quiz_count": 15,
-      "branch_count": 1
+      "branch_count": 2
     },
     {
       "id": "ep_047",
