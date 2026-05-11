@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T11:41:16Z",
+  "generated_at": "2026-05-11T12:19:49Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1041,12 +1041,12 @@
         "ru": {
           "html": "ru/ep_049.html",
           "data": "ru/ep_049.json",
-          "content_hash": "f1f6f5a52a20009e"
+          "content_hash": "b8a77eba2587673d"
         }
       },
       "title_ru": "Возвращение",
       "lesson": "13A.1",
-      "scene_count": 35,
+      "scene_count": 33,
       "quiz_count": 11,
       "branch_count": 2
     },
