@@ -1,7 +1,7 @@
 # CONTEXT STATE — current project state
 
 > Updated after each work session.
-> Last updated: 2026-04-21
+> Last updated: 2026-05-11
 
 ---
 
@@ -9,13 +9,19 @@
 **Gameflow + day-by-day freeze.** Work mode: close each day fully (RU → proofread → freeze → UK), then move on (see `project_day_by_day_localization` memory).
 
 - **Day 1 (ep_001–004, lessons 1A + 1B): FROZEN 2026-04-19.**
-  Git tag: `day-01-frozen` @ commit `8888c05`.
+  Git tag: `day-01-frozen` @ commit `8888c05`. Разморожен 2026-05-02
+  для live-QA правок (см. `project_day01_frozen` memory).
 - **Days 2+3 (ep_005–012, lessons 2A/2B/3A/3B): FROZEN 2026-04-21.**
   Git tag: `day-02-03-frozen`.
-  Author read-through complete. RU content locked; do not edit without explicit request.
-- Day 4 (ep_013–016): IN PROGRESS — gameflow build
-- Days 5–13 gameflow: NOT STARTED
-- UK translation layer for Day 1: NOT STARTED (next step after tooling)
+- **Day 12 (ep_045–048, lessons 12A/12B): DONE.**
+- **Day 13 (ep_049–050, lessons 13A): DONE 2026-05-11.**
+  ep_049 «Возвращение»: 11 квизов + 1 открытый. Семейный совет с
+  Софией (не Сем), Рей-30 пробует демагогию на Марко, Марко режет.
+  ep_050 «1» (финал): PURE DRAMA, 0 квизов как механика игрока,
+  16 сцен. Шантаж = Голос крадёт имя Марко (ложный авторитет),
+  Марко отказывает, Голос уходит с угрозой «сделаю жизнь
+  опасной» (мост в сезон 2).
+- UK translation overlay: Days 1–10 done, Days 11–13 NOT STARTED
 - HTML renderer, validator, artifact audit: DONE
 
 ### New Layer: Gameflow
