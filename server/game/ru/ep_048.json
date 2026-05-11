@@ -25,7 +25,7 @@
     ],
     "previous_episode": 47
   },
-  "scene_count": 35,
+  "scene_count": 34,
   "quiz_count": 14,
   "branch_count": 1,
   "scenes": [
@@ -1287,7 +1287,7 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s20",
+        "next": "ep048_s21",
         "next_success": null,
         "next_fail": null,
         "merge_to": null
@@ -1318,7 +1318,7 @@
           {
             "id": "keep_walking",
             "text": "Идти дальше. Софа уже зовёт.",
-            "next": "ep048_s20"
+            "next": "ep048_s21"
           }
         ]
       },
@@ -1373,10 +1373,10 @@
       "set_flags": [],
       "require_flags": [],
       "nav": {
-        "next": "ep048_s20",
+        "next": "ep048_s21",
         "next_success": null,
         "next_fail": null,
-        "merge_to": "ep048_s20"
+        "merge_to": "ep048_s21"
       },
       "text": [
         {
@@ -1417,60 +1417,6 @@
         "focus_object": "ладонь Марко у выцветшей надписи",
         "atmosphere": "слова без власти",
         "ui_mode": "reading"
-      },
-      "source_ref": "day_12.ep48.challenge"
-    },
-    {
-      "id": "ep048_s20",
-      "kind": "dialogue",
-      "is_chat": true,
-      "location": "Зеркальный город, прозрачные улицы",
-      "time": "утро",
-      "chars": [
-        "Марко",
-        "Софа"
-      ],
-      "mood": "Софа подводит к разбору надписей",
-      "branch_type": null,
-      "set_flags": [],
-      "require_flags": [],
-      "nav": {
-        "next": "ep048_s21",
-        "next_success": null,
-        "next_fail": null,
-        "merge_to": null
-      },
-      "text": [
-        {
-          "who": "sofa",
-          "line": "Финальный микс."
-        },
-        {
-          "who": "sofa",
-          "line": "Не экзамен. Просто разговор."
-        },
-        {
-          "who": "sofa",
-          "line": "Каждая надпись — одно из трёх."
-        }
-      ],
-      "quizzes": [],
-      "choice": null,
-      "unlock": null,
-      "visual_brief": {
-        "background": "Экран телефона, три пузыря Софы — голубое свечение",
-        "camera": "close-up",
-        "characters": [
-          {
-            "who": "Марко",
-            "expression": "готов разбирать",
-            "pose": "телефон в руке, читает стену",
-            "position": "center"
-          }
-        ],
-        "focus_object": "пузырь — «не экзамен. просто разговор»",
-        "atmosphere": "разговор, а не экзамен",
-        "ui_mode": "dialogue"
       },
       "source_ref": "day_12.ep48.challenge"
     },
@@ -1839,7 +1785,7 @@
       ],
       "quizzes": [
         {
-          "question": "Почему Маша в конце возненавидела Гришу?",
+          "question": "Почему Маша в конце перестала дружить с Гришей?",
           "options": [
             {
               "id": "bad_cookies",
@@ -1858,7 +1804,7 @@
             }
           ],
           "correct_logic": "Манипуляция — кредит: «да» сегодня, ненависть завтра. Маша соглашалась не потому что хотела, а потому что боялась быть «плохой подругой».",
-          "feedback_success": "Каждое «да» — вынужденное. Доверие сгорело. Это и есть встроенный процент манипуляции.",
+          "feedback_success": "Каждое «да» — вынужденное. Доверие закончилось. Это и есть встроенный процент манипуляции.",
           "feedback_soft_fail": "Дело не в печенье и не в благодарности. Каждое «да» Маши было от страха быть «плохой» — не от желания. Маленькие долги собрались в большой. Это и убило дружбу."
         }
       ],
