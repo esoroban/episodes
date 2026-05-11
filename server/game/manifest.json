@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T11:39:04Z",
+  "generated_at": "2026-05-11T11:41:16Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1041,7 +1041,7 @@
         "ru": {
           "html": "ru/ep_049.html",
           "data": "ru/ep_049.json",
-          "content_hash": "1b72598f392504ee"
+          "content_hash": "f1f6f5a52a20009e"
         }
       },
       "title_ru": "Возвращение",
