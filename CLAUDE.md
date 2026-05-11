@@ -38,7 +38,7 @@ YAML comments (`#`) and dev-only fields are exempt — there latinisms are OK.
 | Sofa | Broken AI in a cracked phone (Sofia programmed it) |
 | Lina | Double agent, friend/spy, 12 years old |
 | Max | Loyal friend, straightforward, honest |
-| Ray | Herald of the Voice, teenage demagogue, 15 years old |
+| Ray | Herald of the Voice, charismatic stage demagogue, around 30 years old |
 | Leon | Old professor, unreliable source |
 | Vera (Vera Andreevna) | Teacher, mentor. First mention — Vera Andreevna, then simply Vera |
 | Sam | Younger kid, Marko teaches him (from ep.17) |
