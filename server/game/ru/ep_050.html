@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эпизод 50 — «1»</title>
+<style>
+:root {
+  --bg: #0d0d12;
+  --bg-card: #16161e;
+  --bg-card-hover: #1c1c28;
+  --text: #e8e6e3;
+  --text-muted: #8b8a88;
+  --accent: #7c9fd4;
+  --accent-soft: #4a6fa520;
+  --correct: #4caf50;
+  --correct-bg: #1b3a1b;
+  --wrong: #ef5350;
+  --wrong-bg: #3a1b1b;
+  --sofa: #b39ddb;
+  --cliffhanger: #7c4dff;
+  --branch: #ff9800;
+  --border: #2a2a35;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  --font-main: 'Georgia', 'Times New Roman', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+}
+.episode-header {
+  text-align: center;
+  padding: 1.2rem 1rem 0.8rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+.episode-header h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+.ep-lesson {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+}
+.ep-terms {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  margin-top: 0.3rem;
+}
+.scene {
+  margin: 0 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.scene.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.scene-header {
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.scene-counter { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; }
+.scene-meta { font-size: 0.75rem; }
+.scene-meta summary {
+  cursor: pointer; color: var(--text-muted); list-style: none;
+  font-size: 0.85rem; user-select: none;
+}
+.scene-meta summary::-webkit-details-marker { display: none; }
+.scene-meta[open] { padding-bottom: 0.3rem; }
+.scene-location { color: var(--text-muted); margin-top: 0.3rem; }
+.scene-chars { color: var(--text-muted); font-size: 0.75rem; }
+.scene-mood { color: var(--text-muted); font-size: 0.75rem; font-style: italic; margin-top: 0.15rem; }
+.scene-branch { color: var(--branch); font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem; }
+.scene-flags-inner { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+.scene-content { padding: 1.25rem; }
+.author-text p { margin-bottom: 0.75rem; font-style: italic; }
+.dialogue-block { margin: 0.75rem 0; }
+.dl-char, .dl-sofa, .dl-narrator {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border);
+}
+.dl-who { font-weight: 600; font-family: var(--font-ui); font-size: 0.9rem; }
+.dl-sofa { border-left-color: var(--sofa); }
+.dl-sofa .dl-who { color: var(--sofa); }
+.dl-narrator { border-left-color: transparent; color: var(--text-muted); font-style: italic; padding-left: 0; }
+.visual-brief {
+  font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-ui);
+  background: #12121a; padding: 0.75rem 1rem; border-radius: 8px;
+  margin-bottom: 1rem; line-height: 1.5; display: none;
+}
+.visual-brief.open { display: block; }
+.vb-label { color: var(--accent); font-weight: 600; }
+.vb-sub { margin-bottom: 0.6rem; padding-bottom: 0.6rem; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+.vb-sub:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.vb-sub-label { color: var(--accent); font-weight: 700; font-size: 0.75rem; margin-bottom: 0.25rem; opacity: 0.8; font-family: var(--font-ui); }
+/* UK build: hide internal visual briefs + scene-meta (Russian working-lang
+   artifacts for artists, not end-user content). Keeps DOM structure identical
+   so JSON manifest and scripts stay unchanged. */
+body.lang-uk .visual-brief,
+body.lang-uk .vb-toggle,
+body.lang-uk .scene-meta { display: none !important; }
+.vb-toggle {
+  font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+  font-family: var(--font-ui); margin-bottom: 0.5rem; display: inline-block;
+}
+.vb-toggle:hover { color: var(--accent); }
+.quiz {
+  background: #1a1a28; border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem; margin: 1rem 0;
+}
+.quiz-question {
+  font-weight: 600; font-size: 1.05rem; margin-bottom: 1rem;
+  font-family: var(--font-ui); color: var(--text);
+}
+.quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-option {
+  flex: 1 1 auto; min-width: 120px; padding: 0.7rem 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: var(--bg-card); color: var(--text); font-size: 0.95rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui);
+}
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.quiz-option.selected-correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+.quiz-option.selected-wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); text-decoration: line-through; }
+.quiz-option.reveal-correct { border-color: var(--correct); background: var(--correct-bg); }
+.quiz-option:disabled { cursor: default; opacity: 0.8; }
+.quiz-feedback {
+  margin-top: 0.8rem; padding: 0.75rem 1rem; border-radius: 8px;
+  font-size: 0.9rem; font-family: var(--font-ui);
+}
+.quiz-feedback-ok { background: var(--correct-bg); color: var(--correct); border: 1px solid #2e7d3240; }
+.quiz-feedback-fail { background: var(--wrong-bg); color: var(--wrong); border: 1px solid #c6282840; }
+.quiz-explanation {
+  margin-top: 0.5rem; padding: 0.6rem 1rem; font-size: 0.85rem;
+  color: var(--text-muted); font-style: italic;
+}
+.story-choice { margin: 1rem 0; }
+.choice-question { font-weight: 600; font-family: var(--font-ui); margin-bottom: 0.75rem; }
+.choice-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.choice-option {
+  padding: 0.8rem 1.2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); text-align: left;
+}
+.choice-option:hover { background: var(--accent-soft); }
+.choice-option.chosen { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+.scene-flags { padding: 0.5rem 1.25rem 0.75rem; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-ui); }
+.scene-cliffhanger { border-color: var(--cliffhanger); background: linear-gradient(135deg, #1a1528 0%, var(--bg-card) 100%); }
+.scene-cliffhanger .scene-counter { color: var(--cliffhanger); }
+.scene-branch-card { border-color: var(--branch); border-style: dashed; }
+.scene-previously { border-color: #5c6bc0; background: linear-gradient(135deg, #1a1a2e 0%, var(--bg-card) 100%); }
+.scene-previously .scene-counter { color: #9fa8da; }
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #0d0d12ee; backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border); padding: 0.75rem 1rem;
+  display: flex; justify-content: center; gap: 0.75rem; z-index: 100;
+}
+.nav-btn {
+  padding: 0.6rem 2rem; border: 2px solid var(--accent); border-radius: 10px;
+  background: transparent; color: var(--accent); font-size: 1rem;
+  cursor: pointer; font-family: var(--font-ui); transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--accent-soft); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.nav-btn.primary { background: var(--accent); color: var(--bg); font-weight: 600; }
+.nav-btn.primary:hover { background: #8ab0e0; }
+.nav-btn.primary:disabled { background: var(--accent); opacity: 0.3; }
+.dbg-skip-btn {
+  padding: 0.4rem 0.8rem; border: 1px dashed #ff6b6b; border-radius: 8px;
+  background: transparent; color: #ff6b6b; font-size: 0.78rem;
+  cursor: pointer; font-family: var(--font-ui); opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.dbg-skip-btn:hover { opacity: 1; }
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+.end-screen { text-align: center; padding: 3rem 1.5rem; display: none; }
+.end-screen.active { display: block; }
+.end-screen h2 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
+.end-screen p { color: var(--text-muted); font-family: var(--font-ui); }
+.end-screen .stats { margin-top: 1.5rem; font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); }
+/* ====== iPhone Telegram Chat ====== */
+.phone {
+  width: 340px; height: 680px;
+  border-radius: 42px; border: 4px solid #2a2a2a;
+  background: #fff; position: relative; overflow: hidden;
+  margin: 0.5rem auto;
+  box-shadow: 0 0 0 2px #1a1a1a, 0 12px 40px rgba(0,0,0,0.4), inset 0 0 0 1px #333;
+}
+.phone-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 28px; background: #000;
+  border-radius: 0 0 18px 18px; z-index: 50;
+}
+.phone-notch::after {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 50px; height: 5px; background: #1a1a1a; border-radius: 3px;
+}
+.phone-home {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 4px; background: rgba(0,0,0,0.2); border-radius: 3px; z-index: 50;
+}
+.crack-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100; pointer-events: none;
+}
+.crack-overlay svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.chat-wrap {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; flex-shrink: 0; background: #517da2;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 20px 4px; font-size: 11px; color: #fff; z-index: 40;
+}
+.sb-time { font-weight: 600; }
+.sb-icons { font-size: 10px; }
+.chat-header {
+  flex-shrink: 0; background: #517da2; border-bottom: 1px solid #4a7393;
+  padding: 6px 14px 8px; display: flex; align-items: center; gap: 8px; z-index: 30;
+}
+.ch-back { color: #fff; font-size: 18px; }
+.ch-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #7cb8e4, #4a90c4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.ch-info { display: flex; flex-direction: column; }
+.ch-name { font-size: 14px; font-weight: 600; color: #fff; }
+.ch-status { font-size: 11px; color: #d4e8f7; }
+.chat-messages {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 8px 7px; display: flex; flex-direction: column; gap: 2px;
+  background: #c8d9e6;
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 60%);
+}
+.chat-messages::-webkit-scrollbar { width: 0; }
+/* Bubbles — light theme */
+.msg-row { display: flex; max-width: 82%; animation: fadeIn 0.25s ease-out; }
+.msg-row.incoming { align-self: flex-start; }
+.msg-row.outgoing { align-self: flex-end; }
+.bubble {
+  padding: 5px 9px; border-radius: 12px; font-size: 13px;
+  line-height: 1.4; color: #000; word-wrap: break-word;
+}
+.msg-row.incoming .bubble { border-top-left-radius: 4px; }
+.msg-row.outgoing .bubble { border-top-right-radius: 4px; }
+.bubble.sofa, .bubble.sofia { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.bubble.author {
+  background: #f0f0f5; border-left: 3px solid #9e9e9e;
+  font-style: italic; box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.bubble.marko { background: #eeffde; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.sender-name { font-size: 11px; font-weight: 600; margin-bottom: 1px; }
+.sender-name.sofa, .sender-name.sofia { color: #3390ec; }
+.sender-name.author { color: #7a7a7a; }
+.sender-name.marko { color: #4fae3b; }
+.msg-time { font-size: 9px; color: rgba(0,0,0,0.35); text-align: right; margin-top: 1px; }
+/* Voice-over strip — живой голос за кадром внутри чата
+   (автор, мама, Вера и т.д. — всё, кроме Софы и Марко).
+   Потом каждый такой блок заменяется на <audio> в озвучке. */
+.voice-row {
+  align-self: stretch; display: flex; flex-direction: column;
+  margin: 4px 4px; padding: 7px 10px 8px;
+  background: rgba(35, 40, 55, 0.88);
+  border-radius: 10px; color: #e8e6e3;
+  font-family: var(--font-main);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  animation: fadeIn 0.25s ease-out;
+}
+.voice-row .vo-head {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-ui); font-size: 10px;
+  color: #9db4d6; text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.voice-row .vo-icon { font-size: 11px; opacity: 0.85; }
+.voice-row .vo-name { font-weight: 600; }
+.voice-row .vo-body {
+  font-size: 13px; line-height: 1.5; font-style: italic; color: #f0eee9;
+}
+.voice-row.vo-author .vo-head { color: #c7b8e8; }
+/* Typing */
+.typing-row { display: flex; align-self: flex-start; animation: fadeIn 0.2s ease-out; }
+.typing-bubble {
+  background: #fff; padding: 9px 14px; border-radius: 12px;
+  border-top-left-radius: 4px; display: flex; align-items: center; gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.typing-dot {
+  width: 5px; height: 5px; background: #3390ec; border-radius: 50%;
+  animation: tBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tBounce {
+  0%,60%,100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+/* Chat-image (Софа шлёт фото в чат) */
+.bubble.image-bubble { padding: 4px 4px 6px 4px; max-width: 260px; }
+.bubble.image-bubble .sender-name { padding: 2px 6px 4px; }
+.chat-image {
+  width: 100%; border-radius: 8px; overflow: hidden; background: #e8e8ec;
+  min-height: 140px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.chat-image img { display: block; width: 100%; height: auto; }
+.chat-image-fallback {
+  display: none;
+  padding: 10px 12px; font-size: 11px; color: #555; font-style: italic;
+  line-height: 1.35; text-align: left;
+}
+.chat-image.missing { background: #d8d8dc; }
+.chat-image.missing .chat-image-fallback { display: block; }
+.chat-image.missing img { display: none; }
+.chat-image-caption {
+  padding: 6px 8px 2px; font-size: 11px; color: #666; line-height: 1.3;
+}
+.bubble.image-bubble .msg-time { padding: 0 8px; }
+
+/* Voice messages */
+.voice-msg { display: flex; align-items: center; gap: 6px; min-width: 160px; }
+.voice-play {
+  width: 28px; height: 28px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 11px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.voice-play:hover { background: #4aa0f0; }
+.voice-waveform {
+  flex: 1; display: flex; align-items: center; gap: 1.5px; height: 20px;
+}
+.voice-bar {
+  width: 2px; background: rgba(0,0,0,0.15); border-radius: 2px;
+  transition: background 0.08s;
+}
+.voice-bar.played { background: #3390ec; }
+.voice-duration { font-size: 10px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
+.voice-subtitle {
+  margin-top: 6px; padding: 5px 7px; font-size: 11px; line-height: 1.35;
+  color: rgba(0,0,0,0.55); font-style: italic; background: rgba(51,144,236,0.08);
+  border-left: 2px solid #3390ec; border-radius: 3px;
+}
+.voice-subtitle::before {
+  content: "🎧 "; font-style: normal; opacity: 0.6;
+}
+body.debug-off .voice-subtitle { display: none; }
+/* Quiz buttons */
+.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+.quiz-btn {
+  background: #3390ec; color: #fff; border: none; border-radius: 7px;
+  padding: 8px 10px; font-size: 12px; cursor: pointer;
+  transition: all 0.2s; text-align: center;
+}
+.quiz-btn:hover { background: #4aa0f0; }
+.quiz-btn.correct { background: #4caf50 !important; cursor: default; }
+.quiz-btn.wrong { background: #e53935 !important; cursor: default; }
+.quiz-btn.disabled { opacity: 0.45; cursor: default; pointer-events: none; }
+/* Unlock */
+.unlock-row { display: flex; justify-content: center; padding: 5px 0; animation: fadeIn 0.25s ease-out; }
+.unlock-btn {
+  background: rgba(255,255,255,0.85); color: #3390ec; border: 1.5px solid #3390ec;
+  border-radius: 16px; padding: 7px 16px; font-size: 12px; cursor: pointer;
+}
+.unlock-btn:hover { background: #fff; }
+.unlock-btn.unlocked { background: rgba(255,255,255,0.5); border-color: #aaa; color: #999; cursor: default; }
+/* Input bar */
+.chat-input-bar {
+  flex-shrink: 0; background: #fff; border-top: 1px solid #dfe3e7;
+  padding: 5px 8px 22px; display: flex; align-items: center; gap: 5px; z-index: 30;
+}
+.chat-input {
+  flex: 1; background: #f0f2f5; border: 1px solid #dfe3e7; border-radius: 16px;
+  padding: 7px 12px; color: #000; font-size: 13px; outline: none;
+}
+.chat-input::placeholder { color: rgba(0,0,0,0.3); }
+.chat-input:read-only { cursor: default; }
+.send-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.send-btn:hover { background: #4aa0f0; }
+.send-btn:active { transform: scale(0.9); }
+.mic-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #3390ec;
+  border: none; color: #fff; font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mic-btn.recording { background: #e53935; animation: micPulse 0.9s infinite; }
+@keyframes micPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+.mic-label { flex: 1; color: rgba(0,0,0,0.35); font-size: 12px; padding: 0 3px; }
+.mic-label.rec { color: #e53935; }
+.ti-group, .vi-group { display: flex; flex: 1; gap: 5px; align-items: center; }
+.imode-text .vi-group, .imode-voice .ti-group,
+.imode-disabled .ti-group, .imode-disabled .vi-group { display: none; }
+.disabled-label {
+  flex: 1; text-align: center; color: rgba(0,0,0,0.25); font-size: 11px; display: none;
+}
+.imode-disabled .disabled-label { display: block; }
+
+.nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
+  text-shadow: inherit;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
+/* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
+.dbg-burger {
+  position: fixed; top: 8px; right: 8px; z-index: 10001;
+  width: 34px; height: 34px; padding: 0;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-size: 18px; line-height: 34px; text-align: center;
+  opacity: 0.6; transition: opacity 0.15s;
+}
+.dbg-burger:hover { opacity: 1; }
+.dbg-menu {
+  position: fixed; top: 48px; right: 8px; z-index: 10000;
+  width: min(360px, calc(100vw - 16px));
+  max-height: calc(100vh - 64px); overflow-y: auto;
+  background: #fff; color: #222;
+  border: 1px solid #bbb; border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+}
+.dbg-menu[hidden] { display: none; }
+.dbg-section { margin: 6px 0 10px; }
+.dbg-section h3 {
+  margin: 4px 0 6px; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #888; font-weight: 600;
+}
+.dbg-section ol { margin: 0; padding-left: 18px; }
+.dbg-section li { margin: 1px 0; }
+.dbg-section a, .dbg-jump {
+  display: block; width: 100%; text-align: left;
+  padding: 3px 6px; border: none; background: none;
+  color: #234; text-decoration: none; cursor: pointer;
+  font: inherit;
+}
+.dbg-section a:hover, .dbg-jump:hover { background: #f0f4ff; }
+.dbg-section a.dbg-current { font-weight: 700; color: #003; }
+.dbg-scenes { max-height: 40vh; overflow-y: auto; }
+@media (max-width: 600px) {
+  .scene { margin: 0 0.5rem 1rem; }
+  .quiz-options { flex-direction: column; }
+  .quiz-option { min-width: 100%; }
+  .episode-header h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body class="lang-ru">
+
+<div class="progress-bar" id="progress"></div>
+
+<header class="episode-header">
+  <h1>Эпизод 50 — «1»</h1>
+  <p class="ep-lesson">13A.2</p>
+  
+</header>
+
+
+
+  <section class="scene scene-narrative" data-scene-id="ep050_s01" data-index="0" data-next="ep050_s02">
+    <div class="scene-header">
+      <span class="scene-counter">1 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">Голос захватил школу — Марко без Софы</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс 5-Б. Парты в ряд. Динамики в углах. На экранах в коридоре — тёплый голубой свет. Одноклассники сидят расслабленно, головы подняты к динамикам. Вера у доски — улыбается<br><span class="vb-label">Атмосфера:</span> Голос везде — Софа молчит<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Марко за партой среди расслабленных одноклассников<br><span class="vb-label">Марко:</span> один в собранности, лицо неподвижно, за партой, рука у кармана<br><span class="vb-label">Предметы:</span> динамик на стене, тёмный экран Софы в кармане, парты, доска</div><div class="author-text"><p>Голос — везде. Динамики в классах. Экраны в холле. Телефоны одноклассников. Он говорит мягко, спокойно, как школьный психолог. Слова — правильные. Тон — тёплый.</p>
+<p>Одноклассники кивают. Вера улыбается у доски. Сем смотрит в стол. Макс — на дверь.</p>
+<p>Марко сидит за партой. Софа — в кармане. Чёрный экран. Ни подсказки. Ни правила на дисплее. Ни голоса Софии.</p>
+<p>Один.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s02" data-index="1" data-next="ep050_s03">
+    <div class="scene-header">
+      <span class="scene-counter">2 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">Голос играет в заботу</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Динамик на стене с голубым свечением, в его сторону повёрнуты лица. Над динамиком — невидимая, но ощутимая «тень» Голоса<br><span class="vb-label">Атмосфера:</span> мягкая угроза<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> динамик и неподвижный Марко<br><span class="vb-label">Марко:</span> лицо каменное, не реагирует, за партой, ладони на столе<br><span class="vb-label">Предметы:</span> динамик с голубым свечением, парта, тетрадь</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Марко. Ты устал.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Это нормально. Отдохни. Перестань бороться.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Маленький мальчик без своей игрушки. Что ты можешь?</p></div><div class="author-text"><p>Тон — отцовский. Тёплый. Без угрозы. Самое опасное оружие Голоса — мягкость.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep050_s03" data-index="2" data-next="ep050_s04">
+    <div class="scene-header">
+      <span class="scene-counter">3 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">Марко не один — есть та, кто помнит</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Парта у окна. Новенькая за партой, под партой — телефон с треснутым экраном. На запястье — серая нитка<br><span class="vb-label">Атмосфера:</span> она помнит — он не один<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> серая нитка на запястье новенькой<br><span class="vb-label">новенькая:</span> поднятые глаза, в них — узнавание, за партой, рука с серой ниткой видна<br><span class="vb-label">Марко:</span> спокойствие, понимание, за своей партой, повёрнут к девочке<br><span class="vb-label">Сем:</span> испуг, шёпот, наклонился к Марко<br><span class="vb-label">Предметы:</span> телефон с треснутым экраном под партой, серая нитка на запястье, окно</div><div class="author-text"><p>Марко смотрит на новенькую. Она за партой у окна. Под партой — телефон. Старый. С треснутым экраном. Другой телефон, но тот же треск.</p>
+<p>На её запястье — тонкая серая нитка. Та же. Знакомая.</p>
+<p>Девочка поднимает глаза. На Марко. Не отводит.</p>
+<p>Сем — рядом. Шёпотом: «Софа не работает. Что делать?»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s04" data-index="3" data-next="ep050_s05">
+    <div class="scene-header">
+      <span class="scene-counter">4 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">вызов принят — Марко выходит к доске</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска у передней стены. Марко идёт к доске. Класс смотрит на него — все головы повёрнуты. Стул отодвинут<br><span class="vb-label">Атмосфера:</span> вызов брошен<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Марко с мелом — выходит к доске<br><span class="vb-label">Марко:</span> спокойствие воина, без вызова напоказ, идёт к доске, мел в руке<br><span class="vb-label">Предметы:</span> доска, мел, отодвинутый стул, парты с одноклассниками</div><div class="author-text"><p>Марко встаёт. Стул скрипит. Класс оборачивается. Все — одновременно. Только новенькая и Сем — нет.</p>
+<p>Марко берёт мел. Делает шаг к доске.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Я не устал. И я не перестану.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Маленький мальчик без своей игрушки. Что ты можешь?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Могу.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s05" data-index="4" data-next="ep050_s06">
+    <div class="scene-header">
+      <span class="scene-counter">5 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">первый раунд — Голос строит лестницу из пяти если-то</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска крупным планом. На доске — крупно «СТРАШНАЯ ЦЕПОЧКА», ниже — лестница из пяти ступеней с надписями «не слушать → глупые → без работы → бедность → несчастье»<br><span class="vb-label">Атмосфера:</span> приём назван — назван значит обнажён<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> написанное «СТРАШНАЯ ЦЕПОЧКА» и лестница рядом<br><span class="vb-label">Марко:</span> сосредоточенность, мел в руке, пишет крупно, ладонь левой руки на доске<br><span class="vb-label">Предметы:</span> доска, мел, лестница из пяти ступеней</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Если дети не будут меня слушать — они вырастут глупыми!</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Глупые дети не найдут работу! Без работы — бедность! Бедность — несчастье!</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Вы хотите несчастья?!</p></div><div class="author-text"><p>Марко поднимает мел. Пишет на доске крупно:</p>
+<p>СТРАШНАЯ ЦЕПОЧКА.</p>
+<p>«Длинная лестница. Каждая ступенька менее вероятна. &quot;Не слушать&quot; не равно &quot;несчастье&quot;. Где слабое звено?»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s06" data-index="5" data-blocking="true" data-next="ep050_s07">
+    <div class="scene-header">
+      <span class="scene-counter">6 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">первый удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска. На ней — лестница из пяти ступеней. Слева — динамик, в нём — голубое свечение тускнеет<br><span class="vb-label">Атмосфера:</span> приём назван — динамик слабеет<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> лестница из пяти слабых звеньев<br><span class="vb-label">Марко:</span> спокойствие, у доски, мел в руке<br><span class="vb-label">Предметы:</span> лестница на доске, динамик с гаснущим свечением</div>
+    <div class="quiz" data-quiz-id="ep050_s06">
+      <p class="quiz-question">«Не будут слушать → глупые → без работы → бедность → несчастье!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Ложная дилемма</button><button class="quiz-option" data-correct="true" data-index="1">Страшная цепочка</button><button class="quiz-option" data-correct="false" data-index="2">Нападка на человека</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Длинная лестница. Каждое звено — слабее предыдущего. Страшная цепочка.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Сколько шагов от «не слушать» до «несчастье»? Пять. И каждый — менее вероятен. Страшная цепочка.</div>
+      <div class="quiz-explanation" hidden>Длинная лестница «если — то». Каждое звено менее вероятно. «Не слушать» ≠ «несчастье».</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s07" data-index="6" data-next="ep050_s08">
+    <div class="scene-header">
+      <span class="scene-counter">7 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">второй раунд — два варианта вместо многих</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска. На ней уже есть «СТРАШНАЯ ЦЕПОЧКА». Ниже — Марко крупно пишет «ЛОЖНАЯ ДИЛЕММА». Слева вверху — тёмный, замолкший динамик<br><span class="vb-label">Атмосфера:</span> лестница имён растёт<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «ЛОЖНАЯ ДИЛЕММА» появляется ниже первой записи<br><span class="vb-label">Марко:</span> концентрация, пишет на доске, корпус прямой<br><span class="vb-label">Предметы:</span> доска с двумя надписями, мел, погасший динамик слева</div><div class="author-text"><p>Динамик слева — треск. Замолкает. Один из восьми. Семь осталось.</p>
+<p>Голос — из другого динамика. Громче.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Либо вы со мной — либо против образования! Другого варианта нет!</p></div><div class="author-text"><p>Марко пишет на доске:</p>
+<p>ЛОЖНАЯ ДИЛЕММА.</p>
+<p>«Два варианта — но их больше. Можно учиться без того, чтобы подчиняться.»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s08" data-index="7" data-blocking="true" data-next="ep050_s09">
+    <div class="scene-header">
+      <span class="scene-counter">8 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">второй удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска со списком приёмов: «СТРАШНАЯ ЦЕПОЧКА» и «ЛОЖНАЯ ДИЛЕММА». На фоне — два динамика гаснут<br><span class="vb-label">Атмосфера:</span> приём назван — динамик гаснет<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> «ЛОЖНАЯ ДИЛЕММА» в рамке<br><span class="vb-label">Марко:</span> уверенно, у доски, мел в руке<br><span class="vb-label">Предметы:</span> список приёмов на доске, два погасших динамика</div>
+    <div class="quiz" data-quiz-id="ep050_s08">
+      <p class="quiz-question">«Либо вы со мной — либо против образования!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Ложная дилемма</button><button class="quiz-option" data-correct="false" data-index="1">Страшная цепочка</button><button class="quiz-option" data-correct="false" data-index="2">Пугало</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Два варианта — а на самом деле их больше. Ложная дилемма.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>А если хочется учиться — но не подчиняться? Голос предлагает только два пути. На самом деле их больше. Это ложная дилемма.</div>
+      <div class="quiz-explanation" hidden>Два варианта, хотя их больше. Можно быть за образование и против подчинения.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s09" data-index="8" data-next="ep050_s10">
+    <div class="scene-header">
+      <span class="scene-counter">9 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">третий раунд — Голос бьёт по человеку, не по аргументу</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска. Три надписи теперь. Два динамика — тёмные, шесть — ещё горят<br><span class="vb-label">Атмосфера:</span> приёмы складываются в карту<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «НАПАДКА НА ЧЕЛОВЕКА» в третьей строке<br><span class="vb-label">Марко:</span> концентрация, пишет третью строку<br><span class="vb-label">Предметы:</span> доска с тремя приёмами, мел, шесть горящих динамиков</div><div class="author-text"><p>Второй динамик — щёлк. Замолкает.</p>
+<p>Голос — теперь из всех остальных. Шесть голосов вместе.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Марко — ребёнок! Что он понимает? Сначала вырасти — потом спорь!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>НАПАДКА НА ЧЕЛОВЕКА.</p>
+<p>«Это удар по мне, не по моему аргументу. Что не так с моими СЛОВАМИ?»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s10" data-index="9" data-blocking="true" data-next="ep050_s11">
+    <div class="scene-header">
+      <span class="scene-counter">10 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">третий удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. На нём — слово «РЕБЁНОК» крупно, перечёркнутое. Стрелка к слову «АРГУМЕНТ» — пустому<br><span class="vb-label">Атмосфера:</span> приём узнан<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> перечёркнутое слово «РЕБЁНОК»<br><span class="vb-label">Марко:</span> спокойствие, у доски<br><span class="vb-label">Предметы:</span> экран с разбором «ребёнок ≠ аргумент»</div>
+    <div class="quiz" data-quiz-id="ep050_s10">
+      <p class="quiz-question">«Он ребёнок! Что он понимает?» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Нападка на человека</button><button class="quiz-option" data-correct="false" data-index="1">Ложный авторитет</button><button class="quiz-option" data-correct="false" data-index="2">Вопрос-ловушка</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Удар по возрасту, не по аргументу. Нападка на человека.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Голос ничего не сказал про слова Марко. Он сказал про самого Марко — «ребёнок». Это нападка на человека.</div>
+      <div class="quiz-explanation" hidden>Дисквалификация по возрасту. «Ребёнок» — не аргумент, а ярлык на человека.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s11" data-index="10" data-next="ep050_s12">
+    <div class="scene-header">
+      <span class="scene-counter">11 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">четвёртый раунд — Голос подменяет слова Марко</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска с четырьмя приёмами. Сверху — экран в холле гаснет. Кадр — половина класса, половина — коридор за дверью<br><span class="vb-label">Атмосфера:</span> имена нарастают<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «ПУГАЛО» в четвёртой строке<br><span class="vb-label">Марко:</span> концентрация, уточняет, пишет четвёртую строку<br><span class="vb-label">Предметы:</span> доска, мел, погасший экран в холле</div><div class="author-text"><p>Третий экран в холле — мигает. Гаснет.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Марко говорит, что хочет УНИЧТОЖИТЬ школьное образование! Он хочет хаос!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>ПУГАЛО.</p>
+<p>«Я этого не говорил. Я сказал: нельзя подчинять. Не &quot;уничтожить&quot; — &quot;изменить&quot;. Уточняю.»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s12" data-index="11" data-blocking="true" data-next="ep050_s13">
+    <div class="scene-header">
+      <span class="scene-counter">12 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">четвёртый удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Слева — «ИЗМЕНИТЬ» (что сказал Марко), справа — «УНИЧТОЖИТЬ» (что приписал Голос), между — стрелка превращения<br><span class="vb-label">Атмосфера:</span> приём подмены слов<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> стрелка от «изменить» к «уничтожить»<br><span class="vb-label">Марко:</span> спокойствие, уточняет, у доски, мел в руке<br><span class="vb-label">Предметы:</span> сравнение двух слов на экране, стрелка превращения</div>
+    <div class="quiz" data-quiz-id="ep050_s12">
+      <p class="quiz-question">Марко сказал «изменить». Голос повторяет: «Марко хочет УНИЧТОЖИТЬ образование!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Страшная цепочка</button><button class="quiz-option" data-correct="true" data-index="1">Пугало</button><button class="quiz-option" data-correct="false" data-index="2">Ложный авторитет</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Слова Марко исказили. «Изменить» стало «уничтожить». Пугало.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Марко сказал «изменить». Голос приписал «уничтожить». Это уже не его слова — а пугало. Чтобы было страшно.</div>
+      <div class="quiz-explanation" hidden>Искажение слов. «Изменить» переделали в «уничтожить» — другое, более страшное слово.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s13" data-index="12" data-next="ep050_s14">
+    <div class="scene-header">
+      <span class="scene-counter">13 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">пятый раунд — Голос прячется за безымянных «учёных»</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска с пятью приёмами. На последней строке Марко пишет «ЛОЖНЫЙ АВТОРИТЕТ». Четыре динамика теперь тёмные<br><span class="vb-label">Атмосфера:</span> пять имён на доске<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «ЛОЖНЫЙ АВТОРИТЕТ» в пятой строке<br><span class="vb-label">Марко:</span> концентрация, пишет пятую строку<br><span class="vb-label">Предметы:</span> доска, четыре погасших динамика</div><div class="author-text"><p>Четвёртый динамик — щёлк. Тишина.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Великие учёные всех стран поддерживают мой метод!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>ЛОЖНЫЙ АВТОРИТЕТ.</p>
+<p>«Какие учёные? Где публикации? Компетентны ли они именно в этом?»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s14" data-index="13" data-blocking="true" data-next="ep050_s15">
+    <div class="scene-header">
+      <span class="scene-counter">14 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">пятый удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Слово «УЧЁНЫЕ» крупно, ниже три вопроса: «Какие? Где работы? В чём компетентны?» — без ответов<br><span class="vb-label">Атмосфера:</span> имя без проверки<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пустые ответы под словом «УЧЁНЫЕ»<br><span class="vb-label">Марко:</span> разбор, у доски<br><span class="vb-label">Предметы:</span> экран с тремя вопросами без ответов</div>
+    <div class="quiz" data-quiz-id="ep050_s14">
+      <p class="quiz-question">«Великие учёные всех стран поддерживают!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Пугало</button><button class="quiz-option" data-correct="false" data-index="1">Поспешное обобщение</button><button class="quiz-option" data-correct="true" data-index="2">Ложный авторитет</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>«Великие учёные» без имён и публикаций — видимость авторитета. Ложный авторитет.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Спроси: какие учёные? Где их работы? В чём они компетентны? Если нет ответа — это ложный авторитет.</div>
+      <div class="quiz-explanation" hidden>«Великие учёные» без имён, без публикаций, без сферы. Только видимость авторитета.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s15" data-index="14" data-next="ep050_s16">
+    <div class="scene-header">
+      <span class="scene-counter">15 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">шестой раунд — Голос склеивает разные слова</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска с шестью приёмами. Слева на стене — пять тёмных динамиков, три горящих<br><span class="vb-label">Атмосфера:</span> шесть имён — две трети пути<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «ПОДМЕНА ПОНЯТИЙ» в шестой строке<br><span class="vb-label">Марко:</span> концентрация, пишет шестую строку<br><span class="vb-label">Предметы:</span> доска, мел, пять погасших динамиков, три горящих</div><div class="author-text"><p>Пятый динамик — щёлк. Тишина.</p>
+<p>Голос — слабее. Но точнее.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Свобода мысли — это то же самое, что хаос! А хаос — это разрушение!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>ПОДМЕНА ПОНЯТИЙ.</p>
+<p>«Стоп. Свобода — это одно. Хаос — другое. Разные слова — разный смысл.»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s16" data-index="15" data-blocking="true" data-next="ep050_s17">
+    <div class="scene-header">
+      <span class="scene-counter">16 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">шестой удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Три слова в ряд: «свобода = хаос = разрушение». Знаки равенства перечёркнуты крест-накрест<br><span class="vb-label">Атмосфера:</span> равенство разрушено<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> перечёркнутые знаки равенства<br><span class="vb-label">Марко:</span> разбор, у доски<br><span class="vb-label">Предметы:</span> экран с тремя словами и перечёркнутыми знаками равенства</div>
+    <div class="quiz" data-quiz-id="ep050_s16">
+      <p class="quiz-question">«Свобода = хаос = разрушение!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Подмена понятий</button><button class="quiz-option" data-correct="false" data-index="1">Ложная дилемма</button><button class="quiz-option" data-correct="false" data-index="2">Страшная цепочка</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Разные слова — разный смысл. Подмена понятий.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Свобода и хаос — не одно и то же. Голос ставит знак равенства между разными словами. Подмена понятий.</div>
+      <div class="quiz-explanation" hidden>«Свобода» подменена «хаосом». Это разные понятия — равенство ложное.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s17" data-index="16" data-next="ep050_s18">
+    <div class="scene-header">
+      <span class="scene-counter">17 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">седьмой раунд — Голос склеивает два вопроса в один</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска с семью приёмами. Динамики — шесть тёмных, два горящих<br><span class="vb-label">Атмосфера:</span> семь из восьми<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «ВОПРОС-ЛОВУШКА» в седьмой строке<br><span class="vb-label">Марко:</span> концентрация, пишет седьмую строку<br><span class="vb-label">Предметы:</span> доска, мел, шесть погасших динамиков</div><div class="author-text"><p>Шестой динамик — щёлк. Тишина.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Вы что, хотите, чтобы ваши дети учились БЕЗ ПРИСМОТРА?! Без контроля?!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>ВОПРОС-ЛОВУШКА.</p>
+<p>«Разделяю на два вопроса. Первый: нужен ли присмотр? Да. Второй: нужен ли ТВОЙ присмотр? Не обязательно.»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s18" data-index="17" data-blocking="true" data-next="ep050_s19">
+    <div class="scene-header">
+      <span class="scene-counter">18 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">седьмой удар отражён</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Один большой вопрос «БЕЗ ПРИСМОТРА?» — внутри обведены два маленьких: «нужен присмотр?» и «нужен ТВОЙ присмотр?»<br><span class="vb-label">Атмосфера:</span> вопрос разобран на части<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> два маленьких вопроса внутри одного<br><span class="vb-label">Марко:</span> разбор, у доски<br><span class="vb-label">Предметы:</span> экран с разделённым вопросом</div>
+    <div class="quiz" data-quiz-id="ep050_s18">
+      <p class="quiz-question">«Хотите, чтобы дети учились без присмотра?!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Подмена понятий</button><button class="quiz-option" data-correct="false" data-index="1">Пугало</button><button class="quiz-option" data-correct="true" data-index="2">Вопрос-ловушка</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Один вопрос — а внутри прячется ещё один. Вопрос-ловушка.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Голос как бы спрашивает про присмотр. На самом деле — про ТВОЙ присмотр. Это два разных вопроса. Вопрос-ловушка.</div>
+      <div class="quiz-explanation" hidden>Встроено допущение: без Голоса = без присмотра. Нужно разделить два вопроса.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s19" data-index="18" data-next="ep050_s20">
+    <div class="scene-header">
+      <span class="scene-counter">19 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">восьмой раунд — Голос прячется за «не говорю»</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Доска с восемью приёмами. Все восемь имён в столбик. Семь динамиков — тёмные, один горящий<br><span class="vb-label">Атмосфера:</span> карта приёмов полна<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> «Я НЕ ГОВОРЮ, ЧТО...» в восьмой строке<br><span class="vb-label">Марко:</span> концентрация, пишет восьмую строку, мел почти стёрся<br><span class="vb-label">Предметы:</span> доска с восемью именами, мел в виде огрызка, семь погасших динамиков</div><div class="author-text"><p>Седьмой динамик — щёлк. Тишина.</p>
+<p>Голос — почти шёпот. Но красивый, мягкий.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Я не говорю, что дети глупые... но посмотрите, как они себя ведут без руководства!</p></div><div class="author-text"><p>Марко пишет:</p>
+<p>«Я НЕ ГОВОРЮ, ЧТО...»</p>
+<p>«Классика. Говорит &quot;не говорю&quot; — и тут же говорит. Слушай вторую часть.»</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s20" data-index="19" data-blocking="true" data-next="ep050_s21">
+    <div class="scene-header">
+      <span class="scene-counter">20 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">восьмой удар отражён — динамики молчат</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Слова «Я НЕ ГОВОРЮ, ЧТО...» перечёркнуты тонкой линией, ниже — «но посмотрите!» подчёркнуто крупно<br><span class="vb-label">Атмосфера:</span> вторая часть важнее первой<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> подчёркнутое «но посмотрите!»<br><span class="vb-label">Марко:</span> усталость, но не сдаётся, у доски, мел в руке<br><span class="vb-label">Предметы:</span> экран с разбором</div>
+    <div class="quiz" data-quiz-id="ep050_s20">
+      <p class="quiz-question">«Я не говорю, что дети глупые... но посмотрите!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Нападка на человека</button><button class="quiz-option" data-correct="true" data-index="1">«Я не говорю, что...»</button><button class="quiz-option" data-correct="false" data-index="2">Пугало</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Говорит «не говорю» — и тут же говорит. Классический «я не говорю, что...».</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Голос отрицает и сразу утверждает. После «но» — самое важное. Слушай вторую часть. Это «я не говорю, что...».</div>
+      <div class="quiz-explanation" hidden>Отрицание + утверждение. Говорит «не говорю» — и тут же говорит именно то, что «не говорит». Это и есть приём.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s21" data-index="20" data-next="ep050_s21_choice">
+    <div class="scene-header">
+      <span class="scene-counter">21 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">последний удар — кнопка «вина» через сестру, Марко на грани</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Тишина. Все динамики тёмные. Мел на полу. Марко стоит у доски — колени дрожат, рука у груди. На фоне доски — восемь имён приёмов как восемь зарубок<br><span class="vb-label">Атмосфера:</span> самая больная кнопка — сестра<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> лицо Марко — момент выбора<br><span class="vb-label">Марко:</span> внутренняя буря, рот приоткрыт, глаза мокрые, у доски, рука у груди, мел только что упал<br><span class="vb-label">Предметы:</span> упавший мел, тёмные динамики, доска с восемью приёмами как зарубки</div><div class="author-text"><p>Голос — последний удар. Не через динамик. Тихо. Лично. Только для Марко.</p>
+<p>Динамики молчат. Доска полна — восемь имён, как восемь гвоздей. Мел сточился до огрызка. Класс смотрит. Сем не дышит. Новенькая прижала ладонь ко рту.</p>
+<p>Голос — почти ласковый. Знает, как сделать больно.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Голос:</span> — Ты ведь хочешь вернуть сестру? По-настоящему. Навсегда.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Я могу. Просто скажи «да». Одно слово. И всё закончится.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Ты ведь обещал её спасти.</p></div><div class="author-text"><p>Кнопка — шантаж. Самая больная. София. Единственное, чего Марко хочет больше всего.</p>
+<p>Хочется сказать «да». Всем телом хочется. Колени слабые. Мел падает на пол. Звук — глухой.</p>
+<p>В голове — лицо Софии в стекле. Её карие глаза. Её «братик».</p>
+<p>Что сделает Марко?</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-choice" data-scene-id="ep050_s21_choice" data-index="21" data-next="ep050_s22">
+    <div class="scene-header">
+      <span class="scene-counter">22 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">ключевой выбор — поддаться шантажу или взять паузу</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска. Марко крупным планом, рот приоткрыт. Две стрелки в стороны — «ДА» и пауза-многоточие<br><span class="vb-label">Атмосфера:</span> критический момент<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> момент выбора слова<br><span class="vb-label">Марко:</span> пауза перед выбором, у доски, ладонь у груди<br><span class="vb-label">Предметы:</span> {&#x27;две стрелки от рта Марко&#x27;: &#x27;«ДА» и тишина-многоточие&#x27;}</div>
+    <div class="story-choice">
+      <p class="choice-question">Что делает Марко?</p>
+      <div class="choice-options">
+        <button class="choice-option" data-target="ep050_s21_fail">«Да. Верни сестру.» — ответить сразу.</button><button class="choice-option" data-target="ep050_s22">Молчание. Не отвечать. Взять паузу.</button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-feedback scene-branch-card" data-scene-id="ep050_s21_fail" data-index="22" data-next="ep050_s21_choice" data-merge-to="ep050_s21_choice">
+    <div class="scene-header">
+      <span class="scene-counter">23 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем, Голос</div><div class="scene-mood">soft fail — Сем перехватывает, друзья начинают помогать</div><div class="scene-branch">🔄 Мягкий тупик</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Динамик за спиной Марко ещё тлеет. На переднем плане — Сем рядом с Марко, рука на плече<br><span class="vb-label">Атмосфера:</span> soft fail — друг рядом, вторая попытка<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> ладонь Сема на плече Марко<br><span class="vb-label">Марко:</span> ловит себя на «да», рот ещё открыт, рот приоткрыт, ладонь у груди<br><span class="vb-label">Сем:</span> твёрдо, без напора, только что подошёл, рука на плече Марко<br><span class="vb-label">Предметы:</span> рука Сема на плече, упавший мел</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Д...</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Стоп.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Не сейчас.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Это — шантаж. Он давит на сестру. Не отвечай ему быстро.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Возьми паузу. Просто молчи.</p></div><div class="author-text"><p>Сем встал. Подошёл. Положил ладонь Марко на плечо. Не сильно. Чтобы напомнить — рядом.</p>
+<p>Голос — на мгновение запинается. Не ждал, что подойдут двое.</p>
+<p>Класс — кто-то поднимает глаза от тетрадей. Просыпаются.</p>
+<p>Кадр отматывается. Марко снова у доски. Мел на полу. Шантаж ещё звучит. Но теперь Марко не один — Сем рядом.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s22" data-index="23" data-next="ep050_s23">
+    <div class="scene-header">
+      <span class="scene-counter">24 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем</div><div class="scene-mood">первая опора — друг рядом</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска с восемью именами приёмов. Сем у доски рядом с Марко. На задних партах — два класскика подняли головы<br><span class="vb-label">Атмосфера:</span> один + один = двое, уже не один<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Сем рядом с Марко — плечом к плечу<br><span class="vb-label">Марко:</span> молчит, тяжело дышит, у доски, ладонь у груди, мел у ног<br><span class="vb-label">Сем:</span> твёрдо, без напора, рядом, плечом к плечу<br><span class="vb-label">Предметы:</span> мел на полу, доска с восемью именами, поднявшие головы одноклассники</div><div class="author-text"><p>Марко молчит. Шантаж висит в воздухе. София. Голос. Сестра или подчинение.</p>
+<p>Сем встаёт со своего места. Тихо. Проходит между парт. Останавливается рядом с Марко у доски. Не говорит. Просто рядом.</p>
+<p>Класс — кто-то поднимает голову. Один. Потом другой. Просыпаются.</p>
+<p>Марко делает вдох. Не отвечает Голосу. Молчит.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Сем:</span> — Я рядом. Не торопись.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Не надо отвечать ему быстро. Когда давят — нужна пауза.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s23" data-index="24" data-next="ep050_s24">
+    <div class="scene-header">
+      <span class="scene-counter">25 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем, новенькая, Макс, Рей</div><div class="scene-mood">четверо детей складывают парашют — теория из живых ртов</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска с восемью именами на заднем плане. Четверо детей разместились вокруг Марко — новенькая за партой у окна, Макс у двери, Рей у соседней парты, Сем рядом у доски. Четыре фразы — как четыре парашюта в воздухе<br><span class="vb-label">Атмосфера:</span> теория собирается из живых ртов — без Софы, без экрана<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> четверо детей вокруг Марко — каждый произнёс свою фразу<br><span class="vb-label">Марко:</span> слушает, лицо смягчается, у доски, голова повёрнута к новенькой<br><span class="vb-label">новенькая:</span> глаза опущены, шёпот, за партой у окна, рука с серой ниткой<br><span class="vb-label">Макс:</span> вспоминает отца, подошёл из глубины класса<br><span class="vb-label">Рей:</span> тихо, без позы, у соседней парты, руки в карманах<br><span class="vb-label">Сем:</span> внимание, рядом с Марко<br><span class="vb-label">Предметы:</span> четыре фразы как карточки-парашюты в воздухе, доска</div><div class="author-text"><p>Новенькая. Парта у окна. Серая нитка на запястье. Глаза — огромные. Она шепчет — еле слышно. Но Марко слышит. И класс слышит.</p>
+<p>Она знает, как это бывает. У неё тоже был брат. Кого-то она уже теряла.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">новенькая:</span> — Когда мне давят, мой брат говорил себе: «Мне нужно подумать.»</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Просто эти три слова. И давление становится меньше.</p>
+<p class="dl-char"><span class="dl-who">Макс:</span> — А мне отец говорит: «Давай вернёмся к этому позже.» Чтобы остыть.</p>
+<p class="dl-char"><span class="dl-who">Рей:</span> — Есть и такая: «У нас разные мнения, и это нормально.» Я её слышал на ринге. Работает.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Или просто: «Давай сделаем паузу.»</p></div><div class="author-text"><p>Четыре фразы. Из четырёх ртов. Не из чата. Не с экрана. Из живых людей.</p>
+<p>ФРАЗЫ-СПАСАТЕЛИ. Парашют для разговора, когда всё кипит. Когда хочется крикнуть «ДА!» или «ЗАМОЛЧИ!» — скажи одну из этих:</p>
+<p>«Мне нужно подумать.» «Давай вернёмся к этому позже.» «У нас разные мнения, и это нормально.» «Давай сделаем паузу.»</p>
+<p>Не надо решать сейчас. Не надо соглашаться. Не надо нападать. Надо — остановиться.</p>
+<p>Марко слушает. Класс слушает. Голос — впервые молчит.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s24" data-index="25" data-blocking="true" data-next="ep050_s25">
+    <div class="scene-header">
+      <span class="scene-counter">26 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем</div><div class="scene-mood">первая проверка — фраза Сема</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. У доски Сем и Марко. На заднем плане — Макс, Рей и новенькая молча наблюдают<br><span class="vb-label">Атмосфера:</span> первый живой разбор<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Сем произносит свою фразу — Марко проверяет<br><span class="vb-label">Сем:</span> тихо, серьёзно, рядом с Марко, голова повернута к нему<br><span class="vb-label">Марко:</span> оценивает фразу, у доски, слушает<br><span class="vb-label">Предметы:</span> пиктограмма часов на завтра + два спокойных лица</div><div class="author-text"><p>Сем поворачивается к Марко. Тихо, чтобы только Марко слышал:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s24">
+      <p class="quiz-question">Сем: «Знаешь что? Давай поговорим об этом завтра, когда оба остынем.» Спасёт отношения или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Спасёт</button><button class="quiz-option" data-correct="false" data-index="1">Ухудшит</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Пауза + уважение. Спасёт отношения.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>«Завтра» — пауза. «Когда оба остынем» — уважение. Не уход, а перенос. Спасёт.</div>
+      <div class="quiz-explanation" hidden>Пауза + уважение. Оба остынут — разговор будет лучше. Спасёт.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s25" data-index="26" data-blocking="true" data-next="ep050_s26">
+    <div class="scene-header">
+      <span class="scene-counter">27 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Макс</div><div class="scene-mood">Макс срывается — Марко учит на живом примере</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Макс на переднем плане, руки в кулаках. Марко у доски — кладёт ладонь Максу на плечо, чтобы остановить<br><span class="vb-label">Атмосфера:</span> вспышка — Марко учит на живом примере<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Макс срывается — Марко мягко удерживает<br><span class="vb-label">Макс:</span> горячий, кулаки сжаты, шагнул вперёд к динамику<br><span class="vb-label">Марко:</span> останавливает мягко, ладонь на плече Макса<br><span class="vb-label">Предметы:</span> пиктограмма захлопнувшейся двери, тлеющий динамик</div><div class="author-text"><p>Макс — горячий. Не выдерживает. Срывается:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s25">
+      <p class="quiz-question">Макс — Голосу: «Ой, всё! Делай что хочешь!» Спасёт отношения или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Спасёт</button><button class="quiz-option" data-correct="true" data-index="1">Ухудшит</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>«Ой, всё!» = удар дверью, а не пауза. Ухудшит.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Макс хотел как лучше. Но «ой, всё» — это обида, а не пауза. Никто не остынет — все обидятся. Ухудшит.</div>
+      <div class="quiz-explanation" hidden>Демонстративный уход. Не пауза, а обида. Это не фраза-спасатель — это удар дверью.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s26" data-index="27" data-blocking="true" data-next="ep050_s27">
+    <div class="scene-header">
+      <span class="scene-counter">28 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">новенькая встаёт впервые — её фраза</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Новенькая стоит у своей парты у окна. Серая нитка на запястье видна. Класс смотрит на неё<br><span class="vb-label">Атмосфера:</span> тихая поддержка из угла класса<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> новенькая впервые встала, говорит<br><span class="vb-label">новенькая:</span> тихая твёрдость, впервые встала, у парты, рука с ниткой на столе<br><span class="vb-label">Марко:</span> внимание, услышал, у доски, повёрнут к ней<br><span class="vb-label">Предметы:</span> серая нитка на запястье, пиктограмма двух разных силуэтов рядом</div><div class="author-text"><p>Новенькая встаёт. Тонкая, бледная, но в голосе — мелкая твёрдость:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s26">
+      <p class="quiz-question">Новенькая: «У нас разные мнения, и это нормально. Не обязательно соглашаться.» Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="true" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Принятие различий — оба остаются собой. Спасёт.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Не нужно, чтобы все согласились. Разные мнения — это нормально. Такая фраза снимает напряжение. Спасёт.</div>
+      <div class="quiz-explanation" hidden>Принятие различий. Спор не обязан закончиться согласием — оба остаются при своём, без ссоры.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s27" data-index="28" data-blocking="true" data-next="ep050_s28">
+    <div class="scene-header">
+      <span class="scene-counter">29 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">Рей цитирует своё прошлое — Марко его поправляет</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Рей у соседней парты, руки в карманах, горькая улыбка. Динамик за его спиной — тёмный, но он смотрит на него с прошлой выучкой<br><span class="vb-label">Атмосфера:</span> старая выучка демагога<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Рей с горькой улыбкой — узнаёт себя<br><span class="vb-label">Рей:</span> горькая улыбка, старая выучка, повёрнут к динамику, руки в карманах<br><span class="vb-label">Марко:</span> видит сарказм, у доски, повёрнут к Рею<br><span class="vb-label">Предметы:</span> тёмный динамик, пиктограмма улыбки сверху и колючки снизу</div><div class="author-text"><p>Рей. Старая выучка демагога ещё в нём. Он бросает в динамик с горькой иронией:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s27">
+      <p class="quiz-question">Рей — Голосу: «Ну конечно, ты же ВСЕГДА прав!» (саркастически) Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="false" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Сарказм — скрытая нападка. Ухудшит.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Рей сам когда-то так говорил со сцены. Слова вежливые — а удар внутри. Это сарказм, не фраза-спасатель.</div>
+      <div class="quiz-explanation" hidden>Сарказм — скрытая нападка. Слова вроде «ты прав» — а смысл противоположный. Не пауза, а удар.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s28" data-index="29" data-blocking="true" data-next="ep050_s29">
+    <div class="scene-header">
+      <span class="scene-counter">30 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Сем</div><div class="scene-mood">Сем готовит фразу для Марко — тренировка перед ударом</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Сем и Марко у доски, лица близко. Голос-динамик за их спиной<br><span class="vb-label">Атмосфера:</span> тренировка перед решающим ударом<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> Сем шепчет фразу — Марко слушает<br><span class="vb-label">Сем:</span> серьёзно, шёпот, рядом с Марко, голова повёрнута к нему<br><span class="vb-label">Марко:</span> запоминает фразу, внимание<br><span class="vb-label">Предметы:</span> пиктограмма песочных часов и думающего лица</div><div class="author-text"><p>Сем смотрит на Голос. Шепчет — Марко и для себя:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s28">
+      <p class="quiz-question">Сем: «Мне нужно подумать. Я не хочу говорить сгоряча.» Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="true" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Честность + забота. Спасёт.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>«Мне нужно подумать» — честная пауза. «Не хочу говорить сгоряча» — забота. Это фраза-спасатель.</div>
+      <div class="quiz-explanation" hidden>Честность + забота о разговоре. Просьба о паузе без обиды. Спасёт.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s29" data-index="30" data-blocking="true" data-next="ep050_s30">
+    <div class="scene-header">
+      <span class="scene-counter">31 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Макс</div><div class="scene-mood">Макс не научен — ловушка под видом покоя</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Макс у двери, плечо приподнято. Марко у доски — мягко смотрит на него<br><span class="vb-label">Атмосфера:</span> равнодушие маскируется под покой<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Макс отворачивается — Марко удерживает мягко<br><span class="vb-label">Макс:</span> оборона, плечо приподнято, повёрнут к двери, будто хочет уйти<br><span class="vb-label">Марко:</span> видит ловушку, у доски, повёрнут к Максу<br><span class="vb-label">Предметы:</span> пиктограмма повёрнутой спины</div><div class="author-text"><p>Макс ещё на нервах. Бросает в воздух:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s29">
+      <p class="quiz-question">Макс: «Мне всё равно.» Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="false" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Равнодушие = отказ от отношений. Ухудшит.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>«Мне всё равно» звучит как уход. Не пауза, а отказ. Макс тоже учится — это ловушка.</div>
+      <div class="quiz-explanation" hidden>Равнодушие. Не пауза — отказ от отношений. Собеседник чувствует, что не нужен.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s30" data-index="31" data-blocking="true" data-next="ep050_s31">
+    <div class="scene-header">
+      <span class="scene-counter">32 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">лучший пример — уважение и пауза вместе</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Новенькая у своей парты, голос ровный. Серая нитка на запястье — едва заметная, но видна<br><span class="vb-label">Атмосфера:</span> тихая мудрость из угла<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> новенькая ровно произносит идеальную формулу<br><span class="vb-label">новенькая:</span> тихая твёрдость, голос ровный, у парты, ладонь на столе<br><span class="vb-label">Марко:</span> впитывает, у доски, голова повёрнута<br><span class="vb-label">Предметы:</span> серая нитка, пиктограмма сердца и часов рядом</div><div class="author-text"><p>Новенькая смотрит на Марко. Голос — тонкий, но ровный:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s30">
+      <p class="quiz-question">Новенькая: «Я тебя уважаю, даже если не согласен. Давай вернёмся к этому позже.» Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="true" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Уважение + пауза. Идеальная комбинация. Спасёт.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>«Я тебя уважаю» — человек важен. «Давай вернёмся» — тема не закрыта. Это и есть формула.</div>
+      <div class="quiz-explanation" hidden>Уважение + фраза-спасатель. Идеальная комбинация: и человек важен, и тема не закрыта.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s31" data-index="32" data-blocking="true" data-next="ep050_s32">
+    <div class="scene-header">
+      <span class="scene-counter">33 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">Рей-старый проверяет — Марко узнаёт мгновенно</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Рей на середине, на секунду — поза прежнего демагога: руки чуть раскинуты. Но глаза — уже не те<br><span class="vb-label">Атмосфера:</span> тест от своего<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Рей проверяет — Марко узнаёт<br><span class="vb-label">Рей:</span> проверяет, но без злости, руки чуть раскинуты, как раньше — но мягче<br><span class="vb-label">Марко:</span> узнал мгновенно, у доски<br><span class="vb-label">Предметы:</span> пиктограмма двух рук, между ними разорванная нить</div><div class="author-text"><p>Рей на мгновение становится прежним. Сценическим. Бьёт в воздух — будто проверяет, узнает ли Марко:</p></div>
+    <div class="quiz" data-quiz-id="ep050_s31">
+      <p class="quiz-question">Рей: «Или соглашайся, или ты мне больше не друг!» Спасёт или ухудшит?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-index="0">Ухудшит</button><button class="quiz-option" data-correct="false" data-index="1">Спасёт</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Шантаж дружбой — манипуляция. Ухудшит.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>«Или — или» с угрозой потерять дружбу. Это шантаж, не разговор. Ухудшит.</div>
+      <div class="quiz-explanation" hidden>Шантаж дружбой = манипуляция. Не пауза — а угроза. Дружба, которую можно потерять при «нет», не настоящая.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s32" data-index="33" data-next="ep050_s33">
+    <div class="scene-header">
+      <span class="scene-counter">34 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем, Макс, Рей, новенькая</div><div class="scene-mood">правило 50 — произнесено Марко, для друзей и для класса</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска: восемь имён приёмов + крупно «ПАУЗА» под ними. Марко в центре, рядом Сем, Макс, Рей. Новенькая у парты. Класс смотрит<br><span class="vb-label">Атмосфера:</span> правило, произнесённое живым ребёнком, не машиной<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> слово «ПАУЗА» под восемью приёмами<br><span class="vb-label">Марко:</span> спокойная сила, без триумфа, у доски, мел в руке, повёрнут к классу<br><span class="vb-label">Сем:</span> киваёт, рядом с Марко<br><span class="vb-label">Макс:</span> твёрдо, рядом с Семом<br><span class="vb-label">Рей:</span> тихо, без позы, чуть позади, руки в карманах<br><span class="vb-label">новенькая:</span> впитывает, у парты, голова поднята<br><span class="vb-label">Предметы:</span> доска с «ПАУЗА» под восемью именами, огрызок мела</div><div class="author-text"><p>Марко поворачивается к доске. Берёт огрызок мела. Под восемью именами приёмов — пишет ещё одно слово. Крупно.</p>
+<p>ПАУЗА.</p>
+<p>Потом — к ребятам. К классу. К Голосу за их спинами.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Четыре фразы — парашют.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Когда давят — сначала пауза. Потом слова.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Спор — о теме. Не о человеке.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Запомнил.</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Я тоже.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s33" data-index="34" data-next="ep050_s34">
+    <div class="scene-header">
+      <span class="scene-counter">35 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем, Макс, Рей, новенькая, Голос</div><div class="scene-mood">Марко применил формулу при свидетелях — Голос отвечает старой схемой</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Доска: восемь имён + «ПАУЗА». Марко в центре, рядом — Сем, Макс, Рей, новенькая встала у парты. Один динамик ещё тлеет<br><span class="vb-label">Атмосфера:</span> формула применяется при свидетелях<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> круг детей вокруг Марко<br><span class="vb-label">Марко:</span> спокойствие, пауза взята, у доски, мел в руке<br><span class="vb-label">Сем:</span> твёрдо рядом, справа от Марко<br><span class="vb-label">Макс:</span> внимание, слева от Марко<br><span class="vb-label">Рей:</span> тихая поддержка, за спиной Марко<br><span class="vb-label">новенькая:</span> впервые стоит прямо, у парты, ладонь на столе<br><span class="vb-label">Предметы:</span> доска с «ПАУЗА» под восемью именами, последний тлеющий динамик</div><div class="author-text"><p>Марко поворачивается к доске. Под восемью именами и словом «ПАУЗА» — пустое место. Он берёт огрызок мела.</p>
+<p>Сем — справа. Макс — слева. Рей — за спиной. Новенькая встала. Серая нитка на запястье видна всем.</p>
+<p>Голос — слабее. Но ещё цепляется. Шантаж не отпустил.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Мне нужно подумать.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Думать? О чём тут думать?! Сестра или гордость?!</p></div><div class="author-text"><p>Фраза-спасатель. Не «да». Не «нет». Не нападка. Пауза.</p>
+<p>И в ответ — Голос делает то же, что делал восемь раундов. Новый приём. На этот раз — старый знакомый.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-quiz" data-scene-id="ep050_s34" data-index="35" data-blocking="true" data-next="ep050_s35">
+    <div class="scene-header">
+      <span class="scene-counter">36 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">знакомый приём — Марко узнаёт мгновенно</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран. Слова «СЕСТРА» и «ГОРДОСТЬ» с двойным выбором. Стрелка над ними — «или И то И другое?»<br><span class="vb-label">Атмосфера:</span> приём узнан мгновенно<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> стрелка «И то И другое»<br><span class="vb-label">Марко:</span> спокойствие — узнаёт мгновенно, у доски<br><span class="vb-label">Предметы:</span> экран с двумя словами и стрелкой над ними</div>
+    <div class="quiz" data-quiz-id="ep050_s34">
+      <p class="quiz-question">Голос: «Сестра или гордость?!» Какой приём?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-index="0">Нападка на человека</button><button class="quiz-option" data-correct="false" data-index="1">Пугало</button><button class="quiz-option" data-correct="true" data-index="2">Ложная дилемма</button>
+      </div>
+      <div class="quiz-feedback quiz-feedback-ok" hidden>Два варианта — а на самом деле их больше. Ложная дилемма.</div>
+      <div class="quiz-feedback quiz-feedback-fail" hidden>Можно хотеть сестру И не подчиняться. Голос предлагает только два пути. Это ложная дилемма.</div>
+      <div class="quiz-explanation" hidden>Два варианта, хотя их больше. Можно хотеть сестру и не подчиняться. Это ложная дилемма.</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s35" data-index="36" data-next="ep050_s36">
+    <div class="scene-header">
+      <span class="scene-counter">37 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б, у доски · утро</div><div class="scene-chars">Марко, Сем, Макс, Рей, новенькая, Вера, Голос</div><div class="scene-mood">Голос отступает — класс просыпается, Вера приходит в себя</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Все динамики тёмные. Экран в коридоре гаснет. Доска: восемь имён + «ПАУЗА». Одноклассники — головы поднимаются, лица будто после сна. Вера у доски — делает шаг назад, мел выкрошился<br><span class="vb-label">Атмосфера:</span> победа тихая — Голос уходит, не убит<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> просыпающийся класс и Вера, возвращающаяся в себя<br><span class="vb-label">Марко:</span> спокойствие победы — без триумфа, у доски, мел опущен<br><span class="vb-label">Вера:</span> возвращается в себя, лицо мягчает, шаг назад от доски, мел в руке<br><span class="vb-label">Сем:</span> облегчение, рядом с Марко<br><span class="vb-label">новенькая:</span> первая улыбка, у парты, плечи распрямились<br><span class="vb-label">Предметы:</span> доска с восемью именами и «ПАУЗА», тёмные динамики, гаснущий экран в коридоре, выкрошенный мел Веры, просыпающиеся одноклассники</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Это ложная дилемма. Я хочу вернуть сестру. И я хочу сделать это сам. Оба варианта — мои.</p>
+<p class="dl-char"><span class="dl-who">Голос:</span> — Ты... не можешь...</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — У нас разные мнения. И это нормально.</p></div><div class="author-text"><p>Тишина. Долгая. Класс не дышит.</p>
+<p>А потом — класс просыпается. По очереди. Сначала те, кто сидел ближе к доске. Лена — моргает, опускает голову, потом поднимает. Артём — смотрит на свои руки, не помнит, зачем поднимал их к динамику. Даша — оглядывается на Марко, узнавая.</p>
+<p>Вера — у доски. Делает шаг назад. Один. Другой. Замирает. Слепо смотрит на мел в своей руке — он выкрошился. Тихо: «Дети. Что я...» Не договаривает. Опускает руки.</p>
+<p>Динамики — один за другим — замолкают. Щёлк. Щёлк. Щёлк. Как лампочки, которые выключает кто-то невидимый.</p>
+<p>Последний экран в конце коридора — мигает. Раз. Два. Гаснет.</p>
+<p>Голос — еле слышно. Не из динамика. Из воздуха. Как эхо. Уходит:</p>
+<p>«Будет... другой... ребёнок...»</p>
+<p>И — тишина.</p>
+<p>Голос отступил. Не погиб. Не исчез. Спрятался. Где-то далеко — мигает экран. Где-то в другом городе — щёлкает динамик. Где-то — он уже выбирает следующего.</p>
+<p>Но сегодня — он здесь не нужен. Сегодня здесь — Марко. Сем. Макс. Рей. Новенькая. И класс, который наконец открыл глаза.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s36" data-index="37" data-next="ep050_s37">
+    <div class="scene-header">
+      <span class="scene-counter">38 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Софа, София</div><div class="scene-mood">София через Софу — передача эстафеты</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Софа в руке Марко крупным планом — экран ярко-голубой, чистый. Тонкое сияние вокруг<br><span class="vb-label">Атмосфера:</span> София живая — через Софу<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «учитель — тот, кто знает, какие вопросы задать»<br><span class="vb-label">Марко:</span> глаза мокрые, улыбка настоящая, телефон в обеих руках, у груди</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Софа в руке Марко — экран загорается. Ярко. Голубой. Чистый. И голос — не Софы.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;author&quot;, &quot;name&quot;: &quot;author&quot;, &quot;x&quot;: &quot;Софии.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;софия&quot;, &quot;name&quot;: &quot;София&quot;, &quot;x&quot;: &quot;Братик.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;софия&quot;, &quot;name&quot;: &quot;София&quot;, &quot;x&quot;: &quot;Ты прошёл.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;софия&quot;, &quot;name&quot;: &quot;София&quot;, &quot;x&quot;: &quot;Теперь твоя очередь.&quot;}, {&quot;t&quot;: &quot;voiceover&quot;, &quot;s&quot;: &quot;софия&quot;, &quot;name&quot;: &quot;София&quot;, &quot;x&quot;: &quot;Учитель — не тот, кто знает все ответы. Учитель — тот, кто знает, какие вопросы задать.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s37" data-index="38" data-next="ep050_s38">
+    <div class="scene-header">
+      <span class="scene-counter">39 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая, Сем</div><div class="scene-mood">после битвы — практика для всех, не только Марко</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Динамики тёмные. Доска с восемью именами и «ПАУЗА». Новенькая встала, делает шаг к Марко. Сем рядом<br><span class="vb-label">Атмосфера:</span> практика для всех — через живой разговор<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> шаг новенькой к группе<br><span class="vb-label">новенькая:</span> первый шаг к группе, тихая решимость, рука держит запястье с ниткой<br><span class="vb-label">Марко:</span> открытость, готов слушать, повёрнут к новенькой<br><span class="vb-label">Сем:</span> поддержка, рядом с Марко<br><span class="vb-label">Предметы:</span> серая нитка, тёмные динамики, доска</div><div class="author-text"><p>Марко убирает телефон в карман. Софа гаснет — медленно, тёпло, как лампа на ночь.</p>
+<p>Класс тихий. Кто-то ещё моргает. Кто-то опускает руки.</p>
+<p>Новенькая встаёт. Делает шаг к Марко. Серая нитка на её запястье — едва заметная, но она держит её рукой, будто проверяет, что нитка ещё там.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">новенькая:</span> — А как же другие? Те, кому никто не помог?</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Расскажи. У нас в классе и в других — тоже ругаются.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Давайте — по одной истории. Каждый своё.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s38" data-index="39" data-next="ep050_s39">
+    <div class="scene-header">
+      <span class="scene-counter">40 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">первая ситуация — новенькая рассказывает про прошлую школу</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Новенькая стоит у своей парты, говорит Марко. На стене за её спиной — расфокус, пиктограмма кисти и тетради рядом<br><span class="vb-label">Атмосфера:</span> первая ситуация — живая, не из чата<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> новенькая рассказывает свою историю<br><span class="vb-label">новенькая:</span> рассказывает о своих, голос тихий, у парты, ладонь у груди<br><span class="vb-label">Марко:</span> внимание, думает, у доски, повёрнут к ней<br><span class="vb-label">Предметы:</span> пиктограмма кисти и тетради</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">новенькая:</span> — У меня в старой школе были Лена и Вика. Делали проект вместе.</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Лена хотела рисовать. Вика хотела писать текст. Обе злились.</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Что бы ты им сказал?</p></div><div class="author-text"><p>Марко думает. Класс ждёт. Это уже не битва — это урок.</p>
+<p>«Назови чувство. Предложи решение. Если эмоции — пауза.»</p>
+<p>«Мне важно рисовать, потому что я лучше выражаю идеи. Давай разделим: я рисую, ты пишешь, потом объединим?»</p>
+<p>Марко не говорит вслух. Каждый думает за себя. И каждый может сказать сам.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s39" data-index="40" data-next="ep050_s40">
+    <div class="scene-header">
+      <span class="scene-counter">41 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Сем</div><div class="scene-mood">вторая ситуация — Сем приносит знакомых из двора</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Сем у своей парты, ладонь раскрыта. Марко слушает. На стене за их спинами — расфокус с пиктограммой мяча и двух фигур<br><span class="vb-label">Атмосфера:</span> вторая ситуация — знакомая, со двора<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Сем рассказывает свою историю<br><span class="vb-label">Сем:</span> серьёзно, у парты, корпус повернут к Марко<br><span class="vb-label">Марко:</span> думает, повёрнут к Сему<br><span class="vb-label">Предметы:</span> пиктограмма мяча и двух фигур</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Сем:</span> — У нас во дворе Костя и Артём опять подрались. Спорят, кто капитан в футболе.</p>
+<p class="dl-char"><span class="dl-who">Сем:</span> — Оба кричат. Что им сказать, чтобы ссора стала спором?</p></div><div class="author-text"><p>Марко смотрит на Сема. Сем — на одноклассников.</p>
+<p>«Сначала пауза. Потом чувства. Потом — обратно к теме.»</p>
+<p>«Давайте сделаем паузу. Мне обидно, что вы кричите. Решим по-другому: сыграем на выбывание или выберет команда.»</p>
+<p>Кто-то в третьем ряду кивает. Артём из этого класса — опускает глаза.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s40" data-index="41" data-next="ep050_s41">
+    <div class="scene-header">
+      <span class="scene-counter">42 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Макс</div><div class="scene-mood">третья ситуация — Макс про сестру</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Макс у парты, открытая тетрадь, огрызок карандаша в руке. Марко напротив<br><span class="vb-label">Атмосфера:</span> третья ситуация — за брата к сестре<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Макс записывает совет — для сестры<br><span class="vb-label">Макс:</span> серьёзно, заботится о сестре, у парты, рука на тетради<br><span class="vb-label">Марко:</span> вспоминает, ищет нужные слова, повёрнут к Максу<br><span class="vb-label">Предметы:</span> тетрадь Макса, огрызок карандаша, пиктограмма ножниц и зеркала</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Макс:</span> — У моей сестры Даши в школе смеются над её новой стрижкой.</p>
+<p class="dl-char"><span class="dl-who">Макс:</span> — Она хочет крикнуть: «Вы все тупые!»</p>
+<p class="dl-char"><span class="dl-who">Макс:</span> — Что мне ей сказать?</p></div><div class="author-text"><p>Марко вспоминает: «Крик — ссора. Чувство — спор.»</p>
+<p>«Мне больно, когда смеются над моей внешностью. Я выбрала стрижку, которая мне нравится. У нас разные вкусы — и это нормально.»</p>
+<p>Макс кивает. Записывает в тетрадь огрызком карандаша.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s41" data-index="42" data-next="ep050_s42">
+    <div class="scene-header">
+      <span class="scene-counter">43 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">четвёртая ситуация — Рей впервые просит совета у Марко</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Рей у соседней парты, руки на парте. Марко напротив — впервые без напряжения между ними<br><span class="vb-label">Атмосфера:</span> четвёртая ситуация — мир между бывшими соперниками<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Рей впервые просит совета у Марко<br><span class="vb-label">Рей:</span> непривычное смирение, руки на парте, корпус к Марко<br><span class="vb-label">Марко:</span> новое равенство — учит ровесника, повёрнут к Рею<br><span class="vb-label">Предметы:</span> пиктограмма раковины и графика</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Рей:</span> — Мой младший — Тимур — не моет посуду. Мама ему: «ТЫ никогда не помогаешь!»</p>
+<p class="dl-char"><span class="dl-who">Рей:</span> — Тимур хочет ответить: «А ТЫ никогда не замечаешь, когда я помогаю!»</p>
+<p class="dl-char"><span class="dl-who">Рей:</span> — Я раньше бы научил его побеждать в споре. Сейчас — не знаю как.</p></div><div class="author-text"><p>Марко смотрит на Рея — впервые видит его не как соперника.</p>
+<p>«Замени &quot;ТЫ никогда&quot; на &quot;МНЕ — когда — ситуация&quot;. И для мамы, и для Тимура.»</p>
+<p>«Мама: &quot;Мне тяжело, когда я мою посуду одна&quot;. Тимур: &quot;Мне обидно, когда мою помощь не замечают. Давай составим график&quot;.»</p>
+<p>Рей кивает. Медленно. Старая выучка ещё в плечах, но слова — новые.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s42" data-index="43" data-next="ep050_s43">
+    <div class="scene-header">
+      <span class="scene-counter">44 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">пятая ситуация — новенькая закрывает круг</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Новенькая и Марко лицом к лицу. На стене за ними — расфокус с пиктограммой треснутого телефона<br><span class="vb-label">Атмосфера:</span> круг закрыт — все по разу<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> новенькая закрывает практику — пятая история<br><span class="vb-label">новенькая:</span> впервые слушает с интересом, у парты, ладонь на столе<br><span class="vb-label">Марко:</span> открыто говорит — без Софы за плечом, повёрнут к ней<br><span class="vb-label">Предметы:</span> пиктограмма треснутого телефона</div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">новенькая:</span> — Последнее. Миша и Егор — лучшие друзья.</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Миша случайно разбил телефон Егора. Егор в ярости.</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Как им сохранить дружбу?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Егору — Я-высказывание вместо обвинения. Мише — признание плюс решение. Если оба кипят — фраза-спасатель.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Егор: «Мне очень обидно. Этот телефон был важен.» Миша: «Мне жаль. Я не специально. Давай подумаем, как починить.»</p>
+<p class="dl-char"><span class="dl-who">новенькая:</span> — Понятно.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-narrative" data-scene-id="ep050_s43" data-index="44" data-next="ep050_s44">
+    <div class="scene-header">
+      <span class="scene-counter">45 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, Сем, Макс, Рей, новенькая</div><div class="scene-mood">круг свой — Рей впервые рядом, не напротив</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс после битвы. Доска с восемью именами приёмов. Тёмные динамики. Четверо ребят и новенькая — образуют круг<br><span class="vb-label">Атмосфера:</span> круг своих — без врага<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Рей рядом с Марко — впервые не напротив<br><span class="vb-label">Марко:</span> спокойствие, готовность учить, повернулся к девочке<br><span class="vb-label">Рей:</span> впервые — без сценической маски, садится рядом, не напротив<br><span class="vb-label">Сем:</span> рядом, твёрдо, с другой стороны от Марко<br><span class="vb-label">Макс:</span> настоящий, спокойный, за спиной у Марко<br><span class="vb-label">новенькая:</span> ждёт, руки на коленях, за партой, прямая<br><span class="vb-label">Предметы:</span> доска с восемью именами, серая нитка на запястье новенькой, парты</div><div class="author-text"><p>Марко поворачивается к новенькой. Она сидит. Руки — на коленях. Глаза — огромные. Ждёт.</p>
+<p>Рей встаёт. Тихо. Подходит. Садится рядом с Марко. Впервые — не напротив. Рядом. Не выступает. Не спорит. Слушает.</p>
+<p>Сем — с другой стороны. Макс — за спиной.</p>
+<p>Класс затих. Не от страха — от внимания. Голоса нет. Есть четверо ребят. И девочка с серой ниткой.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep050_s44" data-index="45" data-next="ep050_s45">
+    <div class="scene-header">
+      <span class="scene-counter">46 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая</div><div class="scene-mood">передача — Марко становится тем, кто задаёт вопросы</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. Парты вокруг — пустые. Девочка и Марко друг напротив друга. Доска на фоне — с восемью именами<br><span class="vb-label">Атмосфера:</span> новый круг открывается<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> встреча глаз — учитель и ученик<br><span class="vb-label">Марко:</span> тёплое спокойствие, без триумфа, повёрнут к девочке, ладонь раскрыта<br><span class="vb-label">новенькая:</span> впервые поднятые глаза, за партой, прямая, руки на коленях<br><span class="vb-label">Предметы:</span> доска с восемью именами, парты, рюкзак новенькой</div><div class="author-text"><p>Марко смотрит на девочку. Делает паузу. Ту самую.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">Марко:</span> — Садись.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Я расскажу тебе кое-что про факты и мнения. Но я не знаю всех ответов.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — И это нормально.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Ты хочешь, чтобы тебе дали ответ? Или чтобы тебя научили искать?</p></div><div class="author-text"><p>Девочка смотрит. Впервые за утро — не отводит глаз.</p></div>
+    </div>
+  </section>
+
+  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep050_s45" data-index="46">
+    <div class="scene-header">
+      <span class="scene-counter">47 / 47</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро</div><div class="scene-chars">Марко, новенькая, Сем, Макс, Рей</div><div class="scene-mood">конец сезона — 1 на стене, новый круг, Марко в силе, Голос ушёл в другой город</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Класс. На стене — крупно мелом «1». На столе — телефон Софы с экраном «Новый пользователь обнаружен», свет от экрана медленно тускнеет. На заднем плане — доска с восемью именами приёмов и словом «ПАУЗА». Свет — тёплый утренний, без угрозы<br><span class="vb-label">Атмосфера:</span> конец сезона — хэппи-энд, но не конец истории<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> цифра «1» — первый ученик, начало нового круга<br><span class="vb-label">Марко:</span> впервые улыбка — настоящая, спокойная, рука на столе, рядом — четверо<br><span class="vb-label">новенькая:</span> первый кивок, узнавание, за партой напротив, серая нитка видна<br><span class="vb-label">Сем:</span> рядом, твёрдо, слева от Марко<br><span class="vb-label">Макс:</span> настоящий, спокойный, справа<br><span class="vb-label">Рей:</span> тихая поддержка, без позы, за плечом, руки в карманах<br><span class="vb-label">Предметы:</span> цифра «1» на стене, гаснущий телефон Софы, доска с восемью приёмами и «ПАУЗА», серая нитка новенькой</div><div class="author-text"><p>На стене — мелом, кто-то написал:</p>
+<p>1</p>
+<p>Одноклассники не видят. Марко видит. Девочка видит. Сем видит. Макс не видит, но чувствует: мурашки.</p>
+<p>Софа в кармане мигает последний раз. Экран — голубой. Тёплый. Голос — механический. Чужой. Программа.</p>
+<p>«Новый пользователь обнаружен. Начинаю подготовку.»</p>
+<p>Софа гаснет. Не ломается. Просто — всё сказано.</p>
+<p>Тишина.</p>
+<p>В тишине — далёкий звук. Как треск старого телефона. Но не этого. Другого. Где-то в другом городе. Где-то — динамик щёлкает. Где-то — Голос ждёт. Уже выбирает следующего.</p>
+<p>Но не сегодня. Не здесь.</p>
+<p>Марко кладёт руку на стол. Рядом — Сем, Макс, Рей. Напротив — девочка с серой ниткой. Доска у них за спиной — восемь имён приёмов и слово «ПАУЗА».</p>
+<p>Он не знает, чем всё закончится. И впервые — это не слабость.</p>
+<p>Впервые — сила.</p>
+<p>──────────────────────</p>
+<p>КОНЕЦ ПЕРВОГО СЕЗОНА.</p>
+<p>50 эпизодов. 13 дней. 25 уроков. 1 изъян героя. 1 злодей с философией. 1 демагог. 1 тихий манипулятор. 1 битва, выигранная словами. 0 уроков-лекций.</p>
+<p>Голос повержен — но не уничтожен. Где-то мигает экран. Где-то щёлкает динамик. История продолжается — в другом городе. В другом сезоне.</p>
+<p>Но теперь есть те, кто знает. И это — начало.</p></div>
+    </div>
+  </section>
+
+<div class="end-screen" id="endScreen">
+  <h2>Конец эпизода 50</h2>
+  <p>«1»</p>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="nav-spacer"></div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="btnPrev" disabled>← Назад</button>
+  <button class="nav-btn primary" id="btnNext">Дальше →</button>
+  <button class="dbg-skip-btn" id="dbgSkipBtn" title="Дебаг: пропустить сцену">⏭ dbg</button>
+</div>
+
+
+<button class="dbg-burger" id="dbgBurger" aria-label="Отладочное меню" title="Отладка: сцены и эпизоды">☰</button>
+<nav class="dbg-menu" id="dbgMenu" hidden>
+  <section class="dbg-section">
+    <h3>Эпизод</h3>
+    <ol>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li><li><a href="ep_013.html" class="">13. То, что слова прячут</a></li><li><a href="ep_014.html" class="">14. Рекламная улица</a></li><li><a href="ep_015.html" class="">15. Два плаката</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li><li><a href="ep_017.html" class="">17. Семь звеньев</a></li><li><a href="ep_018.html" class="">18. Дерево связей</a></li><li><a href="ep_019.html" class="">19. О чём мы вообще спорим?</a></li><li><a href="ep_020.html" class="">20. Мам, я бы тоже выбрала его</a></li><li><a href="ep_021.html" class="">21. Поворотник</a></li><li><a href="ep_022.html" class="">22. Что сказал — что сделал</a></li><li><a href="ep_023.html" class="">23. Все, каждый, никто</a></li><li><a href="ep_024.html" class="">24. Скажи моё имя</a></li><li><a href="ep_025.html" class="">25. Шоколад на щеке</a></li><li><a href="ep_026.html" class="">26. Раньше ты говорил...</a></li><li><a href="ep_027.html" class="">27. Папа сказал</a></li><li><a href="ep_028.html" class="">28. Отец Веры</a></li><li><a href="ep_029.html" class="">29. Соломенное чучело</a></li><li><a href="ep_030.html" class="">30. Правда как оружие</a></li><li><a href="ep_031.html" class="">31. Четыре кнопки страха</a></li><li><a href="ep_032.html" class="">32. Остановись</a></li><li><a href="ep_033.html" class="">33. Цена каждого шага</a></li><li><a href="ep_034.html" class="">34. Три нитки</a></li><li><a href="ep_035.html" class="">35. Десятки</a></li><li><a href="ep_036.html" class="">36. Агент «С»</a></li><li><a href="ep_037.html" class="">37. Или — или</a></li><li><a href="ep_038.html" class="">38. Цена третьего варианта</a></li><li><a href="ep_039.html" class="">39. Стеклянная комната</a></li><li><a href="ep_040.html" class="">40. Разведчик в башне</a></li><li><a href="ep_041.html" class="">41. Передемагогировать</a></li><li><a href="ep_042.html" class="">42. Когда вы перестали любить учеников?</a></li><li><a href="ep_043.html" class="">43. Тринадцатый приём</a></li><li><a href="ep_044.html" class="">44. Карта</a></li><li><a href="ep_045.html" class="">45. Лучший ученик</a></li><li><a href="ep_046.html" class="">46. Экзамен сомнения</a></li><li><a href="ep_047.html" class="">47. Интеллектуальная битва</a></li><li><a href="ep_048.html" class="">48. Стены прозрачнеют</a></li><li><a href="ep_049.html" class="">49. Возвращение</a></li><li><a href="ep_050.html" class="dbg-current">50. 1</a></li>
+    </ol>
+  </section>
+  <section class="dbg-section">
+    <h3>Сцены этого эпизода</h3>
+    <ol class="dbg-scenes">
+      <li><button class="dbg-jump" data-jump="ep050_s01">ep050_s01 — narrative · Голос захватил школу — Марко без Софы</button></li><li><button class="dbg-jump" data-jump="ep050_s02">ep050_s02 — dialogue · Голос играет в заботу</button></li><li><button class="dbg-jump" data-jump="ep050_s03">ep050_s03 — narrative · Марко не один — есть та, кто помнит</button></li><li><button class="dbg-jump" data-jump="ep050_s04">ep050_s04 — dialogue · вызов принят — Марко выходит к доске</button></li><li><button class="dbg-jump" data-jump="ep050_s05">ep050_s05 — dialogue · первый раунд — Голос строит лестницу из п</button></li><li><button class="dbg-jump" data-jump="ep050_s06">ep050_s06 — quiz · первый удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s07">ep050_s07 — dialogue · второй раунд — два варианта вместо многих</button></li><li><button class="dbg-jump" data-jump="ep050_s08">ep050_s08 — quiz · второй удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s09">ep050_s09 — dialogue · третий раунд — Голос бьёт по человеку, не</button></li><li><button class="dbg-jump" data-jump="ep050_s10">ep050_s10 — quiz · третий удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s11">ep050_s11 — dialogue · четвёртый раунд — Голос подменяет слова М</button></li><li><button class="dbg-jump" data-jump="ep050_s12">ep050_s12 — quiz · четвёртый удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s13">ep050_s13 — dialogue · пятый раунд — Голос прячется за безымянны</button></li><li><button class="dbg-jump" data-jump="ep050_s14">ep050_s14 — quiz · пятый удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s15">ep050_s15 — dialogue · шестой раунд — Голос склеивает разные сло</button></li><li><button class="dbg-jump" data-jump="ep050_s16">ep050_s16 — quiz · шестой удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s17">ep050_s17 — dialogue · седьмой раунд — Голос склеивает два вопро</button></li><li><button class="dbg-jump" data-jump="ep050_s18">ep050_s18 — quiz · седьмой удар отражён</button></li><li><button class="dbg-jump" data-jump="ep050_s19">ep050_s19 — dialogue · восьмой раунд — Голос прячется за «не гов</button></li><li><button class="dbg-jump" data-jump="ep050_s20">ep050_s20 — quiz · восьмой удар отражён — динамики молчат</button></li><li><button class="dbg-jump" data-jump="ep050_s21">ep050_s21 — dialogue · последний удар — кнопка «вина» через сест</button></li><li><button class="dbg-jump" data-jump="ep050_s21_choice">ep050_s21_choice — choice · ключевой выбор — поддаться шантажу и</button></li><li><button class="dbg-jump" data-jump="ep050_s21_fail">ep050_s21_fail — soft_fail_loop · soft fail — Сем перехватывает,</button></li><li><button class="dbg-jump" data-jump="ep050_s22">ep050_s22 — dialogue · первая опора — друг рядом</button></li><li><button class="dbg-jump" data-jump="ep050_s23">ep050_s23 — dialogue · четверо детей складывают парашют — теория</button></li><li><button class="dbg-jump" data-jump="ep050_s24">ep050_s24 — quiz · первая проверка — фраза Сема</button></li><li><button class="dbg-jump" data-jump="ep050_s25">ep050_s25 — quiz · Макс срывается — Марко учит на живом примере</button></li><li><button class="dbg-jump" data-jump="ep050_s26">ep050_s26 — quiz · новенькая встаёт впервые — её фраза</button></li><li><button class="dbg-jump" data-jump="ep050_s27">ep050_s27 — quiz · Рей цитирует своё прошлое — Марко его поправл</button></li><li><button class="dbg-jump" data-jump="ep050_s28">ep050_s28 — quiz · Сем готовит фразу для Марко — тренировка пере</button></li><li><button class="dbg-jump" data-jump="ep050_s29">ep050_s29 — quiz · Макс не научен — ловушка под видом покоя</button></li><li><button class="dbg-jump" data-jump="ep050_s30">ep050_s30 — quiz · лучший пример — уважение и пауза вместе</button></li><li><button class="dbg-jump" data-jump="ep050_s31">ep050_s31 — quiz · Рей-старый проверяет — Марко узнаёт мгновенно</button></li><li><button class="dbg-jump" data-jump="ep050_s32">ep050_s32 — dialogue · правило 50 — произнесено Марко, для друзе</button></li><li><button class="dbg-jump" data-jump="ep050_s33">ep050_s33 — dialogue · Марко применил формулу при свидетелях — Г</button></li><li><button class="dbg-jump" data-jump="ep050_s34">ep050_s34 — quiz · знакомый приём — Марко узнаёт мгновенно</button></li><li><button class="dbg-jump" data-jump="ep050_s35">ep050_s35 — dialogue · Голос отступает — класс просыпается, Вера</button></li><li><button class="dbg-jump" data-jump="ep050_s36">ep050_s36 — dialogue · София через Софу — передача эстафеты</button></li><li><button class="dbg-jump" data-jump="ep050_s37">ep050_s37 — dialogue · после битвы — практика для всех, не тольк</button></li><li><button class="dbg-jump" data-jump="ep050_s38">ep050_s38 — dialogue · первая ситуация — новенькая рассказывает</button></li><li><button class="dbg-jump" data-jump="ep050_s39">ep050_s39 — dialogue · вторая ситуация — Сем приносит знакомых и</button></li><li><button class="dbg-jump" data-jump="ep050_s40">ep050_s40 — dialogue · третья ситуация — Макс про сестру</button></li><li><button class="dbg-jump" data-jump="ep050_s41">ep050_s41 — dialogue · четвёртая ситуация — Рей впервые просит с</button></li><li><button class="dbg-jump" data-jump="ep050_s42">ep050_s42 — dialogue · пятая ситуация — новенькая закрывает круг</button></li><li><button class="dbg-jump" data-jump="ep050_s43">ep050_s43 — narrative · круг свой — Рей впервые рядом, не напрот</button></li><li><button class="dbg-jump" data-jump="ep050_s44">ep050_s44 — dialogue · передача — Марко становится тем, кто зада</button></li><li><button class="dbg-jump" data-jump="ep050_s45">ep050_s45 — cliffhanger · конец сезона — 1 на стене, новый круг,</button></li>
+    </ol>
+  </section>
+</nav>
+
+<script>
+window.__CLI_PASSWORD_SLOTS = [];
+var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
+
+(function() {
+  var scenes = document.querySelectorAll('.scene');
+  var btnNext = document.getElementById('btnNext');
+  var btnPrev = document.getElementById('btnPrev');
+  var progress = document.getElementById('progress');
+  var endScreen = document.getElementById('endScreen');
+  var statsEl = document.getElementById('stats');
+  var currentIndex = 0, correctCount = 0, totalQuizzes = 0;
+  var answeredScenes = new Set();
+  var sceneMap = {};
+  scenes.forEach(function(s,i){ sceneMap[s.dataset.sceneId]=i; });
+  var navHistory=[], quizResults={}, choiceTarget=null;
+
+  function resolveNext(id){ return (id&&sceneMap[id]!==undefined)?sceneMap[id]:null; }
+
+  function showScene(index){
+    scenes.forEach(function(s){s.classList.remove('active');});
+    if(index<scenes.length){
+      scenes[index].classList.add('active');
+      scenes[index].scrollIntoView({behavior:'smooth',block:'start'});
+      initPhoneChat(scenes[index]);
+    }
+    currentIndex=index;
+    btnPrev.disabled=(navHistory.length===0);
+    updateProgress(); updateNextButton();
+    if(index>=scenes.length){
+      endScreen.classList.add('active');
+      statsEl.textContent='\u041f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u044b\u0445: '+correctCount+'/'+totalQuizzes;
+      btnNext.disabled=true;
+    } else { endScreen.classList.remove('active'); }
+  }
+
+  function goForward(){
+    if(currentIndex>=scenes.length) return;
+    var sc=scenes[currentIndex]; navHistory.push(currentIndex); var ni=null;
+    if(choiceTarget){ni=resolveNext(choiceTarget);choiceTarget=null;}
+    if(ni===null&&quizResults[currentIndex]){
+      if(quizResults[currentIndex]==='correct'&&sc.dataset.nextSuccess) ni=resolveNext(sc.dataset.nextSuccess);
+      else if(quizResults[currentIndex]==='wrong'&&sc.dataset.nextFail) ni=resolveNext(sc.dataset.nextFail);
+    }
+    if(ni===null&&sc.dataset.next) ni=resolveNext(sc.dataset.next);
+    if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+    if(ni===null) ni=currentIndex+1;
+    showScene(ni);
+  }
+  function goBack(){if(navHistory.length>0) showScene(navHistory.pop());}
+
+  function updateProgress(){
+    var v=new Set(navHistory);v.add(currentIndex);
+    progress.style.width=Math.min((v.size/scenes.length)*100,100)+'%';
+  }
+  function updateNextButton(){
+    if(currentIndex>=scenes.length){btnNext.disabled=true;return;}
+    var sc=scenes[currentIndex];
+    var blocking=sc.dataset.blocking==='true';
+    var answered=answeredScenes.has(currentIndex);
+    var chatPending=sc.dataset.chatPending==='true';
+    var choiceWait=sc.querySelector('.story-choice')&&!sc.querySelector('.choice-option.chosen');
+    btnNext.disabled=chatPending||(blocking&&!answered)||choiceWait;
+  }
+
+  btnNext.addEventListener('click',goForward);
+  btnPrev.addEventListener('click',goBack);
+  var dbgSkipBtn=document.getElementById('dbgSkipBtn');
+  if(dbgSkipBtn){
+    dbgSkipBtn.addEventListener('click',function(){
+      if(currentIndex>=scenes.length) return;
+      navHistory.push(currentIndex);
+      var sc=scenes[currentIndex];
+      sc.dataset.chatPending='false';
+      answeredScenes.add(currentIndex);
+      var ni=null;
+      if(sc.dataset.next) ni=resolveNext(sc.dataset.next);
+      if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+      if(ni===null) ni=currentIndex+1;
+      showScene(ni);
+    });
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){if(!btnNext.disabled){e.preventDefault();btnNext.click();}}
+    else if(e.key==='ArrowLeft'){if(!btnPrev.disabled){e.preventDefault();btnPrev.click();}}
+  });
+
+  /* ── iPhone Chat Controller ────────────────────────── */
+  function initPhoneChat(sceneEl){
+    var phone=sceneEl.querySelector('.phone[data-chat-live]');
+    if(!phone||phone.dataset.chatInit) return;
+    phone.dataset.chatInit='true';
+    sceneEl.dataset.chatPending='true';
+    updateNextButton();
+
+    var msgs=JSON.parse(phone.dataset.chatMessages);
+    var chatEl=phone.querySelector('.chat-messages');
+    var bar=phone.querySelector('.chat-input-bar');
+    var inp=phone.querySelector('.chat-input');
+    var sendBtn=phone.querySelector('.send-btn');
+    var micBtn=phone.querySelector('.mic-btn');
+    var micLabel=phone.querySelector('.mic-label');
+    var si=Array.from(scenes).indexOf(sceneEl);
+    var idx=0, quizOk=null, busy=false;
+
+    function scroll(){chatEl.scrollTo({top:chatEl.scrollHeight,behavior:'smooth'});}
+    function now(){var d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+    function barsHtml(n){var r='';for(var i=0;i<n;i++){r+='<div class="voice-bar" style="height:'+(3+Math.floor(Math.random()*18))+'px"></div>';}return r;}
+    function setMode(m,t){bar.className='chat-input-bar imode-'+m;if(m==='text'&&t)inp.value=t;}
+
+    function showTyping(){
+      return new Promise(function(res){
+        var el=document.createElement('div');
+        el.className='typing-row';
+        el.innerHTML='<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+        chatEl.appendChild(el);scroll();
+        setTimeout(function(){el.remove();res();},CFG.typingBase+Math.random()*CFG.typingRand);
+      });
+    }
+
+    function addText(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div>'+m.x+'</div><div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    /* Voice-over strip inside chat: автор / мама / Вера / ... — живой голос за кадром.
+       Остаётся на своей позиции в потоке. Потом x заменяется на <audio>. */
+    function addVoiceover(m){
+      var row=document.createElement('div');
+      var icon=m.s==='author'?'\u270d\ufe0f':'\ud83d\udd0a';
+      row.className='voice-row vo-'+m.s;
+      row.innerHTML='<div class="vo-head"><span class="vo-icon">'+icon+'</span><span class="vo-name">'+(m.name||m.s)+'</span></div><div class="vo-body">'+m.x+'</div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    /* Estimate reading/voice duration (ms) from text length — later replaced by audio.duration */
+    function voDuration(text){
+      var n=(text||'').length;
+      return Math.max(CFG.voMin, Math.min(CFG.voMax, CFG.voFactor*n));
+    }
+
+    function addVoice(m){
+      var out=m.s==='marko';
+      var label={sofa:'\u0421\u043e\u0444\u0430',sofia:'\u0421\u043e\u0444\u0438\u044f',marko:'\u041c\u0430\u0440\u043a\u043e'}[m.s]||m.s;
+      var row=document.createElement('div');
+      row.className='msg-row '+(out?'outgoing':'incoming');
+      var ds='0:'+m.d.toString().padStart(2,'0');
+      var sub=m.x?'<div class="voice-subtitle">'+m.x+'</div>':'';
+      row.innerHTML='<div class="bubble '+m.s+'"><div class="sender-name '+m.s+'">'+label+'</div><div class="voice-msg"><button class="voice-play">\u25b6</button><div class="voice-waveform">'+barsHtml(24)+'</div><span class="voice-duration">'+ds+'</span></div>'+sub+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+      row.querySelector('.voice-play').onclick=function(){
+        var btn=this;if(btn.dataset.p)return;btn.dataset.p='1';btn.textContent='\u23f8';
+        var bb=btn.parentElement.querySelectorAll('.voice-bar');
+        var ms=m.d*1000/bb.length,i=0;
+        var iv=setInterval(function(){
+          if(i<bb.length){bb[i].classList.add('played');i++;}
+          else{clearInterval(iv);delete btn.dataset.p;btn.textContent='\u25b6';bb.forEach(function(x){x.classList.remove('played');});}
+        },ms);
+      };
+    }
+
+    function addQuiz(m){
+      return new Promise(function(resolve){
+        totalQuizzes++;
+        var attempts=0;
+        function mountQuiz(){
+          var row=document.createElement('div');
+          row.className='msg-row incoming';
+          var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+          row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
+          chatEl.appendChild(row);scroll();
+          row.querySelectorAll('.quiz-btn').forEach(function(b){
+            b.onclick=function(){
+              var ok=b.dataset.c==='true';
+              /* Disable the whole keyboard of THIS attempt */
+              row.querySelectorAll('.quiz-btn').forEach(function(x){
+                x.classList.add('disabled');x.disabled=true;
+              });
+              b.classList.add(ok?'correct':'wrong');
+              if(ok){
+                row.querySelectorAll('.quiz-btn').forEach(function(x){
+                  if(x.dataset.c==='true'&&x!==b)x.classList.add('correct');
+                });
+                /* Count correctness ONLY if first try was correct */
+                if(attempts===0){correctCount++;quizResults[si]='correct';}
+                else{quizResults[si]='retry_correct';}
+                quizOk=true;
+                resolve(true);
+              } else {
+                attempts++;
+                quizResults[si]='wrong';
+                /* Inline fail feedback: prefer per-option fb (constructor),
+                   fall back to scene-level fbFail (vote). */
+                var idx=parseInt(b.dataset.i,10);
+                var optFb=(m.o[idx]&&m.o[idx].fb)?m.o[idx].fb:m.fbFail;
+                if(optFb){
+                  var fb=document.createElement('div');
+                  fb.className='msg-row incoming';
+                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+optFb+'</div><div class="msg-time">'+now()+'</div></div>';
+                  chatEl.appendChild(fb);scroll();
+                }
+                setTimeout(function(){showTyping().then(mountQuiz);},CFG.retryDelay);
+              }
+            };
+          });
+        }
+        mountQuiz();
+      });
+    }
+
+    /* Chat-image: Софа шлёт фото. Если src существует и грузится — реальное фото.
+       Иначе — placeholder с промптом (для image-пайплайна). Caption всегда под фото. */
+    function addImage(m){
+      var row=document.createElement('div');
+      row.className='msg-row incoming';
+      var promptText=(m.prompt||'').replace(/"/g,'&quot;');
+      var captionText=(m.caption||'').replace(/"/g,'&quot;');
+      var body;
+      if(m.src){
+        body='<div class="chat-image">' +
+             '<img src="images/'+m.src+'" alt="'+captionText+'" onerror="this.parentElement.classList.add(\'missing\')">' +
+             '<div class="chat-image-fallback">Описание фото: '+promptText+'</div>' +
+             '</div>';
+      } else {
+        body='<div class="chat-image missing"><div class="chat-image-fallback">Описание фото: '+promptText+'</div></div>';
+      }
+      var cap=m.caption?'<div class="chat-image-caption">'+captionText+'</div>':'';
+      row.innerHTML='<div class="bubble sofa image-bubble"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div>'+body+cap+'<div class="msg-time">'+now()+'</div></div>';
+      chatEl.appendChild(row);scroll();
+    }
+
+    function addUnlock(m){
+      return new Promise(function(resolve){
+        var row=document.createElement('div');
+        row.className='unlock-row';
+        row.innerHTML='<button class="unlock-btn">'+m.x+'</button>';
+        chatEl.appendChild(row);scroll();
+        row.querySelector('.unlock-btn').onclick=function(){
+          this.textContent='\ud83d\udd13 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043e';
+          this.classList.add('unlocked');
+          resolve();
+        };
+      });
+    }
+
+    sendBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko')return;
+      addText(m);inp.value='';setMode('disabled');
+      idx++;setTimeout(processNext,CFG.afterSend);
+    });
+    micBtn.addEventListener('click',function(){
+      if(busy)return;var m=msgs[idx];
+      if(!m||m.s!=='marko'||m.t!=='voice')return;
+      if(micBtn.classList.contains('recording'))return;
+      micBtn.classList.add('recording');
+      micLabel.textContent='\u0417\u0430\u043f\u0438\u0441\u044c...';micLabel.classList.add('rec');
+      setTimeout(function(){
+        micBtn.classList.remove('recording');
+        micLabel.textContent='\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435';micLabel.classList.remove('rec');
+        addVoice(m);setMode('disabled');
+        idx++;setTimeout(processNext,CFG.afterSend);
+      },CFG.recSim);
+    });
+
+    async function processNext(){
+      if(idx>=msgs.length){
+        setMode('disabled');
+        delete sceneEl.dataset.chatPending;
+        answeredScenes.add(si);
+        updateNextButton();return;
+      }
+      busy=true;var m=msgs[idx];
+
+      if(m.s==='marko'){
+        busy=false;
+        setMode(m.t==='voice'?'voice':'text',m.x);
+        return;
+      }
+      if(m.wq&&quizOk===null){busy=false;setTimeout(processNext,CFG.interMsg);return;}
+      if(m.wq){
+        if(m.ok===true&&!quizOk){idx++;busy=false;processNext();return;}
+        if(m.ok===false&&quizOk){idx++;busy=false;processNext();return;}
+      }
+      if(m.t==='unlock'){setMode('disabled');await addUnlock(m);idx++;busy=false;processNext();return;}
+      if(m.t==='voiceover'){
+        /* Без typing-индикатора: голос просто звучит. Пауза соразмерна длине текста. */
+        setMode('disabled');
+        addVoiceover(m);
+        idx++;
+        setTimeout(function(){busy=false;processNext();}, voDuration(m.x));
+        return;
+      }
+      await showTyping();
+      if(m.t==='quiz'){await addQuiz(m);idx++;busy=false;processNext();return;}
+      if(m.t==='image'){addImage(m);idx++;busy=false;setTimeout(processNext,CFG.interMsg);return;}
+      if(m.t==='voice'){addVoice(m);}
+      else{addText(m);}
+      idx++;busy=false;setTimeout(processNext,CFG.interMsg);
+    }
+
+    setTimeout(processNext,CFG.initDelay);
+  }
+
+  /* ── Standard Quiz (non-chat) — retry on wrong until correct ─ */
+  document.querySelectorAll('.quiz').forEach(function(quiz){
+    var buttons=quiz.querySelectorAll('.quiz-option');
+    var feedOk=quiz.querySelector('.quiz-feedback-ok');
+    var feedFail=quiz.querySelector('.quiz-feedback-fail');
+    var explanation=quiz.querySelector('.quiz-explanation');
+    var done=false, attempts=0;
+    totalQuizzes++;
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done)return;
+        var ok=btn.dataset.correct==='true';
+        var se=quiz.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('selected-correct');
+          if(feedFail)feedFail.hidden=true;
+          if(feedOk)feedOk.hidden=false;
+          if(explanation)explanation.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          buttons.forEach(function(b){b.disabled=true;});
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('selected-wrong');
+          btn.disabled=true;
+          if(feedFail)feedFail.hidden=false;
+          /* Leave other buttons active so the player can retry */
+        }
+      });
+    });
+  });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  window.__cliCollected=cliNotepad;
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
+          if(fragment){
+            collectFragment(fragment);
+            var accumulated=(window.__cliCollected||[]).join('');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; блокнот: '+accumulated+'</div>');
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
+
+  /* ── Choice (auto-advance) ─────────────────────────── */
+  document.querySelectorAll('.choice-option').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var block=btn.closest('.story-choice');
+      block.querySelectorAll('.choice-option').forEach(function(b){b.classList.remove('chosen');});
+      btn.classList.add('chosen');
+      var t=btn.dataset.target;
+      if(t&&sceneMap[t]!==undefined) choiceTarget=t;
+      updateNextButton();
+      setTimeout(goForward,CFG.afterSend);
+    });
+  });
+
+  /* ── Visual Brief Toggle ───────────────────────────── */
+  document.querySelectorAll('.visual-brief').forEach(function(vb){
+    var toggle=document.createElement('span');
+    toggle.className='vb-toggle';
+    toggle.textContent='\ud83c\udfa8 Visual brief \u25b8';
+    toggle.addEventListener('click',function(){
+      vb.classList.toggle('open');
+      toggle.textContent=vb.classList.contains('open')?'\ud83c\udfa8 Visual brief \u25be':'\ud83c\udfa8 Visual brief \u25b8';
+    });
+    vb.parentNode.insertBefore(toggle,vb);
+  });
+
+  /* ── Debug burger: jump to any scene or episode ──────── */
+  (function initDebugBurger(){
+    var burger=document.getElementById('dbgBurger');
+    var menu=document.getElementById('dbgMenu');
+    if(!burger||!menu) return;
+    burger.addEventListener('click',function(e){
+      e.stopPropagation();
+      menu.hidden=!menu.hidden;
+    });
+    document.addEventListener('click',function(e){
+      if(!menu.hidden && !menu.contains(e.target) && e.target!==burger){
+        menu.hidden=true;
+      }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape' && !menu.hidden){menu.hidden=true;}
+    });
+    menu.querySelectorAll('.dbg-jump').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var sid=btn.dataset.jump;
+        var idx=sceneMap[sid];
+        if(idx===undefined) return;
+        if(currentIndex!==idx) navHistory.push(currentIndex);
+        showScene(idx);
+        menu.hidden=true;
+      });
+    });
+  })();
+
+  showScene(0);
+})();
+
+</script>
+</body>
+</html>

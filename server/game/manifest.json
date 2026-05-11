@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T04:17:49Z",
+  "generated_at": "2026-05-11T04:45:22Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1033,6 +1033,38 @@
       "scene_count": 34,
       "quiz_count": 14,
       "branch_count": 1
+    },
+    {
+      "id": "ep_049",
+      "number": 49,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_049.html",
+          "data": "ru/ep_049.json",
+          "content_hash": "eb0f29477b359308"
+        }
+      },
+      "title_ru": "Возвращение",
+      "lesson": "13A.1",
+      "scene_count": 36,
+      "quiz_count": 14,
+      "branch_count": 2
+    },
+    {
+      "id": "ep_050",
+      "number": 50,
+      "languages": {
+        "ru": {
+          "html": "ru/ep_050.html",
+          "data": "ru/ep_050.json",
+          "content_hash": "1f30dd3673139e53"
+        }
+      },
+      "title_ru": "1",
+      "lesson": "13A.2",
+      "scene_count": 47,
+      "quiz_count": 17,
+      "branch_count": 2
     }
   ]
 }
