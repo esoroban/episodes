@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T14:46:43Z",
+  "generated_at": "2026-05-11T15:33:53Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -14,7 +14,7 @@
         "uk": {
           "html": "uk/ep_001.html",
           "data": "uk/ep_001.json",
-          "content_hash": "ec7bf47f40428c8c"
+          "content_hash": "f7ce1ffee44deea2"
         }
       },
       "title_ru": "Утро без сестры",
@@ -300,7 +300,7 @@
         "uk": {
           "html": "uk/ep_014.html",
           "data": "uk/ep_014.json",
-          "content_hash": "17a67dea7827e37d"
+          "content_hash": "cf609bef27d57cc6"
         }
       },
       "title_ru": "Рекламная улица",
@@ -674,7 +674,7 @@
         "uk": {
           "html": "uk/ep_031.html",
           "data": "uk/ep_031.json",
-          "content_hash": "fb6c2ebf4fc5f3da"
+          "content_hash": "5c2e7c46fd1eaa1e"
         }
       },
       "title_ru": "Четыре кнопки страха",
@@ -960,7 +960,7 @@
         "uk": {
           "html": "uk/ep_044.html",
           "data": "uk/ep_044.json",
-          "content_hash": "c6a004d8df3832b9"
+          "content_hash": "597f1ba6386bf01b"
         }
       },
       "title_ru": "Карта",
@@ -977,14 +977,20 @@
         "ru": {
           "html": "ru/ep_045.html",
           "data": "ru/ep_045.json",
-          "content_hash": "00c52f2415197038"
+          "content_hash": "22bf92b0e7fa0197"
+        },
+        "uk": {
+          "html": "uk/ep_045.html",
+          "data": "uk/ep_045.json",
+          "content_hash": "7c042b04ef31f1ca"
         }
       },
       "title_ru": "Лучший ученик",
       "lesson": "12A.1",
       "scene_count": 44,
       "quiz_count": 17,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Найкращий учень"
     },
     {
       "id": "ep_046",
@@ -994,13 +1000,19 @@
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
           "content_hash": "54a626ae0b2aa50e"
+        },
+        "uk": {
+          "html": "uk/ep_046.html",
+          "data": "uk/ep_046.json",
+          "content_hash": "a9bde68cc74ac152"
         }
       },
       "title_ru": "Экзамен сомнения",
       "lesson": "12A.3",
       "scene_count": 36,
       "quiz_count": 15,
-      "branch_count": 2
+      "branch_count": 2,
+      "title_uk": "Іспит сумніву"
     },
     {
       "id": "ep_047",
@@ -1010,13 +1022,19 @@
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
           "content_hash": "3c104db6f56603f9"
+        },
+        "uk": {
+          "html": "uk/ep_047.html",
+          "data": "uk/ep_047.json",
+          "content_hash": "81bcd3598d116e05"
         }
       },
       "title_ru": "Интеллектуальная битва",
       "lesson": "12B.1",
       "scene_count": 36,
       "quiz_count": 18,
-      "branch_count": 2
+      "branch_count": 2,
+      "title_uk": "Інтелектуальна битва"
     },
     {
       "id": "ep_048",
@@ -1025,14 +1043,20 @@
         "ru": {
           "html": "ru/ep_048.html",
           "data": "ru/ep_048.json",
-          "content_hash": "3c38b5797c9cd51c"
+          "content_hash": "891b696ede7571de"
+        },
+        "uk": {
+          "html": "uk/ep_048.html",
+          "data": "uk/ep_048.json",
+          "content_hash": "f7654edb7fb96f7c"
         }
       },
       "title_ru": "Стены прозрачнеют",
       "lesson": "12B.3",
       "scene_count": 36,
       "quiz_count": 14,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Стіни прозоріють"
     },
     {
       "id": "ep_049",
@@ -1042,13 +1066,19 @@
           "html": "ru/ep_049.html",
           "data": "ru/ep_049.json",
           "content_hash": "fd4efe9d9d1c02c3"
+        },
+        "uk": {
+          "html": "uk/ep_049.html",
+          "data": "uk/ep_049.json",
+          "content_hash": "a8504952fd737bc3"
         }
       },
       "title_ru": "Возвращение",
       "lesson": "13A.1",
       "scene_count": 33,
       "quiz_count": 11,
-      "branch_count": 2
+      "branch_count": 2,
+      "title_uk": "Повернення"
     },
     {
       "id": "ep_050",
@@ -1057,14 +1087,20 @@
         "ru": {
           "html": "ru/ep_050.html",
           "data": "ru/ep_050.json",
-          "content_hash": "ce9f506ebf6e8f2c"
+          "content_hash": "e6d1eb86b3192de3"
+        },
+        "uk": {
+          "html": "uk/ep_050.html",
+          "data": "uk/ep_050.json",
+          "content_hash": "d04606b0ee90fdd0"
         }
       },
       "title_ru": "1",
       "lesson": "13A.2",
       "scene_count": 15,
       "quiz_count": 0,
-      "branch_count": 1
+      "branch_count": 1,
+      "title_uk": "Один"
     }
   ]
 }

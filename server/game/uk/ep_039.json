@@ -530,14 +530,14 @@
           "question": "Голос через Софію: «Чому ти кинув друзів і прийшов один?» Скільки питань сховано?",
           "options": [
             {
-              "id": "one",
-              "text": "Одне",
-              "correct": false
-            },
-            {
               "id": "two",
               "text": "Два",
               "correct": true
+            },
+            {
+              "id": "one",
+              "text": "Одне",
+              "correct": false
             }
           ],
           "correct_logic": "1: чому кинув друзів? 2: чому прийшов один? Дві теми склеєні в одну.",
@@ -770,14 +770,14 @@
           "question": "«Де ти був учора ввечері?» Просте чи складне?",
           "options": [
             {
-              "id": "simple",
-              "text": "Просте",
-              "correct": true
-            },
-            {
               "id": "compound",
               "text": "Складне",
               "correct": false
+            },
+            {
+              "id": "simple",
+              "text": "Просте",
+              "correct": true
             }
           ],
           "correct_logic": "Одна тема. Один час. Чесне питання.",

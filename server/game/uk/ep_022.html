@@ -114,6 +114,9 @@ body {
 }
 .visual-brief.open { display: block; }
 .vb-label { color: var(--accent); font-weight: 600; }
+.vb-sub { margin-bottom: 0.6rem; padding-bottom: 0.6rem; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+.vb-sub:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.vb-sub-label { color: var(--accent); font-weight: 700; font-size: 0.75rem; margin-bottom: 0.25rem; opacity: 0.8; font-family: var(--font-ui); }
 /* UK build: hide internal visual briefs + scene-meta (Russian working-lang
    artifacts for artists, not end-user content). Keeps DOM structure identical
    so JSON manifest and scripts stay unchanged. */
@@ -187,6 +190,13 @@ body.lang-uk .scene-meta { display: none !important; }
 .nav-btn.primary { background: var(--accent); color: var(--bg); font-weight: 600; }
 .nav-btn.primary:hover { background: #8ab0e0; }
 .nav-btn.primary:disabled { background: var(--accent); opacity: 0.3; }
+.dbg-skip-btn {
+  padding: 0.4rem 0.8rem; border: 1px dashed #ff6b6b; border-radius: 8px;
+  background: transparent; color: #ff6b6b; font-size: 0.78rem;
+  cursor: pointer; font-family: var(--font-ui); opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.dbg-skip-btn:hover { opacity: 1; }
 .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
 .end-screen { text-align: center; padding: 3rem 1.5rem; display: none; }
 .end-screen.active { display: block; }
@@ -362,9 +372,9 @@ body.lang-uk .scene-meta { display: none !important; }
   content: "🎧 "; font-style: normal; opacity: 0.6;
 }
 body.debug-off .voice-subtitle { display: none; }
-/* Quiz buttons */
-.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
-.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+/* Quiz buttons — scoped to chat bubbles only (drama-quiz keeps light text) */
+.bubble .quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.bubble .quiz-options { display: flex; flex-direction: column; gap: 4px; }
 .quiz-btn {
   background: #3390ec; color: #fff; border: none; border-radius: 7px;
   padding: 8px 10px; font-size: 12px; cursor: pointer;
@@ -418,6 +428,183 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
+  text-shadow: inherit;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -471,7 +658,7 @@ body.debug-off .voice-subtitle { display: none; }
 <header class="episode-header">
   <h1>Эпизод 22 — «Що сказав — що зробив»</h1>
   <p class="ep-lesson">6A.3</p>
-  <p class="ep-terms">Новые термины: питання-детектор, чарівна фраза (повернення до питання)</p>
+  
 </header>
 
 
@@ -557,7 +744,7 @@ body.debug-off .voice-subtitle { display: none; }
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Зеркальный Город, подвал подполья · после полудня</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">тонка хитрість — визнання без «так»</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка ластика<br><span class="vb-label">Атмосфера:</span> бытовая уловка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> ластик и знак «?»<br><span class="vb-label">Марко:</span> прищур, смотрит в экран</div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти брав мою гумку?» — «Потім поверну!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Потім поверну» — це «так, брав». Але відповідь прямо — мала б бути «так/ні». Ухиляння.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Потім поверну» = визнання, але не на те питання. Питали «брав?» — треба «так/ні».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Тобі сподобався фільм?» — «Мені дуже сподобався!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Запитали про фільм — відповіли про фільм. І з емоцією «дуже». Це відповідь.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, по суті, на те питання. «Так, дуже» — відповідь.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти з&#x27;їв печиво?» — «А ти знаєш, що печиво роблять з борошна?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Ерудиція про борошно — мило, але відводить. На «ти з&#x27;їв?» — не відповів.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми. Факт про борошно — не відповідь на «ти з&#x27;їв?».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хто розбив вікно?» — «Я ЗАВЖДИ винен, так?!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Образився — але не відповів. Емоція замість відповіді. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна тональності. Образа замість відповіді. На «хто розбив?» — не відповів.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти зателефонував бабусі?» — «Бабуся дуже тебе любить!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Тепло, але не по суті. Про любов — не про дзвінок. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Відповідь на інше питання. Приємно, але не відповідає «зателефонував чи ні».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти зробив уроки?» — «Так, математику й читання.» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Пряме «так» + деталі — зразок справжньої відповіді. Не хитрість.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, з деталями, по суті. «Так» + що саме.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило... двадцять друге.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Питання-детектор: «Це відповідь на МОЄ питання чи на ІНШЕ?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Чарівна фраза: «Це цікаво, але я питав про інше...» — GPS розмови.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Голос: «Я даю свободу» — на питання «навіщо стираєш?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Свобода» — це відповідь на «навіщо стираєш»? Ні. Різні теми. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Говорить про свободу, але не відповідає НАВІЩО стирає. Різні питання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як ввічливо повернути Голос до питання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Ти брешеш!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Це цікаво, але я питав, навіщо ти стираєш.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Брешеш» — це напад, а не повернення. Співрозмовник закриється. Потрібна формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула чарівної фрази — три кроки: визнати → повернути → не нападати. Варіант Б саме це і робить: «це цікаво» (визнати), «я питав, навіщо ти стираєш» (повернути), без звинувачень (не нападати).&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Рей: «У нас у Місті все добре!» — на питання «чому числа падають?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Усе добре» — це про числа? Ні. Рей ухилився. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Говорить про Місто загалом, не про числа. Відповідь на інше питання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як повернути Рея до питання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Ти поворотник увімкнув!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Зачекай, я питав про числа.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Ти поворотник увімкнув» — це звинувачення, а не повернення. Співрозмовник закриється. Формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула: визнати → повернути → не нападати. Варіант Б спокійно повертає розмову до чисел, без звинувачень на адресу Рея.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно в суботу?» — «Ой, цього тижня стільки уроків!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Про уроки — це про суботу? Лише непрямо. Прямого «так/ні» немає. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми. Уроки — не відповідь на «хочеш у кіно в суботу?».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно в суботу?» — «Так, давай на вечірній сеанс!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Так» + вечірній сеанс — це пряма відповідь. Деталь навіть уточнює.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, з деталями. Справжня відповідь.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно?» — «Фільми зараз такі дорогі!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Про ціни — це про «хочеш»? Непрямо. Прямого «так/ні» немає. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми на ціни. Не відповідь: хоче чи ні.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як повернути?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Тобі шкода грошей?»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Це правда, але я питав — чи хочеш ти піти?»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Шкода грошей» — атака на людину, а не повернення до питання. Співрозмовник закриється. Формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула повністю: «це правда» (визнати) → «чи хочеш ти піти?» (повернути) → без атаки на людину (не нападати). Усі три кроки в одній репліці.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep022_s05"><div class="vb-sub-label">ep022_s05</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка ластика<br><span class="vb-label">Атмосфера:</span> бытовая уловка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> ластик и знак «?»<br><span class="vb-label">Марко:</span> прищур, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s06"><div class="vb-sub-label">ep022_s06</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка билета в кино<br><span class="vb-label">Атмосфера:</span> простой пример — ответил<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> билет в кино с галочкой<br><span class="vb-label">Марко:</span> одобрительный кивок, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s07"><div class="vb-sub-label">ep022_s07</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка печенья и пакета муки<br><span class="vb-label">Атмосфера:</span> знакомая уловка через факт<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> печенье vs мука<br><span class="vb-label">Марко:</span> лёгкая усмешка, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s08"><div class="vb-sub-label">ep022_s08</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка разбитого окна<br><span class="vb-label">Атмосфера:</span> обида вместо правды<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> разбитое окно + восклицательный знак<br><span class="vb-label">Марко:</span> твёрдость, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s09"><div class="vb-sub-label">ep022_s09</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка бабушки с сердечком<br><span class="vb-label">Атмосфера:</span> сентимент как поворотник<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> сердце с знаком «?»<br><span class="vb-label">Марко:</span> спокойная внимательность, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s10"><div class="vb-sub-label">ep022_s10</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка раскрытой тетради с галочкой<br><span class="vb-label">Атмосфера:</span> контраст к пяти поворотникам<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> тетрадь с галочкой<br><span class="vb-label">Марко:</span> одобрительный кивок, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s11_sofa"><div class="vb-sub-label">ep022_s11_sofa</div><span class="vb-label">Фон:</span> Экран телефона крупным планом<br><span class="vb-label">Атмосфера:</span> инструмент встал<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузыри Софи — правило 22<br><span class="vb-label">Марко:</span> сосредоточенность, держит телефон в опущенной руке</div><div class="vb-sub" data-scene-id="ep022_s12"><div class="vb-sub-label">ep022_s12</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка открытых ворот со знаком «?»<br><span class="vb-label">Атмосфера:</span> детектор на Голосе<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> ворота с «?»<br><span class="vb-label">Марко:</span> въедливый разведчик, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s13"><div class="vb-sub-label">ep022_s13</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, две карточки А и Б<br><span class="vb-label">Атмосфера:</span> инструмент в действии<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> карточка Б подсвечена зелёным<br><span class="vb-label">Марко:</span> ясный выбор, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s14"><div class="vb-sub-label">ep022_s14</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка Рея и числа-графика<br><span class="vb-label">Атмосфера:</span> парадное уклонение<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> «всё хорошо» vs падающий график<br><span class="vb-label">Марко:</span> узнавание, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s15"><div class="vb-sub-label">ep022_s15</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, две карточки А и Б<br><span class="vb-label">Атмосфера:</span> вежливый возврат<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> Б подсвечена зелёным<br><span class="vb-label">Марко:</span> уверенный, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s16"><div class="vb-sub-label">ep022_s16</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка билета в кино и тетради<br><span class="vb-label">Атмосфера:</span> знакомая отмазка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> билет vs тетрадь<br><span class="vb-label">Марко:</span> прищур, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s17"><div class="vb-sub-label">ep022_s17</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка билета на вечерний сеанс<br><span class="vb-label">Атмосфера:</span> ясный «да»<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> билет на вечер<br><span class="vb-label">Марко:</span> одобрительный кивок, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s18"><div class="vb-sub-label">ep022_s18</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, иконка билета с ценником<br><span class="vb-label">Атмосфера:</span> ещё одна уловка<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> ценник вместо ответа<br><span class="vb-label">Марко:</span> спокойный анализ, смотрит в экран</div><div class="vb-sub" data-scene-id="ep022_s19"><div class="vb-sub-label">ep022_s19</div><span class="vb-label">Фон:</span> Экран телефона, пузырь, две карточки А и Б<br><span class="vb-label">Атмосфера:</span> инструмент в руке<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> Б подсвечена зелёным<br><span class="vb-label">Марко:</span> собранная уверенность, смотрит в экран</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти брав мою гумку?» — «Потім поверну!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Потім поверну» — це «так, брав». Але відповідь прямо — мала б бути «так/ні». Ухиляння.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Потім поверну» = визнання, але не на те питання. Питали «брав?» — треба «так/ні».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Тобі сподобався фільм?» — «Мені дуже сподобався!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Запитали про фільм — відповіли про фільм. І з емоцією «дуже». Це відповідь.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, по суті, на те питання. «Так, дуже» — відповідь.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти з&#x27;їв печиво?» — «А ти знаєш, що печиво роблять з борошна?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Ерудиція про борошно — мило, але відводить. На «ти з&#x27;їв?» — не відповів.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми. Факт про борошно — не відповідь на «ти з&#x27;їв?».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хто розбив вікно?» — «Я ЗАВЖДИ винен, так?!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Образився — але не відповів. Емоція замість відповіді. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна тональності. Образа замість відповіді. На «хто розбив?» — не відповів.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти зателефонував бабусі?» — «Бабуся дуже тебе любить!» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Тепло, але не по суті. Про любов — не про дзвінок. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Відповідь на інше питання. Приємно, але не відповідає «зателефонував чи ні».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Ти зробив уроки?» — «Так, математику й читання.» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Пряме «так» + деталі — зразок справжньої відповіді. Не хитрість.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, з деталями, по суті. «Так» + що саме.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Правило... двадцять друге.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Питання-детектор: «Це відповідь на МОЄ питання чи на ІНШЕ?»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Чарівна фраза: «Це цікаво, але я питав про інше...» — GPS розмови.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Голос: «Я даю свободу» — на питання «навіщо стираєш?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Свобода» — це відповідь на «навіщо стираєш»? Ні. Різні теми. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Говорить про свободу, але не відповідає НАВІЩО стирає. Різні питання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як ввічливо повернути Голос до питання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Ти брешеш!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Це цікаво, але я питав, навіщо ти стираєш.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Брешеш» — це напад, а не повернення. Співрозмовник закриється. Потрібна формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула чарівної фрази — три кроки: визнати → повернути → не нападати. Варіант Б саме це і робить: «це цікаво» (визнати), «я питав, навіщо ти стираєш» (повернути), без звинувачень (не нападати).&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Рей: «У нас у Місті все добре!» — на питання «чому числа падають?» Відповів чи поворотник?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Усе добре» — це про числа? Ні. Рей ухилився. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Говорить про Місто загалом, не про числа. Відповідь на інше питання.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як повернути Рея до питання?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Ти поворотник увімкнув!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Зачекай, я питав про числа.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Ти поворотник увімкнув» — це звинувачення, а не повернення. Співрозмовник закриється. Формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула: визнати → повернути → не нападати. Варіант Б спокійно повертає розмову до чисел, без звинувачень на адресу Рея.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно в суботу?» — «Ой, цього тижня стільки уроків!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Про уроки — це про суботу? Лише непрямо. Прямого «так/ні» немає. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми. Уроки — не відповідь на «хочеш у кіно в суботу?».&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно в суботу?» — «Так, давай на вечірній сеанс!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Так» + вечірній сеанс — це пряма відповідь. Деталь навіть уточнює.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Конкретно, з деталями. Справжня відповідь.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;«Хочеш у кіно?» — «Фільми зараз такі дорогі!» Відповів?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;Відповів&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Поворотник&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Про ціни — це про «хочеш»? Непрямо. Прямого «так/ні» немає. Поворотник.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Зміна теми на ціни. Не відповідь: хоче чи ні.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Як повернути?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;А: «Тобі шкода грошей?»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;Б: «Це правда, але я питав — чи хочеш ти піти?»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;«Шкода грошей» — атака на людину, а не повернення до питання. Співрозмовник закриється. Формула: визнати → повернути → не нападати. Це варіант Б.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Формула повністю: «це правда» (визнати) → «чи хочеш ти піти?» (повернути) → без атаки на людину (не нападати). Усі три кроки в одній репліці.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
@@ -600,6 +787,7 @@ body.debug-off .voice-subtitle { display: none; }
 <div class="nav-bar">
   <button class="nav-btn" id="btnPrev" disabled>← Назад</button>
   <button class="nav-btn primary" id="btnNext">Дальше →</button>
+  
 </div>
 
 
@@ -608,7 +796,7 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Эпизод</h3>
     <ol>
-      <li><a href="ep_001.html" class="">1. Ранок без сестри</a></li><li><a href="ep_002.html" class="">2. Неправда та її види</a></li><li><a href="ep_003.html" class="">3. Хитрі твердження</a></li><li><a href="ep_004.html" class="">4. Детектив правди</a></li><li><a href="ep_005.html" class="">5. Якщо правильно — правильно завжди</a></li><li><a href="ep_006.html" class="">6. Світлофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Ляльковод</a></li><li><a href="ep_009.html" class="">9. Три цілі суперечки</a></li><li><a href="ep_010.html" class="">10. Розвідник</a></li><li><a href="ep_011.html" class="">11. Перший, хто чує</a></li><li><a href="ep_012.html" class="">12. Формула висловлювання</a></li><li><a href="ep_013.html" class="">13. Те, що слова ховають</a></li><li><a href="ep_014.html" class="">14. Рекламна вулиця</a></li><li><a href="ep_015.html" class="">15. Два плакати</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li><li><a href="ep_017.html" class="">17. Сім ланок</a></li><li><a href="ep_018.html" class="">18. Дерево зв&#x27;язків</a></li><li><a href="ep_019.html" class="">19. Про що ми взагалі сперечаємось?</a></li><li><a href="ep_020.html" class="">20. Мам, я б теж обрала його</a></li><li><a href="ep_021.html" class="">21. Поворотник</a></li><li><a href="ep_022.html" class="dbg-current">22. Що сказав — що зробив</a></li><li><a href="ep_023.html" class="">23. Усі, кожен, ніхто</a></li><li><a href="ep_024.html" class="">24. Скажи моє ім&#x27;я</a></li><li><a href="ep_025.html" class="">25. Шоколад на щоці</a></li><li><a href="ep_026.html" class="">26. Раніше ти казав...</a></li><li><a href="ep_027.html" class="">27. Тато сказав</a></li><li><a href="ep_028.html" class="">28. Батько Віри</a></li><li><a href="ep_029.html" class="">29. Солом&#x27;яне опудало</a></li><li><a href="ep_030.html" class="">30. Правда як зброя</a></li><li><a href="ep_031.html" class="">31. Чотири кнопки страху</a></li><li><a href="ep_032.html" class="">32. Зупинись</a></li><li><a href="ep_033.html" class="">33. Ціна кожного кроку</a></li><li><a href="ep_034.html" class="">34. Три нитки</a></li><li><a href="ep_035.html" class="">35. Десятки</a></li><li><a href="ep_036.html" class="">36. Агент «С»</a></li><li><a href="ep_037.html" class="">37. Або — або</a></li><li><a href="ep_038.html" class="">38. Ціна третього варіанту</a></li><li><a href="ep_039.html" class="">39. Скляна кімната</a></li><li><a href="ep_040.html" class="">40. Розвідник у вежі</a></li>
+      <li><a href="ep_001.html" class="">1. Ранок без сестри</a></li><li><a href="ep_002.html" class="">2. Неправда та її види</a></li><li><a href="ep_003.html" class="">3. Хитрі твердження</a></li><li><a href="ep_004.html" class="">4. Детектив правди</a></li><li><a href="ep_005.html" class="">5. Якщо правильно — правильно завжди</a></li><li><a href="ep_006.html" class="">6. Світлофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Ляльковод</a></li><li><a href="ep_009.html" class="">9. Три цілі суперечки</a></li><li><a href="ep_010.html" class="">10. Розвідник</a></li><li><a href="ep_011.html" class="">11. Перший, хто чує</a></li><li><a href="ep_012.html" class="">12. Формула висловлювання</a></li><li><a href="ep_013.html" class="">13. Те, що слова ховають</a></li><li><a href="ep_014.html" class="">14. Рекламна вулиця</a></li><li><a href="ep_015.html" class="">15. Два плакати</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li><li><a href="ep_017.html" class="">17. Сім ланок</a></li><li><a href="ep_018.html" class="">18. Дерево зв&#x27;язків</a></li><li><a href="ep_019.html" class="">19. Про що ми взагалі сперечаємось?</a></li><li><a href="ep_020.html" class="">20. Мам, я б теж обрала його</a></li><li><a href="ep_021.html" class="">21. Поворотник</a></li><li><a href="ep_022.html" class="dbg-current">22. Що сказав — що зробив</a></li><li><a href="ep_023.html" class="">23. Усі, кожен, ніхто</a></li><li><a href="ep_024.html" class="">24. Скажи моє ім&#x27;я</a></li><li><a href="ep_025.html" class="">25. Шоколад на щоці</a></li><li><a href="ep_026.html" class="">26. Раніше ти казав...</a></li><li><a href="ep_027.html" class="">27. Тато сказав</a></li><li><a href="ep_028.html" class="">28. Батько Віри</a></li><li><a href="ep_029.html" class="">29. Солом&#x27;яне опудало</a></li><li><a href="ep_030.html" class="">30. Правда як зброя</a></li><li><a href="ep_031.html" class="">31. Чотири кнопки страху</a></li><li><a href="ep_032.html" class="">32. Зупинись</a></li><li><a href="ep_033.html" class="">33. Ціна кожного кроку</a></li><li><a href="ep_034.html" class="">34. Три нитки</a></li><li><a href="ep_035.html" class="">35. Десятки</a></li><li><a href="ep_036.html" class="">36. Агент «С»</a></li><li><a href="ep_037.html" class="">37. Або — або</a></li><li><a href="ep_038.html" class="">38. Ціна третього варіанту</a></li><li><a href="ep_039.html" class="">39. Скляна кімната</a></li><li><a href="ep_040.html" class="">40. Розвідник у вежі</a></li><li><a href="ep_041.html" class="">41. Передемагогувати</a></li><li><a href="ep_042.html" class="">42. Коли ви перестали любити учнів?</a></li><li><a href="ep_043.html" class="">43. Тринадцятий прийом</a></li><li><a href="ep_044.html" class="">44. Карта</a></li><li><a href="ep_045.html" class="">45. Найкращий учень</a></li><li><a href="ep_046.html" class="">46. Іспит сумніву</a></li><li><a href="ep_047.html" class="">47. Інтелектуальна битва</a></li><li><a href="ep_048.html" class="">48. Стіни прозоріють</a></li><li><a href="ep_049.html" class="">49. Повернення</a></li><li><a href="ep_050.html" class="">50. Один</a></li>
     </ol>
   </section>
   <section class="dbg-section">
@@ -620,6 +808,7 @@ body.debug-off .voice-subtitle { display: none; }
 </nav>
 
 <script>
+window.__CLI_PASSWORD_SLOTS = [];
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
 (function() {
@@ -685,6 +874,21 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
 
   btnNext.addEventListener('click',goForward);
   btnPrev.addEventListener('click',goBack);
+  var dbgSkipBtn=document.getElementById('dbgSkipBtn');
+  if(dbgSkipBtn){
+    dbgSkipBtn.addEventListener('click',function(){
+      if(currentIndex>=scenes.length) return;
+      navHistory.push(currentIndex);
+      var sc=scenes[currentIndex];
+      sc.dataset.chatPending='false';
+      answeredScenes.add(currentIndex);
+      var ni=null;
+      if(sc.dataset.next) ni=resolveNext(sc.dataset.next);
+      if(ni===null&&sc.dataset.nextEp){window.location.href=sc.dataset.nextEp;return;}
+      if(ni===null) ni=currentIndex+1;
+      showScene(ni);
+    });
+  }
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'||e.key===' '){if(!btnNext.disabled){e.preventDefault();btnNext.click();}}
     else if(e.key==='ArrowLeft'){if(!btnPrev.disabled){e.preventDefault();btnPrev.click();}}
@@ -798,11 +1002,14 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
               } else {
                 attempts++;
                 quizResults[si]='wrong';
-                /* Inline fail feedback + re-inject same quiz below */
-                if(m.fbFail){
+                /* Inline fail feedback: prefer per-option fb (constructor),
+                   fall back to scene-level fbFail (vote). */
+                var idx=parseInt(b.dataset.i,10);
+                var optFb=(m.o[idx]&&m.o[idx].fb)?m.o[idx].fb:m.fbFail;
+                if(optFb){
                   var fb=document.createElement('div');
                   fb.className='msg-row incoming';
-                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+m.fbFail+'</div><div class="msg-time">'+now()+'</div></div>';
+                  fb.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div>'+optFb+'</div><div class="msg-time">'+now()+'</div></div>';
                   chatEl.appendChild(fb);scroll();
                 }
                 setTimeout(function(){showTyping().then(mountQuiz);},CFG.retryDelay);
@@ -943,6 +1150,119 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     });
   });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  window.__cliCollected=cliNotepad;
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
+          if(fragment){
+            collectFragment(fragment);
+            var accumulated=(window.__cliCollected||[]).join('');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; блокнот: '+accumulated+'</div>');
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
 
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){

@@ -452,14 +452,14 @@
           "question": "«Лід слизький, бо при нагріванні поверхні тонкий шар води зменшує тертя.» Який тип обґрунтування?",
           "options": [
             {
-              "id": "logic",
-              "text": "Логіка",
-              "correct": false
-            },
-            {
               "id": "fact",
               "text": "Факт",
               "correct": true
+            },
+            {
+              "id": "logic",
+              "text": "Логіка",
+              "correct": false
             },
             {
               "id": "source",
@@ -1040,14 +1040,14 @@
           "question": "«Планети обертаються навколо Сонця — це підтверджено тисячами спостережень за сотні років.» Який тип?",
           "options": [
             {
-              "id": "fact",
-              "text": "Факт",
-              "correct": true
-            },
-            {
               "id": "logic",
               "text": "Логіка",
               "correct": false
+            },
+            {
+              "id": "fact",
+              "text": "Факт",
+              "correct": true
             },
             {
               "id": "source",

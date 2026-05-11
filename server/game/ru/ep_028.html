@@ -372,9 +372,9 @@ body.lang-uk .scene-meta { display: none !important; }
   content: "🎧 "; font-style: normal; opacity: 0.6;
 }
 body.debug-off .voice-subtitle { display: none; }
-/* Quiz buttons */
-.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
-.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+/* Quiz buttons — scoped to chat bubbles only (drama-quiz keeps light text) */
+.bubble .quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.bubble .quiz-options { display: flex; flex-direction: column; gap: 4px; }
 .quiz-btn {
   background: #3390ec; color: #fff; border: none; border-radius: 7px;
   padding: 8px 10px; font-size: 12px; cursor: pointer;
@@ -428,6 +428,183 @@ body.debug-off .voice-subtitle { display: none; }
 .imode-disabled .disabled-label { display: block; }
 
 .nav-spacer { height: 4rem; }
+/* ====== CLI Terminal (ep_045 carta-demagogy + challenge) ====== */
+.cli-screen {
+  background: #0a0a0a;
+  color: #33ff33;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  border: 1px solid #1f3f1f;
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem 1.5rem;
+  /* Phone-shaped vertical panel — full mobile screen on small devices */
+  width: 100%;
+  max-width: 375px;
+  min-height: 80vh;
+  margin: 0.6rem auto;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(51, 255, 51, 0.08) inset,
+    0 0 18px rgba(51, 255, 51, 0.08),
+    0 6px 22px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+@media (max-width: 480px) {
+  .cli-screen { max-width: 100%; min-height: calc(100vh - 80px); margin: 0; border-radius: 0; }
+}
+.cli-screen::before {
+  /* faint scanlines */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0.04) 0,
+    rgba(51, 255, 51, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.cli-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 0.55rem; margin-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.35);
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.cli-sys { font-weight: 700; }
+.cli-blink {
+  animation: cliBlink 1s steps(2, start) infinite;
+  font-weight: 700;
+}
+@keyframes cliBlink {
+  to { opacity: 0; }
+}
+.cli-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; }
+.cli-narrator {
+  position: relative; z-index: 1;
+  margin: 0.55rem 0 0.85rem;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-left: 2px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.04);
+  border-radius: 0 6px 6px 0;
+  color: #88dd88;
+  font-style: italic;
+  text-shadow: 0 0 2px rgba(51, 255, 51, 0.25);
+}
+.cli-narrator-tag {
+  display: block; font-size: 0.72rem; letter-spacing: 0.08em;
+  opacity: 0.7; text-transform: lowercase; margin-bottom: 0.3rem;
+  font-style: normal; color: #66bb66;
+}
+.cli-narrator-body { font-size: 0.92rem; line-height: 1.55; white-space: pre-wrap; }
+.cli-line { white-space: pre-wrap; word-wrap: break-word; margin: 0.18rem 0; }
+.cli-q { font-weight: 700; margin-bottom: 0.5rem; }
+.cli-options {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin: 0.6rem 0 0.7rem;
+}
+.cli-tap-hint {
+  opacity: 0.55; font-size: 0.85em; margin-top: 0.4rem;
+}
+.cli-option {
+  display: block; width: 100%; text-align: left;
+  background: rgba(51, 255, 51, 0.06); color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px;
+  text-shadow: inherit;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cli-option:hover {
+  background: rgba(51, 255, 51, 0.14);
+  border-color: rgba(51, 255, 51, 0.65);
+}
+.cli-option:active {
+  background: rgba(51, 255, 51, 0.22);
+}
+.cli-option.cli-correct {
+  background: rgba(51, 255, 51, 0.22);
+  border-color: #66ff66;
+  color: #aaffaa;
+  cursor: default;
+}
+.cli-option.cli-wrong {
+  background: rgba(255, 80, 80, 0.14);
+  border-color: #ff6666;
+  color: #ff8585;
+  text-decoration: line-through;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.45);
+}
+.cli-option:disabled { cursor: default; }
+.cli-prompt { opacity: 0.7; margin-right: 0.3rem; }
+.cli-num {
+  display: inline-block; min-width: 1.6em; opacity: 0.95;
+  font-weight: 700;
+}
+.cli-cursor {
+  display: inline-block; width: 0.55em; background: rgba(51,255,51,0.6);
+  margin-left: 0.15em; animation: cliBlink 1s steps(2, start) infinite;
+}
+.cli-feedback {
+  margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.6rem;
+  border: 1px dashed rgba(51, 255, 51, 0.4);
+  background: rgba(51, 255, 51, 0.06);
+  font-size: 0.92rem;
+}
+.cli-feedback.cli-fb-deny {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffa0a0;
+  text-shadow: 0 0 4px rgba(255, 80, 80, 0.4);
+}
+.cli-feedback .cli-line { margin: 0.1rem 0; }
+.cli-char-line { font-weight: 700; letter-spacing: 0.18em; }
+/* ===== Floating notepad widget (collected password fragments) ===== */
+.cli-notepad {
+  position: fixed; right: 12px; top: 12px;
+  z-index: 9000;
+  background: rgba(10, 10, 10, 0.88);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.4);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem 0.6rem;
+  font-family: 'Courier New', 'Menlo', 'Consolas', monospace;
+  font-size: 0.78rem; line-height: 1.4;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.55);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cli-notepad.visible { opacity: 1; }
+.cli-notepad-title {
+  font-weight: 700; letter-spacing: 0.12em;
+  font-size: 0.7rem; opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+.cli-notepad-slots {
+  display: flex; flex-wrap: wrap; gap: 0.18rem;
+  font-weight: 700; letter-spacing: 0.05em;
+  word-break: break-all;
+}
+.cli-slot {
+  display: inline-block; min-width: 0.7em; text-align: center;
+}
+.cli-slot.empty { color: rgba(51, 255, 51, 0.32); }
+.cli-slot.filled { color: #aaffaa; text-shadow: 0 0 5px rgba(170,255,170,0.7); }
+.cli-slot.dot { color: #66ff66; }
+@media (max-width: 600px) {
+  .cli-notepad { right: 6px; top: 6px; padding: 0.4rem 0.55rem; max-width: 180px; }
+}
 /* ─── Debug burger + menu (always on, for scene/episode jumps) ─── */
 .dbg-burger {
   position: fixed; top: 8px; right: 8px; z-index: 10001;
@@ -481,7 +658,7 @@ body.debug-off .voice-subtitle { display: none; }
 <header class="episode-header">
   <h1>Эпизод 28 — «Отец Веры»</h1>
   <p class="ep-lesson">7B.2</p>
-  <p class="ep-terms">Новые термины: нападение на человека, три вида нападения, защита от нападения (три шага)</p>
+  
 </header>
 
 
@@ -656,7 +833,7 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Эпизод</h3>
     <ol>
-      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li><li><a href="ep_013.html" class="">13. То, что слова прячут</a></li><li><a href="ep_014.html" class="">14. Рекламная улица</a></li><li><a href="ep_015.html" class="">15. Два плаката</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li><li><a href="ep_017.html" class="">17. Семь звеньев</a></li><li><a href="ep_018.html" class="">18. Дерево связей</a></li><li><a href="ep_019.html" class="">19. О чём мы вообще спорим?</a></li><li><a href="ep_020.html" class="">20. Мам, я бы тоже выбрала его</a></li><li><a href="ep_021.html" class="">21. Поворотник</a></li><li><a href="ep_022.html" class="">22. Что сказал — что сделал</a></li><li><a href="ep_023.html" class="">23. Все, каждый, никто</a></li><li><a href="ep_024.html" class="">24. Скажи моё имя</a></li><li><a href="ep_025.html" class="">25. Шоколад на щеке</a></li><li><a href="ep_026.html" class="">26. Раньше ты говорил...</a></li><li><a href="ep_027.html" class="">27. Папа сказал</a></li><li><a href="ep_028.html" class="dbg-current">28. Отец Веры</a></li><li><a href="ep_029.html" class="">29. Соломенное чучело</a></li><li><a href="ep_030.html" class="">30. Правда как оружие</a></li><li><a href="ep_031.html" class="">31. Четыре кнопки страха</a></li><li><a href="ep_032.html" class="">32. Остановись</a></li><li><a href="ep_033.html" class="">33. Цена каждого шага</a></li><li><a href="ep_034.html" class="">34. Три нитки</a></li><li><a href="ep_035.html" class="">35. Десятки</a></li><li><a href="ep_036.html" class="">36. Агент «С»</a></li><li><a href="ep_037.html" class="">37. Или — или</a></li><li><a href="ep_038.html" class="">38. Цена третьего варианта</a></li><li><a href="ep_039.html" class="">39. Стеклянная комната</a></li><li><a href="ep_040.html" class="">40. Разведчик в башне</a></li><li><a href="ep_041.html" class="">41. Передемагогировать</a></li><li><a href="ep_042.html" class="">42. Когда вы перестали любить учеников?</a></li><li><a href="ep_043.html" class="">43. Тринадцатый приём</a></li><li><a href="ep_044.html" class="">44. Карта</a></li><li><a href="ep_045.html" class="">45. Лучший ученик</a></li><li><a href="ep_046.html" class="">46. Экзамен сомнения</a></li><li><a href="ep_047.html" class="">47. Интеллектуальная битва</a></li><li><a href="ep_048.html" class="">48. Стены прозрачнеют</a></li>
+      <li><a href="ep_001.html" class="">1. Утро без сестры</a></li><li><a href="ep_002.html" class="">2. Неправда и её виды</a></li><li><a href="ep_003.html" class="">3. Хитрые утверждения</a></li><li><a href="ep_004.html" class="">4. Детектив правды</a></li><li><a href="ep_005.html" class="">5. Если верно — верно всегда</a></li><li><a href="ep_006.html" class="">6. Светофор</a></li><li><a href="ep_007.html" class="">7. 47</a></li><li><a href="ep_008.html" class="">8. Кукловод</a></li><li><a href="ep_009.html" class="">9. Три цели спора</a></li><li><a href="ep_010.html" class="">10. Разведчик</a></li><li><a href="ep_011.html" class="">11. Первый, кто слышит</a></li><li><a href="ep_012.html" class="">12. Формула высказывания</a></li><li><a href="ep_013.html" class="">13. То, что слова прячут</a></li><li><a href="ep_014.html" class="">14. Рекламная улица</a></li><li><a href="ep_015.html" class="">15. Два плаката</a></li><li><a href="ep_016.html" class="">16. Табуретка</a></li><li><a href="ep_017.html" class="">17. Семь звеньев</a></li><li><a href="ep_018.html" class="">18. Дерево связей</a></li><li><a href="ep_019.html" class="">19. О чём мы вообще спорим?</a></li><li><a href="ep_020.html" class="">20. Мам, я бы тоже выбрала его</a></li><li><a href="ep_021.html" class="">21. Поворотник</a></li><li><a href="ep_022.html" class="">22. Что сказал — что сделал</a></li><li><a href="ep_023.html" class="">23. Все, каждый, никто</a></li><li><a href="ep_024.html" class="">24. Скажи моё имя</a></li><li><a href="ep_025.html" class="">25. Шоколад на щеке</a></li><li><a href="ep_026.html" class="">26. Раньше ты говорил...</a></li><li><a href="ep_027.html" class="">27. Папа сказал</a></li><li><a href="ep_028.html" class="dbg-current">28. Отец Веры</a></li><li><a href="ep_029.html" class="">29. Соломенное чучело</a></li><li><a href="ep_030.html" class="">30. Правда как оружие</a></li><li><a href="ep_031.html" class="">31. Четыре кнопки страха</a></li><li><a href="ep_032.html" class="">32. Остановись</a></li><li><a href="ep_033.html" class="">33. Цена каждого шага</a></li><li><a href="ep_034.html" class="">34. Три нитки</a></li><li><a href="ep_035.html" class="">35. Десятки</a></li><li><a href="ep_036.html" class="">36. Агент «С»</a></li><li><a href="ep_037.html" class="">37. Или — или</a></li><li><a href="ep_038.html" class="">38. Цена третьего варианта</a></li><li><a href="ep_039.html" class="">39. Стеклянная комната</a></li><li><a href="ep_040.html" class="">40. Разведчик в башне</a></li><li><a href="ep_041.html" class="">41. Передемагогировать</a></li><li><a href="ep_042.html" class="">42. Когда вы перестали любить учеников?</a></li><li><a href="ep_043.html" class="">43. Тринадцатый приём</a></li><li><a href="ep_044.html" class="">44. Карта</a></li><li><a href="ep_045.html" class="">45. Лучший ученик</a></li><li><a href="ep_046.html" class="">46. Экзамен сомнения</a></li><li><a href="ep_047.html" class="">47. Интеллектуальная битва</a></li><li><a href="ep_048.html" class="">48. Стены прозрачнеют</a></li><li><a href="ep_049.html" class="">49. Возвращение</a></li><li><a href="ep_050.html" class="">50. 1</a></li>
     </ol>
   </section>
   <section class="dbg-section">
@@ -668,6 +845,7 @@ body.debug-off .voice-subtitle { display: none; }
 </nav>
 
 <script>
+window.__CLI_PASSWORD_SLOTS = [];
 var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,voMin:200,voMax:400,voFactor:10,retryDelay:400,recSim:500};
 
 (function() {
@@ -1009,6 +1187,119 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
       });
     });
   });
+
+  /* ── CLI Quiz (terminal-style; collects password fragments) ─ */
+  var cliNotepad=[];
+  window.__cliCollected=cliNotepad;
+  var cliNotepadEl=null;
+  var cliPasswordSlots=window.__CLI_PASSWORD_SLOTS||[];
+  function ensureCliNotepad(){
+    if(cliNotepadEl) return cliNotepadEl;
+    if(!cliPasswordSlots.length) return null;
+    var el=document.createElement('div');
+    el.className='cli-notepad';
+    el.id='cliNotepad';
+    var slotsHtml=cliPasswordSlots.map(function(s,i){
+      return '<span class="cli-slot empty" data-slot-i="'+i+'">_</span>';
+    }).join('');
+    el.innerHTML='<div class="cli-notepad-title">\u0411\u041b\u041e\u041a\u041d\u041e\u0422</div><div class="cli-notepad-slots">'+slotsHtml+'</div>';
+    document.body.appendChild(el);
+    cliNotepadEl=el;
+    return el;
+  }
+  function showCliNotepad(){
+    var el=ensureCliNotepad();
+    if(el) el.classList.add('visible');
+  }
+  function hideCliNotepad(){
+    if(cliNotepadEl) cliNotepadEl.classList.remove('visible');
+  }
+  function collectFragment(frag){
+    if(!frag) return;
+    var el=ensureCliNotepad();
+    if(!el) return;
+    /* Fill the next empty slot whose expected fragment matches; fallback —
+       fill first empty slot. Slots remember their own intended char so
+       sequential collection is consistent across retries. */
+    var slots=el.querySelectorAll('.cli-slot.empty');
+    var target=null;
+    for(var i=0;i<slots.length;i++){
+      var idx=parseInt(slots[i].dataset.slotI,10);
+      var expected=cliPasswordSlots[idx]&&cliPasswordSlots[idx].frag;
+      if(expected===frag){target=slots[i];break;}
+    }
+    if(!target&&slots.length){target=slots[0];}
+    if(!target) return;
+    target.classList.remove('empty');
+    target.classList.add('filled');
+    if(frag==='.') target.classList.add('dot');
+    target.textContent=frag;
+    cliNotepad.push(frag);
+  }
+  document.querySelectorAll('.cli-screen').forEach(function(cli){
+    var buttons=cli.querySelectorAll('.cli-option');
+    var feedback=cli.querySelector('.cli-feedback');
+    var meta=cli.querySelector('.cli-meta');
+    var fbOk=meta?meta.dataset.fbOk:'';
+    var fbFail=meta?meta.dataset.fbFail:'';
+    var fragment=cli.dataset.passwordFragment||'';
+    var done=false, attempts=0;
+    totalQuizzes++;
+    /* Reveal notepad as soon as the player ENTERS any CLI scene (even before
+       answering), so the affordance is visible and the player understands
+       letters will collect there. */
+    showCliNotepad();
+    buttons.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(done) return;
+        var ok=btn.dataset.correct==='true';
+        var se=cli.closest('.scene');
+        var si=Array.from(scenes).indexOf(se);
+        if(ok){
+          done=true;
+          btn.classList.add('cli-correct');
+          buttons.forEach(function(b){b.disabled=true;});
+          var lines=['<div class="cli-line">&gt; ДОСТУП ОТКРЫТ</div>'];
+          if(fragment){
+            collectFragment(fragment);
+            var accumulated=(window.__cliCollected||[]).join('');
+            lines.push('<div class="cli-line cli-char-line">&gt; символ: '+fragment+'</div>');
+            lines.push('<div class="cli-line cli-char-line">&gt; блокнот: '+accumulated+'</div>');
+          }
+          if(fbOk){
+            lines.push('<div class="cli-line">&gt; '+fbOk+'</div>');
+          }
+          feedback.classList.remove('cli-fb-deny');
+          feedback.innerHTML=lines.join('');
+          feedback.hidden=false;
+          if(attempts===0){correctCount++;quizResults[si]='correct';}
+          else{quizResults[si]='retry_correct';}
+          answeredScenes.add(si);updateNextButton();
+        } else {
+          attempts++;
+          quizResults[si]='wrong';
+          btn.classList.add('cli-wrong');
+          btn.disabled=true;
+          var dlines=['<div class="cli-line">&gt; ОТКАЗАНО</div>'];
+          if(fbFail){
+            dlines.push('<div class="cli-line">&gt; подсказка: '+fbFail+'</div>');
+          }
+          dlines.push('<div class="cli-line">&gt; попробуй ещё раз.</div>');
+          feedback.classList.add('cli-fb-deny');
+          feedback.innerHTML=dlines.join('');
+          feedback.hidden=false;
+        }
+      });
+    });
+  });
+  /* Hide notepad on episode end-screen (no longer relevant). */
+  (function watchEnd(){
+    if(!endScreen) return;
+    var obs=new MutationObserver(function(){
+      if(endScreen.classList.contains('active')) hideCliNotepad();
+    });
+    obs.observe(endScreen,{attributes:true,attributeFilter:['class']});
+  })();
 
   /* ── Choice (auto-advance) ─────────────────────────── */
   document.querySelectorAll('.choice-option').forEach(function(btn){
