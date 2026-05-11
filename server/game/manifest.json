@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T14:41:05Z",
+  "generated_at": "2026-05-11T14:46:43Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1057,14 +1057,14 @@
         "ru": {
           "html": "ru/ep_050.html",
           "data": "ru/ep_050.json",
-          "content_hash": "8cce08e9bdc8e52d"
+          "content_hash": "ce9f506ebf6e8f2c"
         }
       },
       "title_ru": "1",
       "lesson": "13A.2",
-      "scene_count": 16,
+      "scene_count": 15,
       "quiz_count": 0,
-      "branch_count": 2
+      "branch_count": 1
     }
   ]
 }
