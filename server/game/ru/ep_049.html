@@ -372,9 +372,9 @@ body.lang-uk .scene-meta { display: none !important; }
   content: "🎧 "; font-style: normal; opacity: 0.6;
 }
 body.debug-off .voice-subtitle { display: none; }
-/* Quiz buttons */
-.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
-.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+/* Quiz buttons — scoped to chat bubbles only (drama-quiz keeps light text) */
+.bubble .quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.bubble .quiz-options { display: flex; flex-direction: column; gap: 4px; }
 .quiz-btn {
   background: #3390ec; color: #fff; border: none; border-radius: 7px;
   padding: 8px 10px; font-size: 12px; cursor: pointer;
@@ -663,132 +663,121 @@ body.debug-off .voice-subtitle { display: none; }
 
 
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s01" data-index="0" data-next="ep049_s02">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s01" data-index="0" data-next="ep049_s02">
     <div class="scene-header">
-      <span class="scene-counter">1 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, обычный мир, класс 5-Б · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">первый день после Зеркального Города — школа обычная, Марко другой</div></details>
+      <span class="scene-counter">1 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, прихожая → улица · утро</div><div class="scene-chars">Марко, София, мама</div><div class="scene-mood">первое обычное утро — сестра рядом, телефон молчит, идут к школе</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Обычный класс: бежевые стены, низкий потолок, парты в ряд. За окном — нормальное серое утро. Без зеркал, без фиолетового неба<br><span class="vb-label">Атмосфера:</span> обычный мир после стекла<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Марко за партой — он вернулся, но он другой<br><span class="vb-label">Марко:</span> спокойствие, внутренняя собранность, за партой, тетрадь открыта, ручка в руке<br><span class="vb-label">Предметы:</span> парта, тетрадь, ручка, рюкзак на крючке, телефон в кармане</div><div class="author-text"><p>Школа. Обычная. Знакомая. Потолки — низкие, стены — бежевые, пол — линолеум. Ни зеркал, ни динамиков, ни фиолетового неба. Просто школа.</p>
-<p>Марко сидит за партой. Рюкзак — на крючке. Тетрадь — открыта. Ручка — в руке. Как будто ничего не было. Как будто Зеркальный Город — сон.</p>
-<p>Но Марко — другой.</p>
-<p>Софа в кармане — молчит. Марко не достаёт телефон. Впервые — не нуждается. Сегодня он сам.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Двор у подъезда. Утренний свет, серый асфальт, скамейка, песочница, кот соседа на бордюре. Дальше — улица с автобусной остановкой<br><span class="vb-label">Атмосфера:</span> новый день — обычный, но рядом — сестра<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Марко и София идут плечом к плечу<br><span class="vb-label">Марко:</span> спокойная улыбка, рюкзак за плечами, шаг от подъезда, поправляет лямку<br><span class="vb-label">София:</span> первый школьный день после стекла — лёгкая,  бодрая, рядом, портфель в руке<br><span class="vb-label">мама:</span> смотрит в окно, удерживается, чтобы не выйти, за стеклом окна, силуэт<br><span class="vb-label">Предметы:</span> рюкзак Марко, портфель Софии, окно с маминым силуэтом, скамейка, кот соседа</div><div class="author-text"><p>Утро. Тёплое. Обычное.</p>
+<p>Кухня — пахнет тостами. Папа уже уехал. Мама в халате — у плиты. Каждые тридцать секунд оборачивается и проверяет, что София ещё на табуретке. София — есть. Жуёт хлеб с маслом. Болтает ногами.</p>
+<p>Софа в кармане Марко — молчит со вчерашнего вечера. Чёрный экран. Голос Софии теперь — не из трубки. Из кухни.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">мама:</span> — Идите потихоньку. У вас новый день.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Мам, мы вдвоём — как обычно.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Я приведу её к классу. Не потеряется.</p>
+<p class="dl-char"><span class="dl-who">мама:</span> — Знаю.</p></div><div class="author-text"><p>Марко и София выходят из подъезда. Воздух прохладный. Двор — обычный. Скамейка. Песочница. Соседский кот.</p>
+<p>Они идут к остановке. Не спеша. По дороге у них будет время поговорить.</p></div>
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s02" data-index="1" data-next="ep049_s03">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s02" data-index="1" data-next="ep049_s03">
     <div class="scene-header">
-      <span class="scene-counter">2 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">По дороге в школу, городской автобус · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">первый приём, замеченный Марко в обычном мире</div></details>
+      <span class="scene-counter">2 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Улица, автобусная остановка · утро</div><div class="scene-chars">Марко, София</div><div class="scene-mood">первая ловушка — поймана вдвоём, без напряжения</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Городской автобус снаружи. На борту — большой рекламный плакат школы. По стеклу — отражение Марко, который смотрит на надпись<br><span class="vb-label">Атмосфера:</span> приём, который раньше прошёл бы мимо — теперь виден<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> слово «ВСЕ» крупным планом<br><span class="vb-label">Марко:</span> пауза узнавания, стоит у остановки, смотрит на борт автобуса<br><span class="vb-label">Предметы:</span> рекламный плакат на борту автобуса, надпись «ВСЕ умные родители»</div><div class="author-text"><p>Автобус по дороге в школу. На борту — огромная реклама:</p>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Городская улица, автобусная остановка с табличкой. Уезжающий автобус с рекламой «ВСЕ умные родители». Утренний свет, обычные пешеходы<br><span class="vb-label">Атмосфера:</span> лёгкая разминка — ловушка опознана<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Марко и София у остановки — первая совместная находка<br><span class="vb-label">Марко:</span> спокойная гордость — учит сестру, рядом с Софией, голова повёрнута к ней<br><span class="vb-label">София:</span> лукавая улыбка узнавания, смотрит вслед автобусу, портфель в руке<br><span class="vb-label">Предметы:</span> рекламный плакат на борту автобуса, табличка остановки, портфель Софии</div><div class="author-text"><p>Остановка. Подъезжает автобус. На борту — огромная реклама. Школа на фоне детей с пятёрками.</p>
 <p>«ВСЕ умные родители выбирают нашу школу!»</p>
-<p>Марко смотрит — и видит. Раньше кивнул бы. Теперь — пауза. Полсекунды. Но в этой паузе — всё.</p>
-<p>Слово «ВСЕ». Без доказательств. Без цифр. Без имён. Просто — ярлык. Чтобы каждый родитель подумал: «А я что, не умный?»</p>
-<p>Кто-то взял один пример — и приклеил его ко всем подряд.</p></div>
+<p>София щурится — читает вслух. Останавливается на «ВСЕ».</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">София:</span> — «ВСЕ умные родители»? Прям все-все?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Помнишь, я тебе про поспешное обобщение рассказывал?</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Это когда один пример приклеивают ко всем подряд?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Да. Слово «ВСЕ» без доказательств. Чтобы каждый родитель подумал: «А я что, не умный?»</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Ловушка.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Ага. Первая за утро.</p></div><div class="author-text"><p>Автобус уезжает. Реклама уезжает с ним. София улыбается — впервые поймала ловушку вместе с братом.</p></div>
     </div>
   </section>
 
-  <section class="scene scene-quiz" data-scene-id="ep049_s03" data-index="2" data-blocking="true" data-next="ep049_s04">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s03" data-index="2" data-next="ep049_s04">
     <div class="scene-header">
-      <span class="scene-counter">3 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">По дороге в школу, городской автобус · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">первое узнавание приёма в обычной жизни</div></details>
+      <span class="scene-counter">3 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, холл у раздевалки · утро</div><div class="scene-chars">Марко, София</div><div class="scene-mood">вторая ловушка — София находит сама, считает на пальцах</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Слайд квиза: на фоне расфокус автобуса, по центру — увеличенный плакат «ВСЕ умные родители выбирают нашу школу!»<br><span class="vb-label">Атмосфера:</span> приём виден<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> плакат — ярлык вместо факта<br><span class="vb-label">Марко:</span> внутренний разбор, смотрит на плакат<br><span class="vb-label">Предметы:</span> плакат, слово «ВСЕ» подсвечено красной рамкой</div>
-    <div class="quiz" data-quiz-id="ep049_s03">
-      <p class="quiz-question">«ВСЕ умные родители выбирают нашу школу!» Какой приём?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-correct="false" data-index="0">Страшная цепочка</button><button class="quiz-option" data-correct="true" data-index="1">Поспешное обобщение</button><button class="quiz-option" data-correct="false" data-index="2">Нападка на человека</button>
-      </div>
-      <div class="quiz-feedback quiz-feedback-ok" hidden>Слово «ВСЕ» без доказательств — поспешное обобщение.</div>
-      <div class="quiz-feedback quiz-feedback-fail" hidden>Где доказательства, что выбирают ВСЕ умные? Нет ни цифр, ни имён. «ВСЕ» здесь — не факт, а ярлык. Это поспешное обобщение.</div>
-      <div class="quiz-explanation" hidden>«ВСЕ умные» — нет доказательств. Один пример приклеили ко всем. Это поспешное обобщение.</div>
-    </div>
-    </div>
-  </section>
-
-  <section class="scene scene-narrative" data-scene-id="ep049_s04" data-index="3" data-next="ep049_s05">
-    <div class="scene-header">
-      <span class="scene-counter">4 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, холл · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">вторая узнаваемая форма — страшная цепочка</div></details>
-    </div>
-    <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный холл. На стене — большой экран, на нём диктор с тревожным выражением и заголовок «ЕСЛИ НЕ ПРИМЕМ ЗАКОН». Марко стоит у раздевалки, рюкзак на плече<br><span class="vb-label">Атмосфера:</span> новости играют на страхе<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> цепочка слов «закон → работа → образование»<br><span class="vb-label">Марко:</span> останавливается, слушает, рюкзак на плече, голова повёрнута к экрану<br><span class="vb-label">Предметы:</span> экран на стене, тревожный заголовок, раздевалка</div><div class="author-text"><p>Холл школы. Над раздевалкой — экран. На экране — новости. Диктор серьёзный, фон тревожный:</p>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный холл у раздевалки. Большой экран на стене с заголовком «ЕСЛИ НЕ ПРИМЕМ ЗАКОН». София считает на пальцах. Марко рядом<br><span class="vb-label">Атмосфера:</span> София считает сама — Марко не подсказывает<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> пальцы Софии — пять ступеней страшной цепочки<br><span class="vb-label">София:</span> считает на пальцах, увлечена, остановилась перед экраном, поднимает пальцы<br><span class="vb-label">Марко:</span> довольная улыбка — она поймала сама, рядом, рюкзак на плече<br><span class="vb-label">Предметы:</span> экран с тревожными новостями, пальцы Софии, раздевалка</div><div class="author-text"><p>Школа. Холл. Над раздевалкой — экран. Новости. Диктор серьёзный, фон тревожный:</p>
 <p>«Если не примем этот закон — экономика рухнет, люди потеряют работу, дети не получат образование!»</p>
-<p>Марко останавливается. Слушает.</p>
-<p>Длинная лестница. Каждая ступенька — менее вероятна предыдущей. От «не примем закон» до «дети без образования» — пять шагов. И каждый держится на честном слове.</p></div>
+<p>София останавливается. Слушает. Считает на пальцах.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">София:</span> — Подожди. Один, два, три... пять шагов от «не примем» до «дети без образования».</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — И каждый шаг держится на честном слове.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Это та, страшная — как её? Цепочка?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Страшная цепочка. Длинная лестница из «если — то». Каждая ступенька — слабее.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — А зачем так делают?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Чтобы стало страшно. Тогда не думаешь — соглашаешься.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Вторая ловушка.</p></div>
     </div>
   </section>
 
-  <section class="scene scene-quiz" data-scene-id="ep049_s05" data-index="4" data-blocking="true" data-next="ep049_s06">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s04" data-index="3" data-next="ep049_s05">
     <div class="scene-header">
-      <span class="scene-counter">5 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, холл · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">узнавание второго приёма</div></details>
+      <span class="scene-counter">4 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, коридор у спортзала · утро</div><div class="scene-chars">Марко, София</div><div class="scene-mood">третья ловушка — Марко формулирует роль: мы охотники, не учителя</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Слайд квиза: на фоне расфокус экрана новостей, по центру — лестница из пяти ступеней с надписями «закон → работа → образование → бедность → крах»<br><span class="vb-label">Атмосфера:</span> приём страха через цепочку<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> лестница из пяти ступеней — каждая слабее предыдущей<br><span class="vb-label">Марко:</span> считает звенья цепи, смотрит на экран, рюкзак на плече<br><span class="vb-label">Предметы:</span> лестница-схема пяти шагов, тревожный заголовок</div>
-    <div class="quiz" data-quiz-id="ep049_s05">
-      <p class="quiz-question">«Не примем закон — экономика рухнет, люди потеряют работу, дети не получат образование!» Какой приём?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-correct="false" data-index="0">Поспешное обобщение</button><button class="quiz-option" data-correct="true" data-index="1">Страшная цепочка</button><button class="quiz-option" data-correct="false" data-index="2">Нападка на человека</button>
-      </div>
-      <div class="quiz-feedback quiz-feedback-ok" hidden>Длинная лестница «если — то». Каждое звено держится на честном слове. Это страшная цепочка.</div>
-      <div class="quiz-feedback quiz-feedback-fail" hidden>Сколько шагов от «не примем закон» до «дети без образования»? Пять. И каждый держится на честном слове. Это страшная цепочка.</div>
-      <div class="quiz-explanation" hidden>Длинная лестница из «если — то». Каждое звено менее вероятно предыдущего. Один закон не равен катастрофе.</div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор у спортзала. Учитель в спортивной форме со свистком у двери. Школьники проходят мимо, опустив головы. Марко и София идут не спеша<br><span class="vb-label">Атмосфера:</span> третья ловушка поймана — мы охотники<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> Марко и София идут мимо учителя — слышат, разбирают<br><span class="vb-label">София:</span> вопросительный взгляд снизу-вверх на Марко, идёт чуть позади, голова повёрнута к брату<br><span class="vb-label">Марко:</span> спокойствие учителя без триумфа, идёт рядом, голова чуть склонена к Софии<br><span class="vb-label">Предметы:</span> дверь спортзала, свисток на шее учителя, журнал, школьники с опущенными головами</div><div class="author-text"><p>Коридор у спортзала. Учитель физкультуры — у двери. На весь коридор:</p>
+<p>«Кто не сдал норматив — тот ленивый!»</p>
+<p>Несколько школьников проходят мимо, опустив головы. Марко и София тоже идут. Не быстро. София искоса смотрит на Марко.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">София:</span> — А «ленивый» — это что?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Ярлык. Удар по человеку, а не разбор.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — А может, кто-то болел. Или боится прыгать. Или просто не выспался.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Именно. Учитель не спросил «почему». Он сразу наклеил.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Это нападка на человека?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Она. Третья ловушка за утро.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — У нас тут целый сезон ловушек.</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Поэтому мы будем охотниками. Не учителями. Охотниками.</p></div>
     </div>
+  </section>
+
+  <section class="scene scene-dialogue" data-scene-id="ep049_s05" data-index="4" data-next="ep049_s06">
+    <div class="scene-header">
+      <span class="scene-counter">5 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, у двери класса · утро</div><div class="scene-chars">Марко, София</div><div class="scene-mood">разделение на пути — оба теперь видят ловушки</div></details>
+    </div>
+    <div class="scene-content">
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Лестничный пролёт в школе. Дверь класса 5-Б. Внизу — пролёт ведёт на этаж младших<br><span class="vb-label">Атмосфера:</span> первое расставание дня — спокойное<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> брат и сестра расходятся по классам<br><span class="vb-label">София:</span> лёгкая улыбка, портфель в руке, на первой ступени вниз, повёрнута к брату<br><span class="vb-label">Марко:</span> спокойствие, рука на ручке двери, повёрнут к двери класса<br><span class="vb-label">Предметы:</span> дверь класса 5-Б, лестница, портфель Софии, лямка рюкзака Марко</div><div class="author-text"><p>У двери класса 5-Б — конец общего пути. У Софии — другой класс. Она младшего потока. Её дверь — этажом ниже.</p>
+<p>Они останавливаются.</p></div><div class="dialogue-block"><p class="dl-char"><span class="dl-who">София:</span> — Три ловушки за утро. Это нормально?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — Это везде. Сейчас ты их видишь — теперь не отучишься.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — Хорошо это или плохо?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — И то, и то. Но точно — лучше, чем не видеть.</p>
+<p class="dl-char"><span class="dl-who">София:</span> — На большой перемене?</p>
+<p class="dl-char"><span class="dl-who">Марко:</span> — У окна. Как всегда.</p></div><div class="author-text"><p>София кивает, поправляет лямку портфеля и спускается по лестнице.</p>
+<p>Марко поворачивается к двери своего класса. Входит.</p></div>
     </div>
   </section>
 
   <section class="scene scene-narrative" data-scene-id="ep049_s06" data-index="5" data-next="ep049_s07">
     <div class="scene-header">
-      <span class="scene-counter">6 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, коридор у спортзала · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">третья форма — нападка на человека</div></details>
+      <span class="scene-counter">6 / 24</span>
+      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б → коридор · большая перемена</div><div class="scene-chars">Марко</div><div class="scene-mood">переход — от утренней прогулки к встрече с Реем</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор. У двери спортзала — учитель в спортивной форме со свистком. Несколько школьников проходят мимо, опустив головы<br><span class="vb-label">Атмосфера:</span> ярлык вместо разбора<br><span class="vb-label">Камера:</span> medium<br><span class="vb-label">Фокус:</span> учитель и его слово «ленивый» в воздухе<br><span class="vb-label">Марко:</span> внутреннее «не куплюсь», идёт мимо двери, голова повёрнута к учителю<br><span class="vb-label">Предметы:</span> дверь спортзала, свисток на шее учителя, журнал в его руках</div><div class="author-text"><p>Коридор у спортзала. Учитель физкультуры стоит у двери и громко, на весь коридор:</p>
-<p>«Кто не сдал норматив — тот ленивый!»</p>
-<p>Раньше Марко поверил бы. Сейчас — нет.</p>
-<p>«Ленивый» — это ярлык. Удар по человеку, а не разбор. Может быть, кто-то не выспался. Кто-то болел. Кто-то боится прыгать. Учитель не разобрал — он наклеил этикетку.</p></div>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Школьный коридор после звонка. Дети с рюкзаками, открытые двери классов. В конце коридора — большое окно с серым светом<br><span class="vb-label">Атмосфера:</span> обычная перемена — но впереди узнавание<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> силуэт у окна в конце коридора<br><span class="vb-label">Марко:</span> внимательный шаг, видит силуэт у окна, идёт по коридору, голова повёрнута к окну<br><span class="vb-label">Предметы:</span> двери классов, рюкзаки, школьники, большое окно в конце</div><div class="author-text"><p>Уроки прошли как всегда. Русский. Математика. Природа. Марко слушал, записывал. Поднял руку один раз. На математике.</p>
+<p>Звонок на большую перемену.</p>
+<p>Класс выходит в коридор. Шум, смех, рюкзаки на стульях. Марко идёт к окну в конце коридора. На пути в окне — виден тот, кого он не ожидал увидеть.</p></div>
     </div>
   </section>
 
-  <section class="scene scene-quiz" data-scene-id="ep049_s07" data-index="6" data-blocking="true" data-next="ep049_s08">
+  <section class="scene scene-narrative" data-scene-id="ep049_s07" data-index="6" data-next="ep049_s09">
     <div class="scene-header">
-      <span class="scene-counter">7 / 25</span>
-      <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, коридор у спортзала · утро</div><div class="scene-chars">Марко</div><div class="scene-mood">узнавание третьего приёма</div></details>
-    </div>
-    <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Слайд квиза: на фоне расфокус коридора, по центру — большое слово «ЛЕНИВЫЙ» в красной рамке, перечёркнутое стрелкой «не разбор, а ярлык»<br><span class="vb-label">Атмосфера:</span> приём узнан<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> ярлык вместо вопроса «почему?»<br><span class="vb-label">Марко:</span> спокойное несогласие, смотрит на ярлык<br><span class="vb-label">Предметы:</span> ярлык «ЛЕНИВЫЙ» в рамке, стрелка-разбор</div>
-    <div class="quiz" data-quiz-id="ep049_s07">
-      <p class="quiz-question">Учитель: «Кто не сдал норматив — тот ленивый!» Какой приём?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-correct="false" data-index="0">Страшная цепочка</button><button class="quiz-option" data-correct="false" data-index="1">Поспешное обобщение</button><button class="quiz-option" data-correct="true" data-index="2">Нападка на человека</button>
-      </div>
-      <div class="quiz-feedback quiz-feedback-ok" hidden>«Ленивый» — это ярлык, а не разбор. Нападка на человека.</div>
-      <div class="quiz-feedback quiz-feedback-fail" hidden>Учитель не спросил почему. Он наклеил слово «ленивый» — удар по человеку. Это нападка на человека, а не аргумент.</div>
-      <div class="quiz-explanation" hidden>«Ленивый» — ярлык. Удар по человеку, а не разбор причин. Нападка на человека вместо обсуждения темы.</div>
-    </div>
-    </div>
-  </section>
-
-  <section class="scene scene-narrative" data-scene-id="ep049_s08" data-index="7" data-next="ep049_s09">
-    <div class="scene-header">
-      <span class="scene-counter">8 / 25</span>
+      <span class="scene-counter">7 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, коридор у окна · большая перемена</div><div class="scene-chars">Марко, Рей</div><div class="scene-mood">Рей вне сцены — без харизмы, без напора</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><span class="vb-label">Фон:</span> Длинный школьный коридор. Большое окно в конце. У окна — Рей, силуэт против света. Линолеум, шкафчики, неяркий свет<br><span class="vb-label">Атмосфера:</span> герой-демагог без сцены — просто подросток<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Рей без толпы — обычный мальчик<br><span class="vb-label">Рей:</span> усталость, обычный подросток, руки в карманах, плечи опущены, лицо к окну<br><span class="vb-label">Марко:</span> спокойствие, без вражды, идёт по коридору, смотрит на Рея<br><span class="vb-label">Предметы:</span> окно, школьный двор за стеклом, шкафчики</div><div class="author-text"><p>Большая перемена. Длинный коридор. У окна, в самом конце — Рей.</p>
+      <div class="visual-brief"><span class="vb-label">Фон:</span> Длинный школьный коридор. Большое окно в конце. У окна — Рей, силуэт против света. Линолеум, шкафчики, неяркий свет<br><span class="vb-label">Атмосфера:</span> герой-демагог без сцены — просто подросток<br><span class="vb-label">Камера:</span> wide<br><span class="vb-label">Фокус:</span> Рей без толпы — обычный мальчик<br><span class="vb-label">Рей:</span> усталость, обычный подросток, руки в карманах, плечи опущены, лицо к окну<br><span class="vb-label">Марко:</span> спокойствие, без вражды, идёт по коридору, смотрит на Рея<br><span class="vb-label">Предметы:</span> окно, школьный двор за стеклом, шкафчики</div><div class="author-text"><p>У окна, в самом конце коридора — Рей.</p>
 <p>Без толпы. Без микрофона. Без зала, готового кивать. Руки в карманах. Плечи опущены. Смотрит на школьный двор.</p>
 <p>Марко идёт мимо. Рей поднимает глаза. Не отводит. Кивает. Коротко. Как знакомому.</p>
 <p>Без толпы он выглядит как обычный подросток. Меньше. Тише. Обычный.</p></div>
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s09" data-index="8" data-next="ep049_s10">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s09" data-index="7" data-next="ep049_s10">
     <div class="scene-header">
-      <span class="scene-counter">9 / 25</span>
+      <span class="scene-counter">8 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, коридор, скамейка у окна · перемена</div><div class="scene-chars">Марко, мама</div><div class="scene-mood">впервые мама говорит правду без увиливаний</div></details>
     </div>
     <div class="scene-content">
@@ -801,9 +790,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s10" data-index="9" data-next="ep049_s11">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s10" data-index="8" data-next="ep049_s11">
     <div class="scene-header">
-      <span class="scene-counter">10 / 25</span>
+      <span class="scene-counter">9 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Сем, мама</div><div class="scene-mood">нормальный спор — два мнения, ещё про тему</div></details>
     </div>
     <div class="scene-content">
@@ -815,9 +804,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s11" data-index="10" data-next="ep049_s12">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s11" data-index="9" data-next="ep049_s12">
     <div class="scene-header">
-      <span class="scene-counter">11 / 25</span>
+      <span class="scene-counter">10 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Сем, мама</div><div class="scene-mood">спор перешёл в ссору — Марко узнаёт форму</div></details>
     </div>
     <div class="scene-content">
@@ -830,9 +819,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s12" data-index="11" data-next="ep049_s13">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s12" data-index="10" data-next="ep049_s13">
     <div class="scene-header">
-      <span class="scene-counter">12 / 25</span>
+      <span class="scene-counter">11 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа подхватывает живой пример</div></details>
     </div>
     <div class="scene-content">
@@ -840,9 +829,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s13" data-index="12" data-next="ep049_s14">
+  <section class="scene scene-narrative" data-scene-id="ep049_s13" data-index="11" data-next="ep049_s14">
     <div class="scene-header">
-      <span class="scene-counter">13 / 25</span>
+      <span class="scene-counter">12 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко</div><div class="scene-mood">тихая теория — два режима разговора</div></details>
     </div>
     <div class="scene-content">
@@ -855,9 +844,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s14" data-index="13" data-blocking="true" data-next="ep049_s17">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s14" data-index="12" data-blocking="true" data-next="ep049_s17">
     <div class="scene-header">
-      <span class="scene-counter">14 / 25</span>
+      <span class="scene-counter">13 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">разминка — чистый спор</div></details>
     </div>
     <div class="scene-content">
@@ -865,9 +854,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s17" data-index="14" data-next="ep049_s18">
+  <section class="scene scene-narrative" data-scene-id="ep049_s17" data-index="13" data-next="ep049_s18">
     <div class="scene-header">
-      <span class="scene-counter">15 / 25</span>
+      <span class="scene-counter">14 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко</div><div class="scene-mood">вторая теория — инструмент</div></details>
     </div>
     <div class="scene-content">
@@ -882,9 +871,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s18" data-index="15" data-blocking="true" data-next="ep049_s22">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s18" data-index="14" data-blocking="true" data-next="ep049_s22">
     <div class="scene-header">
-      <span class="scene-counter">16 / 25</span>
+      <span class="scene-counter">15 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">разминка — обвинение</div></details>
     </div>
     <div class="scene-content">
@@ -892,9 +881,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-choice" data-scene-id="ep049_s22" data-index="16" data-next="ep049_s22_ok">
+  <section class="scene scene-choice" data-scene-id="ep049_s22" data-index="15" data-next="ep049_s22_ok">
     <div class="scene-header">
-      <span class="scene-counter">17 / 25</span>
+      <span class="scene-counter">16 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Сем, мама</div><div class="scene-mood">выбор: формула или нападка</div></details>
     </div>
     <div class="scene-content">
@@ -910,9 +899,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-feedback scene-branch-card" data-scene-id="ep049_s22_fail" data-index="17" data-next="ep049_s22" data-merge-to="ep049_s22">
+  <section class="scene scene-feedback scene-branch-card" data-scene-id="ep049_s22_fail" data-index="16" data-next="ep049_s22" data-merge-to="ep049_s22">
     <div class="scene-header">
-      <span class="scene-counter">18 / 25</span>
+      <span class="scene-counter">17 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">soft fail — узнаваема нападка, Софа возвращает к формуле</div><div class="scene-branch">🔄 Мягкий тупик</div></details>
     </div>
     <div class="scene-content">
@@ -920,9 +909,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s22_ok" data-index="18" data-next="ep049_s23">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s22_ok" data-index="17" data-next="ep049_s23">
     <div class="scene-header">
-      <span class="scene-counter">19 / 25</span>
+      <span class="scene-counter">18 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Сем, мама</div><div class="scene-mood">формула сработала на живом случае</div></details>
     </div>
     <div class="scene-content">
@@ -933,19 +922,19 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s23" data-index="19" data-blocking="true" data-next="ep049_s30">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s23" data-index="18" data-blocking="true" data-next="ep049_s30">
     <div class="scene-header">
-      <span class="scene-counter">20 / 25</span>
+      <span class="scene-counter">19 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Дом Марко, кухня · вечер</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">Софа — подводка к практике</div></details>
     </div>
     <div class="scene-content">
-      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep049_s23"><div class="vb-sub-label">ep049_s23</div><span class="vb-label">Фон:</span> Экран телефона, три коротких пузыря Софы — голубое свечение<br><span class="vb-label">Атмосфера:</span> подводка к практике<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «пять ситуаций»<br><span class="vb-label">Марко:</span> готовность, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s24"><div class="vb-sub-label">ep049_s24</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой друга и тремя вариантами. Пиктограмма сломанного карандаша рядом<br><span class="vb-label">Атмосфера:</span> первый раунд практики<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта ответа — нападка, Я-высказывание, оскорбление<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s25"><div class="vb-sub-label">ep049_s25</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой и тремя вариантами. Пиктограмма проигранного матча — табло<br><span class="vb-label">Атмосфера:</span> вторая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — встречная нападка, Я-высказывание, уход<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s26"><div class="vb-sub-label">ep049_s26</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой брата и тремя вариантами. Пиктограмма облачка и капли<br><span class="vb-label">Атмосфера:</span> третья ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — нападка, Я-высказывание, уход<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s27"><div class="vb-sub-label">ep049_s27</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой подруги и тремя вариантами. Пиктограмма календаря с пропущенной датой<br><span class="vb-label">Атмосфера:</span> четвёртая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — встречная нападка, Я-высказывание, сарказм<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s28"><div class="vb-sub-label">ep049_s28</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой и тремя вариантами. Пиктограмма ручки, забранной с парты<br><span class="vb-label">Атмосфера:</span> пятая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — оскорбление, Я-высказывание, подчинение<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s29"><div class="vb-sub-label">ep049_s29</div><span class="vb-label">Фон:</span> Экран телефона, шесть пузырей Софы — голубое свечение<br><span class="vb-label">Атмосфера:</span> Марко формулирует сам<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь с примером — «Мне неприятно, когда...»<br><span class="vb-label">Марко:</span> думает, мысленно формулирует, телефон в руке, взгляд в пол</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Сейчас — практика.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Пять ситуаций. Каждый раз кто-то начинает с «ТЫ».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Твоя задача — выбрать Я-высказывание. Не контратаку. Не уход. Не сарказм.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Друг кричит: «Ты специально сломал мой карандаш!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Сам виноват — нечего было давать!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ты вообще псих!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Мне жаль, что карандаш сломался. Я не специально.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка. Вариант «в» — оскорбление. Я-высказывание начинается с «мне» или «я»: «Мне жаль, что карандаш сломался».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне жаль» — о своих чувствах. Без удара в ответ. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Одноклассница говорит: «Из-за тебя наша команда проиграла!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Мне обидно это слышать. Давай разберём, что пошло не так.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«А ты сама плохо играла!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ну и ладно, мне всё равно!»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка. Вариант «в» — равнодушие, уход. Только «б» начинается с «мне» и возвращает разговор к делу.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне обидно» + «давай разберём» — чувства плюс возврат к теме. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Брат: «ТЫ всегда портишь мне настроение!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«А ТЫ всегда ноешь!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Мне грустно, что ты так думаешь. Я не хотел.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«Мне всё равно.»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка с тем же «ТЫ». Вариант «в» — отказ от разговора. Я-высказывание — «Мне грустно...»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне грустно» — о себе, без удара в ответ. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Подруга жалуется: «ТЫ обещала прийти и не пришла! Ты ненадёжная!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Я чувствую себя виноватой. Давай договоримся заново.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«А ТЫ сама вчера не пришла!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ну извини, что у меня есть дела!»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — «сама такая». Вариант «в» — сарказм. Только «б» начинается с «я чувствую» и предлагает выход.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Я чувствую себя виноватой» + «давай договоримся» — чувства плюс решение. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Сосед по парте взял твою ручку без спроса. Что скажешь?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Мне неприятно, когда берут мои вещи без спроса.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«Вор! Отдай!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ладно, бери...»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Вор» — оскорбление. «Ладно, бери...» — отказ от своей границы. Я-высказывание — «Мне неприятно, когда берут мои вещи без спроса».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне неприятно» — о своих чувствах. Граница есть, нападки нет. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Последний — без вариантов. Подумай сам.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Друг взял твою вещь без спроса. Сформулируй Я-высказывание.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Подсказка: «Мне [чувство], когда [ситуация].» Говори о себе, не нападай.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Например: «Мне неприятно, когда берут мои вещи без спроса. Пожалуйста, спрашивай в следующий раз.»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;marko&quot;, &quot;x&quot;: &quot;Понял.&quot;, &quot;im&quot;: &quot;text&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Молодец. На сегодня — всё.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
+      <div class="visual-brief"><div class="vb-sub" data-scene-id="ep049_s23"><div class="vb-sub-label">ep049_s23</div><span class="vb-label">Фон:</span> Экран телефона, три коротких пузыря Софы — голубое свечение<br><span class="vb-label">Атмосфера:</span> подводка к практике<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь — «пять ситуаций»<br><span class="vb-label">Марко:</span> готовность, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s24"><div class="vb-sub-label">ep049_s24</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой друга и тремя вариантами. Пиктограмма сломанного карандаша рядом<br><span class="vb-label">Атмосфера:</span> первый раунд практики<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта ответа — нападка, Я-высказывание, оскорбление<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s25"><div class="vb-sub-label">ep049_s25</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой и тремя вариантами. Пиктограмма проигранного матча — табло<br><span class="vb-label">Атмосфера:</span> вторая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — встречная нападка, Я-высказывание, уход<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s26"><div class="vb-sub-label">ep049_s26</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой брата и тремя вариантами. Пиктограмма облачка и капли<br><span class="vb-label">Атмосфера:</span> третья ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — нападка, Я-высказывание, уход<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s27"><div class="vb-sub-label">ep049_s27</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой подруги и тремя вариантами. Пиктограмма календаря с пропущенной датой<br><span class="vb-label">Атмосфера:</span> четвёртая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — встречная нападка, Я-высказывание, сарказм<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s28"><div class="vb-sub-label">ep049_s28</div><span class="vb-label">Фон:</span> Экран телефона, пузырь Софы с цитатой и тремя вариантами. Пиктограмма ручки, забранной с парты<br><span class="vb-label">Атмосфера:</span> пятая ситуация<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> три варианта — оскорбление, Я-высказывание, подчинение<br><span class="vb-label">Марко:</span> выбор, телефон в руке</div><div class="vb-sub" data-scene-id="ep049_s29"><div class="vb-sub-label">ep049_s29</div><span class="vb-label">Фон:</span> Экран телефона, шесть пузырей Софы — голубое свечение<br><span class="vb-label">Атмосфера:</span> Марко формулирует сам<br><span class="vb-label">Камера:</span> close-up<br><span class="vb-label">Фокус:</span> пузырь с примером — «Мне неприятно, когда...»<br><span class="vb-label">Марко:</span> думает, мысленно формулирует, телефон в руке, взгляд в пол</div></div><div class="phone" data-chat-messages="[{&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Сейчас — практика.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Пять ситуаций. Каждый раз кто-то начинает с «ТЫ».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Твоя задача — выбрать Я-высказывание. Не контратаку. Не уход. Не сарказм.&quot;}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Друг кричит: «Ты специально сломал мой карандаш!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Сам виноват — нечего было давать!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ты вообще псих!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Мне жаль, что карандаш сломался. Я не специально.»&quot;, &quot;c&quot;: true}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка. Вариант «в» — оскорбление. Я-высказывание начинается с «мне» или «я»: «Мне жаль, что карандаш сломался».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне жаль» — о своих чувствах. Без удара в ответ. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Одноклассница говорит: «Из-за тебя наша команда проиграла!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Мне обидно это слышать. Давай разберём, что пошло не так.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«А ты сама плохо играла!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Ну и ладно, мне всё равно!»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка. Вариант «в» — равнодушие, уход. Только «б» начинается с «мне» и возвращает разговор к делу.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне обидно» + «давай разберём» — чувства плюс возврат к теме. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Брат: «ТЫ всегда портишь мне настроение!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Мне грустно, что ты так думаешь. Я не хотел.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«А ТЫ всегда ноешь!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Мне всё равно.»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — встречная нападка с тем же «ТЫ». Вариант «в» — отказ от разговора. Я-высказывание — «Мне грустно...»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне грустно» — о себе, без удара в ответ. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Подруга жалуется: «ТЫ обещала прийти и не пришла! Ты ненадёжная!» Какой ответ — Я-высказывание?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«А ТЫ сама вчера не пришла!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Я чувствую себя виноватой. Давай договоримся заново.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«Ну извини, что у меня есть дела!»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;Вариант «а» — «сама такая». Вариант «в» — сарказм. Только «б» начинается с «я чувствую» и предлагает выход.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Я чувствую себя виноватой» + «давай договоримся» — чувства плюс решение. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;quiz&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;q&quot;: &quot;Сосед по парте взял твою ручку без спроса. Что скажешь?&quot;, &quot;o&quot;: [{&quot;x&quot;: &quot;«Вор! Отдай!»&quot;, &quot;c&quot;: false}, {&quot;x&quot;: &quot;«Мне неприятно, когда берут мои вещи без спроса.»&quot;, &quot;c&quot;: true}, {&quot;x&quot;: &quot;«Ладно, бери...»&quot;, &quot;c&quot;: false}], &quot;fbFail&quot;: &quot;«Вор» — оскорбление. «Ладно, бери...» — отказ от своей границы. Я-высказывание — «Мне неприятно, когда берут мои вещи без спроса».&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;«Мне неприятно» — о своих чувствах. Граница есть, нападки нет. Я-высказывание.&quot;, &quot;wq&quot;: true, &quot;ok&quot;: true}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Последний — без вариантов. Подумай сам.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Друг взял твою вещь без спроса. Сформулируй Я-высказывание.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Подсказка: «Мне [чувство], когда [ситуация].» Говори о себе, не нападай.&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Например: «Мне неприятно, когда берут мои вещи без спроса. Пожалуйста, спрашивай в следующий раз.»&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;marko&quot;, &quot;x&quot;: &quot;Понял.&quot;, &quot;im&quot;: &quot;text&quot;}, {&quot;t&quot;: &quot;text&quot;, &quot;s&quot;: &quot;sofa&quot;, &quot;x&quot;: &quot;Молодец. На сегодня — всё.&quot;}]" data-chat-live="true"><div class="phone-notch"></div><div class="phone-home"></div><div class="crack-overlay"><svg viewBox="0 0 375 812" fill="none"><path d="M310 0L305 35L292 72L278 120L262 170L248 218L232 268L218 315L202 362L188 412L172 460L158 510L140 560L122 612L102 665L80 720L55 780L45 812" stroke="rgba(0,0,0,0.12)" stroke-width="1.2"/><path d="M312 0L301 55L288 100L274 152L256 202L243 248L228 295L214 342" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/><path d="M248 218L268 245L295 262" stroke="rgba(0,0,0,0.09)" stroke-width="0.8"/><path d="M195 388L172 402L158 408" stroke="rgba(0,0,0,0.08)" stroke-width="0.7"/><path d="M308 2L296 60L283 97L268 150L251 200L238 247L223 292L208 342L193 390L178 437L163 490L146 540L130 587L110 642L90 692L66 752L43 812" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/></svg></div><div class="chat-wrap"><div class="status-bar"><span class="sb-time">9:41</span><span class="sb-icons">⚡ 5G 🔋</span></div><div class="chat-header"><span class="ch-back">‹</span><div class="ch-avatar">📱</div><div class="ch-info"><div class="ch-name">Софа</div><div class="ch-status">онлайн</div></div></div><div class="chat-messages"></div><div class="chat-input-bar imode-disabled"><div class="ti-group"><input type="text" class="chat-input" readonly placeholder="Сообщение..."><button class="send-btn">➤</button></div><div class="vi-group"><button class="mic-btn">🎤</button><span class="mic-label">Голосовое</span></div><span class="disabled-label">Ожидайте...</span></div></div></div>
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s30" data-index="20" data-next="ep049_s31">
+  <section class="scene scene-narrative" data-scene-id="ep049_s30" data-index="19" data-next="ep049_s31">
     <div class="scene-header">
-      <span class="scene-counter">21 / 25</span>
+      <span class="scene-counter">20 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро следующего дня</div><div class="scene-chars">Марко</div><div class="scene-mood">новая девочка — как первый день для Марко когда-то</div></details>
     </div>
     <div class="scene-content">
@@ -955,9 +944,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s31" data-index="21" data-next="ep049_s32">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s31" data-index="20" data-next="ep049_s32">
     <div class="scene-header">
-      <span class="scene-counter">22 / 25</span>
+      <span class="scene-counter">21 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро следующего дня</div><div class="scene-chars">Марко, Вера, новенькая</div><div class="scene-mood">история начинается снова — но Марко уже знает форму</div></details>
     </div>
     <div class="scene-content">
@@ -971,9 +960,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-narrative" data-scene-id="ep049_s32" data-index="22" data-next="ep049_s33">
+  <section class="scene scene-narrative" data-scene-id="ep049_s32" data-index="21" data-next="ep049_s33">
     <div class="scene-header">
-      <span class="scene-counter">23 / 25</span>
+      <span class="scene-counter">22 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро следующего дня</div><div class="scene-chars">Марко</div><div class="scene-mood">Софа гаснет — Голос возвращается</div></details>
     </div>
     <div class="scene-content">
@@ -983,9 +972,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-dialogue" data-scene-id="ep049_s33" data-index="23" data-next="ep049_s34">
+  <section class="scene scene-dialogue" data-scene-id="ep049_s33" data-index="22" data-next="ep049_s34">
     <div class="scene-header">
-      <span class="scene-counter">24 / 25</span>
+      <span class="scene-counter">23 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро следующего дня</div><div class="scene-chars">Марко, Голос</div><div class="scene-mood">Голос вернулся. Марко — не тот, что в первый день</div></details>
     </div>
     <div class="scene-content">
@@ -999,9 +988,9 @@ body.debug-off .voice-subtitle { display: none; }
     </div>
   </section>
 
-  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep049_s34" data-index="24" data-next="ep050_s01" data-next-ep="ep_050.html">
+  <section class="scene scene-cliffhanger scene-cliffhanger" data-scene-id="ep049_s34" data-index="23" data-next="ep050_s01" data-next-ep="ep_050.html">
     <div class="scene-header">
-      <span class="scene-counter">25 / 25</span>
+      <span class="scene-counter">24 / 24</span>
       <details class="scene-meta"><summary>ℹ️</summary><div class="scene-location">Школа, класс 5-Б · утро следующего дня</div><div class="scene-chars">Марко, Софа</div><div class="scene-mood">конец эпизода: Софа отключена, Марко один на один с Голосом</div></details>
     </div>
     <div class="scene-content">
@@ -1035,7 +1024,7 @@ body.debug-off .voice-subtitle { display: none; }
   <section class="dbg-section">
     <h3>Сцены этого эпизода</h3>
     <ol class="dbg-scenes">
-      <li><button class="dbg-jump" data-jump="ep049_s01">ep049_s01 — narrative · первый день после Зеркального Города — ш</button></li><li><button class="dbg-jump" data-jump="ep049_s02">ep049_s02 — narrative · первый приём, замеченный Марко в обычном</button></li><li><button class="dbg-jump" data-jump="ep049_s03">ep049_s03 — quiz · первое узнавание приёма в обычной жизни</button></li><li><button class="dbg-jump" data-jump="ep049_s04">ep049_s04 — narrative · вторая узнаваемая форма — страшная цепоч</button></li><li><button class="dbg-jump" data-jump="ep049_s05">ep049_s05 — quiz · узнавание второго приёма</button></li><li><button class="dbg-jump" data-jump="ep049_s06">ep049_s06 — narrative · третья форма — нападка на человека</button></li><li><button class="dbg-jump" data-jump="ep049_s07">ep049_s07 — quiz · узнавание третьего приёма</button></li><li><button class="dbg-jump" data-jump="ep049_s08">ep049_s08 — narrative · Рей вне сцены — без харизмы, без напора</button></li><li><button class="dbg-jump" data-jump="ep049_s09">ep049_s09 — dialogue · впервые мама говорит правду без увиливани</button></li><li><button class="dbg-jump" data-jump="ep049_s10">ep049_s10 — dialogue · нормальный спор — два мнения, ещё про тем</button></li><li><button class="dbg-jump" data-jump="ep049_s11">ep049_s11 — dialogue · спор перешёл в ссору — Марко узнаёт форму</button></li><li><button class="dbg-jump" data-jump="ep049_s12">ep049_s12 — dialogue · Софа подхватывает живой пример</button></li><li><button class="dbg-jump" data-jump="ep049_s13">ep049_s13 — narrative · тихая теория — два режима разговора</button></li><li><button class="dbg-jump" data-jump="ep049_s14">ep049_s14 — чат ×3 · разминка — чистый спор</button></li><li><button class="dbg-jump" data-jump="ep049_s17">ep049_s17 — narrative · вторая теория — инструмент</button></li><li><button class="dbg-jump" data-jump="ep049_s18">ep049_s18 — чат ×4 · разминка — обвинение</button></li><li><button class="dbg-jump" data-jump="ep049_s22">ep049_s22 — choice · выбор: формула или нападка</button></li><li><button class="dbg-jump" data-jump="ep049_s22_fail">ep049_s22_fail — soft_fail_loop · soft fail — узнаваема нападка,</button></li><li><button class="dbg-jump" data-jump="ep049_s22_ok">ep049_s22_ok — dialogue · формула сработала на живом случае</button></li><li><button class="dbg-jump" data-jump="ep049_s23">ep049_s23 — чат ×7 · Софа — подводка к практике</button></li><li><button class="dbg-jump" data-jump="ep049_s30">ep049_s30 — narrative · новая девочка — как первый день для Марк</button></li><li><button class="dbg-jump" data-jump="ep049_s31">ep049_s31 — dialogue · история начинается снова — но Марко уже з</button></li><li><button class="dbg-jump" data-jump="ep049_s32">ep049_s32 — narrative · Софа гаснет — Голос возвращается</button></li><li><button class="dbg-jump" data-jump="ep049_s33">ep049_s33 — dialogue · Голос вернулся. Марко — не тот, что в пер</button></li><li><button class="dbg-jump" data-jump="ep049_s34">ep049_s34 — cliffhanger · конец эпизода: Софа отключена, Марко о</button></li>
+      <li><button class="dbg-jump" data-jump="ep049_s01">ep049_s01 — dialogue · первое обычное утро — сестра рядом, телеф</button></li><li><button class="dbg-jump" data-jump="ep049_s02">ep049_s02 — dialogue · первая ловушка — поймана вдвоём, без напр</button></li><li><button class="dbg-jump" data-jump="ep049_s03">ep049_s03 — dialogue · вторая ловушка — София находит сама, счит</button></li><li><button class="dbg-jump" data-jump="ep049_s04">ep049_s04 — dialogue · третья ловушка — Марко формулирует роль:</button></li><li><button class="dbg-jump" data-jump="ep049_s05">ep049_s05 — dialogue · разделение на пути — оба теперь видят лов</button></li><li><button class="dbg-jump" data-jump="ep049_s06">ep049_s06 — narrative · переход — от утренней прогулки к встрече</button></li><li><button class="dbg-jump" data-jump="ep049_s07">ep049_s07 — narrative · Рей вне сцены — без харизмы, без напора</button></li><li><button class="dbg-jump" data-jump="ep049_s09">ep049_s09 — dialogue · впервые мама говорит правду без увиливани</button></li><li><button class="dbg-jump" data-jump="ep049_s10">ep049_s10 — dialogue · нормальный спор — два мнения, ещё про тем</button></li><li><button class="dbg-jump" data-jump="ep049_s11">ep049_s11 — dialogue · спор перешёл в ссору — Марко узнаёт форму</button></li><li><button class="dbg-jump" data-jump="ep049_s12">ep049_s12 — dialogue · Софа подхватывает живой пример</button></li><li><button class="dbg-jump" data-jump="ep049_s13">ep049_s13 — narrative · тихая теория — два режима разговора</button></li><li><button class="dbg-jump" data-jump="ep049_s14">ep049_s14 — чат ×3 · разминка — чистый спор</button></li><li><button class="dbg-jump" data-jump="ep049_s17">ep049_s17 — narrative · вторая теория — инструмент</button></li><li><button class="dbg-jump" data-jump="ep049_s18">ep049_s18 — чат ×4 · разминка — обвинение</button></li><li><button class="dbg-jump" data-jump="ep049_s22">ep049_s22 — choice · выбор: формула или нападка</button></li><li><button class="dbg-jump" data-jump="ep049_s22_fail">ep049_s22_fail — soft_fail_loop · soft fail — узнаваема нападка,</button></li><li><button class="dbg-jump" data-jump="ep049_s22_ok">ep049_s22_ok — dialogue · формула сработала на живом случае</button></li><li><button class="dbg-jump" data-jump="ep049_s23">ep049_s23 — чат ×7 · Софа — подводка к практике</button></li><li><button class="dbg-jump" data-jump="ep049_s30">ep049_s30 — narrative · новая девочка — как первый день для Марк</button></li><li><button class="dbg-jump" data-jump="ep049_s31">ep049_s31 — dialogue · история начинается снова — но Марко уже з</button></li><li><button class="dbg-jump" data-jump="ep049_s32">ep049_s32 — narrative · Софа гаснет — Голос возвращается</button></li><li><button class="dbg-jump" data-jump="ep049_s33">ep049_s33 — dialogue · Голос вернулся. Марко — не тот, что в пер</button></li><li><button class="dbg-jump" data-jump="ep049_s34">ep049_s34 — cliffhanger · конец эпизода: Софа отключена, Марко о</button></li>
     </ol>
   </section>
 </nav>

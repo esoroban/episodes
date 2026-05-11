@@ -1967,9 +1967,9 @@ body.lang-uk .scene-meta { display: none !important; }
   content: "\U0001f3a7 "; font-style: normal; opacity: 0.6;
 }
 body.debug-off .voice-subtitle { display: none; }
-/* Quiz buttons */
-.quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
-.quiz-options { display: flex; flex-direction: column; gap: 4px; }
+/* Quiz buttons — scoped to chat bubbles only (drama-quiz keeps light text) */
+.bubble .quiz-question { margin-bottom: 5px; font-size: 13px; line-height: 1.4; color: #000; }
+.bubble .quiz-options { display: flex; flex-direction: column; gap: 4px; }
 .quiz-btn {
   background: #3390ec; color: #fff; border: none; border-radius: 7px;
   padding: 8px 10px; font-size: 12px; cursor: pointer;
