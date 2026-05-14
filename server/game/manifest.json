@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-11T15:33:53Z",
+  "generated_at": "2026-05-14T03:18:26Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -1087,12 +1087,12 @@
         "ru": {
           "html": "ru/ep_050.html",
           "data": "ru/ep_050.json",
-          "content_hash": "e6d1eb86b3192de3"
+          "content_hash": "4bd128e397497f64"
         },
         "uk": {
           "html": "uk/ep_050.html",
           "data": "uk/ep_050.json",
-          "content_hash": "d04606b0ee90fdd0"
+          "content_hash": "e299e596f8c5c7d3"
         }
       },
       "title_ru": "1",
