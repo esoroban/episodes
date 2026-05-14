@@ -185,7 +185,7 @@ def merge_uk_overlay(ru_data: dict, uk_data: dict) -> None:
                 if "reveals" in ub_uk and isinstance(ub_uk["reveals"], dict):
                     rev_uk = ub_uk["reveals"]
                     if "reveals" in ru_scene["unlock_button"] and isinstance(ru_scene["unlock_button"]["reveals"], dict):
-                        for k in ("line", "who"):
+                        for k in ("line", "who", "parts", "dialogue", "duration"):
                             if k in rev_uk:
                                 ru_scene["unlock_button"]["reveals"][k] = rev_uk[k]
 
@@ -595,8 +595,18 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
     if isinstance(ub, dict):
         reveals = ub.get("reveals", {}) or {}
         rev_out = {"type": reveals.get("type", "")}
+        parts_in = reveals.get("parts")
         dialogue_in = reveals.get("dialogue")
-        if isinstance(dialogue_in, list) and dialogue_in:
+        if isinstance(parts_in, list) and parts_in:
+            rev_out["duration"] = reveals.get("duration", "")
+            rev_out["parts"] = [
+                {
+                    "who": _localize_who(p.get("who", ""), lang),
+                    "line": str(p.get("line", "")).strip(),
+                }
+                for p in parts_in if isinstance(p, dict)
+            ]
+        elif isinstance(dialogue_in, list) and dialogue_in:
             rev_out["duration"] = reveals.get("duration", "")
             rev_out["dialogue"] = [
                 {
@@ -1017,8 +1027,20 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
         msgs.append({"t": "unlock", "x": unlock.get("text", "\U0001f513 \u0420\u0430\u0437\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u0442\u044c")})
         rev = unlock.get("reveals", {})
         if rev:
+            parts_rev = rev.get("parts")
             dialogue_rev = rev.get("dialogue")
-            if isinstance(dialogue_rev, list) and dialogue_rev:
+            if isinstance(parts_rev, list) and parts_rev:
+                ds = str(rev.get("duration", "0"))
+                total_sec = (int(ds.split(":")[-2]) * 60 + int(ds.split(":")[-1])
+                             if ":" in ds else int(ds))
+                clean = [p for p in parts_rev if isinstance(p, dict) and p.get("line")]
+                weights = [max(len(str(p.get("line", ""))), 1) for p in clean]
+                wsum = sum(weights) or 1
+                for p, w in zip(clean, weights):
+                    dur = max(1, round(total_sec * w / wsum))
+                    spk = _speaker_key(p.get("who", "")) or "sofia"
+                    msgs.append({"t": "voice", "s": spk, "d": dur, "x": p.get("line", "")})
+            elif isinstance(dialogue_rev, list) and dialogue_rev:
                 for d in dialogue_rev:
                     if not isinstance(d, dict):
                         continue

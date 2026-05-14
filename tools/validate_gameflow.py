@@ -256,8 +256,25 @@ def validate_episode(path: Path, all_scene_ids: set) -> ValidationResult:
             continue
         rev = unlock.get("reveals", {}) if isinstance(unlock, dict) else {}
         if rev.get("type") == "voice_message":
+            parts = rev.get("parts")
             dlg = rev.get("dialogue")
-            if isinstance(dlg, list) and dlg:
+            if isinstance(parts, list) and parts:
+                if not rev.get("duration"):
+                    result.error(
+                        f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals missing top-level duration "
+                        f"(required when using parts[])."
+                    )
+                for i, p in enumerate(parts):
+                    if not isinstance(p, dict):
+                        result.error(f"VOICE_MESSAGE BAD ITEM: {sid}.unlock_button.reveals.parts[{i}] must be a mapping")
+                        continue
+                    missing = [k for k in ("who", "line") if not p.get(k)]
+                    if missing:
+                        result.error(
+                            f"VOICE_MESSAGE INCOMPLETE: {sid}.unlock_button.reveals.parts[{i}] missing {missing}. "
+                            f"Each part needs who+line; duration is top-level on reveals."
+                        )
+            elif isinstance(dlg, list) and dlg:
                 for i, d in enumerate(dlg):
                     if not isinstance(d, dict):
                         result.error(f"VOICE_MESSAGE BAD ITEM: {sid}.unlock_button.reveals.dialogue[{i}] must be a mapping")
