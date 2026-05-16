@@ -1207,10 +1207,16 @@ def render_scene_chain(chain: list, index: int, total: int, lang: str = "ru") ->
     location = first.get("location", "")
     time_str = first.get("time", "")
     mood = first.get("mood", "")
-    # Collect all messages from all scenes in chain
+    # Collect all messages from all scenes in chain.
+    # Tag every message with its source scene_id so downstream tooling
+    # (factory/weave.py chat-image injection) can place injected images
+    # at the correct position within the merged chain.
     all_msgs = []
     for s in chain:
-        all_msgs.extend(build_chat_messages(s, lang))
+        s_sid = s.get("scene_id", "")
+        for m in build_chat_messages(s, lang):
+            m["sid"] = s_sid
+            all_msgs.append(m)
 
     # Blocking if any scene has quiz or unlock
     has_blocking = any(
