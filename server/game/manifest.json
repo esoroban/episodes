@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-16T13:57:11Z",
+  "generated_at": "2026-05-16T15:09:36Z",
   "episodes": [
     {
       "id": "ep_001",
@@ -889,12 +889,12 @@
         "ru": {
           "html": "ru/ep_041.html",
           "data": "ru/ep_041.json",
-          "content_hash": "ee0a9d697b8895b6"
+          "content_hash": "ae970e9a6e100661"
         },
         "uk": {
           "html": "uk/ep_041.html",
           "data": "uk/ep_041.json",
-          "content_hash": "7db1387c4269c313"
+          "content_hash": "4c44f54292a14ee9"
         }
       },
       "title_ru": "Передемагогировать",
@@ -911,12 +911,12 @@
         "ru": {
           "html": "ru/ep_042.html",
           "data": "ru/ep_042.json",
-          "content_hash": "2269844b7ab2383d"
+          "content_hash": "e15a5fcb7450c203"
         },
         "uk": {
           "html": "uk/ep_042.html",
           "data": "uk/ep_042.json",
-          "content_hash": "e66a5da0f4b3ae0b"
+          "content_hash": "751bfe631786b427"
         }
       },
       "title_ru": "Когда вы перестали любить учеников?",
@@ -955,12 +955,12 @@
         "ru": {
           "html": "ru/ep_044.html",
           "data": "ru/ep_044.json",
-          "content_hash": "ed904552cb94feef"
+          "content_hash": "a0cacc893dcbe367"
         },
         "uk": {
           "html": "uk/ep_044.html",
           "data": "uk/ep_044.json",
-          "content_hash": "597f1ba6386bf01b"
+          "content_hash": "bf4250acb1d364e5"
         }
       },
       "title_ru": "Карта",
@@ -999,12 +999,12 @@
         "ru": {
           "html": "ru/ep_046.html",
           "data": "ru/ep_046.json",
-          "content_hash": "850e834192cdf138"
+          "content_hash": "dabb041443f348fd"
         },
         "uk": {
           "html": "uk/ep_046.html",
           "data": "uk/ep_046.json",
-          "content_hash": "a3ad80b69115ce10"
+          "content_hash": "19228058bc6b62fe"
         }
       },
       "title_ru": "Экзамен сомнения",
@@ -1021,12 +1021,12 @@
         "ru": {
           "html": "ru/ep_047.html",
           "data": "ru/ep_047.json",
-          "content_hash": "3c104db6f56603f9"
+          "content_hash": "aea973aaf57a0584"
         },
         "uk": {
           "html": "uk/ep_047.html",
           "data": "uk/ep_047.json",
-          "content_hash": "81bcd3598d116e05"
+          "content_hash": "de78d6bbb2242d6b"
         }
       },
       "title_ru": "Интеллектуальная битва",

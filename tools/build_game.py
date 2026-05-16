@@ -434,15 +434,21 @@ def balance_episode_quizzes(data: dict) -> None:
 
 
 def _quiz_block(src: dict) -> dict:
-    """Convert a scene (or interaction) with options[] into a quiz manifest block."""
+    """Convert a scene (or interaction) with options[] into a quiz manifest block.
+    `fb` per-option feedback (used by ep_041 constructor для per-option fail-аудио)
+    пробрасывается в JSON, если есть — voice_prompts_experiment эмитит из него
+    треки `{scene}_qNN_fail_optM.wav`."""
     question = str(src.get("question", "")).strip()
     opts = []
     for o in _shuffle_quiz_opts(question, src.get("options", []) or []):
-        opts.append({
+        entry = {
             "id": o.get("id", ""),
             "text": str(o.get("text", "")).strip(),
             "correct": bool(o.get("correct", False)),
-        })
+        }
+        if "fb" in o and str(o.get("fb", "")).strip():
+            entry["fb"] = str(o["fb"]).strip()
+        opts.append(entry)
     return {
         "question": question,
         "options": opts,
@@ -529,11 +535,16 @@ def _scene_to_manifest(scene: dict, lang: str = "ru") -> dict:
             for o in opts_raw:
                 if not isinstance(o, dict):
                     continue
-                quiz_opts.append({
+                entry = {
                     "id": o.get("id", ""),
                     "text": str(o.get("text", "")).strip(),
                     "correct": bool(o.get("correct", False)),
-                })
+                }
+                # per-option fb (для wrong options нужно voice_prompts_experiment
+                # чтобы эмитить fail-аудио). Не теряем при конвертации в JSON.
+                if "fb" in o and str(o.get("fb", "")).strip():
+                    entry["fb"] = str(o["fb"]).strip()
+                quiz_opts.append(entry)
                 if o.get("correct"):
                     correct_fb = str(o.get("fb", "")).strip()
                     correct_text = str(o.get("text", "")).strip()
