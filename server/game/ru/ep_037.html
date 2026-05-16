@@ -1064,7 +1064,7 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
         function mountQuiz(){
           var row=document.createElement('div');
           row.className='msg-row incoming';
-          var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+          var opts=m.o.map(function(o,i){var aAttr=o.a?(' data-a="'+o.a+'"'):'';return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'"'+aAttr+'>'+o.x+'</button>';}).join('');
           row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
           chatEl.appendChild(row);scroll();
           row.querySelectorAll('.quiz-btn').forEach(function(b){
@@ -1087,6 +1087,15 @@ var CFG={typingBase:200,typingRand:100,interMsg:150,afterSend:200,initDelay:200,
               } else {
                 attempts++;
                 quizResults[si]='wrong';
+                /* Per-option fail audio (если в data-a указан URL —
+                   проигрываем напрямую, не полагаясь на текст-матчинг
+                   tracksByText). Voice генерит файлы вида
+                   {scene_id}_quiz_fail_opt{M}.wav (первый шаг) или
+                   _qNN_fail_opt{M}.wav (последующие). Если файла нет —
+                   .play() reject'нется, .catch() глотает. */
+                if(b.dataset.a){
+                  try{var fa=new Audio(b.dataset.a);fa.play().catch(function(){});}catch(e){}
+                }
                 /* Inline fail feedback: prefer per-option fb (constructor),
                    fall back to scene-level fbFail (vote). */
                 var idx=parseInt(b.dataset.i,10);

@@ -664,6 +664,12 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     # `ep_NNN/chat_images/<X>` — этот regex переписывает src на CDN URL,
     # и 404 уходит без правки данных.
     flat_chat_img_pat = re.compile(r'&quot;ep0*(\d+)/([^&]+)&quot;')
+    # Per-option fail-аудио для constructor-квизов: URL'ы вида
+    # `&quot;audio/epNNN_sNN_quiz_fail_optM.wav&quot;` (или _qNN_fail_optM)
+    # внутри data-chat-messages JSON. Аналогично chat_img_pat — пишем
+    # абсолютный CDN URL, чтобы addQuiz при wrong-клике подцепил аудио
+    # напрямую через `new Audio(b.dataset.a)`.
+    chat_audio_pat = re.compile(r'&quot;audio/([^&]+)&quot;')
 
     n_audio = 0
     n_images = 0
@@ -691,6 +697,11 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
         target_nnn = m.group(1).zfill(3)
         return (f'&quot;{public_url}/ep_{target_nnn}/chat_images/'
                 f'{m.group(2)}&quot;')
+
+    def sub_chat_audio(m: re.Match) -> str:
+        nonlocal n_audio
+        n_audio += 1
+        return f'&quot;{base}/audio/{m.group(1)}&quot;'
 
     # ПЕРВЫМ: патч JS-рендера addImage. В source-коде строка:
     #   '<img src="images/'+m.src+'"
@@ -748,6 +759,7 @@ def rewrite_html(html: str, public_url: str, nnn: str) -> tuple[str, int, int, i
     html = image_pat.sub(sub_image, html)
     html = chat_img_pat.sub(sub_chat_img, html)
     html = flat_chat_img_pat.sub(sub_flat_chat_img, html)
+    html = chat_audio_pat.sub(sub_chat_audio, html)
     # Сократить `pause_after_ms` между репликами в 4 раза (150→38, 400→100,
     # 800→200). Источник ставит 150/400/800 мс — для живой аудио-драмы это
     # много, особенно при ×2 playbackRate в debug-режиме. Делим на 4.

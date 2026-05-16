@@ -958,7 +958,8 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
             msgs.append({"t": "text", "s": "sofa", "x": intro})
 
         correct_picks = {}
-        for step in scene.get("steps", []):
+        scene_id = scene.get("scene_id", "")
+        for step_idx, step in enumerate(scene.get("steps", [])):
             sid = step.get("id", "")
             label = str(step.get("label", "")).strip()
             hint = str(step.get("hint", "")).strip()
@@ -967,14 +968,23 @@ def build_chat_messages(scene: dict, lang: str = "ru") -> list:
             if label:
                 msgs.append({"t": "text", "s": "sofa", "x": f"\u25b8 {label}"})
 
+            # Voice-naming convention: first quiz in scene → `_quiz_`, subsequent
+            # → `_q02_`, `_q03_`, ... Согласовано с voice_prompts_experiment.
+            prefix = "quiz" if step_idx == 0 else f"q{step_idx + 1:02d}"
+
             quiz_opts = []
             correct_fb = ""
             correct_text = ""
-            for o in _shuffle_quiz_opts(label or hint, step_opts):
+            for opt_idx, o in enumerate(_shuffle_quiz_opts(label or hint, step_opts)):
                 entry = {"x": o.get("text", ""), "c": bool(o.get("correct"))}
                 fb = str(o.get("fb", "")).strip()
                 if fb:
                     entry["fb"] = fb
+                # Per-option fail audio URL для wrong опций. Voice генерит
+                # файл по детерминированному имени; если файла нет — addQuiz
+                # .play().catch() глотает ошибку, fb-текст всё равно покажется.
+                if not o.get("correct") and scene_id:
+                    entry["a"] = f"audio/{scene_id}_{prefix}_fail_opt{opt_idx + 1}.wav"
                 quiz_opts.append(entry)
                 if o.get("correct"):
                     correct_fb = fb
@@ -2457,7 +2467,7 @@ JS = r"""
         function mountQuiz(){
           var row=document.createElement('div');
           row.className='msg-row incoming';
-          var opts=m.o.map(function(o,i){return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'">'+o.x+'</button>';}).join('');
+          var opts=m.o.map(function(o,i){var aAttr=o.a?(' data-a="'+o.a+'"'):'';return '<button class="quiz-btn" data-c="'+o.c+'" data-i="'+i+'"'+aAttr+'>'+o.x+'</button>';}).join('');
           row.innerHTML='<div class="bubble sofa"><div class="sender-name sofa">\u0421\u043e\u0444\u0430</div><div class="quiz-question">'+m.q+'</div><div class="quiz-options">'+opts+'</div><div class="msg-time">'+now()+'</div></div>';
           chatEl.appendChild(row);scroll();
           row.querySelectorAll('.quiz-btn').forEach(function(b){
@@ -2480,6 +2490,15 @@ JS = r"""
               } else {
                 attempts++;
                 quizResults[si]='wrong';
+                /* Per-option fail audio (если в data-a указан URL —
+                   проигрываем напрямую, не полагаясь на текст-матчинг
+                   tracksByText). Voice генерит файлы вида
+                   {scene_id}_quiz_fail_opt{M}.wav (первый шаг) или
+                   _qNN_fail_opt{M}.wav (последующие). Если файла нет —
+                   .play() reject'нется, .catch() глотает. */
+                if(b.dataset.a){
+                  try{var fa=new Audio(b.dataset.a);fa.play().catch(function(){});}catch(e){}
+                }
                 /* Inline fail feedback: prefer per-option fb (constructor),
                    fall back to scene-level fbFail (vote). */
                 var idx=parseInt(b.dataset.i,10);
